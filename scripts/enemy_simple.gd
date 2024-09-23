@@ -6,12 +6,18 @@ const JUMP_VELOCITY = -400.0
 
 var enemy_direction: int = 1
 
+var is_dead = false
+
 @onready var fall_raycast_1 = $FallRaycast_1
 @onready var fall_raycast_2 = $FallRaycast_2
 
 signal enemy_hit
+signal enemy_death
 
 func _physics_process(delta: float) -> void:
+	
+	if is_dead:
+		return
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -28,3 +34,10 @@ func _physics_process(delta: float) -> void:
 func _on_enemy_attack_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		enemy_hit.emit()
+
+
+func _on_enemy_head_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		is_dead = true
+		enemy_death.emit()
+		queue_free()
