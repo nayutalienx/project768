@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbes6p0xgmvbf"]
+
+[ext_resource type="Script" path="res://scenes/enemy_simple.gd" id="1_hd7p3"]
+[ext_resource type="Texture2D" uid="uid://baql6qn040vl" path="res://icon.svg" id="1_uu8sh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oa0gj"]
+size = Vector2(62, 63)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oxby5"]
+
+[node name="enemy_simple" type="CharacterBody2D"]
+script = ExtResource("1_hd7p3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.33, 0.33, 1)
+position = Vector2(0, -32)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_uu8sh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -32.5)
+shape = SubResource("RectangleShape2D_oa0gj")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, -67)
+scale = Vector2(1, 0.24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(3.04, 1)
+shape = SubResource("RectangleShape2D_oxby5")
+
+[node name="FallRaycast_1" type="RayCast2D" parent="."]
+position = Vector2(-35, -9)
+target_position = Vector2(0, 20)
+
+[node name="FallRaycast_2" type="RayCast2D" parent="."]
+position = Vector2(34, -9)
+target_position = Vector2(0, 20)
