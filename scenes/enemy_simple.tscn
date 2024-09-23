@@ -48,4 +48,5 @@ scale = Vector2(3.38474, 2.94474)
 position = Vector2(0, 0.603215)
 shape = SubResource("RectangleShape2D_qe8td")
 
+[connection signal="body_entered" from="EnemyHeadArea" to="." method="_on_enemy_head_area_body_entered"]
 [connection signal="body_entered" from="EnemyAttackArea" to="." method="_on_enemy_attack_area_body_entered"]

@@ -10,9 +10,13 @@ func _ready():
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	for enemy in enemies:
 		enemy.connect("enemy_hit", _on_enemy_hit)
+		enemy.connect("enemy_death", _on_enemy_death)
 
 func _on_enemy_hit():
 	killed = true
+
+func _on_enemy_death():
+	velocity.y = JUMP_VELOCITY
 	
 func _process(_delta: float):
 	if killed:
