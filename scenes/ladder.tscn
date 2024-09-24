@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dirjawkiwdyvb"]
+
+[ext_resource type="Texture2D" uid="uid://cl4cber4uro0u" path="res://sprites/ladder.png" id="1_1dujp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nf2ra"]
+size = Vector2(224, 1196)
+
+[node name="ladder" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_1dujp")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1, 6)
+shape = SubResource("RectangleShape2D_nf2ra")

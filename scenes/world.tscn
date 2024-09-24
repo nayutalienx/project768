@@ -1,25 +1,70 @@
-[gd_scene load_steps=4 format=3 uid="uid://u730p1tggvfb"]
+[gd_scene load_steps=6 format=4 uid="uid://u730p1tggvfb"]
 
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/player.tscn" id="1_vljbg"]
-[ext_resource type="PackedScene" uid="uid://b2ocmp13jafrt" path="res://scenes/platform.tscn" id="2_he6gq"]
 [ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/enemy_simple.tscn" id="3_kssy4"]
+[ext_resource type="Texture2D" uid="uid://dmbsrtuoaekr0" path="res://tile_sets/tileset1.png" id="4_yv7j6"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a5xc7"]
+texture = ExtResource("4_yv7j6")
+3:3/size_in_atlas = Vector2i(13, 5)
+3:3/0 = 0
+18:3/size_in_atlas = Vector2i(18, 5)
+18:3/0 = 0
+3:10/size_in_atlas = Vector2i(6, 6)
+3:10/0 = 0
+11:10/size_in_atlas = Vector2i(14, 6)
+11:10/0 = 0
+27:10/size_in_atlas = Vector2i(9, 5)
+27:10/0 = 0
+38:3/size_in_atlas = Vector2i(11, 47)
+38:3/0 = 0
+3:17/size_in_atlas = Vector2i(6, 6)
+3:17/0 = 0
+11:17/size_in_atlas = Vector2i(14, 3)
+11:17/0 = 0
+27:17/size_in_atlas = Vector2i(9, 4)
+27:17/0 = 0
+11:21/size_in_atlas = Vector2i(14, 5)
+11:21/0 = 0
+3:25/size_in_atlas = Vector2i(6, 27)
+3:25/0 = 0
+11:28/size_in_atlas = Vector2i(14, 6)
+11:28/0 = 0
+11:35/size_in_atlas = Vector2i(14, 9)
+11:35/0 = 0
+27:28/size_in_atlas = Vector2i(9, 6)
+27:28/0 = 0
+27:35/size_in_atlas = Vector2i(9, 9)
+27:35/0 = 0
+27:44/size_in_atlas = Vector2i(9, 5)
+27:44/0 = 0
+51:4/size_in_atlas = Vector2i(9, 45)
+51:4/0 = 0
+61:2/size_in_atlas = Vector2i(15, 74)
+61:2/0 = 0
+3:68/size_in_atlas = Vector2i(36, 8)
+3:68/0 = 0
+3:68/0/physics_layer_0/polygon_0/points = PackedVector2Array(-286.78, -50.0253, 283.005, -48.1376, 282.376, 60.7226, -284.893, 62.9249)
+3:53/size_in_atlas = Vector2i(54, 9)
+3:53/0 = 0
+3:53/0/z_index = 10
+3:53/0/physics_layer_0/polygon_0/points = PackedVector2Array(-424.743, -56.0032, 420.339, -54.7447, 422.699, 63.1824, -428.519, 68.5882)
+
+[sub_resource type="TileSet" id="TileSet_4035l"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+sources/4 = SubResource("TileSetAtlasSource_a5xc7")
 
 [node name="World" type="Node2D"]
 
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(-129, 329)
+scale = Vector2(0.5, 0.5)
+tile_map_data = PackedByteArray("AAD+/wYABAADAEQAAAAoAPT/BAADAEQAAAATAAkABAADADUAAABOABAABAADADUAAABrABMABAADAEQAAACBABcABAADAEQAAACPABUABAADAEQAAACZABEABAADAEQAAAAsAA0ABAADAEQAAAA6AAgABAADAEQAAAA=")
+tile_set = SubResource("TileSet_4035l")
+
 [node name="Player" parent="." instance=ExtResource("1_vljbg")]
 position = Vector2(538, 368)
-
-[node name="platform" parent="." instance=ExtResource("2_he6gq")]
-position = Vector2(177, 543)
-
-[node name="platform2" parent="." instance=ExtResource("2_he6gq")]
-position = Vector2(702, 619)
-
-[node name="platform3" parent="." instance=ExtResource("2_he6gq")]
-position = Vector2(1173, 550)
-
-[node name="platform4" parent="." instance=ExtResource("2_he6gq")]
-position = Vector2(1638, 619)
 
 [node name="enemy_simple" parent="." instance=ExtResource("3_kssy4")]
 position = Vector2(1159, 506)
