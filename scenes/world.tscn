@@ -64,7 +64,7 @@ sources/4 = SubResource("TileSetAtlasSource_a5xc7")
 position = Vector2(-140, 137)
 
 [node name="ladder3" parent="ladders" instance=ExtResource("1_e01dh")]
-position = Vector2(1174, -172)
+position = Vector2(1174, -162)
 
 [node name="ladder2" parent="ladders" instance=ExtResource("1_e01dh")]
 position = Vector2(339, 169)
@@ -74,7 +74,7 @@ position = Vector2(339, 169)
 [node name="TileMapLayer" type="TileMapLayer" parent="tiles"]
 position = Vector2(-129, 329)
 scale = Vector2(0.5, 0.5)
-tile_map_data = PackedByteArray("AAD+/wYABAADAEQAAAAoAPT/BAADAEQAAAATAAkABAADADUAAABOABAABAADADUAAABrABMABAADAEQAAACBABcABAADAEQAAACPABUABAADAEQAAACZABEABAADAEQAAAAsAA0ABAADAEQAAAA6AAgABAADAEQAAAAQAOP/BAADADUAAABAAPH/BAADADUAAABAAND/BAADADUAAABiAND/BAADADUAAAB/AOv/BAADADUAAAA=")
+tile_map_data = PackedByteArray("AAD+/wYABAADAEQAAAAoAPT/BAADAEQAAAATAAkABAADADUAAABOABAABAADADUAAABrABMABAADAEQAAACBABcABAADAEQAAACPABUABAADAEQAAACZABEABAADAEQAAAAsAA0ABAADAEQAAAA6AAgABAADAEQAAABAAPH/BAADADUAAABAAND/BAADADUAAABiAND/BAADADUAAAB/AOv/BAADADUAAAAOAOX/BAADAEQAAAA=")
 tile_set = SubResource("TileSet_4035l")
 
 [node name="enemies" type="Node2D" parent="."]
