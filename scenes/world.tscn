@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=4 uid="uid://u730p1tggvfb"]
+[gd_scene load_steps=7 format=4 uid="uid://u730p1tggvfb"]
 
+[ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/ladder.tscn" id="1_e01dh"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/player.tscn" id="1_vljbg"]
 [ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/enemy_simple.tscn" id="3_kssy4"]
 [ext_resource type="Texture2D" uid="uid://dmbsrtuoaekr0" path="res://tile_sets/tileset1.png" id="4_yv7j6"]
@@ -57,17 +58,38 @@ sources/4 = SubResource("TileSetAtlasSource_a5xc7")
 
 [node name="World" type="Node2D"]
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="ladders" type="Node2D" parent="."]
+
+[node name="ladder" parent="ladders" instance=ExtResource("1_e01dh")]
+position = Vector2(-140, 137)
+
+[node name="ladder3" parent="ladders" instance=ExtResource("1_e01dh")]
+position = Vector2(1174, -172)
+
+[node name="ladder2" parent="ladders" instance=ExtResource("1_e01dh")]
+position = Vector2(339, 169)
+
+[node name="tiles" type="Node2D" parent="."]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="tiles"]
 position = Vector2(-129, 329)
 scale = Vector2(0.5, 0.5)
-tile_map_data = PackedByteArray("AAD+/wYABAADAEQAAAAoAPT/BAADAEQAAAATAAkABAADADUAAABOABAABAADADUAAABrABMABAADAEQAAACBABcABAADAEQAAACPABUABAADAEQAAACZABEABAADAEQAAAAsAA0ABAADAEQAAAA6AAgABAADAEQAAAA=")
+tile_map_data = PackedByteArray("AAD+/wYABAADAEQAAAAoAPT/BAADAEQAAAATAAkABAADADUAAABOABAABAADADUAAABrABMABAADAEQAAACBABcABAADAEQAAACPABUABAADAEQAAACZABEABAADAEQAAAAsAA0ABAADAEQAAAA6AAgABAADAEQAAAAQAOP/BAADADUAAABAAPH/BAADADUAAABAAND/BAADADUAAABiAND/BAADADUAAAB/AOv/BAADADUAAAA=")
 tile_set = SubResource("TileSet_4035l")
 
-[node name="Player" parent="." instance=ExtResource("1_vljbg")]
-position = Vector2(538, 368)
+[node name="enemies" type="Node2D" parent="."]
 
-[node name="enemy_simple" parent="." instance=ExtResource("3_kssy4")]
+[node name="enemy_simple" parent="enemies" instance=ExtResource("3_kssy4")]
 position = Vector2(1159, 506)
 
-[node name="enemy_simple2" parent="." instance=ExtResource("3_kssy4")]
+[node name="enemy_simple3" parent="enemies" instance=ExtResource("3_kssy4")]
+position = Vector2(1892, -55)
+
+[node name="enemy_simple4" parent="enemies" instance=ExtResource("3_kssy4")]
+position = Vector2(897, -485)
+
+[node name="enemy_simple2" parent="enemies" instance=ExtResource("3_kssy4")]
 position = Vector2(1597, 577)
+
+[node name="Player" parent="." instance=ExtResource("1_vljbg")]
+position = Vector2(405, 383)
