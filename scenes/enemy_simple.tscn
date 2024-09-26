@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cbes6p0xgmvbf"]
 
-[ext_resource type="Script" path="res://scripts/Enemy.cs" id="1_le13m"]
+[ext_resource type="Script" path="res://scripts/enemy/Enemy.cs" id="1_le13m"]
 [ext_resource type="Texture2D" uid="uid://baql6qn040vl" path="res://sprites/icon.svg" id="1_uu8sh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqmav"]
@@ -15,6 +15,7 @@ height = 23.0446
 
 [node name="enemy_simple" type="CharacterBody2D" groups=["enemy"]]
 script = ExtResource("1_le13m")
+SPEED = 150.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.33, 0.33, 1)
@@ -52,6 +53,9 @@ scale = Vector2(3.38474, 2.94474)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAttackArea"]
 position = Vector2(0, 0.603215)
 shape = SubResource("CapsuleShape2D_ykh1j")
+
+[node name="DirectionTimer" type="Timer" parent="."]
+process_callback = 0
 
 [connection signal="body_entered" from="EnemyHeadArea" to="." method="_on_enemy_head_area_body_entered"]
 [connection signal="body_entered" from="EnemyAttackArea" to="." method="_on_enemy_attack_area_body_entered"]

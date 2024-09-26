@@ -20,7 +20,8 @@ public partial class Player : CharacterBody2D
 
 	private bool isDead = false;
 
-	private LadderEvent ladderEvent;
+	private LadderEvent topSnapLadder = new LadderEvent();
+	private LadderEvent bottomSnapLadder = new LadderEvent();
 
 	public override void _Ready()
 	{
@@ -29,14 +30,14 @@ public partial class Player : CharacterBody2D
 
 		foreach (var enemy in enemies)
 		{
-			enemy.Connect(Enemy.SignalName.EnemyInteract, Callable.From<EnemyEvent>(OnEnemyReact));
+			(enemy as Enemy).EnemyInteract += OnEnemyReact;
 		}
 
 		var ladders = GetTree().GetNodesInGroup("ladder");
 
 		foreach (var ladder in ladders)
 		{
-			ladder.Connect(Ladder.SignalName.LadderInteract, Callable.From<LadderEvent>(OnLadderReact));
+			(ladder as Ladder).LadderInteract += OnLadderReact; ;
 		}
 
 	}
@@ -72,7 +73,7 @@ public partial class Player : CharacterBody2D
 		Input.IsActionJustPressed("ui_accept")
 		)
 		{
-			toGroundMode();
+			toGroundMode(getCurrentActiveLadder());
 			Velocity = Vector2.Zero;
 			return;
 		}
@@ -96,12 +97,14 @@ public partial class Player : CharacterBody2D
 	public void MoveOnGround(double delta)
 	{
 
-		if (ladderEvent.NearLadder &&
+		if ((
+			topSnapLadder.NearLadder || bottomSnapLadder.NearLadder
+		) &&
 		Input.IsActionJustPressed("ui_up") ||
 		Input.IsActionJustPressed("ui_down")
 		)
 		{
-			toLadderMode();
+			toLadderMode(getCurrentActiveLadder());
 			return;
 		}
 
@@ -131,14 +134,14 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 	}
 
-	private void toGroundMode()
+	private void toGroundMode(LadderEvent ladderEvent)
 	{
 		GD.Print("Go to ground mode");
 		playerMode = PlayerMode.GROUND;
 		ladderEvent.LadderTop.SetCollisionLayerValue(1, true);
 	}
 
-	private void toLadderMode()
+	private void toLadderMode(LadderEvent ladderEvent)
 	{
 		GD.Print("Go to ladder mode");
 		playerMode = PlayerMode.LADDER;
@@ -161,11 +164,30 @@ public partial class Player : CharacterBody2D
 
 	public void OnLadderReact(LadderEvent ladderEvent)
 	{
-		GD.Print($"near ladder {ladderEvent.NearLadder}");
-		this.ladderEvent = ladderEvent;
-
-		if (!ladderEvent.NearLadder) {
-			toGroundMode();
+		GD.Print($"near ladder {ladderEvent.NearLadder} {ladderEvent.Snap}");
+		if (ladderEvent.Snap == LadderEvent.LadderSnap.BOTTOM_SNAP)
+		{
+			bottomSnapLadder = ladderEvent;
 		}
+		else
+		{
+			topSnapLadder = ladderEvent;
+		}
+
+
+		if (!ladderEvent.NearLadder &&
+		ladderEvent.Snap == LadderEvent.LadderSnap.BOTTOM_SNAP)
+		{
+			toGroundMode(ladderEvent);
+		}
+	}
+
+	private LadderEvent getCurrentActiveLadder()
+	{
+		if (topSnapLadder.NearLadder)
+		{
+			return topSnapLadder;
+		}
+		return bottomSnapLadder;
 	}
 }

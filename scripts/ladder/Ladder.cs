@@ -35,7 +35,8 @@ public partial class Ladder : Node2D
 				{
 					NearLadder = true,
 					Position = Position,
-					LadderTop = ladderTop
+					LadderTop = ladderTop,
+					Snap = LadderEvent.LadderSnap.BOTTOM_SNAP
 				});
 		}
 	}
@@ -50,7 +51,8 @@ public partial class Ladder : Node2D
 				{
 					NearLadder = false,
 					Position = Position,
-					LadderTop = ladderTop
+					LadderTop = ladderTop,
+					Snap = LadderEvent.LadderSnap.BOTTOM_SNAP
 				});
 		}
 	}
@@ -66,7 +68,8 @@ public partial class Ladder : Node2D
 				{
 					NearLadder = true,
 					Position = Position,
-					LadderTop = ladderTop
+					LadderTop = ladderTop,
+					Snap = LadderEvent.LadderSnap.TOP_SNAP
 				});
 		}
 	}
@@ -81,7 +84,8 @@ public partial class Ladder : Node2D
 				{
 					NearLadder = false,
 					Position = Position,
-					LadderTop = ladderTop
+					LadderTop = ladderTop,
+					Snap = LadderEvent.LadderSnap.TOP_SNAP
 				});
 		}
 	}
