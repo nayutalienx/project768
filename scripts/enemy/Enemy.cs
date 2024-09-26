@@ -6,11 +6,12 @@ public partial class Enemy : CharacterBody2D
 
 	[Signal]
 	public delegate void EnemyInteractEventHandler(
-		LadderEvent ladderEvent
+		EnemyEvent ladderEvent
 	);
 
 	public float JUMP_VELOCITY = -400.0f;
 
+	[Export]
 	public float SPEED = 300.0f;
 
 	private RayCast2D fallRaycastLeft;
@@ -18,6 +19,8 @@ public partial class Enemy : CharacterBody2D
 
 	private bool isDead;
 	private int enemyDirection = 1;
+	private bool lockDirection = false;
+	private Timer lockDirectionTimer;
 
 
 	public override void _Ready()
@@ -25,9 +28,11 @@ public partial class Enemy : CharacterBody2D
 		fallRaycastLeft = GetNode<RayCast2D>("FallRaycast_1");
 		fallRaycastRight = GetNode<RayCast2D>("FallRaycast_2");
 
-		GetNode<Area2D>("EnemyHeadArea").Connect(Area2D.SignalName.BodyEntered, Callable.From<Node2D>(EnemyHeadBodyEntered));
+		GetNode<Area2D>("EnemyHeadArea").BodyEntered += EnemyHeadBodyEntered;
+		GetNode<Area2D>("EnemyAttackArea").BodyEntered += EnemyAttackBodyEntered;
 
-		GetNode<Area2D>("EnemyAttackArea").Connect(Area2D.SignalName.BodyEntered, Callable.From<Node2D>(EnemyAttackBodyEntered));
+		lockDirectionTimer = GetNode<Timer>("DirectionTimer");
+		lockDirectionTimer.Timeout += OnTimerFinish;
 	}
 
 	public void EnemyAttackBodyEntered(Node2D body)
@@ -73,14 +78,16 @@ public partial class Enemy : CharacterBody2D
 		}
 
 		if (
-			!fallRaycastLeft.IsColliding() || !fallRaycastRight.IsColliding() ||
-			IsOnWall()
+			!fallRaycastLeft.IsColliding() ||
+			!fallRaycastRight.IsColliding()
+			|| IsOnWall()
 			)
 		{
-
-			if (IsOnFloor())
+			if (IsOnFloor() && !lockDirection)
 			{
 				enemyDirection *= -1;
+				lockDirection = true;
+				lockDirectionTimer.Start();
 			}
 		}
 
@@ -88,5 +95,10 @@ public partial class Enemy : CharacterBody2D
 
 		MoveAndSlide();
 
+	}
+
+	private void OnTimerFinish()
+	{
+		lockDirection = false;
 	}
 }
