@@ -14,6 +14,8 @@ radius = 10.0451
 height = 23.0446
 
 [node name="enemy_simple" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 0
+collision_mask = 9
 script = ExtResource("1_le13m")
 SPEED = 150.0
 
@@ -31,6 +33,8 @@ shape = SubResource("CapsuleShape2D_hqmav")
 [node name="EnemyHeadArea" type="Area2D" parent="."]
 position = Vector2(0, -67)
 scale = Vector2(1, 0.24)
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHeadArea"]
 scale = Vector2(3.04, 1)
@@ -40,15 +44,19 @@ shape = SubResource("RectangleShape2D_oxby5")
 position = Vector2(-35, -9)
 scale = Vector2(2, 2)
 target_position = Vector2(0, 20)
+collision_mask = 9
 
 [node name="FallRaycast_2" type="RayCast2D" parent="."]
 position = Vector2(34, -9)
 scale = Vector2(2, 2)
 target_position = Vector2(0, 20)
+collision_mask = 9
 
 [node name="EnemyAttackArea" type="Area2D" parent="."]
 position = Vector2(0, -32)
 scale = Vector2(3.38474, 2.94474)
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAttackArea"]
 position = Vector2(0, 0.603215)
