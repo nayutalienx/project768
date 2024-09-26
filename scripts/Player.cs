@@ -138,7 +138,7 @@ public partial class Player : CharacterBody2D
 	{
 		GD.Print("Go to ground mode");
 		playerMode = PlayerMode.GROUND;
-		ladderEvent.LadderTop.SetCollisionLayerValue(1, true);
+		SetCollisionMaskValue(4, true);
 	}
 
 	private void toLadderMode(LadderEvent ladderEvent)
@@ -147,7 +147,7 @@ public partial class Player : CharacterBody2D
 		playerMode = PlayerMode.LADDER;
 		Velocity = Vector2.Zero;
 		Position = Position with { X = ladderEvent.Position.X };
-		ladderEvent.LadderTop.SetCollisionLayerValue(1, false);
+		SetCollisionMaskValue(4, false);
 	}
 
 	public void OnEnemyReact(EnemyEvent enemyEvent)
