@@ -3,191 +3,171 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+    enum PlayerMode
+    {
+        GROUND,
+        LADDER
+    }
 
-	enum PlayerMode
-	{
-		GROUND,
-		LADDER
-	}
+    [Export] public float JUMP_VELOCITY = -400.0f;
 
-	[Export]
-	public float JUMP_VELOCITY = -400.0f;
+    [Export] public float SPEED = 300.0f;
 
-	[Export]
-	public float SPEED = 300.0f;
+    private PlayerMode playerMode = PlayerMode.GROUND;
 
-	private PlayerMode playerMode = PlayerMode.GROUND;
+    private bool isDead = false;
 
-	private bool isDead = false;
+    private LadderEvent ladderEvent = new LadderEvent();
 
-	private LadderEvent topSnapLadder = new LadderEvent();
-	private LadderEvent bottomSnapLadder = new LadderEvent();
+    public override void _Ready()
+    {
+        var enemies = GetTree().GetNodesInGroup("enemy");
 
-	public override void _Ready()
-	{
+        foreach (var enemy in enemies)
+        {
+            ((Enemy) enemy).EnemyInteract += OnEnemyReact;
+        }
 
-		var enemies = GetTree().GetNodesInGroup("enemy");
+        var ladders = GetTree().GetNodesInGroup("ladder");
 
-		foreach (var enemy in enemies)
-		{
-			(enemy as Enemy).EnemyInteract += OnEnemyReact;
-		}
+        foreach (var ladder in ladders)
+        {
+            ((Ladder) ladder).LadderInteract += OnLadderReact;
+            ;
+        }
+    }
 
-		var ladders = GetTree().GetNodesInGroup("ladder");
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
+    {
+        if (isDead)
+        {
+            GetTree().ReloadCurrentScene();
+        }
+    }
 
-		foreach (var ladder in ladders)
-		{
-			(ladder as Ladder).LadderInteract += OnLadderReact; ;
-		}
+    public override void _Input(InputEvent @event)
+    {
+        if (@event.IsActionPressed("ui_down"))
+        {
+            Position = Position with {Y = Position.Y + 1};
+        }
+    }
 
-	}
+    public override void _PhysicsProcess(double delta)
+    {
+        switch (playerMode)
+        {
+            case PlayerMode.GROUND:
+                MoveOnGround(delta);
+                break;
+            case PlayerMode.LADDER:
+                MoveOnLadder(delta);
+                break;
+        }
+    }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		if (isDead)
-		{
-			GetTree().ReloadCurrentScene();
-		}
-	}
+    private void MoveOnLadder(double delta)
+    {
+        if (
+            Input.IsActionJustPressed("ui_left") ||
+            Input.IsActionJustPressed("ui_right") ||
+            Input.IsActionJustPressed("ui_accept")
+        )
+        {
+            toGroundMode();
+            Velocity = Vector2.Zero;
+            return;
+        }
 
-	public override void _PhysicsProcess(double delta)
-	{
-		switch (playerMode)
-		{
-			case PlayerMode.GROUND:
-				MoveOnGround(delta);
-				break;
-			case PlayerMode.LADDER:
-				MoveOnLadder(delta);
-				break;
-		}
-	}
+        float direction = Input.GetAxis("ui_up", "ui_down");
 
-	private void MoveOnLadder(double delta)
-	{
+        if (direction == 0)
+        {
+            Velocity = Velocity.MoveToward(
+                Velocity with {Y = 0}, SPEED
+            );
+        }
+        else
+        {
+            Velocity = Velocity with {Y = direction * SPEED};
+        }
 
-		if (
-			Input.IsActionJustPressed("ui_left") ||
-		Input.IsActionJustPressed("ui_right") ||
-		Input.IsActionJustPressed("ui_accept")
-		)
-		{
-			toGroundMode(getCurrentActiveLadder());
-			Velocity = Vector2.Zero;
-			return;
-		}
+        MoveAndSlide();
+    }
 
-		float direction = Input.GetAxis("ui_up", "ui_down");
+    public void MoveOnGround(double delta)
+    {
+        if ((
+                ladderEvent.NearLadder &&
+                (Input.IsActionJustPressed("ui_down") || Input.IsActionJustPressed("ui_up"))
+            )
+           )
+        {
+            toLadderMode();
+            return;
+        }
 
-		if (direction == 0)
-		{
-			Velocity = Velocity.MoveToward(
-				Velocity with { Y = 0 }, SPEED
-			);
-		}
-		else
-		{
-			Velocity = Velocity with { Y = direction * SPEED };
-		}
-		MoveAndSlide();
+        if (!IsOnFloor())
+        {
+            Velocity += GetGravity() * (float) delta;
+        }
 
-	}
+        if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+        {
+            Velocity = Velocity with {Y = JUMP_VELOCITY};
+        }
 
-	public void MoveOnGround(double delta)
-	{
+        float direction = Input.GetAxis("ui_left", "ui_right");
 
-		if ((
-			topSnapLadder.NearLadder || bottomSnapLadder.NearLadder
-		) &&
-		Input.IsActionJustPressed("ui_up") ||
-		Input.IsActionJustPressed("ui_down")
-		)
-		{
-			toLadderMode(getCurrentActiveLadder());
-			return;
-		}
+        if (direction == 0)
+        {
+            Velocity = Velocity.MoveToward(
+                Velocity with {X = 0}, SPEED
+            );
+        }
+        else
+        {
+            Velocity = Velocity with {X = direction * SPEED};
+        }
 
-		if (!IsOnFloor())
-		{
-			Velocity += GetGravity() * (float)delta;
-		}
+        MoveAndSlide();
+    }
 
-		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
-		{
-			Velocity = Velocity with { Y = JUMP_VELOCITY };
-		}
+    private void toGroundMode()
+    {
+        GD.Print("Go to ground mode");
+        playerMode = PlayerMode.GROUND;
+    }
 
-		float direction = Input.GetAxis("ui_left", "ui_right");
+    private void toLadderMode()
+    {
+        GD.Print("Go to ladder mode");
+        playerMode = PlayerMode.LADDER;
+        Velocity = Vector2.Zero;
+        Position = Position with {X = ladderEvent.Position.X};
+    }
 
-		if (direction == 0)
-		{
-			Velocity = Velocity.MoveToward(
-				Velocity with { X = 0 }, SPEED
-			);
-		}
-		else
-		{
-			Velocity = Velocity with { X = direction * SPEED };
-		}
+    public void OnEnemyReact(EnemyEvent enemyEvent)
+    {
+        if (enemyEvent.DiedFromHeadJump)
+        {
+            Velocity = Velocity with {Y = JUMP_VELOCITY};
+        }
 
-		MoveAndSlide();
-	}
+        if (enemyEvent.KillPlayer)
+        {
+            isDead = true;
+        }
+    }
 
-	private void toGroundMode(LadderEvent ladderEvent)
-	{
-		GD.Print("Go to ground mode");
-		playerMode = PlayerMode.GROUND;
-		SetCollisionMaskValue(4, true);
-	}
-
-	private void toLadderMode(LadderEvent ladderEvent)
-	{
-		GD.Print("Go to ladder mode");
-		playerMode = PlayerMode.LADDER;
-		Velocity = Vector2.Zero;
-		Position = Position with { X = ladderEvent.Position.X };
-		SetCollisionMaskValue(4, false);
-	}
-
-	public void OnEnemyReact(EnemyEvent enemyEvent)
-	{
-		if (enemyEvent.DiedFromHeadJump)
-		{
-			Velocity = Velocity with { Y = JUMP_VELOCITY };
-		}
-		if (enemyEvent.KillPlayer)
-		{
-			isDead = true;
-		}
-	}
-
-	public void OnLadderReact(LadderEvent ladderEvent)
-	{
-		GD.Print($"near ladder {ladderEvent.NearLadder} {ladderEvent.Snap}");
-		if (ladderEvent.Snap == LadderEvent.LadderSnap.BOTTOM_SNAP)
-		{
-			bottomSnapLadder = ladderEvent;
-		}
-		else
-		{
-			topSnapLadder = ladderEvent;
-		}
-
-
-		if (!ladderEvent.NearLadder &&
-		ladderEvent.Snap == LadderEvent.LadderSnap.BOTTOM_SNAP)
-		{
-			toGroundMode(ladderEvent);
-		}
-	}
-
-	private LadderEvent getCurrentActiveLadder()
-	{
-		if (topSnapLadder.NearLadder)
-		{
-			return topSnapLadder;
-		}
-		return bottomSnapLadder;
-	}
+    public void OnLadderReact(LadderEvent ladderEvent)
+    {
+        GD.Print($"near ladder {ladderEvent.NearLadder}");
+        this.ladderEvent = ladderEvent;
+        if (!ladderEvent.NearLadder)
+        {
+            toGroundMode();
+        }
+    }
 }

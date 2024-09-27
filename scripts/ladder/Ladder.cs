@@ -10,17 +10,12 @@ public partial class Ladder : Node2D
 
     public override void _Ready()
     {
-        Area2D moveUpArea = GetNode<Area2D>("move_up_area");
-        moveUpArea.BodyEntered += MoveUpZoneEntered;
-        moveUpArea.BodyExited += MoveUpZoneExited;
-
-        Area2D moveDownArea = GetNode<Area2D>("move_down_area");
-
-        moveDownArea.BodyEntered += MoveDownZoneEntered;
-        moveDownArea.BodyExited += MoveDownZoneExited;
+        Area2D moveLadderArea = GetNode<Area2D>("move_ladder_area");
+        moveLadderArea.BodyEntered += MoveLadderArea_BodyEntered;
+        moveLadderArea.BodyExited += MoveLadderArea_BodyExited;
     }
 
-    public void MoveUpZoneEntered(Node2D body)
+    private void MoveLadderArea_BodyEntered(Node2D body)
     {
         if (body.IsInGroup("player"))
         {
@@ -30,12 +25,12 @@ public partial class Ladder : Node2D
                 {
                     NearLadder = true,
                     Position = Position,
-                    Snap = LadderEvent.LadderSnap.BOTTOM_SNAP
                 });
         }
     }
 
-    public void MoveUpZoneExited(Node2D body)
+
+    private void MoveLadderArea_BodyExited(Node2D body)
     {
         if (body.IsInGroup("player"))
         {
@@ -45,38 +40,6 @@ public partial class Ladder : Node2D
                 {
                     NearLadder = false,
                     Position = Position,
-                    Snap = LadderEvent.LadderSnap.BOTTOM_SNAP
-                });
-        }
-    }
-
-
-    public void MoveDownZoneEntered(Node2D body)
-    {
-        if (body.IsInGroup("player"))
-        {
-            EmitSignal(
-                SignalName.LadderInteract,
-                new LadderEvent
-                {
-                    NearLadder = true,
-                    Position = Position,
-                    Snap = LadderEvent.LadderSnap.TOP_SNAP
-                });
-        }
-    }
-
-    public void MoveDownZoneExited(Node2D body)
-    {
-        if (body.IsInGroup("player"))
-        {
-            EmitSignal(
-                SignalName.LadderInteract,
-                new LadderEvent
-                {
-                    NearLadder = false,
-                    Position = Position,
-                    Snap = LadderEvent.LadderSnap.TOP_SNAP
                 });
         }
     }

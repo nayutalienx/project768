@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://u730p1tggvfb"]
+[gd_scene load_steps=9 format=4 uid="uid://u730p1tggvfb"]
 
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/ladder.tscn" id="1_e01dh"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/player.tscn" id="1_vljbg"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/one_way_platform.tscn" id="2_7en46"]
 [ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/enemy_simple.tscn" id="3_kssy4"]
 [ext_resource type="Texture2D" uid="uid://dmbsrtuoaekr0" path="res://tile_sets/tileset1.png" id="4_yv7j6"]
+[ext_resource type="PackedScene" uid="uid://dkn6lvqu0x1vd" path="res://scenes/key.tscn" id="5_5vd7t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a5xc7"]
 texture = ExtResource("4_yv7j6")
@@ -67,15 +69,47 @@ position = Vector2(-140, 137)
 [node name="ladder3" parent="ladders" instance=ExtResource("1_e01dh")]
 position = Vector2(1174, -162)
 
+[node name="ladder4" parent="ladders" instance=ExtResource("1_e01dh")]
+position = Vector2(1728, -162)
+
+[node name="ladder5" parent="ladders" instance=ExtResource("1_e01dh")]
+position = Vector2(2194, 267)
+
 [node name="ladder2" parent="ladders" instance=ExtResource("1_e01dh")]
 position = Vector2(339, 169)
+
+[node name="one_way_platforms" type="Node2D" parent="."]
+
+[node name="one_way_platform" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+position = Vector2(-188, -107)
+
+[node name="one_way_platform2" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+position = Vector2(389, -108)
+
+[node name="one_way_platform3" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+position = Vector2(1228, 125)
+
+[node name="one_way_platform4" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+position = Vector2(1732, 139)
+
+[node name="one_way_platform5" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+position = Vector2(2261, -17)
+
+[node name="one_way_platform6" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+position = Vector2(1796, -448)
+
+[node name="one_way_platform7" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+position = Vector2(1178, -451)
+
+[node name="one_way_platform8" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+position = Vector2(843, -203)
 
 [node name="tiles" type="Node2D" parent="."]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="tiles"]
 position = Vector2(-129, 329)
 scale = Vector2(0.5, 0.5)
-tile_map_data = PackedByteArray("AAD+/wYABAADAEQAAAAoAPT/BAADAEQAAAATAAkABAADADUAAABOABAABAADADUAAABrABMABAADAEQAAACBABcABAADAEQAAACPABUABAADAEQAAACZABEABAADAEQAAAAsAA0ABAADAEQAAAA6AAgABAADAEQAAABAAPH/BAADADUAAABAAND/BAADADUAAABiAND/BAADADUAAAB/AOv/BAADADUAAAAOAOX/BAADAEQAAAA=")
+tile_map_data = PackedByteArray("AAD+/wYABAADAEQAAAAoAPT/BAADAEQAAAATAAkABAADADUAAABOABAABAADADUAAABrABMABAADAEQAAACBABcABAADAEQAAACPABUABAADAEQAAACZABEABAADAEQAAAAsAA0ABAADAEQAAAA6AAgABAADAEQAAABAAPH/BAADADUAAABAAND/BAADADUAAABiAND/BAADADUAAAB/AOv/BAADADUAAAAOAOX/BAADAEQAAAA+AAwABAADAEQAAABiAO3/BAADAEQAAAA=")
 tile_set = SubResource("TileSet_4035l")
 
 [node name="enemies" type="Node2D" parent="."]
@@ -94,3 +128,6 @@ position = Vector2(1597, 577)
 
 [node name="Player" parent="." instance=ExtResource("1_vljbg")]
 position = Vector2(405, 383)
+
+[node name="key" parent="." instance=ExtResource("5_5vd7t")]
+position = Vector2(753, 402)
