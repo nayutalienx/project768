@@ -9,9 +9,8 @@ height = 29.8259
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oxby5"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ykh1j"]
-radius = 10.0451
-height = 23.0446
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vgc30"]
+size = Vector2(20, 12.5648)
 
 [node name="enemy_simple" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 0
@@ -32,7 +31,7 @@ shape = SubResource("CapsuleShape2D_hqmav")
 
 [node name="EnemyHeadArea" type="Area2D" parent="."]
 position = Vector2(0, -67)
-scale = Vector2(1, 0.24)
+scale = Vector2(1.08, 0.6)
 collision_layer = 0
 collision_mask = 2
 
@@ -59,11 +58,8 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAttackArea"]
-position = Vector2(0, 0.603215)
-shape = SubResource("CapsuleShape2D_ykh1j")
+position = Vector2(0, 4.92403)
+shape = SubResource("RectangleShape2D_vgc30")
 
 [node name="DirectionTimer" type="Timer" parent="."]
 process_callback = 0
-
-[connection signal="body_entered" from="EnemyHeadArea" to="." method="_on_enemy_head_area_body_entered"]
-[connection signal="body_entered" from="EnemyAttackArea" to="." method="_on_enemy_attack_area_body_entered"]

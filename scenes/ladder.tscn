@@ -1,17 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dirjawkiwdyvb"]
+[gd_scene load_steps=4 format=3 uid="uid://dirjawkiwdyvb"]
 
 [ext_resource type="Texture2D" uid="uid://cl4cber4uro0u" path="res://sprites/ladder.png" id="1_1dujp"]
 [ext_resource type="Script" path="res://scripts/ladder/Ladder.cs" id="1_xj34d"]
-[ext_resource type="Texture2D" uid="uid://c5c4bv6ak02u4" path="res://sprites/ladder_top.png" id="3_xqnuu"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ss7a8"]
-size = Vector2(280, 70)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nf2ra"]
-size = Vector2(224, 1192)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6jy8q"]
-size = Vector2(270, 152)
+size = Vector2(224, 1224)
 
 [node name="ladder" type="Node2D" groups=["ladder"]]
 scale = Vector2(0.5, 0.5)
@@ -20,31 +13,10 @@ script = ExtResource("1_xj34d")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_1dujp")
 
-[node name="top" type="StaticBody2D" parent="."]
-position = Vector2(0, -556)
-collision_layer = 8
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="top"]
-texture = ExtResource("3_xqnuu")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="top"]
-position = Vector2(0, -3)
-shape = SubResource("RectangleShape2D_ss7a8")
-
-[node name="move_up_area" type="Area2D" parent="."]
+[node name="move_ladder_area" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="move_up_area"]
-position = Vector2(1, 8)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="move_ladder_area"]
+position = Vector2(1, -8)
 shape = SubResource("RectangleShape2D_nf2ra")
-
-[node name="move_down_area" type="Area2D" parent="."]
-position = Vector2(0, -626)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="move_down_area"]
-position = Vector2(-1, -54)
-shape = SubResource("RectangleShape2D_6jy8q")
