@@ -1,13 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://chwq1hm1c6ake"]
+[gd_scene load_steps=4 format=3 uid="uid://chwq1hm1c6ake"]
 
+[ext_resource type="Script" path="res://scripts/platform/OneWayPlatform.cs" id="1_abpv2"]
 [ext_resource type="Texture2D" uid="uid://c5c4bv6ak02u4" path="res://sprites/ladder_top.png" id="1_otw1a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l1hfv"]
 size = Vector2(279, 69)
 
-[node name="one_way_platform" type="StaticBody2D"]
+[node name="one_way_platform" type="AnimatableBody2D"]
 scale = Vector2(1.04384, 0.406434)
-collision_mask = 0
+script = ExtResource("1_abpv2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_otw1a")

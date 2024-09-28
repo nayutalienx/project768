@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cbes6p0xgmvbf"]
+[gd_scene load_steps=7 format=3 uid="uid://cbes6p0xgmvbf"]
 
 [ext_resource type="Script" path="res://scripts/enemy/Enemy.cs" id="1_le13m"]
 [ext_resource type="Texture2D" uid="uid://baql6qn040vl" path="res://sprites/icon.svg" id="1_uu8sh"]
+[ext_resource type="Texture2D" uid="uid://d1xlx4638oyq7" path="res://sprites/key.png" id="2_4uugp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqmav"]
 radius = 14.2247
@@ -13,10 +14,17 @@ height = 29.8259
 size = Vector2(20, 12.5648)
 
 [node name="enemy_simple" type="CharacterBody2D" groups=["enemy"]]
-collision_layer = 0
-collision_mask = 9
+collision_layer = 4
 script = ExtResource("1_le13m")
 SPEED = 150.0
+
+[node name="direction" type="Node2D" parent="."]
+
+[node name="key" type="Sprite2D" parent="direction"]
+visible = false
+position = Vector2(40, -22)
+scale = Vector2(0.0438459, 0.0438459)
+texture = ExtResource("2_4uugp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.33, 0.33, 1)
