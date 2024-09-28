@@ -24,7 +24,7 @@ public partial class Player : CharacterBody2D, ItemPicker
 
     private Node2D directionNode;
 
-    private Sprite2D key;
+    public Sprite2D DoorKey { get; set; }
 
     public override void _Ready()
     {
@@ -51,14 +51,20 @@ public partial class Player : CharacterBody2D, ItemPicker
     {
         if (isDead)
         {
-            var world = GD.Load<PackedScene>("res://scenes/world.tscn");
-            var root = GetTree().GetRoot();
-            foreach (var child in root.GetChildren())
-            {
-                root.RemoveChild(child);
-            }
-            root.AddChild(world.Instantiate<Node2D>());
+            reloadFullScene();
         }
+    }
+
+    private void reloadFullScene()
+    {
+        var world = GD.Load<PackedScene>("res://scenes/world.tscn");
+        var root = GetTree().GetRoot();
+        foreach (var child in root.GetChildren())
+        {
+            root.RemoveChild(child);
+        }
+
+        root.AddChild(world.Instantiate<Node2D>());
     }
 
     public override void _Input(InputEvent _event)
@@ -67,6 +73,11 @@ public partial class Player : CharacterBody2D, ItemPicker
         if (_event.IsActionPressed("ui_down"))
         {
             Position = Position with {Y = Position.Y + 1};
+        }
+
+        if (_event.IsActionPressed("reload"))
+        {
+            reloadFullScene();
         }
     }
 
@@ -175,7 +186,7 @@ public partial class Player : CharacterBody2D, ItemPicker
     {
         GD.Print("Go to ground mode");
         playerMode = PlayerMode.GROUND;
-        key?.Show();
+        DoorKey?.Show();
     }
 
     private void toLadderMode()
@@ -183,7 +194,7 @@ public partial class Player : CharacterBody2D, ItemPicker
         GD.Print("Go to ladder mode");
         playerMode = PlayerMode.LADDER;
         Velocity = Vector2.Zero;
-        key?.Hide();
+        DoorKey?.Hide();
     }
 
     public void OnEnemyReact(EnemyEvent enemyEvent)
@@ -211,10 +222,10 @@ public partial class Player : CharacterBody2D, ItemPicker
 
     public bool TryToPick(ItemEnum itemEnum)
     {
-        if (itemEnum == ItemEnum.Key && key == null)
+        if (itemEnum == ItemEnum.Key && DoorKey == null)
         {
-            key = GetNode<Sprite2D>("direction/key");
-            key.Show();
+            DoorKey = GetNode<Sprite2D>("direction/key");
+            DoorKey.Show();
             return true;
         }
 
