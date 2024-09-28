@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://5bobworwik70"]
+[gd_scene load_steps=5 format=3 uid="uid://5bobworwik70"]
 
 [ext_resource type="Script" path="res://scripts/Player.cs" id="1_23i2h"]
 [ext_resource type="Texture2D" uid="uid://baql6qn040vl" path="res://sprites/icon.svg" id="1_w7hvy"]
+[ext_resource type="Texture2D" uid="uid://d1xlx4638oyq7" path="res://sprites/key.png" id="2_rduud"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b8re8"]
 radius = 30.0
@@ -10,6 +11,14 @@ height = 128.0
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_23i2h")
+
+[node name="direction" type="Node2D" parent="."]
+
+[node name="key" type="Sprite2D" parent="direction"]
+visible = false
+position = Vector2(44, -40)
+scale = Vector2(0.0982703, 0.0982703)
+texture = ExtResource("2_rduud")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -65)

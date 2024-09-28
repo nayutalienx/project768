@@ -1,7 +1,8 @@
+using System.Collections.Generic;
 using Godot;
-using System;
+using project768.scripts.item;
 
-public partial class Player : CharacterBody2D
+public partial class Player : CharacterBody2D, ItemPicker
 {
     enum PlayerMode
     {
@@ -13,14 +14,22 @@ public partial class Player : CharacterBody2D
 
     [Export] public float SPEED = 300.0f;
 
+    [Export] public float PUSH_FORCE = 80.0f;
+
     private PlayerMode playerMode = PlayerMode.GROUND;
 
     private bool isDead = false;
 
     private LadderEvent ladderEvent = new LadderEvent();
 
+    private Node2D directionNode;
+
+    private Sprite2D key;
+
     public override void _Ready()
     {
+        directionNode = GetNode<Node2D>("direction");
+
         var enemies = GetTree().GetNodesInGroup("enemy");
 
         foreach (var enemy in enemies)
@@ -42,13 +51,20 @@ public partial class Player : CharacterBody2D
     {
         if (isDead)
         {
-            GetTree().ReloadCurrentScene();
+            var world = GD.Load<PackedScene>("res://scenes/world.tscn");
+            var root = GetTree().GetRoot();
+            foreach (var child in root.GetChildren())
+            {
+                root.RemoveChild(child);
+            }
+            root.AddChild(world.Instantiate<Node2D>());
         }
     }
 
-    public override void _Input(InputEvent @event)
+    public override void _Input(InputEvent _event)
     {
-        if (@event.IsActionPressed("ui_down"))
+        // snap off one-way-collission
+        if (_event.IsActionPressed("ui_down"))
         {
             Position = Position with {Y = Position.Y + 1};
         }
@@ -64,6 +80,17 @@ public partial class Player : CharacterBody2D
             case PlayerMode.LADDER:
                 MoveOnLadder(delta);
                 break;
+        }
+
+        // Player impulse to rigid bodies
+        for (int i = 0; i < GetSlideCollisionCount(); i++)
+        {
+            KinematicCollision2D c = GetSlideCollision(i);
+            if (c.GetCollider() is RigidBody2D)
+            {
+                ((RigidBody2D) c.GetCollider()).ApplyCentralImpulse(
+                    -c.GetNormal() * PUSH_FORCE);
+            }
         }
     }
 
@@ -92,6 +119,8 @@ public partial class Player : CharacterBody2D
         {
             Velocity = Velocity with {Y = direction * SPEED};
         }
+
+        Position = Position with {X = ladderEvent.Position.X};
 
         MoveAndSlide();
     }
@@ -129,6 +158,14 @@ public partial class Player : CharacterBody2D
         else
         {
             Velocity = Velocity with {X = direction * SPEED};
+            if (direction > 0)
+            {
+                directionNode.Scale = directionNode.Scale with {X = 1};
+            }
+            else
+            {
+                directionNode.Scale = directionNode.Scale with {X = -1};
+            }
         }
 
         MoveAndSlide();
@@ -138,6 +175,7 @@ public partial class Player : CharacterBody2D
     {
         GD.Print("Go to ground mode");
         playerMode = PlayerMode.GROUND;
+        key?.Show();
     }
 
     private void toLadderMode()
@@ -145,7 +183,7 @@ public partial class Player : CharacterBody2D
         GD.Print("Go to ladder mode");
         playerMode = PlayerMode.LADDER;
         Velocity = Vector2.Zero;
-        Position = Position with {X = ladderEvent.Position.X};
+        key?.Hide();
     }
 
     public void OnEnemyReact(EnemyEvent enemyEvent)
@@ -169,5 +207,17 @@ public partial class Player : CharacterBody2D
         {
             toGroundMode();
         }
+    }
+
+    public bool TryToPick(ItemEnum itemEnum)
+    {
+        if (itemEnum == ItemEnum.Key && key == null)
+        {
+            key = GetNode<Sprite2D>("direction/key");
+            key.Show();
+            return true;
+        }
+
+        return false;
     }
 }
