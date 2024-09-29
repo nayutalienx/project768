@@ -16,7 +16,6 @@ size = Vector2(20, 12.5648)
 [node name="enemy_simple" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 4
 script = ExtResource("1_le13m")
-SPEED = 150.0
 
 [node name="direction" type="Node2D" parent="."]
 

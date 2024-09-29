@@ -3,11 +3,6 @@ using System;
 
 public partial class Ladder : Node2D
 {
-    [Signal]
-    public delegate void LadderInteractEventHandler(
-        LadderEvent ladderEvent
-    );
-
     public override void _Ready()
     {
         Area2D moveLadderArea = GetNode<Area2D>("move_ladder_area");
@@ -17,30 +12,19 @@ public partial class Ladder : Node2D
 
     private void MoveLadderArea_BodyEntered(Node2D body)
     {
-        if (body.IsInGroup("player"))
+        if (body is Player player)
         {
-            EmitSignal(
-                SignalName.LadderInteract,
-                new LadderEvent
-                {
-                    NearLadder = true,
-                    Position = Position,
-                });
+            player.Ladder = Position;
         }
     }
 
 
     private void MoveLadderArea_BodyExited(Node2D body)
     {
-        if (body.IsInGroup("player"))
+        if (body is Player player)
         {
-            EmitSignal(
-                SignalName.LadderInteract,
-                new LadderEvent
-                {
-                    NearLadder = false,
-                    Position = Position,
-                });
+            player.ToGroundMode();
+            player.Ladder = Vector2.Zero;
         }
     }
 }
