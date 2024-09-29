@@ -10,17 +10,17 @@ public partial class Player : CharacterBody2D, ItemPicker
         LADDER
     }
 
-    [Export] public float JUMP_VELOCITY = -400.0f;
+    [Export] public float JumpVelocity = -400.0f;
 
-    [Export] public float SPEED = 300.0f;
+    [Export] public float MoveSpeed = 300.0f;
 
-    [Export] public float PUSH_FORCE = 80.0f;
+    [Export] public float PushForce = 80.0f;
 
     private PlayerMode playerMode = PlayerMode.GROUND;
 
-    private bool isDead = false;
+    public bool IsDead { get; set; }
 
-    private LadderEvent ladderEvent = new LadderEvent();
+    public Vector2 Ladder { get; set; }
 
     private Node2D directionNode;
 
@@ -29,27 +29,12 @@ public partial class Player : CharacterBody2D, ItemPicker
     public override void _Ready()
     {
         directionNode = GetNode<Node2D>("direction");
-
-        var enemies = GetTree().GetNodesInGroup("enemy");
-
-        foreach (var enemy in enemies)
-        {
-            ((Enemy) enemy).EnemyInteract += OnEnemyReact;
-        }
-
-        var ladders = GetTree().GetNodesInGroup("ladder");
-
-        foreach (var ladder in ladders)
-        {
-            ((Ladder) ladder).LadderInteract += OnLadderReact;
-            ;
-        }
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
-        if (isDead)
+        if (IsDead)
         {
             reloadFullScene();
         }
@@ -100,7 +85,7 @@ public partial class Player : CharacterBody2D, ItemPicker
             if (c.GetCollider() is RigidBody2D)
             {
                 ((RigidBody2D) c.GetCollider()).ApplyCentralImpulse(
-                    -c.GetNormal() * PUSH_FORCE);
+                    -c.GetNormal() * PushForce);
             }
         }
     }
@@ -113,7 +98,7 @@ public partial class Player : CharacterBody2D, ItemPicker
             Input.IsActionJustPressed("ui_accept")
         )
         {
-            toGroundMode();
+            ToGroundMode();
             Velocity = Vector2.Zero;
             return;
         }
@@ -123,15 +108,15 @@ public partial class Player : CharacterBody2D, ItemPicker
         if (direction == 0)
         {
             Velocity = Velocity.MoveToward(
-                Velocity with {Y = 0}, SPEED
+                Velocity with {Y = 0}, MoveSpeed
             );
         }
         else
         {
-            Velocity = Velocity with {Y = direction * SPEED};
+            Velocity = Velocity with {Y = direction * MoveSpeed};
         }
 
-        Position = Position with {X = ladderEvent.Position.X};
+        Position = Position with {X = Ladder.X};
 
         MoveAndSlide();
     }
@@ -139,12 +124,13 @@ public partial class Player : CharacterBody2D, ItemPicker
     public void MoveOnGround(double delta)
     {
         if ((
-                ladderEvent.NearLadder &&
-                (Input.IsActionJustPressed("ui_down") || Input.IsActionJustPressed("ui_up"))
+                (Input.IsActionJustPressed("ui_down") ||
+                 Input.IsActionJustPressed("ui_up"))
+                && Ladder != Vector2.Zero
             )
            )
         {
-            toLadderMode();
+            ToLadderMode();
             return;
         }
 
@@ -155,7 +141,7 @@ public partial class Player : CharacterBody2D, ItemPicker
 
         if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
         {
-            Velocity = Velocity with {Y = JUMP_VELOCITY};
+            Velocity = Velocity with {Y = JumpVelocity};
         }
 
         float direction = Input.GetAxis("ui_left", "ui_right");
@@ -163,12 +149,12 @@ public partial class Player : CharacterBody2D, ItemPicker
         if (direction == 0)
         {
             Velocity = Velocity.MoveToward(
-                Velocity with {X = 0}, SPEED
+                Velocity with {X = 0}, MoveSpeed
             );
         }
         else
         {
-            Velocity = Velocity with {X = direction * SPEED};
+            Velocity = Velocity with {X = direction * MoveSpeed};
             if (direction > 0)
             {
                 directionNode.Scale = directionNode.Scale with {X = 1};
@@ -182,42 +168,19 @@ public partial class Player : CharacterBody2D, ItemPicker
         MoveAndSlide();
     }
 
-    private void toGroundMode()
+    public void ToGroundMode()
     {
         GD.Print("Go to ground mode");
         playerMode = PlayerMode.GROUND;
         DoorKey?.Show();
     }
 
-    private void toLadderMode()
+    public void ToLadderMode()
     {
         GD.Print("Go to ladder mode");
         playerMode = PlayerMode.LADDER;
         Velocity = Vector2.Zero;
         DoorKey?.Hide();
-    }
-
-    public void OnEnemyReact(EnemyEvent enemyEvent)
-    {
-        if (enemyEvent.DiedFromHeadJump)
-        {
-            Velocity = Velocity with {Y = JUMP_VELOCITY};
-        }
-
-        if (enemyEvent.KillPlayer)
-        {
-            isDead = true;
-        }
-    }
-
-    public void OnLadderReact(LadderEvent ladderEvent)
-    {
-        GD.Print($"near ladder {ladderEvent.NearLadder}");
-        this.ladderEvent = ladderEvent;
-        if (!ladderEvent.NearLadder)
-        {
-            toGroundMode();
-        }
     }
 
     public bool TryToPick(ItemEnum itemEnum)

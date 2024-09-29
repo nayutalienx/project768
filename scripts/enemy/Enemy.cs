@@ -3,21 +3,14 @@ using project768.scripts.item;
 
 public partial class Enemy : CharacterBody2D, ItemPicker
 {
-    [Signal]
-    public delegate void EnemyInteractEventHandler(
-        EnemyEvent ladderEvent
-    );
+    [Export] public float MoveSpeed = 150.0f;
 
-    public float JUMP_VELOCITY = -400.0f;
-
-    [Export] public float SPEED = 300.0f;
-
-    [Export] public float PUSH_FORCE = 80.0f;
+    [Export] public float PushForce = 80.0f;
 
     private RayCast2D fallRaycastLeft;
     private RayCast2D fallRaycastRight;
 
-    private bool isDead;
+    public bool IsDead { get; set; }
     private int enemyDirection = 1;
     private bool lockDirection = false;
     private Timer lockDirectionTimer;
@@ -42,29 +35,24 @@ public partial class Enemy : CharacterBody2D, ItemPicker
 
     public void EnemyAttackBodyEntered(Node2D body)
     {
-        EmitSignal(
-            SignalName.EnemyInteract,
-            new EnemyEvent
-            {
-                KillPlayer = true
-            });
+        if (body is Player player)
+        {
+            player.IsDead = true;
+        }
     }
 
     public void EnemyHeadBodyEntered(Node2D body)
     {
-        EmitSignal(
-            SignalName.EnemyInteract,
-            new EnemyEvent
-            {
-                DiedFromHeadJump = true
-            });
-
-        isDead = true;
+        if (body is Player player)
+        {
+            player.Velocity = player.Velocity with {Y = player.JumpVelocity};
+            IsDead = true;
+        }
     }
 
     public override void _Process(double delta)
     {
-        if (isDead)
+        if (IsDead)
         {
             if (key != null && key.IsVisible())
             {
@@ -74,13 +62,14 @@ public partial class Enemy : CharacterBody2D, ItemPicker
                 GD.Print($"Instantiated key scene");
                 GetTree().GetRoot().AddChild(rb);
             }
+
             QueueFree();
         }
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        if (isDead)
+        if (IsDead)
         {
             return;
         }
@@ -105,7 +94,7 @@ public partial class Enemy : CharacterBody2D, ItemPicker
             }
         }
 
-        Velocity = Velocity with {X = enemyDirection * SPEED};
+        Velocity = Velocity with {X = enemyDirection * MoveSpeed};
 
         MoveAndSlide();
 
@@ -116,7 +105,7 @@ public partial class Enemy : CharacterBody2D, ItemPicker
             if (c.GetCollider() is RigidBody2D)
             {
                 ((RigidBody2D) c.GetCollider()).ApplyCentralImpulse(
-                    -c.GetNormal() * PUSH_FORCE);
+                    -c.GetNormal() * PushForce);
             }
         }
     }

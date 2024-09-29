@@ -19,7 +19,6 @@ texture = ExtResource("1_ledon")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.56123
-scale = Vector2(1, 1)
 shape = SubResource("CapsuleShape2D_q1y3a")
 
 [node name="picker" type="Area2D" parent="."]
