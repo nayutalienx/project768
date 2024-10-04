@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using project768.scripts.player;
 
 public partial class Spike : Line2D
 {
@@ -25,13 +25,13 @@ public partial class Spike : Line2D
         {
             if (body is Player player)
             {
-                player.IsDead = true;
+                player.EnteredSpikeArea();
                 return;
             }
 
             if (body is Enemy enemy)
             {
-                enemy.IsDead = true;
+                enemy.EnteredSpikeArea();
             }
         };
     }
