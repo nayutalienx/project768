@@ -10,6 +10,7 @@ public struct PlayerRewindData
     public Vector2 Ladder { get; set; }
     public bool Visible { get; set; }
     public Player.State CurrentState { get; set; }
+    public DoorKeyPickerContextRewindData DoorKeyCtx { get; set; }
 
     public PlayerRewindData(Player player)
     {
@@ -18,6 +19,7 @@ public struct PlayerRewindData
         CurrentState = player.CurrentState.StateEnum;
         Ladder = player.Ladder;
         Visible = player.Visible;
+        DoorKeyCtx = new DoorKeyPickerContextRewindData(player.DoorKeyPickerContext);
     }
 
     public void ApplyData(Player player)
@@ -27,5 +29,6 @@ public struct PlayerRewindData
         player.RewindState = (int) CurrentState;
         player.Ladder = Ladder;
         player.Visible = Visible;
+        DoorKeyCtx.ApplyData(player.DoorKeyPickerContext);
     }
 }

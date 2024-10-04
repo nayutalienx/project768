@@ -6,7 +6,7 @@ namespace project768.scripts.key;
 
 public class RewindState : State<Key, Key.State>
 {
-    private Tuple<uint, uint> origCollission;
+    private Tuple<uint, uint> pickerAreaCollission;
 
     public RewindState(Key entity, Key.State stateEnum) : base(entity, stateEnum)
     {
@@ -14,15 +14,13 @@ public class RewindState : State<Key, Key.State>
 
     public override void EnterState(Key.State prevState)
     {
-        //origCollission = DisableCollision(Entity);
+        pickerAreaCollission = DisableCollision(Entity.PickerArea);
         Entity.SetDeferred(nameof(Entity.Freeze), true);
     }
 
     public override void ExitState(Key.State prevState)
     {
-        Entity.SetLinearVelocity(Vector2.Zero);
-        Entity.SetAngularVelocity(0.0f);
-        //EnableCollision(Entity, origCollission);
+        EnableCollision(Entity.PickerArea, pickerAreaCollission);
         Entity.SetDeferred(nameof(Entity.Freeze), false);
     }
 }

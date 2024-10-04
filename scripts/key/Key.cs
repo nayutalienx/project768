@@ -21,6 +21,7 @@ public partial class Key :
     public State<Key, State>[] States { get; set; }
     public StateChanger<Key, State> StateChanger { get; set; }
     public DoorKeyPicker Picker { get; set; }
+    public Area2D PickerArea { get; set; }
 
     public override void _Ready()
     {
@@ -33,8 +34,8 @@ public partial class Key :
         StateChanger = new StateChanger<Key, State>(this);
         StateChanger.ChangeState(State.Unpicked);
 
-        var pickerArea = GetNode<Area2D>("picker");
-        pickerArea.BodyEntered += PickerArea_BodyEntered;
+        PickerArea = GetNode<Area2D>("picker");
+        PickerArea.BodyEntered += PickerArea_BodyEntered;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -44,7 +45,7 @@ public partial class Key :
 
     private void PickerArea_BodyEntered(Node2D body)
     {
-        if (Picker != null) return;
+        if (CurrentState.StateEnum != State.Unpicked) return;
 
         if (body is DoorKeyPicker itemPicker && !itemPicker.DoorKeyPickerContext.HasKey)
         {
