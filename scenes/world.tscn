@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://u730p1tggvfb"]
+[gd_scene load_steps=15 format=4 uid="uid://u730p1tggvfb"]
 
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/ladder.tscn" id="1_e01dh"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/player.tscn" id="1_vljbg"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dkn6lvqu0x1vd" path="res://scenes/key_rb.tscn" id="5_5vd7t"]
 [ext_resource type="PackedScene" uid="uid://bb6bemfvj0nt3" path="res://scenes/locked_door.tscn" id="5_17l2d"]
 [ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/spikes.tscn" id="7_efkx0"]
+[ext_resource type="Script" path="res://scripts/rewind/RewindPlayer.cs" id="9_kdnbs"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a5xc7"]
 texture = ExtResource("4_yv7j6")
@@ -102,116 +103,124 @@ _data = {
 
 [node name="World" type="Node2D"]
 
-[node name="ladders" type="Node2D" parent="."]
+[node name="second_world" type="Node2D" parent="."]
+
+[node name="ladders" type="Node2D" parent="second_world"]
 z_index = -10
 
-[node name="ladder" parent="ladders" instance=ExtResource("1_e01dh")]
+[node name="ladder" parent="second_world/ladders" instance=ExtResource("1_e01dh")]
 position = Vector2(-140, 137)
 
-[node name="ladder3" parent="ladders" instance=ExtResource("1_e01dh")]
+[node name="ladder3" parent="second_world/ladders" instance=ExtResource("1_e01dh")]
 position = Vector2(1174, -162)
 
-[node name="ladder4" parent="ladders" instance=ExtResource("1_e01dh")]
+[node name="ladder4" parent="second_world/ladders" instance=ExtResource("1_e01dh")]
 position = Vector2(1728, -162)
 
-[node name="ladder5" parent="ladders" instance=ExtResource("1_e01dh")]
+[node name="ladder5" parent="second_world/ladders" instance=ExtResource("1_e01dh")]
 position = Vector2(2194, 267)
 
-[node name="ladder2" parent="ladders" instance=ExtResource("1_e01dh")]
+[node name="ladder2" parent="second_world/ladders" instance=ExtResource("1_e01dh")]
 position = Vector2(339, 169)
 
-[node name="locked_doors" type="Node2D" parent="."]
+[node name="locked_doors" type="Node2D" parent="second_world"]
 
-[node name="locked_door" parent="locked_doors" instance=ExtResource("5_17l2d")]
+[node name="locked_door" parent="second_world/locked_doors" instance=ExtResource("5_17l2d")]
 position = Vector2(67, 360)
 
-[node name="locked_door2" parent="locked_doors" instance=ExtResource("5_17l2d")]
+[node name="locked_door2" parent="second_world/locked_doors" instance=ExtResource("5_17l2d")]
 position = Vector2(1286, 474)
 
-[node name="locked_door3" parent="locked_doors" instance=ExtResource("5_17l2d")]
+[node name="locked_door3" parent="second_world/locked_doors" instance=ExtResource("5_17l2d")]
 position = Vector2(880, -21)
 
-[node name="tiles" type="Node2D" parent="."]
+[node name="tiles" type="Node2D" parent="second_world"]
 z_index = -5
 
-[node name="TileMapLayer" type="TileMapLayer" parent="tiles"]
+[node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(-129, 329)
 scale = Vector2(0.5, 0.5)
 tile_map_data = PackedByteArray("AAD+/wYABAADAEQAAAAoAPT/BAADAEQAAAATAAkABAADADUAAABOABAABAADADUAAABrABMABAADAEQAAACBABcABAADAEQAAACPABUABAADAEQAAACZABEABAADAEQAAAAsAA0ABAADAEQAAAA6AAgABAADAEQAAABAAPH/BAADADUAAABAAND/BAADADUAAABiAND/BAADADUAAAB/AOv/BAADADUAAAAOAOX/BAADAEQAAAA+AAwABAADAEQAAABiAO3/BAADAEQAAAAGAA0ABAADADUAAAAbAA0ABAADADUAAAD5/woABAADADUAAAANABEABAADADUAAAA=")
 tile_set = SubResource("TileSet_4035l")
 
-[node name="one_way_platforms" type="Node2D" parent="."]
+[node name="one_way_platforms" type="Node2D" parent="second_world"]
 z_index = -1
 
-[node name="one_way_platform" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+[node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("2_7en46")]
 position = Vector2(-188, -107)
 
-[node name="one_way_platform2" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+[node name="one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("2_7en46")]
 position = Vector2(389, -108)
 
-[node name="one_way_platform3" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+[node name="one_way_platform3" parent="second_world/one_way_platforms" instance=ExtResource("2_7en46")]
 position = Vector2(1228, 125)
 
-[node name="one_way_platform4" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+[node name="one_way_platform4" parent="second_world/one_way_platforms" instance=ExtResource("2_7en46")]
 position = Vector2(1732, 139)
 
-[node name="one_way_platform5" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+[node name="one_way_platform5" parent="second_world/one_way_platforms" instance=ExtResource("2_7en46")]
 position = Vector2(2261, -17)
 
-[node name="one_way_platform6" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+[node name="one_way_platform6" parent="second_world/one_way_platforms" instance=ExtResource("2_7en46")]
 position = Vector2(1796, -448)
 
-[node name="one_way_platform7" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+[node name="one_way_platform7" parent="second_world/one_way_platforms" instance=ExtResource("2_7en46")]
 position = Vector2(1178, -451)
 
-[node name="one_way_platform8" parent="one_way_platforms" instance=ExtResource("2_7en46")]
+[node name="one_way_platform8" parent="second_world/one_way_platforms" instance=ExtResource("2_7en46")]
 position = Vector2(843, -203)
 animationName = "Platform1"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="one_way_platforms/one_way_platform8"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="second_world/one_way_platforms/one_way_platform8"]
 libraries = {
 "": SubResource("AnimationLibrary_84wdo")
 }
 
-[node name="enemies" type="Node2D" parent="."]
+[node name="enemies" type="Node2D" parent="second_world"]
 
-[node name="enemy_simple" parent="enemies" instance=ExtResource("3_kssy4")]
+[node name="enemy_simple" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
 position = Vector2(1159, 506)
 
-[node name="enemy_simple3" parent="enemies" instance=ExtResource("3_kssy4")]
+[node name="enemy_simple3" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
 position = Vector2(1892, -55)
 
-[node name="enemy_simple4" parent="enemies" instance=ExtResource("3_kssy4")]
+[node name="enemy_simple4" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
 position = Vector2(897, -485)
 
-[node name="enemy_simple5" parent="enemies" instance=ExtResource("3_kssy4")]
+[node name="enemy_simple5" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
 position = Vector2(1529, -486)
 
-[node name="enemy_simple2" parent="enemies" instance=ExtResource("3_kssy4")]
+[node name="enemy_simple2" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
 position = Vector2(1597, 577)
 
-[node name="enemy_simple6" parent="enemies" instance=ExtResource("3_kssy4")]
+[node name="enemy_simple6" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
 position = Vector2(-667, 529)
 
-[node name="keys" type="Node2D" parent="."]
+[node name="keys" type="Node2D" parent="second_world"]
 
-[node name="key" parent="keys" instance=ExtResource("5_5vd7t")]
+[node name="key" parent="second_world/keys" instance=ExtResource("5_5vd7t")]
 position = Vector2(753, 402)
 
-[node name="key2" parent="keys" instance=ExtResource("5_5vd7t")]
+[node name="key2" parent="second_world/keys" instance=ExtResource("5_5vd7t")]
 position = Vector2(1061, 505)
 
-[node name="key3" parent="keys" instance=ExtResource("5_5vd7t")]
+[node name="key3" parent="second_world/keys" instance=ExtResource("5_5vd7t")]
 position = Vector2(188, 405)
 
-[node name="key4" parent="keys" instance=ExtResource("5_5vd7t")]
+[node name="key4" parent="second_world/keys" instance=ExtResource("5_5vd7t")]
 position = Vector2(1297, -537)
 
-[node name="spikes" type="Node2D" parent="."]
+[node name="spikes" type="Node2D" parent="second_world"]
 
-[node name="Spike" parent="spikes" instance=ExtResource("7_efkx0")]
+[node name="Spike" parent="second_world/spikes" instance=ExtResource("7_efkx0")]
 position = Vector2(-889, 803)
 points = PackedVector2Array(0, -0.0668298, 255.624, 1.40342)
 
 [node name="Player" parent="." instance=ExtResource("1_vljbg")]
 position = Vector2(495, 433)
+
+[node name="RewindPlayer" type="Node2D" parent="." node_paths=PackedStringArray("Player", "EnemyArrayNode", "KeyArrayNode")]
+script = ExtResource("9_kdnbs")
+Player = NodePath("../Player")
+EnemyArrayNode = NodePath("../second_world/enemies")
+KeyArrayNode = NodePath("../second_world/keys")

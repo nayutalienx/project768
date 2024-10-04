@@ -18,11 +18,9 @@ public partial class LockedDoor : AnimatableBody2D
 
     private void OnBodyEntered(Node2D body)
     {
-        if (body is Player player && player.DoorKey != null)
+        if (body is project768.scripts.player.Player player)
         {
             animationPlayer.Play("DoorOpen");
-            player.DoorKey.Hide();
-            player.DoorKey = null;
         }
     }
 
