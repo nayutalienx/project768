@@ -1,18 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Godot;
+using project768.scripts.player;
 using project768.scripts.rewind.entity;
 
 namespace project768.scripts.rewind;
 
 public partial class RewindPlayer : Node2D
 {
-    [Export] public player.Player Player;
-    [Export] public Node2D EnemyArrayNode;
-    [Export] public Node2D KeyArrayNode;
-
-    public Enemy[] Enemies;
-    public Key[] Keys;
+    public Player Player { get; set; }
+    public Enemy[] Enemies { get; set; }
+    public Key[] Keys { get; set; }
+    public LockedDoor[] LockedDoors { get; set; }
 
     public List<Rewindable> Rewindables = new();
 
@@ -22,43 +22,35 @@ public partial class RewindPlayer : Node2D
     public bool IsRewinding { get; set; }
     public bool Paused { get; set; }
 
+
     public override void _Ready()
     {
-        Rewindables.Add(Player);
-        
-        List<Enemy> enemiesList = new();
-        foreach (var child in EnemyArrayNode.GetChildren())
+        Player = FindAndAddRewindables("player")[0] as Player;
+        Enemies = FindAndAddRewindables("enemy").ConvertAll(o => o as Enemy).ToArray();
+        Keys = FindAndAddRewindables("key").ConvertAll(o => o as Key).ToArray();
+        LockedDoors = FindAndAddRewindables("door").ConvertAll(o => o as LockedDoor).ToArray();
+    }
+
+    private List<Rewindable> FindAndAddRewindables(
+        StringName group
+    )
+    {
+        List<Rewindable> list = new();
+        foreach (var child in GetTree().GetNodesInGroup(group))
         {
-            enemiesList.Add(child as Enemy);
-            Rewindables.Add(child as Enemy);
+            Rewindable rewindable = (Rewindable) child;
+            if (rewindable == null)
+            {
+                GD.Print($"ERROR: object is not rewindable {group}");
+                throw new Exception("Object is not rewindable");
+            }
+
+            list.Add(rewindable);
         }
 
-        Enemies = enemiesList.ToArray();
-
-        List<Key> keysList = new();
-        foreach (var child in KeyArrayNode.GetChildren())
-        {
-            keysList.Add(child as Key);
-            Rewindables.Add(child as Key);
-        }
-
-        Keys = keysList.ToArray();
-
-
-        int enemyBytes = Marshal.SizeOf(typeof(EnemyRewindData));
-        int playerBytes = Marshal.SizeOf(typeof(PlayerRewindData));
-        int worldBytes = Marshal.SizeOf(typeof(WorldRewindData));
-
-        GD.Print($"enemy size: {enemyBytes} bytes");
-        GD.Print($"player size: {playerBytes} bytes");
-        GD.Print($"world size: {worldBytes} bytes");
-
-        int enemySumBytesPerFrame = enemyBytes * Enemies.Length;
-        GD.Print($"all enemy size per frame: {enemySumBytesPerFrame} bytes");
-
-        int fullRewindBufferSize = (playerBytes + enemySumBytesPerFrame + worldBytes) * MaxStates;
-        GD.Print(
-            $"full rewind buffer size: {fullRewindBufferSize} bytes. {fullRewindBufferSize / 1024.0} kylobytes. {fullRewindBufferSize / 1024.0 / 1024.0} megabytes.");
+        Rewindables.AddRange(list);
+        GD.Print($"Found {group} {list.Count} rewindables. Rewindables len: {Rewindables.Count}");
+        return list;
     }
 
     public override void _Input(InputEvent _event)
@@ -86,7 +78,7 @@ public partial class RewindPlayer : Node2D
         }
         else
         {
-            RecordState(new WorldRewindData(Player, Enemies, Keys));
+            RecordState(new WorldRewindData(Player, Enemies, Keys, LockedDoors));
         }
     }
 
@@ -96,7 +88,7 @@ public partial class RewindPlayer : Node2D
         {
             var lastState = _states[_states.Count - 1];
             _states.RemoveAt(_states.Count - 1);
-            lastState.ApplyData(Player, Enemies, Keys);
+            lastState.ApplyData(Player, Enemies, Keys, LockedDoors);
         }
         else
         {

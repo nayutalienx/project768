@@ -179,7 +179,7 @@ libraries = {
 [node name="enemies" type="Node2D" parent="second_world"]
 
 [node name="enemy_simple" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
-position = Vector2(1159, 506)
+position = Vector2(1159, 507)
 
 [node name="enemy_simple3" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
 position = Vector2(1892, -55)
@@ -219,8 +219,5 @@ points = PackedVector2Array(0, -0.0668298, 255.624, 1.40342)
 [node name="Player" parent="." instance=ExtResource("1_vljbg")]
 position = Vector2(495, 433)
 
-[node name="RewindPlayer" type="Node2D" parent="." node_paths=PackedStringArray("Player", "EnemyArrayNode", "KeyArrayNode")]
+[node name="RewindPlayer" type="Node2D" parent="."]
 script = ExtResource("9_kdnbs")
-Player = NodePath("../Player")
-EnemyArrayNode = NodePath("../second_world/enemies")
-KeyArrayNode = NodePath("../second_world/keys")
