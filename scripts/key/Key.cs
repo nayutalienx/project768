@@ -20,6 +20,7 @@ public partial class Key :
     public State<Key, State> CurrentState { get; set; }
     public State<Key, State>[] States { get; set; }
     public StateChanger<Key, State> StateChanger { get; set; }
+    public ulong PickerInstanceId { get; set; } = 0;
     public DoorKeyPicker Picker { get; set; }
     public Area2D PickerArea { get; set; }
 
@@ -49,6 +50,7 @@ public partial class Key :
 
         if (body is DoorKeyPicker itemPicker && !itemPicker.DoorKeyPickerContext.HasKey)
         {
+            PickerInstanceId = body.GetInstanceId();
             Picker = itemPicker;
             Picker.DoorKeyPickerContext.HasKey = true;
             StateChanger.ChangeState(State.Picked);
@@ -62,6 +64,11 @@ public partial class Key :
 
     public void RewindFinished()
     {
+        if (PickerInstanceId != 0)
+        {
+            Picker = InstanceFromId(PickerInstanceId) as DoorKeyPicker;
+        }
+
         StateChanger.ChangeState((State) RewindState);
     }
 }

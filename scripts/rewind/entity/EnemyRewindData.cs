@@ -8,6 +8,7 @@ public struct EnemyRewindData
     public Vector2 Velocity { get; set; }
     public bool Visible { get; set; }
     public Enemy.State CurrentState { get; set; }
+    public DoorKeyPickerContextRewindData DoorKeyCtx { get; set; }
 
     public EnemyRewindData(Enemy enemy)
     {
@@ -15,6 +16,7 @@ public struct EnemyRewindData
         Velocity = enemy.Velocity;
         CurrentState = enemy.CurrentState.StateEnum;
         Visible = enemy.Visible;
+        DoorKeyCtx = new DoorKeyPickerContextRewindData(enemy.DoorKeyPickerContext);
     }
 
     public void ApplyData(Enemy enemy)
@@ -23,5 +25,6 @@ public struct EnemyRewindData
         enemy.Position = Position;
         enemy.RewindState = (int) CurrentState;
         enemy.Visible = Visible;
+        DoorKeyCtx.ApplyData(enemy.DoorKeyPickerContext);
     }
 }
