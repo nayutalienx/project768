@@ -9,7 +9,7 @@ height = 101.024
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_owvdi"]
 
-[node name="key" type="RigidBody2D"]
+[node name="key" type="RigidBody2D" groups=["key"]]
 collision_layer = 0
 script = ExtResource("1_qydde")
 
