@@ -13,6 +13,7 @@ public partial class Key :
     {
         Unpicked,
         Picked,
+        Used,
         Rewind
     }
 
@@ -30,6 +31,7 @@ public partial class Key :
         {
             new UnpickedState(this, State.Unpicked),
             new PickedState(this, State.Picked),
+            new UsedState(this, State.Used),
             new RewindState(this, State.Rewind),
         };
         StateChanger = new StateChanger<Key, State>(this);

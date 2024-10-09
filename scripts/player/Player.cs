@@ -126,4 +126,10 @@ public partial class Player :
     {
         Velocity = Velocity with {Y = JumpVelocity};
     }
+
+    public void UnlockedDoor()
+    {
+        DoorKeyPickerContext.HasKey = false;
+        DoorKeyPickerContext.PutEvent(DoorKeyEvent.Used);
+    }
 }

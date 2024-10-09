@@ -19,8 +19,8 @@ public class DeathState : State<Enemy, Enemy.State>
         originalEntityLayerMask = DisableCollision(Entity);
         originalHeadAreaLayerMask = DisableCollision(Entity.HeadArea);
         originalAttackAreaLayerMask = DisableCollision(Entity.AttackArea);
+        Entity.DoorKeyPickerContext.PutEvent(DoorKeyEvent.Dropped);
 
-        Entity.DoorKeyPickerContext.DoorKeyEvent = DoorKeyEvent.Dropped;
         Entity.Visible = false;
         base.EnterState(prevState);
     }
@@ -30,8 +30,6 @@ public class DeathState : State<Enemy, Enemy.State>
         EnableCollision(Entity, originalEntityLayerMask);
         EnableCollision(Entity.HeadArea, originalHeadAreaLayerMask);
         EnableCollision(Entity.AttackArea, originalAttackAreaLayerMask);
-
-        Entity.DoorKeyPickerContext.DoorKeyEvent = DoorKeyEvent.None;
         base.ExitState(prevState);
     }
 }

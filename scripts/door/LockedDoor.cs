@@ -22,13 +22,18 @@ public partial class LockedDoor :
     public StateChanger<LockedDoor, State> StateChanger { get; set; }
 
     public AnimationPlayer AnimationPlayer { get; set; }
-
-    private CollisionShape2D collisionShape2D;
-    private Area2D lockArea;
+    public CollisionShape2D CollisionShape2D { get; set; }
+    public Area2D LockArea { get; set; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        
+        CollisionShape2D = GetNode<CollisionShape2D>("CollisionShape2D");
+        LockArea = GetNode<Area2D>("lock_area");
+        LockArea.BodyEntered += OnBodyEntered;
+
         States = new State<LockedDoor, State>[]
         {
             new LockedState(this, State.Locked),
@@ -37,14 +42,6 @@ public partial class LockedDoor :
         };
         StateChanger = new StateChanger<LockedDoor, State>(this);
         StateChanger.ChangeState(State.Locked);
-
-        AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        collisionShape2D = GetNode<CollisionShape2D>("CollisionShape2D");
-        lockArea = GetNode<Area2D>("lock_area");
-
-        lockArea.BodyEntered += OnBodyEntered;
-
-        //animationPlayer.AnimationFinished += name => collisionShape2D.Disabled = true;
     }
 
     private void OnBodyEntered(Node2D body)
@@ -52,6 +49,7 @@ public partial class LockedDoor :
         if (body is project768.scripts.player.Player player &&
             player.DoorKeyPickerContext.HasKey)
         {
+            player.UnlockedDoor();
             StateChanger.ChangeState(State.Unlocked);
         }
     }
