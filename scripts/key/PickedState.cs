@@ -31,9 +31,19 @@ public class PickedState : State<Key, Key.State>
     public override void PhysicProcess(double delta)
     {
         Entity.Transform = Entity.Picker.Transform;
-        if (Entity.Picker.DoorKeyPickerContext.DoorKeyEvent == DoorKeyEvent.Dropped)
+
+        DoorKeyEvent keyEvent = Entity.Picker.DoorKeyPickerContext.ConsumeEvent();
+
+        if (keyEvent == DoorKeyEvent.Dropped)
         {
             Entity.StateChanger.ChangeState(Key.State.Unpicked);
+            return;
+        }
+
+        if (keyEvent == DoorKeyEvent.Used)
+        {
+            Entity.StateChanger.ChangeState(Key.State.Used);
+            return;
         }
     }
 }

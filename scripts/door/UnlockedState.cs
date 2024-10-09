@@ -10,6 +10,11 @@ public class UnlockedState : State<LockedDoor, LockedDoor.State>
 
     public override void EnterState(LockedDoor.State prevState)
     {
-        Entity.AnimationPlayer.Play("DoorOpen");
+        Entity.CollisionShape2D.SetDeferred("disabled", true);
+        Entity.LockArea.SetDeferred("monitoring", false);
+        if (prevState == LockedDoor.State.Locked)
+        {
+            Entity.AnimationPlayer.Play("DoorOpen");
+        }
     }
 }
