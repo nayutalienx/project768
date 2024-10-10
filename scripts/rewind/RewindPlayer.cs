@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Godot;
 using project768.scripts.player;
@@ -13,8 +14,9 @@ public partial class RewindPlayer : Node2D
     public Enemy[] Enemies { get; set; }
     public Key[] Keys { get; set; }
     public LockedDoor[] LockedDoors { get; set; }
+    public OneWayPlatform[] OneWayPlatforms { get; set; }
 
-    public List<Rewindable> Rewindables = new();
+    public List<IRewindable> Rewindables = new();
 
     private List<WorldRewindData> _states = new List<WorldRewindData>();
     private const int MaxStates = 60 * 60 * 3; // Adjust based on how much time you want to rewind
@@ -29,16 +31,20 @@ public partial class RewindPlayer : Node2D
         Enemies = FindAndAddRewindables("enemy").ConvertAll(o => o as Enemy).ToArray();
         Keys = FindAndAddRewindables("key").ConvertAll(o => o as Key).ToArray();
         LockedDoors = FindAndAddRewindables("door").ConvertAll(o => o as LockedDoor).ToArray();
+        OneWayPlatforms = FindAndAddRewindables("one_way_platform")
+            .ConvertAll(o => o as OneWayPlatform)
+            .Where(platform => platform.AnimationPlayer != null)
+            .ToArray();
     }
 
-    private List<Rewindable> FindAndAddRewindables(
+    private List<IRewindable> FindAndAddRewindables(
         StringName group
     )
     {
-        List<Rewindable> list = new();
+        List<IRewindable> list = new();
         foreach (var child in GetTree().GetNodesInGroup(group))
         {
-            Rewindable rewindable = (Rewindable) child;
+            IRewindable rewindable = (IRewindable) child;
             if (rewindable == null)
             {
                 GD.Print($"ERROR: object is not rewindable {group}");
@@ -78,7 +84,7 @@ public partial class RewindPlayer : Node2D
         }
         else
         {
-            RecordState(new WorldRewindData(Player, Enemies, Keys, LockedDoors));
+            RecordState(new WorldRewindData(Player, Enemies, Keys, LockedDoors, OneWayPlatforms));
         }
     }
 
@@ -88,7 +94,7 @@ public partial class RewindPlayer : Node2D
         {
             var lastState = _states[_states.Count - 1];
             _states.RemoveAt(_states.Count - 1);
-            lastState.ApplyData(Player, Enemies, Keys, LockedDoors);
+            lastState.ApplyData(Player, Enemies, Keys, LockedDoors, OneWayPlatforms);
         }
         else
         {
@@ -113,7 +119,7 @@ public partial class RewindPlayer : Node2D
     private void RewindStarted()
     {
         IsRewinding = true;
-        foreach (Rewindable rewindable in Rewindables)
+        foreach (IRewindable rewindable in Rewindables)
         {
             rewindable.RewindStarted();
         }
@@ -122,7 +128,7 @@ public partial class RewindPlayer : Node2D
     private void RewindFinished()
     {
         IsRewinding = false;
-        foreach (Rewindable rewindable in Rewindables)
+        foreach (IRewindable rewindable in Rewindables)
         {
             rewindable.RewindFinished();
         }

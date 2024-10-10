@@ -26,6 +26,7 @@ enemy=""
 ladder=""
 door=""
 key=""
+one_way_platform=""
 
 [input]
 

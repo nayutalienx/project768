@@ -2,7 +2,7 @@
 
 namespace project768.scripts.rewind.entity;
 
-public interface Rewindable
+public interface IRewindable
 {
     public int RewindState { get; set; }
     public void RewindStarted();

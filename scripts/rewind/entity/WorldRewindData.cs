@@ -1,4 +1,6 @@
-﻿namespace project768.scripts.rewind.entity;
+﻿using System;
+
+namespace project768.scripts.rewind.entity;
 
 public struct WorldRewindData
 {
@@ -6,58 +8,53 @@ public struct WorldRewindData
     public EnemyRewindData[] EnemyRewindDatas { get; set; }
     public KeyRewindData[] KeyRewindDatas { get; set; }
     public LockedDoorRewindData[] LockedDoorRewindDatas { get; set; }
+    public OneWayPlatformRewindData[] OneWayPlatformRewindDatas { get; set; }
 
     public WorldRewindData(
         player.Player player,
         Enemy[] enemies,
         Key[] keys,
-        LockedDoor[] lockedDoors)
+        LockedDoor[] lockedDoors,
+        OneWayPlatform[] oneWayPlatforms)
     {
-        EnemyRewindData[] enemyRewindDatas = new EnemyRewindData[enemies.Length];
-        for (var i = enemies.Length - 1; i >= 0; i--)
-        {
-            enemyRewindDatas[i] = new EnemyRewindData(enemies[i]);
-        }
-
-        KeyRewindData[] keyRewindDatas = new KeyRewindData[keys.Length];
-        for (var i = keys.Length - 1; i >= 0; i--)
-        {
-            keyRewindDatas[i] = new KeyRewindData(keys[i]);
-        }
-
-        LockedDoorRewindData[] doorDatas = new LockedDoorRewindData[lockedDoors.Length];
-        for (var i = lockedDoors.Length - 1; i >= 0; i--)
-        {
-            doorDatas[i] = new LockedDoorRewindData(lockedDoors[i]);
-        }
-
-
         PlayerRewindData = new PlayerRewindData(player);
-        EnemyRewindDatas = enemyRewindDatas;
-        KeyRewindDatas = keyRewindDatas;
-        LockedDoorRewindDatas = doorDatas;
+        EnemyRewindDatas = CreateRewindData(enemies, enemy => new EnemyRewindData(enemy));
+        KeyRewindDatas = CreateRewindData(keys, key => new KeyRewindData(key));
+        LockedDoorRewindDatas = CreateRewindData(lockedDoors, door => new LockedDoorRewindData(door));
+        OneWayPlatformRewindDatas = CreateRewindData(oneWayPlatforms, platform => new OneWayPlatformRewindData(platform));
     }
 
     public void ApplyData(
         player.Player player,
         Enemy[] enemies,
         Key[] keys,
-        LockedDoor[] lockedDoors)
+        LockedDoor[] lockedDoors,
+        OneWayPlatform[] oneWayPlatforms)
     {
         PlayerRewindData.ApplyData(player);
-        for (var i = enemies.Length - 1; i >= 0; i--)
+        
+        ApplyRewindData(enemies, EnemyRewindDatas, (rewindData, entity) => rewindData.ApplyData(entity));
+        ApplyRewindData(keys, KeyRewindDatas, (rewindData, entity) => rewindData.ApplyData(entity));
+        ApplyRewindData(lockedDoors, LockedDoorRewindDatas, (rewindData, entity) => rewindData.ApplyData(entity));
+        ApplyRewindData(oneWayPlatforms, OneWayPlatformRewindDatas, (rewindData, entity) => rewindData.ApplyData(entity));
+    }
+
+    public static T[] CreateRewindData<T, TEntity>(TEntity[] entities, Func<TEntity, T> createDataFunc)
+    {
+        T[] rewindData = new T[entities.Length];
+        for (var i = entities.Length - 1; i >= 0; i--)
         {
-            EnemyRewindDatas[i].ApplyData(enemies[i]);
+            rewindData[i] = createDataFunc(entities[i]);
         }
 
-        for (var i = keys.Length - 1; i >= 0; i--)
+        return rewindData;
+    }
+    
+    public static void ApplyRewindData<T, TData>(T[] entities, TData[] rewindDatas, Action<TData, T> applyFunc)
+    {
+        for (var i = 0; i < entities.Length; i++)
         {
-            KeyRewindDatas[i].ApplyData(keys[i]);
-        }
-
-        for (var i = 0; i < lockedDoors.Length; i++)
-        {
-            LockedDoorRewindDatas[i].ApplyState(lockedDoors[i]);
+            applyFunc(rewindDatas[i], entities[i]);
         }
     }
 }
