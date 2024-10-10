@@ -8,7 +8,7 @@ namespace project768.scripts.player;
 public partial class Player :
     CharacterBody2D,
     DoorKeyPicker,
-    Rewindable,
+    IRewindable,
     IStateMachineEntity<Player, Player.State>
 {
     [Export] public float JumpVelocity = -400.0f;

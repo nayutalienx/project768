@@ -6,7 +6,7 @@ using project768.scripts.state_machine;
 
 public partial class LockedDoor :
     AnimatableBody2D,
-    Rewindable,
+    IRewindable,
     IStateMachineEntity<LockedDoor, LockedDoor.State>
 {
     public enum State

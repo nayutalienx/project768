@@ -16,7 +16,7 @@ public struct LockedDoorRewindData
         AnimationPlayerRewindData = new AnimationPlayerRewindData(lockedDoor.AnimationPlayer);
     }
 
-    public void ApplyState(LockedDoor lockedDoor)
+    public void ApplyData(LockedDoor lockedDoor)
     {
         lockedDoor.Position = Position;
         lockedDoor.RewindState = (int) CurrentState;

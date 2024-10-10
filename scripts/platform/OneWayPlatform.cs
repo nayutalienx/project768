@@ -1,26 +1,59 @@
 using Godot;
 using System;
+using project768.scripts.platform;
+using project768.scripts.rewind.entity;
+using project768.scripts.state_machine;
 
-public partial class OneWayPlatform : Node
+public partial class OneWayPlatform :
+    Node2D,
+    IRewindable,
+    IStateMachineEntity<OneWayPlatform, OneWayPlatform.State>
 {
+    public enum State
+    {
+        Move,
+        Rewind
+    }
+
+    public int RewindState { get; set; }
+    public State<OneWayPlatform, State> CurrentState { get; set; }
+    public State<OneWayPlatform, State>[] States { get; set; }
+    public StateChanger<OneWayPlatform, State> StateChanger { get; set; }
+
     [Export] public string animationName { get; set; }
-    private AnimationPlayer animationPlayer;
+
+    public AnimationPlayer AnimationPlayer { get; set; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        
+        States = new State<OneWayPlatform, State>[]
+        {
+            new MoveState(this, State.Move),
+            new RewindState(this, State.Rewind),
+        };
+        StateChanger = new StateChanger<OneWayPlatform, State>(this);
+        StateChanger.ChangeState(State.Move);
+        
+        
         if (HasNode("AnimationPlayer"))
         {
-            animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-            if (animationPlayer != null && animationName != null)
+            AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+            if (AnimationPlayer != null && animationName != null)
             {
-                animationPlayer.Play(animationName);
+                AnimationPlayer.Play(animationName);
             }
         }
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
+    public void RewindStarted()
     {
+        StateChanger.ChangeState(State.Rewind);
+    }
+
+    public void RewindFinished()
+    {
+        StateChanger.ChangeState((State) RewindState);
     }
 }

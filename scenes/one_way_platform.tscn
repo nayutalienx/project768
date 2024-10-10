@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l1hfv"]
 size = Vector2(279, 69)
 
-[node name="one_way_platform" type="AnimatableBody2D"]
+[node name="one_way_platform" type="AnimatableBody2D" groups=["one_way_platform"]]
 scale = Vector2(1.04384, 0.406434)
 script = ExtResource("1_abpv2")
 

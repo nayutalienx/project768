@@ -10,7 +10,7 @@ using RewindState = project768.scripts.enemy.RewindState;
 public partial class Enemy :
     CharacterBody2D,
     DoorKeyPicker,
-    Rewindable,
+    IRewindable,
     IStateMachineEntity<Enemy, Enemy.State>
 {
     public enum State

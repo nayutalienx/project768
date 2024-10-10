@@ -6,7 +6,7 @@ using project768.scripts.state_machine;
 
 public partial class Key :
     RigidBody2D,
-    Rewindable,
+    IRewindable,
     IStateMachineEntity<Key, Key.State>
 {
     public enum State
