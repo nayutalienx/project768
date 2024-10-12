@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://u730p1tggvfb"]
+[gd_scene load_steps=18 format=4 uid="uid://u730p1tggvfb"]
 
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/ladder.tscn" id="1_e01dh"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/player.tscn" id="1_vljbg"]
@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://bb6bemfvj0nt3" path="res://scenes/locked_door.tscn" id="5_17l2d"]
 [ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/spikes.tscn" id="7_efkx0"]
 [ext_resource type="Script" path="res://scripts/rewind/RewindPlayer.cs" id="9_kdnbs"]
+[ext_resource type="AudioStream" uid="uid://cwk83y0x3xvpd" path="res://music/whisper.mp3" id="10_k0s14"]
+[ext_resource type="Script" path="res://scripts/rewind/RewindAudioPlayer.cs" id="10_oh1bk"]
+[ext_resource type="AudioStream" uid="uid://7l0040kbg4ky" path="res://music/whisper_reverse.mp3" id="12_8g3xf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a5xc7"]
 texture = ExtResource("4_yv7j6")
@@ -221,3 +224,12 @@ position = Vector2(495, 433)
 
 [node name="RewindPlayer" type="Node2D" parent="."]
 script = ExtResource("9_kdnbs")
+
+[node name="BackgroundMusic" type="Node2D" parent="." groups=["background_music"]]
+script = ExtResource("10_oh1bk")
+
+[node name="forward_player" type="AudioStreamPlayer" parent="BackgroundMusic"]
+stream = ExtResource("10_k0s14")
+
+[node name="reverse_player" type="AudioStreamPlayer" parent="BackgroundMusic"]
+stream = ExtResource("12_8g3xf")

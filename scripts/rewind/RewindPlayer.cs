@@ -35,6 +35,7 @@ public partial class RewindPlayer : Node2D
             .ConvertAll(o => o as OneWayPlatform)
             .Where(platform => platform.AnimationPlayer != null)
             .ToArray();
+        FindAndAddRewindables("background_music");
     }
 
     private List<IRewindable> FindAndAddRewindables(
@@ -118,19 +119,25 @@ public partial class RewindPlayer : Node2D
 
     private void RewindStarted()
     {
-        IsRewinding = true;
-        foreach (IRewindable rewindable in Rewindables)
+        if (!IsRewinding)
         {
-            rewindable.RewindStarted();
+            IsRewinding = true;
+            foreach (IRewindable rewindable in Rewindables)
+            {
+                rewindable.RewindStarted();
+            }
         }
     }
 
     private void RewindFinished()
     {
-        IsRewinding = false;
-        foreach (IRewindable rewindable in Rewindables)
+        if (IsRewinding)
         {
-            rewindable.RewindFinished();
+            IsRewinding = false;
+            foreach (IRewindable rewindable in Rewindables)
+            {
+                rewindable.RewindFinished();
+            }
         }
     }
 

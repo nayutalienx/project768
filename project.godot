@@ -27,6 +27,7 @@ ladder=""
 door=""
 key=""
 one_way_platform=""
+background_music=""
 
 [input]
 
