@@ -29,7 +29,7 @@ public partial class LockedDoor :
     public override void _Ready()
     {
         AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        
+
         CollisionShape2D = GetNode<CollisionShape2D>("CollisionShape2D");
         LockArea = GetNode<Area2D>("lock_area");
         LockArea.BodyEntered += OnBodyEntered;
@@ -68,5 +68,10 @@ public partial class LockedDoor :
     public void RewindFinished()
     {
         StateChanger.ChangeState((State) RewindState);
+    }
+
+    public void OnRewindSpeedChanged(int speed)
+    {
+        AnimationPlayer.SpeedScale = speed;
     }
 }

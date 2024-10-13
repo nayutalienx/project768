@@ -1,4 +1,6 @@
+using System;
 using Godot;
+using project768.scripts.common;
 using project768.scripts.item;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
@@ -34,6 +36,8 @@ public partial class Player :
     public Vector2 Ladder { get; set; }
     public PlayerCache Cache { get; set; }
 
+    public Tuple<uint, uint> OrigCollission;
+
     public override void _Ready()
     {
         States = new State<Player, State>[]
@@ -44,6 +48,8 @@ public partial class Player :
             new RewindState(this, State.Rewind),
         };
         StateChanger = new StateChanger<Player, State>(this);
+        OrigCollission = this.GetCollisionLayerMask();
+
         StateChanger.ChangeState(State.Move);
     }
 
@@ -99,6 +105,10 @@ public partial class Player :
     public void RewindFinished()
     {
         StateChanger.ChangeState((State) RewindState);
+    }
+
+    public void OnRewindSpeedChanged(int speed)
+    {
     }
 
     public void EnteredLadderArea(Ladder ladder)

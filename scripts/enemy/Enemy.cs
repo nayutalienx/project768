@@ -1,4 +1,6 @@
+using System;
 using Godot;
+using project768.scripts.common;
 using project768.scripts.item;
 using project768.scripts.player;
 using project768.scripts.rewind.entity;
@@ -35,6 +37,10 @@ public partial class Enemy :
 
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
+    
+    public Tuple<uint, uint> OriginalEntityLayerMask;
+    public Tuple<uint, uint> OriginalHeadAreaLayerMask;
+    public Tuple<uint, uint> OriginalAttackAreaLayerMask;
 
     public override void _Ready()
     {
@@ -45,8 +51,6 @@ public partial class Enemy :
             new RewindState(this, State.Rewind),
         };
         StateChanger = new StateChanger<Enemy, State>(this);
-        StateChanger.ChangeState(State.Move);
-
 
         FallRaycastLeft = GetNode<RayCast2D>("FallRaycast_1");
         FallRaycastRight = GetNode<RayCast2D>("FallRaycast_2");
@@ -55,6 +59,12 @@ public partial class Enemy :
 
         HeadArea.BodyEntered += EnemyHeadBodyEntered;
         AttackArea.BodyEntered += EnemyAttackBodyEntered;
+
+        OriginalEntityLayerMask = this.GetCollisionLayerMask();
+        OriginalAttackAreaLayerMask = AttackArea.GetCollisionLayerMask();
+        OriginalHeadAreaLayerMask = HeadArea.GetCollisionLayerMask();
+        
+        StateChanger.ChangeState(State.Move);
     }
 
     public void EnemyAttackBodyEntered(Node2D body)
@@ -105,5 +115,9 @@ public partial class Enemy :
     public void EnteredSpikeArea()
     {
         StateChanger.ChangeState(State.Death);
+    }
+    
+    public void OnRewindSpeedChanged(int speed)
+    {
     }
 }

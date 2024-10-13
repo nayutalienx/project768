@@ -2,18 +2,19 @@
 
 public class DoorKeyPickerContext
 {
-    private DoorKeyEvent doorKeyEvent = DoorKeyEvent.None;
+    public DoorKeyEvent DoorKeyEvent = DoorKeyEvent.None;
     public bool HasKey { get; set; }
+    public ulong KeyInstanceId { get; set; }
 
     public void PutEvent(DoorKeyEvent doorKeyEvent)
     {
-        this.doorKeyEvent = doorKeyEvent;
+        DoorKeyEvent = doorKeyEvent;
     }
 
     public DoorKeyEvent ConsumeEvent()
     {
-        var ev = doorKeyEvent;
-        doorKeyEvent = DoorKeyEvent.None;
+        var ev = DoorKeyEvent;
+        DoorKeyEvent = DoorKeyEvent.None;
         return ev;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Godot;
+using project768.scripts.common;
 using project768.scripts.state_machine;
 
 namespace project768.scripts.player;
@@ -12,6 +13,15 @@ public class MoveState : State<Player, Player.State>
     public override void HandleInput(InputEvent _event)
     {
         Entity.HandleInput(_event);
+    }
+
+    public override void EnterState(Player.State prevState)
+    {
+        Entity.EnableCollision(Entity.OrigCollission);
+        if (prevState == Player.State.Rewind)
+        {
+            Entity.CleanCache();
+        }
     }
 
     public override void PhysicProcess(double delta)
