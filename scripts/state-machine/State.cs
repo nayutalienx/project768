@@ -20,10 +20,6 @@ public abstract class State<T, TEnum>
     {
     }
 
-    public virtual void ExitState(TEnum prevState)
-    {
-    }
-
     public virtual void HandleInput(InputEvent _event)
     {
     }
@@ -34,19 +30,5 @@ public abstract class State<T, TEnum>
 
     public virtual void PhysicProcess(double delta)
     {
-    }
-
-    protected Tuple<uint, uint> DisableCollision(CollisionObject2D entity)
-    {
-        var res = new Tuple<uint, uint>(entity.CollisionLayer, entity.CollisionMask);
-        entity.CollisionLayer = 0;
-        entity.CollisionMask = 0;
-        return res;
-    }
-
-    protected void EnableCollision(CollisionObject2D entity, Tuple<uint, uint> layerMask)
-    {
-        entity.CollisionLayer = layerMask.Item1;
-        entity.CollisionMask = layerMask.Item2;
     }
 }

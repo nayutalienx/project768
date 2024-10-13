@@ -7,4 +7,5 @@ public interface IRewindable
     public int RewindState { get; set; }
     public void RewindStarted();
     public void RewindFinished();
+    public void OnRewindSpeedChanged(int speed);
 }

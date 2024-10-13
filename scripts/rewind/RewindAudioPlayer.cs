@@ -16,17 +16,19 @@ public partial class RewindAudioPlayer : Node2D, IRewindable
         forwardPlayer = GetNode<AudioStreamPlayer>("forward_player");
         backwardPlayer = GetNode<AudioStreamPlayer>("reverse_player");
 
-
         audioLen = forwardPlayer.GetStream().GetLength();
         forwardPlayer.Play();
+
+        backwardPlayer.Play();
+        backwardPlayer.SetStreamPaused(true);
     }
 
     public void RewindStarted()
     {
         double backwardPos = audioLen - forwardPlayer.GetPlaybackPosition();
         GD.Print($"backwardPos {backwardPos} = {audioLen} - {forwardPlayer.GetPlaybackPosition()}");
-        forwardPlayer.Stop();
-        backwardPlayer.Play();
+        forwardPlayer.SetStreamPaused(true);
+        backwardPlayer.SetStreamPaused(false);
         backwardPlayer.Seek((float) backwardPos);
     }
 
@@ -34,8 +36,30 @@ public partial class RewindAudioPlayer : Node2D, IRewindable
     {
         double forwardPos = audioLen - backwardPlayer.GetPlaybackPosition();
         GD.Print($"forwardPos {forwardPos} = {audioLen} - {backwardPlayer.GetPlaybackPosition()}");
-        backwardPlayer.Stop();
-        forwardPlayer.Play();
+        backwardPlayer.SetStreamPaused(true);
+        forwardPlayer.SetStreamPaused(false);
         forwardPlayer.Seek((float) forwardPos);
+    }
+
+    public void OnRewindSpeedChanged(int speed)
+    {
+        if (speed < 0)
+        {
+            return;
+        }
+
+        if (speed == 0)
+        {
+            backwardPlayer.SetStreamPaused(true);
+        }
+        else
+        {
+            if (backwardPlayer.GetStreamPaused())
+            {
+                backwardPlayer.SetStreamPaused(false);
+            }
+
+            backwardPlayer.PitchScale = speed;
+        }
     }
 }

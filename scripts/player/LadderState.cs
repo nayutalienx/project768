@@ -15,6 +15,15 @@ public class LadderState : State<Player, Player.State>
         Entity.HandleInput(_event);
     }
 
+    public override void EnterState(Player.State prevState)
+    {
+        Entity.EnableCollision(Entity.OrigCollission);
+        if (prevState == Player.State.Rewind)
+        {
+            Entity.CleanCache();
+        }
+    }
+
     public override void PhysicProcess(double delta)
     {
         if (

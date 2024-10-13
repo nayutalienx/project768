@@ -27,7 +27,6 @@ public partial class OneWayPlatform :
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        
         States = new State<OneWayPlatform, State>[]
         {
             new MoveState(this, State.Move),
@@ -35,8 +34,8 @@ public partial class OneWayPlatform :
         };
         StateChanger = new StateChanger<OneWayPlatform, State>(this);
         StateChanger.ChangeState(State.Move);
-        
-        
+
+
         if (HasNode("AnimationPlayer"))
         {
             AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -55,5 +54,13 @@ public partial class OneWayPlatform :
     public void RewindFinished()
     {
         StateChanger.ChangeState((State) RewindState);
+    }
+
+    public void OnRewindSpeedChanged(int speed)
+    {
+        if (AnimationPlayer != null)
+        {
+            AnimationPlayer.SpeedScale = speed;
+        }
     }
 }

@@ -1,4 +1,6 @@
+using System;
 using Godot;
+using project768.scripts.common;
 using project768.scripts.item;
 using project768.scripts.key;
 using project768.scripts.rewind.entity;
@@ -25,6 +27,9 @@ public partial class Key :
     public DoorKeyPicker Picker { get; set; }
     public Area2D PickerArea { get; set; }
 
+    public Tuple<uint, uint> PickerAreaCollision;
+    public Tuple<uint, uint> KeyCollision;
+
     public override void _Ready()
     {
         States = new State<Key, State>[]
@@ -35,10 +40,14 @@ public partial class Key :
             new RewindState(this, State.Rewind),
         };
         StateChanger = new StateChanger<Key, State>(this);
-        StateChanger.ChangeState(State.Unpicked);
 
         PickerArea = GetNode<Area2D>("picker");
         PickerArea.BodyEntered += PickerArea_BodyEntered;
+
+        PickerAreaCollision = PickerArea.GetCollisionLayerMask();
+        KeyCollision = this.GetCollisionLayerMask();
+        
+        StateChanger.ChangeState(State.Unpicked);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -48,14 +57,18 @@ public partial class Key :
 
     private void PickerArea_BodyEntered(Node2D body)
     {
-        if (CurrentState.StateEnum != State.Unpicked) return;
-
-        if (body is DoorKeyPicker itemPicker && !itemPicker.DoorKeyPickerContext.HasKey)
+        if (CurrentState.StateEnum == State.Unpicked)
         {
-            PickerInstanceId = body.GetInstanceId();
-            Picker = itemPicker;
-            Picker.DoorKeyPickerContext.HasKey = true;
-            StateChanger.ChangeState(State.Picked);
+            
+            if (body is DoorKeyPicker itemPicker && !itemPicker.DoorKeyPickerContext.HasKey)
+            {
+                PickerInstanceId = body.GetInstanceId();
+                Picker = itemPicker;
+                Picker.DoorKeyPickerContext.HasKey = true;
+                Picker.DoorKeyPickerContext.KeyInstanceId = GetInstanceId();
+                StateChanger.ChangeState(State.Picked);
+            }
+            
         }
     }
 
@@ -72,5 +85,9 @@ public partial class Key :
         }
 
         StateChanger.ChangeState((State) RewindState);
+    }
+    
+    public void OnRewindSpeedChanged(int speed)
+    {
     }
 }
