@@ -118,6 +118,11 @@ public partial class Player :
 
     public void ExitedLadderArea()
     {
+        if (CurrentState.StateEnum == State.Rewind)
+        {
+            return;
+        }
+
         StateChanger.ChangeState(State.Move);
         Ladder = Vector2.Zero;
     }

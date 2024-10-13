@@ -28,9 +28,9 @@ public class StateChanger<T, TEnum>
             StateMachineEntity.CurrentState.EnterState(default);
         }
 
-        // GD.Print(
-        //     $"{StateMachineEntity.CurrentState.Entity.Name} : " +
-        //     $"{prevState?.GetType().Name} -> " +
-        //     $"{StateMachineEntity.CurrentState.GetType().Name}");
+        GD.Print(
+            $"{StateMachineEntity.CurrentState.Entity.Name} : " +
+            $"{prevState?.GetType().Name} -> " +
+            $"{StateMachineEntity.CurrentState.GetType().Name}");
     }
 }
