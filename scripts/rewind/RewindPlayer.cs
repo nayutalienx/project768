@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Godot;
+using project768.scripts.common;
 using project768.scripts.player;
 using project768.scripts.rewind.entity;
 
@@ -20,11 +21,20 @@ public partial class RewindPlayer : Node2D
 
     public List<IRewindable> Rewindables = new();
 
-    private List<WorldRewindData> _states = new List<WorldRewindData>();
-    private int rewindSpeed;
     private const int MaxStates = 60 * 60 * 3; // Adjust based on how much time you want to rewind
 
+    private FixedSizeStack<WorldRewindData> worldStates = new(MaxStates);
+    private FixedSizeStack<WorldRewindData> rewindedBuffer;
+
+    private int rewindSpeed;
     public bool IsRewinding { get; set; }
+
+    public enum RewindMode
+    {
+        Backward,
+        Stopped,
+        Forward
+    }
 
     public int RewindSpeed
     {
@@ -125,42 +135,72 @@ public partial class RewindPlayer : Node2D
     {
         if (IsRewinding)
         {
-            for (int i = 0; i < RewindSpeed; i++)
-            {
-                RewindState();
-            }
+            RewindState();
         }
         else
         {
-            RecordState(new WorldRewindData(Player, Enemies, Keys, LockedDoors, OneWayPlatforms));
+            RecordState();
         }
     }
 
     public void RewindState()
     {
-        if (_states.Count > 0)
+        RewindMode rewindMode = RewindMode.Backward;
+        if (RewindSpeed == 0)
         {
-            var lastState = _states[_states.Count - 1];
-            _states.RemoveAt(_states.Count - 1);
-            lastState.ApplyData(Player, Enemies, Keys, LockedDoors, OneWayPlatforms);
+            return;
         }
-        else
+
+        if (RewindSpeed < 0)
         {
-            RewindFinished();
-            GD.Print("Rewind player zero rewind");
+            rewindMode = RewindMode.Forward;
+        }
+
+
+        for (int i = 0; i < Math.Abs(RewindSpeed); i++)
+        {
+            if (rewindMode == RewindMode.Backward)
+            {
+                if (!worldStates.IsEmpty)
+                {
+                    var lastState = worldStates.Pop();
+                    lastState.ApplyData(Player, Enemies, Keys, LockedDoors, OneWayPlatforms);
+                    rewindedBuffer.Push(lastState);
+                }
+                else
+                {
+                    RewindFinished();
+                    GD.Print("Rewind player zero rewind[backward]");
+                }
+            }
+            else
+            {
+                if (rewindedBuffer.Count != 0)
+                {
+                    var futureState = rewindedBuffer.Pop();
+                    futureState.ApplyData(Player, Enemies, Keys, LockedDoors, OneWayPlatforms);
+                    worldStates.Push(futureState);
+                }
+                else
+                {
+                    RewindFinished();
+                    GD.Print("Rewind player zero rewind[forward]");
+                }
+            }
         }
     }
 
 
-    public void RecordState(WorldRewindData state)
+    public void RecordState()
     {
         if (!Paused)
         {
-            _states.Add(state);
-            if (_states.Count > MaxStates)
-            {
-                _states.RemoveAt(0);
-            }
+            worldStates.Push(new WorldRewindData(
+                Player,
+                Enemies,
+                Keys,
+                LockedDoors,
+                OneWayPlatforms));
         }
     }
 
@@ -170,6 +210,7 @@ public partial class RewindPlayer : Node2D
         {
             IsRewinding = true;
             RewindSpeed = 1;
+            rewindedBuffer = new(MaxStates);
 
             if (RewindLabel != null)
             {
