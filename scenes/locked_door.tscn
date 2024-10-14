@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bb6bemfvj0nt3"]
 
-[ext_resource type="Script" path="res://scripts/door/LockedDoor.cs" id="1_n7v8n"]
+[ext_resource type="Script" path="res://scripts/game_entity/landscape/door/LockedDoor.cs" id="1_n7v8n"]
 [ext_resource type="Texture2D" uid="uid://c4lgmcno3mv6x" path="res://sprites/locked_door_2.png" id="2_7qnhx"]
 [ext_resource type="Texture2D" uid="uid://nconajl08j87" path="res://sprites/locked_door_1.png" id="3_jpwhx"]
 

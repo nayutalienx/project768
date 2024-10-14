@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://chwq1hm1c6ake"]
 
-[ext_resource type="Script" path="res://scripts/platform/OneWayPlatform.cs" id="1_abpv2"]
+[ext_resource type="Script" path="res://scripts/game_entity/landscape/platform/OneWayPlatform.cs" id="1_abpv2"]
 [ext_resource type="Texture2D" uid="uid://c5c4bv6ak02u4" path="res://sprites/ladder_top.png" id="1_otw1a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l1hfv"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://btobpn5evuwb8"]
+
+[ext_resource type="Texture2D" uid="uid://7fdaex256nf8" path="res://sprites/cannon.png" id="1_nip8d"]
+[ext_resource type="PackedScene" uid="uid://chwame76xqi6l" path="res://scenes/cannon_ball.tscn" id="2_0nh6p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plrir"]
+size = Vector2(159, 101)
+
+[node name="cannon" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1341, 0.1341)
+texture = ExtResource("1_nip8d")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_plrir")
+
+[node name="cannon_ball" parent="." instance=ExtResource("2_0nh6p")]
+position = Vector2(132, -21)

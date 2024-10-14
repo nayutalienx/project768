@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cbes6p0xgmvbf"]
 
-[ext_resource type="Script" path="res://scripts/enemy/Enemy.cs" id="1_le13m"]
+[ext_resource type="Script" path="res://scripts/game_entity/npc/enemy/Enemy.cs" id="1_le13m"]
 [ext_resource type="Texture2D" uid="uid://baql6qn040vl" path="res://sprites/icon.svg" id="1_uu8sh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqmav"]

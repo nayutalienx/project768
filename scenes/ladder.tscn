@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dirjawkiwdyvb"]
 
 [ext_resource type="Texture2D" uid="uid://cl4cber4uro0u" path="res://sprites/ladder.png" id="1_1dujp"]
-[ext_resource type="Script" path="res://scripts/ladder/Ladder.cs" id="1_xj34d"]
+[ext_resource type="Script" path="res://scripts/game_entity/landscape/ladder/Ladder.cs" id="1_xj34d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nf2ra"]
 size = Vector2(224, 1224)
