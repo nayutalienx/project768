@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dagfrs5bi1ci6"]
 
 [ext_resource type="Texture2D" uid="uid://b5q1wo3hqva62" path="res://sprites/spikes.png" id="1_57evk"]
-[ext_resource type="Script" path="res://scripts/spike/Spike.cs" id="2_3ni6w"]
+[ext_resource type="Script" path="res://scripts/game_entity/landscape/spike/Spike.cs" id="2_3ni6w"]
 
 [node name="Spike" type="Line2D"]
 scale = Vector2(14.9634, 14.9634)

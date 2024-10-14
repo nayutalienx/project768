@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://chwame76xqi6l"]
+
+[ext_resource type="Texture2D" uid="uid://bjyfi6hm5ryu0" path="res://sprites/cannon_ball.png" id="1_oi3ry"]
+
+[node name="cannon_ball" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -2.42987
+scale = Vector2(0.0504693, 0.0504693)
+texture = ExtResource("1_oi3ry")
