@@ -24,6 +24,7 @@ public partial class LockedDoor :
     public AnimationPlayer AnimationPlayer { get; set; }
     public CollisionShape2D CollisionShape2D { get; set; }
     public Area2D LockArea { get; set; }
+    public Label DoorLabel { get; set; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -33,6 +34,7 @@ public partial class LockedDoor :
         CollisionShape2D = GetNode<CollisionShape2D>("CollisionShape2D");
         LockArea = GetNode<Area2D>("lock_area");
         LockArea.BodyEntered += OnBodyEntered;
+        DoorLabel = GetNode<Label>("Label");
 
         States = new State<LockedDoor, State>[]
         {
@@ -58,6 +60,16 @@ public partial class LockedDoor :
     public override void _Process(double delta)
     {
         CurrentState.PhysicProcess(delta);
+        if (AnimationPlayer.IsPlaying())
+        {
+            DoorLabel.Text = $"state: {CurrentState.StateEnum}\n" +
+                             $"anim: {AnimationPlayer.GetCurrentAnimationPosition()}";
+        }
+        else
+        {
+            DoorLabel.Text = $"state: {CurrentState.StateEnum}\n" +
+                             $"no animation";
+        }
     }
 
     public void RewindStarted()

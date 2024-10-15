@@ -10,7 +10,7 @@ size = Vector2(159, 101)
 [sub_resource type="LabelSettings" id="LabelSettings_teixd"]
 font_size = 24
 
-[node name="cannon" type="StaticBody2D"]
+[node name="cannon" type="StaticBody2D" groups=["cannon"]]
 collision_mask = 0
 script = ExtResource("1_re2fi")
 
@@ -36,4 +36,10 @@ position = Vector2(102, -19)
 [node name="ball_pool" type="Node2D" parent="."]
 
 [node name="cannon_ball" parent="ball_pool" instance=ExtResource("2_0nh6p")]
+position = Vector2(15, -102)
+
+[node name="cannon_ball2" parent="ball_pool" instance=ExtResource("2_0nh6p")]
+position = Vector2(15, -102)
+
+[node name="cannon_ball3" parent="ball_pool" instance=ExtResource("2_0nh6p")]
 position = Vector2(15, -102)
