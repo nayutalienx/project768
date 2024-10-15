@@ -48,10 +48,12 @@ public partial class CannonBall : Area2D,
 
     public void RewindStarted()
     {
+        StateChanger.ChangeState(State.Rewind);
     }
 
     public void RewindFinished()
     {
+        StateChanger.ChangeState((State) RewindState);
     }
 
     public void OnRewindSpeedChanged(int speed)

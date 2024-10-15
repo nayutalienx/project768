@@ -22,6 +22,7 @@ public struct AnimationPlayerRewindData
 
     public void ApplyData(AnimationPlayer animationPlayer)
     {
+        // todo: fix
         if (IsAnimationPlaying)
         {
             animationPlayer.Seek(AnimationPosition, true);

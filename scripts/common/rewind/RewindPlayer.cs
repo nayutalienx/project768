@@ -18,6 +18,7 @@ public partial class RewindPlayer : Node2D
     public Key[] Keys { get; set; }
     public LockedDoor[] LockedDoors { get; set; }
     public OneWayPlatform[] OneWayPlatforms { get; set; }
+    public Cannon[] Cannons { get; set; }
 
     public List<IRewindable> Rewindables = new();
 
@@ -72,6 +73,12 @@ public partial class RewindPlayer : Node2D
         Enemies = FindAndAddRewindables("enemy").ConvertAll(o => o as Enemy).ToArray();
         Keys = FindAndAddRewindables("key").ConvertAll(o => o as Key).ToArray();
         LockedDoors = FindAndAddRewindables("door").ConvertAll(o => o as LockedDoor).ToArray();
+        Cannons = FindAndAddRewindables("cannon").ConvertAll(o => o as Cannon).ToArray();
+        foreach (Cannon cannon in Cannons)
+        {
+            Rewindables.AddRange(cannon.CannonBallPool);
+        }
+
         OneWayPlatforms = FindAndAddRewindables("one_way_platform")
             .ConvertAll(o => o as OneWayPlatform)
             .Where(platform => platform.AnimationPlayer != null)
@@ -164,7 +171,8 @@ public partial class RewindPlayer : Node2D
                 if (!worldStates.IsEmpty)
                 {
                     var lastState = worldStates.Pop();
-                    lastState.ApplyData(Player, Enemies, Keys, LockedDoors, OneWayPlatforms);
+                    lastState.ApplyData(
+                        Player, Enemies, Keys, LockedDoors, OneWayPlatforms, Cannons);
                     rewindedBuffer.Push(lastState);
                 }
                 else
@@ -178,7 +186,7 @@ public partial class RewindPlayer : Node2D
                 if (rewindedBuffer.Count != 0)
                 {
                     var futureState = rewindedBuffer.Pop();
-                    futureState.ApplyData(Player, Enemies, Keys, LockedDoors, OneWayPlatforms);
+                    futureState.ApplyData(Player, Enemies, Keys, LockedDoors, OneWayPlatforms, Cannons);
                     worldStates.Push(futureState);
                 }
                 else
@@ -200,7 +208,8 @@ public partial class RewindPlayer : Node2D
                 Enemies,
                 Keys,
                 LockedDoors,
-                OneWayPlatforms));
+                OneWayPlatforms,
+                Cannons));
         }
     }
 
