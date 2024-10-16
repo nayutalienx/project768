@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using project768.scripts.common;
 using project768.scripts.platform;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
@@ -22,7 +23,7 @@ public partial class OneWayPlatform :
 
     [Export] public string animationName { get; set; }
 
-    public AnimationPlayer AnimationPlayer { get; set; }
+    public RewindableAnimationPlayer AnimationPlayer { get; set; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -38,7 +39,12 @@ public partial class OneWayPlatform :
 
         if (HasNode("AnimationPlayer"))
         {
-            AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+            AnimationPlayer = new RewindableAnimationPlayer(
+                GetNode<AnimationPlayer>("AnimationPlayer"),
+                new[]
+                {
+                    "Platform1"
+                });
             if (AnimationPlayer != null && animationName != null)
             {
                 AnimationPlayer.Play(animationName);
@@ -60,7 +66,7 @@ public partial class OneWayPlatform :
     {
         if (AnimationPlayer != null)
         {
-            AnimationPlayer.SpeedScale = speed;
+            AnimationPlayer.AnimationPlayer.SpeedScale = speed;
         }
     }
 }

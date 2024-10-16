@@ -1,4 +1,5 @@
 ﻿using Godot;
+using project768.scripts.common;
 
 namespace project768.scripts.rewind.entity;
 
@@ -6,33 +7,38 @@ public struct AnimationPlayerRewindData
 {
     public bool IsAnimationPlaying { get; set; }
     public double AnimationPosition { get; set; }
+    public int CurrentAnimationIndex { get; set; }
 
-    public AnimationPlayerRewindData(AnimationPlayer animationPlayer)
+    public AnimationPlayerRewindData(RewindableAnimationPlayer animationPlayer)
     {
-        IsAnimationPlaying = animationPlayer.IsPlaying();
+        IsAnimationPlaying = animationPlayer.AnimationPlayer.IsPlaying();
         if (IsAnimationPlaying)
         {
-            AnimationPosition = animationPlayer.GetCurrentAnimationPosition();
+            AnimationPosition = animationPlayer.AnimationPlayer.GetCurrentAnimationPosition();
         }
         else
         {
             AnimationPosition = 0.0f;
         }
+
+        CurrentAnimationIndex = animationPlayer.CurrentAnimationIndex;
     }
 
-    public void ApplyData(AnimationPlayer animationPlayer)
+    public void ApplyData(RewindableAnimationPlayer animationPlayer)
     {
-        // todo: fix
+        
+        animationPlayer.SyncRewind(CurrentAnimationIndex);
+        
         if (IsAnimationPlaying)
         {
-            animationPlayer.Seek(AnimationPosition, true);
-            animationPlayer.Play();
+            animationPlayer.AnimationPlayer.Seek(AnimationPosition, true);
+            animationPlayer.AnimationPlayer.Play();
         }
         else
         {
-            if (animationPlayer.IsPlaying())
+            if (animationPlayer.AnimationPlayer.IsPlaying())
             {
-                animationPlayer.Stop();
+                animationPlayer.AnimationPlayer.Stop();
             }
         }
     }

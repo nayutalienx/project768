@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using project768.scripts.common;
 using project768.scripts.door;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
@@ -20,8 +21,7 @@ public partial class LockedDoor :
     public State<LockedDoor, State> CurrentState { get; set; }
     public State<LockedDoor, State>[] States { get; set; }
     public StateChanger<LockedDoor, State> StateChanger { get; set; }
-
-    public AnimationPlayer AnimationPlayer { get; set; }
+    public RewindableAnimationPlayer AnimationPlayer { get; set; }
     public CollisionShape2D CollisionShape2D { get; set; }
     public Area2D LockArea { get; set; }
     public Label DoorLabel { get; set; }
@@ -29,7 +29,14 @@ public partial class LockedDoor :
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        AnimationPlayer = new RewindableAnimationPlayer(
+            GetNode<AnimationPlayer>("AnimationPlayer") as AnimationPlayer,
+            new[]
+            {
+                "DoorOpen",
+                "end",
+            }
+        );
 
         CollisionShape2D = GetNode<CollisionShape2D>("CollisionShape2D");
         LockArea = GetNode<Area2D>("lock_area");
@@ -60,10 +67,11 @@ public partial class LockedDoor :
     public override void _Process(double delta)
     {
         CurrentState.PhysicProcess(delta);
-        if (AnimationPlayer.IsPlaying())
+        if (AnimationPlayer.AnimationPlayer.IsPlaying())
         {
             DoorLabel.Text = $"state: {CurrentState.StateEnum}\n" +
-                             $"anim: {AnimationPlayer.GetCurrentAnimationPosition()}";
+                             $"animation: {AnimationPlayer.CurrentAnimation}\n" +
+                             $"anim: {AnimationPlayer.AnimationPlayer.GetCurrentAnimationPosition()}";
         }
         else
         {
@@ -84,6 +92,6 @@ public partial class LockedDoor :
 
     public void OnRewindSpeedChanged(int speed)
     {
-        AnimationPlayer.SpeedScale = speed;
+        AnimationPlayer.AnimationPlayer.SpeedScale = speed;
     }
 }
