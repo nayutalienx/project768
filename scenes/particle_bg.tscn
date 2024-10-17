@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2sy2b6bk3d6o"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8q3fv"]
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1000, 200, 1)
+angle_min = -356.0
+angle_max = 312.0
+angular_velocity_min = 52.0
+angular_velocity_max = 116.0
+gravity = Vector3(0, -15, 0)
+linear_accel_min = 0.999998
+linear_accel_max = 0.999998
+radial_accel_min = 0.999998
+radial_accel_max = 0.999998
+tangential_accel_min = 0.999998
+tangential_accel_max = 0.999998
+damping_min = 1.0
+damping_max = 1.0
+scale_min = 9.33
+scale_max = 9.33
+turbulence_noise_strength = 15.43
+
+[node name="particle_bg" type="Node2D"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_8q3fv")
+lifetime = 4.0
+randomness = 1.0
