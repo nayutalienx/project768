@@ -71,6 +71,8 @@ _data = {
 
 [sub_resource type="LabelSettings" id="LabelSettings_rj6p8"]
 font_size = 21
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [node name="locked_door" type="Node2D"]
 
