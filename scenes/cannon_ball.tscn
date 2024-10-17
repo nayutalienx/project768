@@ -15,7 +15,8 @@ emission_ring_inner_radius = 0.0
 angular_velocity_min = 601.64
 angular_velocity_max = 654.24
 gravity = Vector3(-100, 0, 0)
-scale_max = 3.28
+scale_min = 3.28
+scale_max = 5.56
 color = Color(1, 0.392157, 0, 1)
 
 [node name="cannon_ball" type="Area2D"]
