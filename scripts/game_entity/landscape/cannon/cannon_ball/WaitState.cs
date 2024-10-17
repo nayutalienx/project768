@@ -11,6 +11,6 @@ public class WaitState : State<CannonBall, CannonBall.State>
 
     public override void EnterState(CannonBall.State prevState)
     {
-        Entity.Hide();
+        Entity.HideBall();
     }
 }

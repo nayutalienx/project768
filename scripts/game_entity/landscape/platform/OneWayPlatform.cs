@@ -66,7 +66,7 @@ public partial class OneWayPlatform :
     {
         if (AnimationPlayer != null)
         {
-            AnimationPlayer.AnimationPlayer.SpeedScale = speed;
+            AnimationPlayer.UpdateRewindSpeed(speed);
         }
     }
 }

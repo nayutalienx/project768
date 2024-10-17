@@ -12,7 +12,7 @@ public class MoveState : State<CannonBall, CannonBall.State>
 
     public override void EnterState(CannonBall.State prevState)
     {
-        Entity.Show();
+        Entity.ShowBall();
     }
 
     public override void PhysicProcess(double delta)

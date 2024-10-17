@@ -71,12 +71,12 @@ public partial class LockedDoor :
         {
             DoorLabel.Text = $"state: {CurrentState.StateEnum}\n" +
                              $"animation: {AnimationPlayer.CurrentAnimation}\n" +
-                             $"anim: {AnimationPlayer.AnimationPlayer.GetCurrentAnimationPosition()}";
+                             $"pos: {AnimationPlayer.AnimationPlayer.GetCurrentAnimationPosition()}";
         }
         else
         {
             DoorLabel.Text = $"state: {CurrentState.StateEnum}\n" +
-                             $"no animation";
+                             $"animation: {AnimationPlayer.CurrentAnimation}";
         }
     }
 
@@ -92,6 +92,6 @@ public partial class LockedDoor :
 
     public void OnRewindSpeedChanged(int speed)
     {
-        AnimationPlayer.AnimationPlayer.SpeedScale = speed;
+        AnimationPlayer.UpdateRewindSpeed(speed);
     }
 }

@@ -36,10 +36,10 @@ position = Vector2(102, -19)
 [node name="ball_pool" type="Node2D" parent="."]
 
 [node name="cannon_ball" parent="ball_pool" instance=ExtResource("2_0nh6p")]
-position = Vector2(15, -102)
+position = Vector2(39, -54)
 
 [node name="cannon_ball2" parent="ball_pool" instance=ExtResource("2_0nh6p")]
-position = Vector2(15, -102)
+position = Vector2(-11, -54)
 
 [node name="cannon_ball3" parent="ball_pool" instance=ExtResource("2_0nh6p")]
-position = Vector2(15, -102)
+position = Vector2(-62, -54)

@@ -10,6 +10,8 @@ public class RewindableAnimationPlayer
     public int CurrentAnimationIndex { get; set; }
     public string CurrentAnimation => Animations[CurrentAnimationIndex];
 
+    private int currentSpeed;
+
     public RewindableAnimationPlayer(
         AnimationPlayer animationPlayer,
         string[] animations
@@ -18,10 +20,7 @@ public class RewindableAnimationPlayer
         AnimationPlayer = animationPlayer;
         Animations = animations;
 
-        AnimationPlayer.AnimationStarted += name =>
-        {
-            CurrentAnimationIndex = GetAnimationIndex(name);
-        };
+        AnimationPlayer.AnimationStarted += name => { CurrentAnimationIndex = GetAnimationIndex(name); };
     }
 
     public void SyncRewind(int currentAnimationIndex)
@@ -37,6 +36,12 @@ public class RewindableAnimationPlayer
     {
         CurrentAnimationIndex = GetAnimationIndex(animation);
         AnimationPlayer.Play(animation);
+    }
+
+    public void UpdateRewindSpeed(int speed)
+    {
+        AnimationPlayer.SpeedScale = Mathf.Abs(speed);
+        currentSpeed = speed;
     }
 
     private int GetAnimationIndex(string animation)
