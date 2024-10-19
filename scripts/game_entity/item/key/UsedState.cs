@@ -13,10 +13,15 @@ public class UsedState : State<Key, Key.State>
 
     public override void EnterState(Key.State prevState)
     {
-        Entity.PickerArea.EnableCollision(Entity.PickerAreaCollision);
+        var transform = Entity.Transform;
         Entity.EnableCollision(Entity.KeyCollision);
         Entity.SetRigidBodyEnabled(true);
-        
+        PhysicsServer2D.BodySetState(
+            Entity.GetRid(),
+            PhysicsServer2D.BodyState.Transform,
+            transform
+        );
+
         Entity.LinearVelocity = Vector2.Zero;
     }
 }

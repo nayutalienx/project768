@@ -1,6 +1,7 @@
-﻿namespace project768.scripts.common.interaction;
+﻿using System;
+
+namespace project768.scripts.common.interaction;
 
 public abstract class InteractionContext
 {
-    
 }

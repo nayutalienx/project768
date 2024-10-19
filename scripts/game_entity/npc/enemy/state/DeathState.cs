@@ -1,6 +1,4 @@
-﻿using System;
-using project768.scripts.common;
-using project768.scripts.item;
+﻿using project768.scripts.common;
 using project768.scripts.state_machine;
 
 namespace project768.scripts.enemy;
@@ -16,8 +14,18 @@ public class DeathState : State<Enemy, Enemy.State>
         Entity.DisableCollision();
         Entity.HeadArea.DisableCollision();
         Entity.AttackArea.DisableCollision();
-        Entity.DoorKeyPickerContext.PutEvent(DoorKeyEvent.Dropped);
 
         Entity.Visible = false;
+
+        DropKey();
+    }
+
+    private void DropKey()
+    {
+        if (Entity.InteractionContext.HasKey)
+        {
+            Entity.InteractionContext.Key.StateChanger.ChangeState(Key.State.Unpicked);
+            Entity.InteractionContext.HasKey = false;
+        }
     }
 }

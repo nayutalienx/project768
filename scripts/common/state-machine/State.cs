@@ -1,5 +1,6 @@
 ﻿using System;
 using Godot;
+using project768.scripts.common;
 
 namespace project768.scripts.state_machine;
 
@@ -29,6 +30,14 @@ public abstract class State<T, TEnum>
     }
 
     public virtual void PhysicProcess(double delta)
+    {
+    }
+
+    public virtual void OnBodyEntered(CollisionBody body)
+    {
+    }
+    
+    public virtual void OnBodyExited(CollisionBody body)
     {
     }
 }

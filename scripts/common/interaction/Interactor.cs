@@ -1,20 +1,24 @@
 ﻿using System;
+using Godot;
 
 namespace project768.scripts.common.interaction;
 
-public class Interactor<T, TContext, TEnum>
-    where TEnum : IConvertible
+public class Interactor<T, TContext, TEventContext, TEnum>
     where TContext : InteractionContext
+    where TEnum : IConvertible
+    where TEventContext : InteractionEvent<TEnum>
 {
-    private IInteractableEntity<T, TContext, TEnum> Entity;
+    private IInteractableEntity<T, TContext, TEventContext, TEnum> Entity;
 
-    public Interactor(IInteractableEntity<T, TContext, TEnum> interactableEntity)
+    public Interactor(IInteractableEntity<T, TContext, TEventContext, TEnum> interactableEntity)
     {
         Entity = interactableEntity;
     }
 
-    public void Interact(TEnum interactType)
+    public void Interact(TEventContext eventContext)
     {
-        Entity.Interactions[interactType.ToInt32(null)].Interact();
+        var interaction = Entity.Interactions[eventContext.InteractionEnum.ToInt32(null)];
+        GD.Print($"Invoke Interact: {interaction.GetType().Name}");
+        interaction.Interact(eventContext);
     }
 }
