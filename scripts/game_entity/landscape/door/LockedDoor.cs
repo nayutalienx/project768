@@ -2,6 +2,7 @@ using Godot;
 using System;
 using project768.scripts.common;
 using project768.scripts.door;
+using project768.scripts.player.interaction;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
 
@@ -56,9 +57,11 @@ public partial class LockedDoor :
     private void OnBodyEntered(Node2D body)
     {
         if (body is project768.scripts.player.Player player &&
-            player.DoorKeyPickerContext.HasKey)
+            player.InteractionContext.HasKey)
         {
-            player.UnlockedDoor();
+            player.Interactor.Interact(
+                new PlayerInteractionEvent(PlayerInteraction.UnlockedDoor)
+            );
             StateChanger.ChangeState(State.Unlocked);
         }
     }

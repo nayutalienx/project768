@@ -1,5 +1,6 @@
 using Godot;
 using project768.scripts.player;
+using project768.scripts.player.interaction;
 
 public partial class Ladder : Node2D
 {
@@ -14,7 +15,10 @@ public partial class Ladder : Node2D
     {
         if (body is Player player)
         {
-            player.EnteredLadderArea(this);
+            player.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.EnteredLadder)
+            {
+                Ladder = Position
+            });
         }
     }
 
@@ -23,7 +27,7 @@ public partial class Ladder : Node2D
     {
         if (body is Player player)
         {
-            player.ExitedLadderArea();
+            player.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.ExitedLadder));
         }
     }
 }

@@ -1,7 +1,8 @@
 using System;
 using Godot;
 using project768.scripts.common;
-using project768.scripts.item;
+using project768.scripts.common.interaction;
+using project768.scripts.player.interaction;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
 
@@ -9,18 +10,15 @@ namespace project768.scripts.player;
 
 public partial class Player :
     CharacterBody2D,
-    DoorKeyPicker,
     IRewindable,
-    IStateMachineEntity<Player, Player.State>
+    IStateMachineEntity<Player, Player.State>,
+    IInteractableEntity<Player, PlayerInteractionContext, PlayerInteractionEvent, PlayerInteraction>
 {
     [Export] public float JumpVelocity = -400.0f;
 
     [Export] public float MoveSpeed = 300.0f;
 
     [Export] public float PushForce = 80.0f;
-
-    public DoorKeyPickerContext DoorKeyPickerContext { get; set; } = new();
-    public Vector2 Ladder { get; set; }
 
     public enum State
     {
@@ -30,6 +28,15 @@ public partial class Player :
         Rewind
     }
 
+    public Interaction<Player, PlayerInteractionEvent, PlayerInteraction>[] Interactions { get; set; }
+
+    public Interactor<Player, PlayerInteractionContext, PlayerInteractionEvent, PlayerInteraction> Interactor
+    {
+        get;
+        set;
+    }
+
+    public PlayerInteractionContext InteractionContext { get; set; } = new();
     public int RewindState { get; set; }
     public State<Player, State> CurrentState { get; set; }
     public State<Player, State>[] States { get; set; }
@@ -40,6 +47,18 @@ public partial class Player :
 
     public override void _Ready()
     {
+        Interactions = new Interaction<Player, PlayerInteractionEvent, PlayerInteraction>[]
+        {
+            new EnteredLadderInteraction(this),
+            new ExitedLadderInteraction(this),
+            new KillPlayerInteraction(this),
+            new FallOnEnemyInteraction(this),
+            new TryPickupKeyInteraction(this),
+            new DoorUnlockedInteraction(this)
+        };
+
+        Interactor = new(this);
+
         States = new State<Player, State>[]
         {
             new MoveState(this, State.Move),
@@ -51,7 +70,12 @@ public partial class Player :
         OrigCollission = this.GetCollisionLayerMask();
 
         StateChanger.ChangeState(State.Move);
+
+        var area2d = GetNode<Area2D>("Area2D");
+        area2d.BodyEntered += body => CurrentState.OnBodyEntered(new CollisionBody("player", body));
+        area2d.BodyExited += body => CurrentState.OnBodyExited(new CollisionBody("player", body));
     }
+
 
     public override void _Input(InputEvent _event)
     {
@@ -109,42 +133,5 @@ public partial class Player :
 
     public void OnRewindSpeedChanged(int speed)
     {
-    }
-
-    public void EnteredLadderArea(Ladder ladder)
-    {
-        Ladder = ladder.Position;
-    }
-
-    public void ExitedLadderArea()
-    {
-        if (CurrentState.StateEnum == State.Rewind)
-        {
-            return;
-        }
-
-        StateChanger.ChangeState(State.Move);
-        Ladder = Vector2.Zero;
-    }
-
-    public void EnteredEnemyAttackArea()
-    {
-        StateChanger.ChangeState(State.Death);
-    }
-
-    public void EnteredSpikeArea()
-    {
-        StateChanger.ChangeState(State.Death);
-    }
-
-    public void EnteredEnemyHeadArea()
-    {
-        Velocity = Velocity with {Y = JumpVelocity};
-    }
-
-    public void UnlockedDoor()
-    {
-        DoorKeyPickerContext.HasKey = false;
-        DoorKeyPickerContext.PutEvent(DoorKeyEvent.Used);
     }
 }

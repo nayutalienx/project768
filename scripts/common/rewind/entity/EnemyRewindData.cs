@@ -1,4 +1,5 @@
 ﻿using Godot;
+using project768.scripts.game_entity.npc.enemy.interaction.data;
 
 namespace project768.scripts.rewind.entity;
 
@@ -8,8 +9,11 @@ public struct EnemyRewindData
     public Vector2 Velocity { get; set; }
     public bool Visible { get; set; }
     public Enemy.State CurrentState { get; set; }
-    public DoorKeyPickerContextRewindData DoorKeyCtx { get; set; }
     public int Direction { get; set; }
+
+    // Key
+    public bool HasKey { get; set; }
+    public ulong KeyInstanceId { get; set; }
 
     public EnemyRewindData(Enemy enemy)
     {
@@ -18,7 +22,9 @@ public struct EnemyRewindData
         CurrentState = enemy.CurrentState.StateEnum;
         Visible = enemy.Visible;
         Direction = enemy.EnemyDirection;
-        DoorKeyCtx = new DoorKeyPickerContextRewindData(enemy.DoorKeyPickerContext);
+        // key
+        HasKey = enemy.InteractionContext.HasKey;
+        KeyInstanceId = enemy.InteractionContext.KeyInstanceId;
     }
 
     public void ApplyData(Enemy enemy)
@@ -28,6 +34,8 @@ public struct EnemyRewindData
         enemy.RewindState = (int) CurrentState;
         enemy.Visible = Visible;
         enemy.EnemyDirection = Direction;
-        DoorKeyCtx.ApplyData(enemy.DoorKeyPickerContext);
+        // key
+        enemy.InteractionContext.HasKey = HasKey;
+        enemy.InteractionContext.KeyInstanceId = KeyInstanceId;
     }
 }

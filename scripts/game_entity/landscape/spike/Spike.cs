@@ -1,5 +1,7 @@
 using Godot;
+using project768.scripts.game_entity.npc.enemy.interaction.data;
 using project768.scripts.player;
+using project768.scripts.player.interaction;
 
 public partial class Spike : Line2D
 {
@@ -25,13 +27,14 @@ public partial class Spike : Line2D
         {
             if (body is Player player)
             {
-                player.EnteredSpikeArea();
+                player.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.KillPlayer));
                 return;
             }
 
             if (body is Enemy enemy)
             {
-                enemy.EnteredSpikeArea();
+                enemy.Interactor.Interact(new EnemyInteractionEvent(EnemyInteraction.KillEnemy));
+                return;
             }
         };
     }

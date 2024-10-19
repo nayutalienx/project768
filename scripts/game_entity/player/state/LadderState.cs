@@ -4,9 +4,9 @@ using project768.scripts.state_machine;
 
 namespace project768.scripts.player;
 
-public class MoveState : State<Player, Player.State>
+public class LadderState : BasePlayerState
 {
-    public MoveState(Player entity, Player.State stateEnum) : base(entity, stateEnum)
+    public LadderState(Player entity, Player.State stateEnum) : base(entity, stateEnum)
     {
     }
 
@@ -17,6 +17,7 @@ public class MoveState : State<Player, Player.State>
 
     public override void EnterState(Player.State prevState)
     {
+        RecoverKeyOnEnterState(prevState);
         Entity.EnableCollision(Entity.OrigCollission);
         if (prevState == Player.State.Rewind)
         {
@@ -26,32 +27,29 @@ public class MoveState : State<Player, Player.State>
 
     public override void PhysicProcess(double delta)
     {
-        if ((Entity.Cache.DownPressed || Entity.Cache.UpPressed) &&
-            Entity.Ladder != Vector2.Zero)
+        if (
+            (Entity.Cache.JumpPressed || Entity.Cache.LeftPressed || Entity.Cache.RightPressed)
+        )
         {
-            Entity.StateChanger.ChangeState(Player.State.Ladder);
+            Entity.StateChanger.ChangeState(Player.State.Move);
             return;
         }
+        
+        ProcessKey();
 
-        if (!Entity.IsOnFloor())
-        {
-            Entity.Velocity += Entity.GetGravity() * (float) delta;
-        }
-
-        if (Entity.Cache.JumpPressed && Entity.IsOnFloor())
-        {
-            Entity.Velocity = Entity.Velocity with {Y = Entity.JumpVelocity};
-        }
-
-        float direction = Entity.Cache.HorizontalDirection;
-
-        Entity.Velocity = Entity.Velocity with {X = direction * Entity.MoveSpeed};
+        float direction = Entity.Cache.VerticalDirection;
         if (direction == 0)
         {
             Entity.Velocity = Entity.Velocity.MoveToward(
-                Entity.Velocity with {X = 0}, Entity.MoveSpeed
+                Entity.Velocity with {Y = 0}, Entity.MoveSpeed
             );
         }
+        else
+        {
+            Entity.Velocity = Entity.Velocity with {Y = direction * Entity.MoveSpeed};
+        }
+
+        Entity.Position = Entity.Position with {X = Entity.InteractionContext.Ladder.X};
 
         if (Entity.Cache.DownPressed)
         {

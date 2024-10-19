@@ -1,6 +1,4 @@
-﻿using Godot;
-using project768.scripts.item;
-using project768.scripts.state_machine;
+﻿using project768.scripts.state_machine;
 
 namespace project768.scripts.player;
 

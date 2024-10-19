@@ -58,7 +58,6 @@ public partial class CannonBall : Area2D,
 
         BodyEntered += body =>
         {
-            GD.Print($"{Name} collided with {body.Name}");
             StateChanger.ChangeState(State.Wait);
         };
 
