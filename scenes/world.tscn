@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://u730p1tggvfb"]
+[gd_scene load_steps=24 format=4 uid="uid://u730p1tggvfb"]
 
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/ladder.tscn" id="1_e01dh"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/player.tscn" id="1_vljbg"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bb6bemfvj0nt3" path="res://scenes/locked_door.tscn" id="5_17l2d"]
 [ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/spikes.tscn" id="7_efkx0"]
 [ext_resource type="PackedScene" uid="uid://btobpn5evuwb8" path="res://scenes/cannon.tscn" id="8_dw018"]
+[ext_resource type="PackedScene" uid="uid://bop1rbgs6g2n0" path="res://scenes/switcher.tscn" id="9_fbjpp"]
 [ext_resource type="Script" path="res://scripts/common/rewind/RewindPlayer.cs" id="9_kdnbs"]
 [ext_resource type="Script" path="res://scripts/common/rewind/audio/RewindAudioPlayer.cs" id="10_61phy"]
 [ext_resource type="AudioStream" uid="uid://cwk83y0x3xvpd" path="res://music/whisper.mp3" id="10_k0s14"]
@@ -263,6 +264,12 @@ position = Vector2(1297, -537)
 [node name="Spike" parent="second_world/spikes" instance=ExtResource("7_efkx0")]
 position = Vector2(-889, 803)
 points = PackedVector2Array(0, -0.0668298, 255.624, 1.40342)
+
+[node name="switchers" type="Node2D" parent="second_world"]
+z_index = -10
+
+[node name="switcher" parent="second_world/switchers" instance=ExtResource("9_fbjpp")]
+position = Vector2(2413, 554)
 
 [node name="Player" parent="." instance=ExtResource("1_vljbg")]
 position = Vector2(495, 433)

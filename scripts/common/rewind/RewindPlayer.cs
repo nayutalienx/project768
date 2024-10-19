@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using Godot;
 using project768.scripts.common;
-using project768.scripts.player;
 using project768.scripts.rewind.entity;
 
 namespace project768.scripts.rewind;
@@ -13,14 +9,7 @@ public partial class RewindPlayer : Node2D
 {
     [Export] public Label RewindLabel;
 
-    public Player Player { get; set; }
-    public Enemy[] Enemies { get; set; }
-    public Key[] Keys { get; set; }
-    public LockedDoor[] LockedDoors { get; set; }
-    public OneWayPlatform[] OneWayPlatforms { get; set; }
-    public Cannon[] Cannons { get; set; }
-
-    public List<IRewindable> Rewindables = new();
+    public RewindDataSource RewindDataSource { get; set; }
 
     private const int MaxStates = 60 * 60 * 3; // Adjust based on how much time you want to rewind
 
@@ -54,7 +43,7 @@ public partial class RewindPlayer : Node2D
 
     private void NotifyRewindableSpeed()
     {
-        foreach (IRewindable rewindable in Rewindables)
+        foreach (IRewindable rewindable in RewindDataSource.Rewindables)
         {
             rewindable.OnRewindSpeedChanged(rewindSpeed);
         }
@@ -69,43 +58,7 @@ public partial class RewindPlayer : Node2D
             RewindLabel.Hide();
         }
 
-        Player = FindAndAddRewindables("player")[0] as Player;
-        Enemies = FindAndAddRewindables("enemy").ConvertAll(o => o as Enemy).ToArray();
-        Keys = FindAndAddRewindables("key").ConvertAll(o => o as Key).ToArray();
-        LockedDoors = FindAndAddRewindables("door").ConvertAll(o => o as LockedDoor).ToArray();
-        Cannons = FindAndAddRewindables("cannon").ConvertAll(o => o as Cannon).ToArray();
-        foreach (Cannon cannon in Cannons)
-        {
-            Rewindables.AddRange(cannon.CannonBallPool);
-        }
-
-        OneWayPlatforms = FindAndAddRewindables("one_way_platform")
-            .ConvertAll(o => o as OneWayPlatform)
-            .Where(platform => platform.AnimationPlayer != null)
-            .ToArray();
-        FindAndAddRewindables("background_music");
-    }
-
-    private List<IRewindable> FindAndAddRewindables(
-        StringName group
-    )
-    {
-        List<IRewindable> list = new();
-        foreach (var child in GetTree().GetNodesInGroup(group))
-        {
-            IRewindable rewindable = (IRewindable) child;
-            if (rewindable == null)
-            {
-                GD.Print($"ERROR: object is not rewindable {group}");
-                throw new Exception("Object is not rewindable");
-            }
-
-            list.Add(rewindable);
-        }
-
-        Rewindables.AddRange(list);
-        GD.Print($"Found {group} {list.Count} rewindables. Rewindables len: {Rewindables.Count}");
-        return list;
+        RewindDataSource = new RewindDataSource(GetTree());
     }
 
     public override void _Input(InputEvent _event)
@@ -171,8 +124,7 @@ public partial class RewindPlayer : Node2D
                 if (!worldStates.IsEmpty)
                 {
                     var lastState = worldStates.Pop();
-                    lastState.ApplyData(
-                        Player, Enemies, Keys, LockedDoors, OneWayPlatforms, Cannons);
+                    lastState.ApplyData(RewindDataSource);
                     rewindedBuffer.Push(lastState);
                 }
                 else
@@ -186,7 +138,7 @@ public partial class RewindPlayer : Node2D
                 if (rewindedBuffer.Count != 0)
                 {
                     var futureState = rewindedBuffer.Pop();
-                    futureState.ApplyData(Player, Enemies, Keys, LockedDoors, OneWayPlatforms, Cannons);
+                    futureState.ApplyData(RewindDataSource);
                     worldStates.Push(futureState);
                 }
                 else
@@ -203,13 +155,7 @@ public partial class RewindPlayer : Node2D
     {
         if (!Paused)
         {
-            worldStates.Push(new WorldRewindData(
-                Player,
-                Enemies,
-                Keys,
-                LockedDoors,
-                OneWayPlatforms,
-                Cannons));
+            worldStates.Push(new WorldRewindData(RewindDataSource));
         }
     }
 
@@ -226,7 +172,7 @@ public partial class RewindPlayer : Node2D
                 RewindLabel.Show();
             }
 
-            foreach (IRewindable rewindable in Rewindables)
+            foreach (IRewindable rewindable in RewindDataSource.Rewindables)
             {
                 rewindable.RewindStarted();
             }
@@ -245,7 +191,7 @@ public partial class RewindPlayer : Node2D
                 RewindLabel.Hide();
             }
 
-            foreach (IRewindable rewindable in Rewindables)
+            foreach (IRewindable rewindable in RewindDataSource.Rewindables)
             {
                 rewindable.RewindFinished();
             }

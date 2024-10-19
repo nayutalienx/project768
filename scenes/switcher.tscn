@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://bop1rbgs6g2n0"]
+
+[ext_resource type="Texture2D" uid="uid://cf52jiwhoqkq" path="res://sprites/switcher_base.png" id="1_funsv"]
+[ext_resource type="Script" path="res://scripts/game_entity/landscape/switcher/Switcher.cs" id="1_yxjlc"]
+[ext_resource type="Texture2D" uid="uid://c71ym5s3ykqon" path="res://sprites/switcher_stick.png" id="2_biwga"]
+
+[sub_resource type="Animation" id="Animation_0blx4"]
+resource_name = "end"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/stick:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5708]
+}
+
+[sub_resource type="Animation" id="Animation_2p7c1"]
+resource_name = "move"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/stick:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -1.5708]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7sjo0"]
+_data = {
+"end": SubResource("Animation_0blx4"),
+"move": SubResource("Animation_2p7c1")
+}
+
+[node name="switcher" type="Node2D" groups=["switcher"]]
+script = ExtResource("1_yxjlc")
+
+[node name="sprites" type="Node2D" parent="."]
+scale = Vector2(0.0876937, 0.0876937)
+
+[node name="base" type="Sprite2D" parent="sprites"]
+texture = ExtResource("1_funsv")
+
+[node name="stick" type="Sprite2D" parent="sprites"]
+position = Vector2(-31, -230)
+texture = ExtResource("2_biwga")
+offset = Vector2(274, -245)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7sjo0")
+}
+next/move = &"end"

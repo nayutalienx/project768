@@ -20,6 +20,7 @@ public partial class Player :
     [Export] public float PushForce = 80.0f;
 
     public DoorKeyPickerContext DoorKeyPickerContext { get; set; } = new();
+    public Vector2 Ladder { get; set; }
 
     public enum State
     {
@@ -33,7 +34,6 @@ public partial class Player :
     public State<Player, State> CurrentState { get; set; }
     public State<Player, State>[] States { get; set; }
     public StateChanger<Player, State> StateChanger { get; set; }
-    public Vector2 Ladder { get; set; }
     public PlayerCache Cache { get; set; }
 
     public Tuple<uint, uint> OrigCollission;
