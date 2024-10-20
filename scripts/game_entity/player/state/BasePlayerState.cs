@@ -14,7 +14,17 @@ public class BasePlayerState : State<Player, Player.State>
     {
         if (prevState == Player.State.Rewind && Entity.InteractionContext.KeyContext.HasKey)
         {
-            Entity.InteractionContext.KeyContext.Key = GodotObject.InstanceFromId(Entity.InteractionContext.KeyContext.KeyInstanceId) as Key;
+            Entity.InteractionContext.KeyContext.Key =
+                GodotObject.InstanceFromId(Entity.InteractionContext.KeyContext.KeyInstanceId) as Key;
+        }
+    }
+
+    protected void RecoverSwitcherOnEnterState(Player.State prevState)
+    {
+        if (prevState == Player.State.Rewind && Entity.InteractionContext.SwitcherContext.JoinedSwitcherArea)
+        {
+            Entity.InteractionContext.SwitcherContext.Switcher =
+                GodotObject.InstanceFromId(Entity.InteractionContext.SwitcherContext.InstanceId) as Switcher;
         }
     }
 
