@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Godot;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
@@ -19,7 +20,7 @@ public partial class CannonBall : Area2D,
     }
 
     public State<CannonBall, State> CurrentState { get; set; }
-    public State<CannonBall, State>[] States { get; set; }
+    public Dictionary<State, State<CannonBall, State>> States { get; set; }
     public StateChanger<CannonBall, State> StateChanger { get; set; }
     public int RewindState { get; set; }
     public Sprite2D Sprite { get; set; }
@@ -48,18 +49,15 @@ public partial class CannonBall : Area2D,
         Sprite = GetNode<Sprite2D>("Sprite2D");
         Particles = GetNode<GpuParticles2D>("GPUParticles2D");
 
-        States = new State<CannonBall, State>[]
+        States = new Dictionary<State, State<CannonBall, State>>()
         {
-            new WaitState(this, State.Wait),
-            new MoveState(this, State.Move),
-            new RewindState(this, State.Rewind),
+            {State.Wait, new WaitState(this, State.Wait)},
+            {State.Move, new MoveState(this, State.Move)},
+            {State.Rewind, new RewindState(this, State.Rewind)},
         };
         StateChanger = new StateChanger<CannonBall, State>(this);
 
-        BodyEntered += body =>
-        {
-            StateChanger.ChangeState(State.Wait);
-        };
+        BodyEntered += body => { StateChanger.ChangeState(State.Wait); };
 
         StateChanger.ChangeState(State.Wait);
     }

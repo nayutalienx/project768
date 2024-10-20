@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 using project768.scripts.common;
 using project768.scripts.key;
@@ -21,24 +22,24 @@ public partial class Key :
 
     public int RewindState { get; set; }
     public State<Key, State> CurrentState { get; set; }
-    public State<Key, State>[] States { get; set; }
+    public Dictionary<State, State<Key, State>> States { get; set; }
     public StateChanger<Key, State> StateChanger { get; set; }
-    
+
     public Tuple<uint, uint> KeyCollision;
 
     public override void _Ready()
     {
-        States = new State<Key, State>[]
+        States = new Dictionary<State, State<Key, State>>()
         {
-            new UnpickedState(this, State.Unpicked),
-            new PickedState(this, State.Picked),
-            new UsedState(this, State.Used),
-            new RewindState(this, State.Rewind),
+            {State.Unpicked, new UnpickedState(this, State.Unpicked)},
+            {State.Picked, new PickedState(this, State.Picked)},
+            {State.Used, new UsedState(this, State.Used)},
+            {State.Rewind, new RewindState(this, State.Rewind)},
         };
         StateChanger = new StateChanger<Key, State>(this);
-        
+
         KeyCollision = this.GetCollisionLayerMask();
-        
+
         StateChanger.ChangeState(State.Unpicked);
     }
 
@@ -46,7 +47,7 @@ public partial class Key :
     {
         CurrentState.PhysicProcess(delta);
     }
-    
+
     public void RewindStarted()
     {
         StateChanger.ChangeState(State.Rewind);
@@ -56,7 +57,7 @@ public partial class Key :
     {
         StateChanger.ChangeState((State) RewindState);
     }
-    
+
     public void OnRewindSpeedChanged(int speed)
     {
     }

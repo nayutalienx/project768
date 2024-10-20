@@ -1,9 +1,12 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using project768.scripts.common;
-using project768.scripts.platform;
+using project768.scripts.game_entity.landscape.cannon;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
+using MoveState = project768.scripts.platform.MoveState;
+using RewindState = project768.scripts.platform.RewindState;
 
 public partial class OneWayPlatform :
     Node2D,
@@ -18,7 +21,7 @@ public partial class OneWayPlatform :
 
     public int RewindState { get; set; }
     public State<OneWayPlatform, State> CurrentState { get; set; }
-    public State<OneWayPlatform, State>[] States { get; set; }
+    public Dictionary<State, State<OneWayPlatform, State>> States { get; set; }
     public StateChanger<OneWayPlatform, State> StateChanger { get; set; }
 
     [Export] public string animationName { get; set; }
@@ -28,10 +31,10 @@ public partial class OneWayPlatform :
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        States = new State<OneWayPlatform, State>[]
+        States = new Dictionary<State, State<OneWayPlatform, State>>()
         {
-            new MoveState(this, State.Move),
-            new RewindState(this, State.Rewind),
+            {State.Move, new MoveState(this, State.Move)},
+            {State.Rewind, new RewindState(this, State.Rewind)},
         };
         StateChanger = new StateChanger<OneWayPlatform, State>(this);
         StateChanger.ChangeState(State.Move);

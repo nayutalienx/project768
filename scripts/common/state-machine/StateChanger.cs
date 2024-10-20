@@ -17,7 +17,7 @@ public class StateChanger<T, TEnum>
     public void ChangeState(TEnum newState)
     {
         var prevState = StateMachineEntity.CurrentState;
-        StateMachineEntity.CurrentState = StateMachineEntity.States[newState.ToInt32(null)];
+        StateMachineEntity.CurrentState = StateMachineEntity.States[newState];
 
         if (prevState != null)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Godot;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
@@ -21,7 +22,7 @@ public partial class RewindAudioPlayer :
 
     public int RewindState { get; set; }
     public State<RewindAudioPlayer, State> CurrentState { get; set; }
-    public State<RewindAudioPlayer, State>[] States { get; set; }
+    public Dictionary<State, State<RewindAudioPlayer, State>> States { get; set; }
     public StateChanger<RewindAudioPlayer, State> StateChanger { get; set; }
 
     public AudioStreamPlayer ForwardPlayer { get; set; }
@@ -32,11 +33,11 @@ public partial class RewindAudioPlayer :
 
     public override void _Ready()
     {
-        States = new State<RewindAudioPlayer, State>[]
+        States = new Dictionary<State, State<RewindAudioPlayer, State>>()
         {
-            new ForwardState(this, State.Forward),
-            new StoppedState(this, State.Stopped),
-            new BackwardState(this, State.Backward),
+            {State.Forward, new ForwardState(this, State.Forward)},
+            {State.Stopped, new StoppedState(this, State.Stopped)},
+            {State.Backward, new BackwardState(this, State.Backward)},
         };
         StateChanger = new StateChanger<RewindAudioPlayer, State>(this);
 

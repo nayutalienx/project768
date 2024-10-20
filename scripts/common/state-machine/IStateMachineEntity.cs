@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Godot;
 
 namespace project768.scripts.state_machine;
@@ -8,6 +9,6 @@ public interface IStateMachineEntity<T, TEnum>
     where TEnum : IConvertible
 {
     public State<T, TEnum> CurrentState { get; set; }
-    public State<T, TEnum>[] States { get; set; }
+    public Dictionary<TEnum, State<T, TEnum>> States { get; set; }
     public StateChanger<T, TEnum> StateChanger { get; set; }
 }
