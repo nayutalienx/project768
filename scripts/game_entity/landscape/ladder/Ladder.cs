@@ -17,8 +17,11 @@ public partial class Ladder : Node2D
         {
             player.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.LadderArea)
             {
-                JoinedLadderArea = true,
-                Ladder = Position
+                LadderEvent = new PlayerLadderEvent()
+                {
+                    JoinedLadderArea = true,
+                    Ladder = Position
+                }
             });
         }
     }
@@ -30,7 +33,11 @@ public partial class Ladder : Node2D
         {
             player.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.LadderArea)
             {
-                JoinedLadderArea = false,
+                LadderEvent = new PlayerLadderEvent()
+                {
+                    JoinedLadderArea = false,
+                    Ladder = Position
+                }
             });
         }
     }

@@ -11,9 +11,9 @@ public class LadderAreaInteraction : Interaction<Player, PlayerInteractionEvent,
 
     public override void Interact(PlayerInteractionEvent eventContext)
     {
-        if (eventContext.JoinedLadderArea)
+        if (eventContext.LadderEvent.JoinedLadderArea)
         {
-            Entity.InteractionContext.Ladder = eventContext.Ladder;
+            Entity.InteractionContext.LadderContext.Ladder = eventContext.LadderEvent.Ladder;
         }
         else
         {
@@ -23,7 +23,7 @@ public class LadderAreaInteraction : Interaction<Player, PlayerInteractionEvent,
             }
 
             Entity.StateChanger.ChangeState(Player.State.Move);
-            Entity.InteractionContext.Ladder = Vector2.Zero;
+            Entity.InteractionContext.LadderContext.Ladder = Vector2.Zero;
         }
     }
 }

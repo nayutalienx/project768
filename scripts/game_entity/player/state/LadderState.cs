@@ -49,7 +49,7 @@ public class LadderState : BasePlayerState
             Entity.Velocity = Entity.Velocity with {Y = direction * Entity.MoveSpeed};
         }
 
-        Entity.Position = Entity.Position with {X = Entity.InteractionContext.Ladder.X};
+        Entity.Position = Entity.Position with {X = Entity.InteractionContext.LadderContext.Ladder.X};
 
         if (Entity.Cache.DownPressed)
         {

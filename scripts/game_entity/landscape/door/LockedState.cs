@@ -19,7 +19,7 @@ public class LockedState : State<LockedDoor, LockedDoor.State>
     public override void OnBodyEntered(CollisionBody body)
     {
         if (body.Body is project768.scripts.player.Player player &&
-            player.InteractionContext.HasKey)
+            player.InteractionContext.KeyContext.HasKey)
         {
             player.Interactor.Interact(
                 new PlayerInteractionEvent(PlayerInteraction.UnlockedDoor)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bop1rbgs6g2n0"]
+[gd_scene load_steps=8 format=3 uid="uid://bop1rbgs6g2n0"]
 
 [ext_resource type="Texture2D" uid="uid://cf52jiwhoqkq" path="res://sprites/switcher_base.png" id="1_funsv"]
 [ext_resource type="Script" path="res://scripts/game_entity/landscape/switcher/Switcher.cs" id="1_yxjlc"]
@@ -40,7 +40,12 @@ _data = {
 "move": SubResource("Animation_2p7c1")
 }
 
-[node name="switcher" type="Node2D" groups=["switcher"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ai67f"]
+size = Vector2(98, 109)
+
+[node name="switcher" type="StaticBody2D" groups=["switcher"]]
+collision_layer = 16
+collision_mask = 0
 script = ExtResource("1_yxjlc")
 
 [node name="sprites" type="Node2D" parent="."]
@@ -59,3 +64,7 @@ libraries = {
 "": SubResource("AnimationLibrary_7sjo0")
 }
 next/move = &"end"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, -21.5)
+shape = SubResource("RectangleShape2D_ai67f")

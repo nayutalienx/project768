@@ -10,7 +10,7 @@ public class DoorUnlockedInteraction : Interaction<Player, PlayerInteractionEven
 
     public override void Interact(PlayerInteractionEvent eventContext)
     {
-        Entity.InteractionContext.Key.StateChanger.ChangeState(Key.State.Used);
-        Entity.InteractionContext.HasKey = false;
+        Entity.InteractionContext.KeyContext.Key.StateChanger.ChangeState(Key.State.Used);
+        Entity.InteractionContext.KeyContext.HasKey = false;
     }
 }

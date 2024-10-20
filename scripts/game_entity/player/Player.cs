@@ -60,7 +60,8 @@ public partial class Player :
                 {PlayerInteraction.KillPlayer, new KillPlayerInteraction(this)},
                 {PlayerInteraction.FallOnEnemyHead, new FallOnEnemyInteraction(this)},
                 {PlayerInteraction.TryPickupKey, new TryPickupKeyInteraction(this)},
-                {PlayerInteraction.UnlockedDoor, new DoorUnlockedInteraction(this)}
+                {PlayerInteraction.UnlockedDoor, new DoorUnlockedInteraction(this)},
+                {PlayerInteraction.SwitcherArea, new SwitcherAreaInteraction(this)}
             };
         Interactor = new(this);
 

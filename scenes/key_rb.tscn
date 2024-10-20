@@ -9,6 +9,7 @@ height = 101.024
 
 [node name="key" type="RigidBody2D" groups=["key"]]
 collision_layer = 8
+lock_rotation = true
 script = ExtResource("1_qydde")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

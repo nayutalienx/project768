@@ -5,9 +5,9 @@ namespace project768.scripts.player.interaction;
 
 public class PlayerInteractionEvent : InteractionEvent<PlayerInteraction>
 {
-    public bool JoinedLadderArea { get; set; }
-    public Vector2 Ladder { get; set; }
-    public Key Key { get; set; }
+    public PlayerLadderEvent LadderEvent { get; set; }
+    public PlayerKeyEvent KeyEvent { get; set; }
+    public PlayerSwitcherEvent SwitcherEvent { get; set; }
 
     public PlayerInteractionEvent(PlayerInteraction interactionEnum) : base(interactionEnum)
     {

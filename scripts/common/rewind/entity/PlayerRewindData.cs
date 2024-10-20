@@ -21,10 +21,10 @@ public struct PlayerRewindData
         Velocity = player.Velocity;
         CurrentState = player.CurrentState.StateEnum;
         Visible = player.Visible;
-        Ladder = player.InteractionContext.Ladder;
+        Ladder = player.InteractionContext.LadderContext.Ladder;
         // Key
-        HasKey = player.InteractionContext.HasKey;
-        KeyInstanceId = player.InteractionContext.KeyInstanceId;
+        HasKey = player.InteractionContext.KeyContext.HasKey;
+        KeyInstanceId = player.InteractionContext.KeyContext.KeyInstanceId;
     }
 
     public void ApplyData(Player player)
@@ -32,10 +32,10 @@ public struct PlayerRewindData
         player.Velocity = Velocity;
         player.Position = Position;
         player.RewindState = (int) CurrentState;
-        player.InteractionContext.Ladder = Ladder;
+        player.InteractionContext.LadderContext.Ladder = Ladder;
         player.Visible = Visible;
         // Key
-        player.InteractionContext.HasKey = HasKey;
-        player.InteractionContext.KeyInstanceId = KeyInstanceId;
+        player.InteractionContext.KeyContext.HasKey = HasKey;
+        player.InteractionContext.KeyContext.KeyInstanceId = KeyInstanceId;
     }
 }
