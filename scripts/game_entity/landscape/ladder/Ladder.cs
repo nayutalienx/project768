@@ -15,8 +15,9 @@ public partial class Ladder : Node2D
     {
         if (body is Player player)
         {
-            player.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.EnteredLadder)
+            player.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.LadderArea)
             {
+                JoinedLadderArea = true,
                 Ladder = Position
             });
         }
@@ -27,7 +28,10 @@ public partial class Ladder : Node2D
     {
         if (body is Player player)
         {
-            player.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.ExitedLadder));
+            player.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.LadderArea)
+            {
+                JoinedLadderArea = false,
+            });
         }
     }
 }

@@ -56,8 +56,7 @@ public partial class Player :
         Interactions =
             new Dictionary<PlayerInteraction, Interaction<Player, PlayerInteractionEvent, PlayerInteraction>>()
             {
-                {PlayerInteraction.EnteredLadder, new EnteredLadderInteraction(this)},
-                {PlayerInteraction.ExitedLadder, new ExitedLadderInteraction(this)},
+                {PlayerInteraction.LadderArea, new LadderAreaInteraction(this)},
                 {PlayerInteraction.KillPlayer, new KillPlayerInteraction(this)},
                 {PlayerInteraction.FallOnEnemyHead, new FallOnEnemyInteraction(this)},
                 {PlayerInteraction.TryPickupKey, new TryPickupKeyInteraction(this)},

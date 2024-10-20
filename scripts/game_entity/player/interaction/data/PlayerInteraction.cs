@@ -2,8 +2,7 @@
 
 public enum PlayerInteraction
 {
-    EnteredLadder,
-    ExitedLadder,
+    LadderArea,
     KillPlayer,
     FallOnEnemyHead,
     TryPickupKey,
