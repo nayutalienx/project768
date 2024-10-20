@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://u730p1tggvfb"]
+[gd_scene load_steps=26 format=4 uid="uid://u730p1tggvfb"]
 
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/ladder.tscn" id="1_e01dh"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/player.tscn" id="1_vljbg"]
@@ -105,6 +105,27 @@ tracks/0/keys = {
 _data = {
 "Platform1": SubResource("Animation_c84js"),
 "RESET": SubResource("Animation_avejg")
+}
+
+[sub_resource type="Animation" id="Animation_jokj5"]
+resource_name = "move"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2688, 586), Vector2(3281, 310)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l6uu7"]
+_data = {
+"move": SubResource("Animation_jokj5")
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_e5xqr"]
@@ -218,11 +239,23 @@ position = Vector2(1178, -451)
 
 [node name="one_way_platform8" parent="second_world/one_way_platforms" instance=ExtResource("2_7en46")]
 position = Vector2(843, -203)
-animationName = "Platform1"
+AnimationNameOnStart = "Platform1"
+AllAnimations = PackedStringArray("Platform1")
+StartAnimationOnReady = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="second_world/one_way_platforms/one_way_platform8"]
 libraries = {
 "": SubResource("AnimationLibrary_84wdo")
+}
+
+[node name="one_way_platform9" parent="second_world/one_way_platforms" instance=ExtResource("2_7en46")]
+position = Vector2(2688, 586)
+DisableOneWayCollission = true
+AllAnimations = PackedStringArray("move")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="second_world/one_way_platforms/one_way_platform9"]
+libraries = {
+"": SubResource("AnimationLibrary_l6uu7")
 }
 
 [node name="enemies" type="Node2D" parent="second_world"]
@@ -268,8 +301,11 @@ points = PackedVector2Array(0, -0.0668298, 255.624, 1.40342)
 [node name="switchers" type="Node2D" parent="second_world"]
 z_index = -10
 
-[node name="switcher" parent="second_world/switchers" instance=ExtResource("9_fbjpp")]
+[node name="switcher" parent="second_world/switchers" node_paths=PackedStringArray("ReactAnimationPlayer") instance=ExtResource("9_fbjpp")]
 position = Vector2(2413, 554)
+Reaction = 1
+ReactAnimationPlayer = NodePath("../../one_way_platforms/one_way_platform9/AnimationPlayer")
+ReactAnimationName = "move"
 
 [node name="Player" parent="." instance=ExtResource("1_vljbg")]
 position = Vector2(495, 433)

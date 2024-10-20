@@ -24,7 +24,11 @@ public partial class OneWayPlatform :
     public Dictionary<State, State<OneWayPlatform, State>> States { get; set; }
     public StateChanger<OneWayPlatform, State> StateChanger { get; set; }
 
-    [Export] public string animationName { get; set; }
+    [Export] public bool DisableOneWayCollission { get; set; }
+
+    [Export] public string AnimationNameOnStart { get; set; }
+    [Export] public string[] AllAnimations { get; set; }
+    [Export] public bool StartAnimationOnReady { get; set; }
 
     public RewindableAnimationPlayer AnimationPlayer { get; set; }
 
@@ -44,14 +48,16 @@ public partial class OneWayPlatform :
         {
             AnimationPlayer = new RewindableAnimationPlayer(
                 GetNode<AnimationPlayer>("AnimationPlayer"),
-                new[]
-                {
-                    "Platform1"
-                });
-            if (AnimationPlayer != null && animationName != null)
+                AllAnimations);
+            if (AnimationPlayer != null && AnimationNameOnStart != null && StartAnimationOnReady)
             {
-                AnimationPlayer.Play(animationName);
+                AnimationPlayer.Play(AnimationNameOnStart);
             }
+        }
+
+        if (DisableOneWayCollission)
+        {
+            GetNode<CollisionShape2D>("CollisionShape2D").OneWayCollision = false;
         }
     }
 
