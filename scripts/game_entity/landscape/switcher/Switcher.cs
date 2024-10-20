@@ -10,6 +10,16 @@ public partial class Switcher : Node2D,
     IStateMachineEntity<Switcher, Switcher.State>,
     IRewindable
 {
+    public enum SwitcherReaction
+    {
+        NoReaction,
+        StartAnimation
+    }
+
+    [Export] public SwitcherReaction Reaction { get; set; }
+    [Export] public AnimationPlayer ReactAnimationPlayer { get; set; }
+    [Export] public string ReactAnimationName { get; set; }
+
     public enum State
     {
         Initial,
