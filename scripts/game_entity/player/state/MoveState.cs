@@ -19,6 +19,7 @@ public class MoveState : BasePlayerState
     public override void EnterState(Player.State prevState)
     {
         RecoverKeyOnEnterState(prevState);
+        RecoverSwitcherOnEnterState(prevState);
         Entity.EnableCollision(Entity.OrigCollission);
         if (prevState == Player.State.Rewind)
         {
@@ -36,6 +37,7 @@ public class MoveState : BasePlayerState
         }
 
         ProcessKey();
+        ProcessSwitcher();
 
         if (!Entity.IsOnFloor())
         {
@@ -103,6 +105,17 @@ public class MoveState : BasePlayerState
                     Switcher = switcher
                 }
             });
+        }
+    }
+
+    private void ProcessSwitcher()
+    {
+        if (Entity.InteractionContext.SwitcherContext.JoinedSwitcherArea)
+        {
+            if (Entity.Cache.UpPressed)
+            {
+                Entity.InteractionContext.SwitcherContext.Switcher.StateChanger.ChangeState(Switcher.State.Used);
+            }
         }
     }
 }
