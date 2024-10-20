@@ -29,7 +29,7 @@ public class MoveState : BasePlayerState
     public override void PhysicProcess(double delta)
     {
         if ((Entity.Cache.DownPressed || Entity.Cache.UpPressed) &&
-            Entity.InteractionContext.Ladder != Vector2.Zero)
+            Entity.InteractionContext.LadderContext.Ladder != Vector2.Zero)
         {
             Entity.StateChanger.ChangeState(Player.State.Ladder);
             return;
@@ -71,7 +71,37 @@ public class MoveState : BasePlayerState
         {
             Entity.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.TryPickupKey)
             {
-                Key = key
+                KeyEvent = new PlayerKeyEvent()
+                {
+                    Key = key
+                }
+            });
+        }
+
+        if (body.Body is Switcher switcher)
+        {
+            Entity.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.SwitcherArea)
+            {
+                SwitcherEvent = new PlayerSwitcherEvent
+                {
+                    JoinedSwitcherArea = true,
+                    Switcher = switcher
+                }
+            });
+        }
+    }
+
+    public override void OnBodyExited(CollisionBody body)
+    {
+        if (body.Body is Switcher switcher)
+        {
+            Entity.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.SwitcherArea)
+            {
+                SwitcherEvent = new PlayerSwitcherEvent
+                {
+                    JoinedSwitcherArea = false,
+                    Switcher = switcher
+                }
             });
         }
     }

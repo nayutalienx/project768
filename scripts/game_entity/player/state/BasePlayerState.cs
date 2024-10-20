@@ -12,17 +12,17 @@ public class BasePlayerState : State<Player, Player.State>
 
     protected void RecoverKeyOnEnterState(Player.State prevState)
     {
-        if (prevState == Player.State.Rewind && Entity.InteractionContext.HasKey)
+        if (prevState == Player.State.Rewind && Entity.InteractionContext.KeyContext.HasKey)
         {
-            Entity.InteractionContext.Key = GodotObject.InstanceFromId(Entity.InteractionContext.KeyInstanceId) as Key;
+            Entity.InteractionContext.KeyContext.Key = GodotObject.InstanceFromId(Entity.InteractionContext.KeyContext.KeyInstanceId) as Key;
         }
     }
 
     protected void ProcessKey()
     {
-        if (Entity.InteractionContext.HasKey)
+        if (Entity.InteractionContext.KeyContext.HasKey)
         {
-            Entity.InteractionContext.Key.Transform = Entity.Transform;
+            Entity.InteractionContext.KeyContext.Key.Transform = Entity.Transform;
         }
     }
 }

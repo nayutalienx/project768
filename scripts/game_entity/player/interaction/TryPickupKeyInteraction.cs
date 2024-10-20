@@ -10,14 +10,14 @@ public class TryPickupKeyInteraction : Interaction<Player, PlayerInteractionEven
 
     public override void Interact(PlayerInteractionEvent eventContext)
     {
-        if (!Entity.InteractionContext.HasKey &&
-            eventContext.Key.CurrentState.StateEnum == Key.State.Unpicked)
+        if (!Entity.InteractionContext.KeyContext.HasKey &&
+            eventContext.KeyEvent.Key.CurrentState.StateEnum == Key.State.Unpicked)
         {
-            Entity.InteractionContext.HasKey = true;
-            Entity.InteractionContext.Key = eventContext.Key;
-            Entity.InteractionContext.KeyInstanceId = eventContext.Key.GetInstanceId();
+            Entity.InteractionContext.KeyContext.HasKey = true;
+            Entity.InteractionContext.KeyContext.Key = eventContext.KeyEvent.Key;
+            Entity.InteractionContext.KeyContext.KeyInstanceId = eventContext.KeyEvent.Key.GetInstanceId();
 
-            eventContext.Key.StateChanger.ChangeState(Key.State.Picked);
+            eventContext.KeyEvent.Key.StateChanger.ChangeState(Key.State.Picked);
         }
     }
 }

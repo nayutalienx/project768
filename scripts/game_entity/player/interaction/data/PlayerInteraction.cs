@@ -6,5 +6,6 @@ public enum PlayerInteraction
     KillPlayer,
     FallOnEnemyHead,
     TryPickupKey,
-    UnlockedDoor
+    UnlockedDoor,
+    SwitcherArea
 }
