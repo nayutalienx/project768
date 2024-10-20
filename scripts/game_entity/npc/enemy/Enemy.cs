@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection.Metadata;
 using Godot;
 using project768.scripts.common;
@@ -27,12 +28,17 @@ public partial class Enemy :
         Rewind
     }
 
-    public Interaction<Enemy, EnemyInteractionEvent, EnemyInteraction>[] Interactions { get; set; }
+    public Dictionary<EnemyInteraction, Interaction<Enemy, EnemyInteractionEvent, EnemyInteraction>> Interactions
+    {
+        get;
+        set;
+    }
+
     public Interactor<Enemy, EnemyInteractionContext, EnemyInteractionEvent, EnemyInteraction> Interactor { get; set; }
     public EnemyInteractionContext InteractionContext { get; set; } = new();
     public int RewindState { get; set; }
     public State<Enemy, State> CurrentState { get; set; }
-    public State<Enemy, State>[] States { get; set; }
+    public Dictionary<State, State<Enemy, State>> States { get; set; }
     public StateChanger<Enemy, State> StateChanger { get; set; }
 
     [Export] public float MoveSpeed = 150.0f;
@@ -51,18 +57,18 @@ public partial class Enemy :
 
     public override void _Ready()
     {
-        Interactions = new Interaction<Enemy, EnemyInteractionEvent, EnemyInteraction>[]
+        Interactions = new Dictionary<EnemyInteraction, Interaction<Enemy, EnemyInteractionEvent, EnemyInteraction>>()
         {
-            new TryPickupKeyInteraction(this),
-            new KillEnemyInteraction(this)
+            {EnemyInteraction.TryPickupKey, new TryPickupKeyInteraction(this)},
+            {EnemyInteraction.KillEnemy, new KillEnemyInteraction(this)}
         };
         Interactor = new Interactor<Enemy, EnemyInteractionContext, EnemyInteractionEvent, EnemyInteraction>(this);
 
-        States = new State<Enemy, State>[]
+        States = new Dictionary<State, State<Enemy, State>>()
         {
-            new MoveState(this, State.Move),
-            new DeathState(this, State.Death),
-            new RewindState(this, State.Rewind),
+            {State.Move, new MoveState(this, State.Move)},
+            {State.Death, new DeathState(this, State.Death)},
+            {State.Rewind, new RewindState(this, State.Rewind)},
         };
         StateChanger = new StateChanger<Enemy, State>(this);
 

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using project768.scripts.common;
 using project768.scripts.game_entity.landscape.switcher;
 using project768.scripts.rewind.entity;
@@ -18,7 +19,7 @@ public partial class Switcher : Node2D,
 
     public int RewindState { get; set; }
     public State<Switcher, State> CurrentState { get; set; }
-    public State<Switcher, State>[] States { get; set; }
+    public Dictionary<State, State<Switcher, State>> States { get; set; }
     public StateChanger<Switcher, State> StateChanger { get; set; }
     public RewindableAnimationPlayer AnimationPlayer { get; set; }
 
@@ -32,12 +33,11 @@ public partial class Switcher : Node2D,
                 "end"
             });
 
-
-        States = new State<Switcher, State>[]
+        States = new Dictionary<State, State<Switcher, State>>()
         {
-            new InitialState(this, State.Initial),
-            new UsedState(this, State.Used),
-            new RewindState(this, State.Rewind)
+            {State.Initial, new InitialState(this, State.Initial)},
+            {State.Used, new UsedState(this, State.Used)},
+            {State.Rewind, new RewindState(this, State.Rewind)},
         };
         StateChanger = new StateChanger<Switcher, State>(this);
 

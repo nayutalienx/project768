@@ -17,7 +17,7 @@ public class Interactor<T, TContext, TEventContext, TEnum>
 
     public void Interact(TEventContext eventContext)
     {
-        var interaction = Entity.Interactions[eventContext.InteractionEnum.ToInt32(null)];
+        var interaction = Entity.Interactions[eventContext.InteractionEnum];
         GD.Print($"Invoke Interact: {interaction.GetType().Name}");
         interaction.Interact(eventContext);
     }

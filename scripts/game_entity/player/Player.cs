@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 using project768.scripts.common;
 using project768.scripts.common.interaction;
+using project768.scripts.game_entity.landscape.cannon;
 using project768.scripts.player.interaction;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
@@ -28,7 +30,11 @@ public partial class Player :
         Rewind
     }
 
-    public Interaction<Player, PlayerInteractionEvent, PlayerInteraction>[] Interactions { get; set; }
+    public Dictionary<PlayerInteraction, Interaction<Player, PlayerInteractionEvent, PlayerInteraction>> Interactions
+    {
+        get;
+        set;
+    }
 
     public Interactor<Player, PlayerInteractionContext, PlayerInteractionEvent, PlayerInteraction> Interactor
     {
@@ -39,7 +45,7 @@ public partial class Player :
     public PlayerInteractionContext InteractionContext { get; set; } = new();
     public int RewindState { get; set; }
     public State<Player, State> CurrentState { get; set; }
-    public State<Player, State>[] States { get; set; }
+    public Dictionary<State, State<Player, State>> States { get; set; }
     public StateChanger<Player, State> StateChanger { get; set; }
     public PlayerCache Cache { get; set; }
 
@@ -47,24 +53,24 @@ public partial class Player :
 
     public override void _Ready()
     {
-        Interactions = new Interaction<Player, PlayerInteractionEvent, PlayerInteraction>[]
-        {
-            new EnteredLadderInteraction(this),
-            new ExitedLadderInteraction(this),
-            new KillPlayerInteraction(this),
-            new FallOnEnemyInteraction(this),
-            new TryPickupKeyInteraction(this),
-            new DoorUnlockedInteraction(this)
-        };
-
+        Interactions =
+            new Dictionary<PlayerInteraction, Interaction<Player, PlayerInteractionEvent, PlayerInteraction>>()
+            {
+                {PlayerInteraction.EnteredLadder, new EnteredLadderInteraction(this)},
+                {PlayerInteraction.ExitedLadder, new ExitedLadderInteraction(this)},
+                {PlayerInteraction.KillPlayer, new KillPlayerInteraction(this)},
+                {PlayerInteraction.FallOnEnemyHead, new FallOnEnemyInteraction(this)},
+                {PlayerInteraction.TryPickupKey, new TryPickupKeyInteraction(this)},
+                {PlayerInteraction.UnlockedDoor, new DoorUnlockedInteraction(this)}
+            };
         Interactor = new(this);
 
-        States = new State<Player, State>[]
+        States = new Dictionary<State, State<Player, State>>()
         {
-            new MoveState(this, State.Move),
-            new LadderState(this, State.Ladder),
-            new DeathState(this, State.Death),
-            new RewindState(this, State.Rewind),
+            {State.Move, new MoveState(this, State.Move)},
+            {State.Ladder, new LadderState(this, State.Ladder)},
+            {State.Death, new DeathState(this, State.Death)},
+            {State.Rewind, new RewindState(this, State.Rewind)},
         };
         StateChanger = new StateChanger<Player, State>(this);
         OrigCollission = this.GetCollisionLayerMask();

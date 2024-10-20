@@ -1,10 +1,13 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using project768.scripts.common;
 using project768.scripts.door;
+using project768.scripts.game_entity.landscape.cannon;
 using project768.scripts.player.interaction;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
+using RewindState = project768.scripts.door.RewindState;
 
 public partial class LockedDoor :
     AnimatableBody2D,
@@ -20,7 +23,7 @@ public partial class LockedDoor :
 
     public int RewindState { get; set; }
     public State<LockedDoor, State> CurrentState { get; set; }
-    public State<LockedDoor, State>[] States { get; set; }
+    public Dictionary<State, State<LockedDoor, State>> States { get; set; }
     public StateChanger<LockedDoor, State> StateChanger { get; set; }
     public RewindableAnimationPlayer AnimationPlayer { get; set; }
     public CollisionShape2D CollisionShape2D { get; set; }
@@ -41,29 +44,17 @@ public partial class LockedDoor :
 
         CollisionShape2D = GetNode<CollisionShape2D>("CollisionShape2D");
         LockArea = GetNode<Area2D>("lock_area");
-        LockArea.BodyEntered += OnBodyEntered;
+        LockArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("door", body)); };
         DoorLabel = GetNode<Label>("Label");
 
-        States = new State<LockedDoor, State>[]
+        States = new Dictionary<State, State<LockedDoor, State>>()
         {
-            new LockedState(this, State.Locked),
-            new UnlockedState(this, State.Unlocked),
-            new RewindState(this, State.Rewind)
+            {State.Locked, new LockedState(this, State.Locked)},
+            {State.Unlocked, new UnlockedState(this, State.Unlocked)},
+            {State.Rewind, new RewindState(this, State.Rewind)},
         };
         StateChanger = new StateChanger<LockedDoor, State>(this);
         StateChanger.ChangeState(State.Locked);
-    }
-
-    private void OnBodyEntered(Node2D body)
-    {
-        if (body is project768.scripts.player.Player player &&
-            player.InteractionContext.HasKey)
-        {
-            player.Interactor.Interact(
-                new PlayerInteractionEvent(PlayerInteraction.UnlockedDoor)
-            );
-            StateChanger.ChangeState(State.Unlocked);
-        }
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
