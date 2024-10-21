@@ -20,7 +20,7 @@ public partial class Ladder : Node2D
                 LadderEvent = new PlayerLadderEvent()
                 {
                     JoinedLadderArea = true,
-                    Ladder = Position
+                    LadderGlobalPosition = GlobalPosition
                 }
             });
         }
@@ -36,7 +36,7 @@ public partial class Ladder : Node2D
                 LadderEvent = new PlayerLadderEvent()
                 {
                     JoinedLadderArea = false,
-                    Ladder = Position
+                    LadderGlobalPosition = GlobalPosition
                 }
             });
         }

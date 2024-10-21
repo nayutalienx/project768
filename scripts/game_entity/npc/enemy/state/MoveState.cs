@@ -8,7 +8,7 @@ using project768.scripts.state_machine;
 
 namespace project768.scripts.enemy;
 
-public class MoveState : State<Enemy, Enemy.State>
+public class MoveState : BaseEnemyState
 {
     private TimerManager invertDirectionTimer = new TimerManager(0.1);
 
@@ -22,6 +22,7 @@ public class MoveState : State<Enemy, Enemy.State>
         Entity.EnableCollision(Entity.OriginalEntityLayerMask);
         Entity.HeadArea.EnableCollision(Entity.OriginalHeadAreaLayerMask);
         Entity.AttackArea.EnableCollision(Entity.OriginalAttackAreaLayerMask);
+        Entity.Visible = true;
     }
 
     public override void OnBodyEntered(CollisionBody body)
@@ -92,7 +93,7 @@ public class MoveState : State<Enemy, Enemy.State>
     {
         if (Entity.InteractionContext.HasKey)
         {
-            Entity.InteractionContext.Key.Transform = Entity.Transform;
+            Entity.InteractionContext.Key.GlobalPosition = Entity.GlobalPosition;
         }
     }
 }

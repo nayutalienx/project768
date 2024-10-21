@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Godot;
+using project768.scripts.common;
+using project768.scripts.game_entity.npc.spawner;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
 
@@ -8,6 +9,7 @@ namespace project768.scripts.game_entity.landscape.cannon;
 
 public partial class CannonBall : Area2D,
     IRewindable,
+    ISpawnable,
     IStateMachineEntity<CannonBall, CannonBall.State>
 {
     public float Speed { get; set; } = 300.0f;
@@ -57,7 +59,7 @@ public partial class CannonBall : Area2D,
         };
         StateChanger = new StateChanger<CannonBall, State>(this);
 
-        BodyEntered += body => { StateChanger.ChangeState(State.Wait); };
+        BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("ball", body)); };
 
         StateChanger.ChangeState(State.Wait);
     }
@@ -102,5 +104,17 @@ public partial class CannonBall : Area2D,
             Particles.SetEmitting(true);
             Particles.SpeedScale = Mathf.Abs(speed);
         }
+    }
+
+    public bool TrySpawn(Vector2 spawnPosition)
+    {
+        if (CurrentState.StateEnum == State.Wait)
+        {
+            GlobalPosition = spawnPosition;
+            StateChanger.ChangeState(State.Move);
+            return true;
+        }
+
+        return false;
     }
 }
