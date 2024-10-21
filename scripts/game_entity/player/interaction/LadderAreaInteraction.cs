@@ -13,7 +13,7 @@ public class LadderAreaInteraction : Interaction<Player, PlayerInteractionEvent,
     {
         if (eventContext.LadderEvent.JoinedLadderArea)
         {
-            Entity.InteractionContext.LadderContext.Ladder = eventContext.LadderEvent.Ladder;
+            Entity.InteractionContext.LadderContext.LadderGlobalPosition = eventContext.LadderEvent.LadderGlobalPosition;
         }
         else
         {
@@ -23,7 +23,7 @@ public class LadderAreaInteraction : Interaction<Player, PlayerInteractionEvent,
             }
 
             Entity.StateChanger.ChangeState(Player.State.Move);
-            Entity.InteractionContext.LadderContext.Ladder = Vector2.Zero;
+            Entity.InteractionContext.LadderContext.LadderGlobalPosition = Vector2.Zero;
         }
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cbes6p0xgmvbf"]
+[gd_scene load_steps=7 format=3 uid="uid://cbes6p0xgmvbf"]
 
 [ext_resource type="Script" path="res://scripts/game_entity/npc/enemy/Enemy.cs" id="1_le13m"]
 [ext_resource type="Texture2D" uid="uid://baql6qn040vl" path="res://sprites/icon.svg" id="1_uu8sh"]
@@ -11,6 +11,11 @@ height = 29.8259
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgc30"]
 size = Vector2(20, 12.5648)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qcvlv"]
+font_size = 25
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [node name="enemy_simple" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 4
@@ -56,3 +61,11 @@ collision_mask = 10
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAttackArea"]
 position = Vector2(0, 4.92403)
 shape = SubResource("RectangleShape2D_vgc30")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -18.0
+offset_top = -93.0
+offset_right = 22.0
+offset_bottom = -70.0
+text = "d:"
+label_settings = SubResource("LabelSettings_qcvlv")

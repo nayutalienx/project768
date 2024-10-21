@@ -12,15 +12,9 @@ public class UnpickedState : State<Key, Key.State>
 
     public override void EnterState(Key.State prevState)
     {
-        var transform = Entity.Transform;
         Entity.EnableCollision(Entity.KeyCollision);
         Entity.SetRigidBodyEnabled(true);
-        PhysicsServer2D.BodySetState(
-            Entity.GetRid(),
-            PhysicsServer2D.BodyState.Transform,
-            transform
-        );
-
+        Entity.GlobalPosition = Entity.GlobalPosition;
         Entity.LinearVelocity = Vector2.Zero;
     }
 }

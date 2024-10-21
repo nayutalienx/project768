@@ -5,7 +5,7 @@ namespace project768.scripts.rewind.entity;
 
 public struct EnemyRewindData
 {
-    public Vector2 Position { get; set; }
+    public Vector2 GlobalPosition { get; set; }
     public Vector2 Velocity { get; set; }
     public bool Visible { get; set; }
     public Enemy.State CurrentState { get; set; }
@@ -17,7 +17,7 @@ public struct EnemyRewindData
 
     public EnemyRewindData(Enemy enemy)
     {
-        Position = enemy.Position;
+        GlobalPosition = enemy.GlobalPosition;
         Velocity = enemy.Velocity;
         CurrentState = enemy.CurrentState.StateEnum;
         Visible = enemy.Visible;
@@ -30,7 +30,7 @@ public struct EnemyRewindData
     public void ApplyData(Enemy enemy)
     {
         enemy.Velocity = Velocity;
-        enemy.Position = Position;
+        enemy.GlobalPosition = GlobalPosition;
         enemy.RewindState = (int) CurrentState;
         enemy.Visible = Visible;
         enemy.EnemyDirection = Direction;

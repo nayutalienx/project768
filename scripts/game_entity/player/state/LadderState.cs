@@ -35,7 +35,7 @@ public class LadderState : BasePlayerState
             Entity.StateChanger.ChangeState(Player.State.Move);
             return;
         }
-        
+
         ProcessKey();
 
         float direction = Entity.Cache.VerticalDirection;
@@ -50,11 +50,14 @@ public class LadderState : BasePlayerState
             Entity.Velocity = Entity.Velocity with {Y = direction * Entity.MoveSpeed};
         }
 
-        Entity.Position = Entity.Position with {X = Entity.InteractionContext.LadderContext.Ladder.X};
+        Entity.GlobalPosition = Entity.GlobalPosition with
+        {
+            X = Entity.InteractionContext.LadderContext.LadderGlobalPosition.X
+        };
 
         if (Entity.Cache.DownPressed)
         {
-            Entity.Position = Entity.Position with {Y = Entity.Position.Y + 1};
+            Entity.GlobalPosition = Entity.GlobalPosition with {Y = Entity.GlobalPosition.Y + 1};
         }
 
         Entity.MoveAndSlide();

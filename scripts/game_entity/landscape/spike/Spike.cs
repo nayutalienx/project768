@@ -33,6 +33,7 @@ public partial class Spike : Line2D
 
             if (body is Enemy enemy)
             {
+                GD.Print("Spike kill enemy");
                 enemy.Interactor.Interact(new EnemyInteractionEvent(EnemyInteraction.KillEnemy));
                 return;
             }

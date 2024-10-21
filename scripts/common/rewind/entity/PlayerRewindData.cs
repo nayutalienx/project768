@@ -5,9 +5,9 @@ namespace project768.scripts.rewind.entity;
 
 public struct PlayerRewindData
 {
-    public Vector2 Position { get; set; }
+    public Vector2 GlobalPosition { get; set; }
     public Vector2 Velocity { get; set; }
-    public Vector2 Ladder { get; set; }
+    public Vector2 LadderGlobalPosition { get; set; }
     public bool Visible { get; set; }
     public Player.State CurrentState { get; set; }
 
@@ -21,11 +21,11 @@ public struct PlayerRewindData
 
     public PlayerRewindData(Player player)
     {
-        Position = player.Position;
+        GlobalPosition = player.GlobalPosition;
         Velocity = player.Velocity;
         CurrentState = player.CurrentState.StateEnum;
         Visible = player.Visible;
-        Ladder = player.InteractionContext.LadderContext.Ladder;
+        LadderGlobalPosition = player.InteractionContext.LadderContext.LadderGlobalPosition;
         // Key
         HasKey = player.InteractionContext.KeyContext.HasKey;
         KeyInstanceId = player.InteractionContext.KeyContext.KeyInstanceId;
@@ -37,9 +37,9 @@ public struct PlayerRewindData
     public void ApplyData(Player player)
     {
         player.Velocity = Velocity;
-        player.Position = Position;
+        player.GlobalPosition = GlobalPosition;
         player.RewindState = (int) CurrentState;
-        player.InteractionContext.LadderContext.Ladder = Ladder;
+        player.InteractionContext.LadderContext.LadderGlobalPosition = LadderGlobalPosition;
         player.Visible = Visible;
         // Key
         player.InteractionContext.KeyContext.HasKey = HasKey;

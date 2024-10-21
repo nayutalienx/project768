@@ -19,7 +19,7 @@ scale_min = 3.28
 scale_max = 5.56
 color = Color(1, 0.392157, 0, 1)
 
-[node name="cannon_ball" type="Area2D"]
+[node name="cannon_ball" type="Area2D" groups=["cannon_ball"]]
 collision_layer = 0
 collision_mask = 7
 script = ExtResource("1_qrlwv")

@@ -30,7 +30,7 @@ public class MoveState : BasePlayerState
     public override void PhysicProcess(double delta)
     {
         if ((Entity.Cache.DownPressed || Entity.Cache.UpPressed) &&
-            Entity.InteractionContext.LadderContext.Ladder != Vector2.Zero)
+            Entity.InteractionContext.LadderContext.LadderGlobalPosition != Vector2.Zero)
         {
             Entity.StateChanger.ChangeState(Player.State.Ladder);
             return;
@@ -61,7 +61,7 @@ public class MoveState : BasePlayerState
 
         if (Entity.Cache.DownPressed)
         {
-            Entity.Position = Entity.Position with {Y = Entity.Position.Y + 1};
+            Entity.GlobalPosition = Entity.GlobalPosition with {Y = Entity.GlobalPosition.Y + 1};
         }
 
         Entity.MoveAndSlide();

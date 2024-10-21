@@ -4,8 +4,10 @@ using System.Reflection.Metadata;
 using Godot;
 using project768.scripts.common;
 using project768.scripts.common.interaction;
+using project768.scripts.enemy;
 using project768.scripts.game_entity.npc.enemy.interaction;
 using project768.scripts.game_entity.npc.enemy.interaction.data;
+using project768.scripts.game_entity.npc.spawner;
 using project768.scripts.player;
 using project768.scripts.player.interaction;
 using project768.scripts.rewind.entity;
@@ -18,6 +20,7 @@ using TryPickupKeyInteraction = project768.scripts.game_entity.npc.enemy.interac
 public partial class Enemy :
     CharacterBody2D,
     IRewindable,
+    ISpawnable,
     IStateMachineEntity<Enemy, Enemy.State>,
     IInteractableEntity<Enemy, EnemyInteractionContext, EnemyInteractionEvent, EnemyInteraction>
 {
@@ -47,9 +50,9 @@ public partial class Enemy :
     public RayCast2D FallRaycastLeft { get; set; }
     public RayCast2D FallRaycastRight { get; set; }
     public int EnemyDirection { get; set; } = 1;
-
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
+    public Label Label { get; set; }
 
     public Tuple<uint, uint> OriginalEntityLayerMask;
     public Tuple<uint, uint> OriginalHeadAreaLayerMask;
@@ -76,6 +79,7 @@ public partial class Enemy :
         FallRaycastRight = GetNode<RayCast2D>("FallRaycast_2");
         HeadArea = GetNode<Area2D>("EnemyHeadArea");
         AttackArea = GetNode<Area2D>("EnemyAttackArea");
+        Label = GetNode<Label>("Label");
 
         HeadArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("head", body)); };
         AttackArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("attack", body)); };
@@ -84,12 +88,14 @@ public partial class Enemy :
         OriginalAttackAreaLayerMask = AttackArea.GetCollisionLayerMask();
         OriginalHeadAreaLayerMask = HeadArea.GetCollisionLayerMask();
 
-        StateChanger.ChangeState(State.Move);
+        StateChanger.ChangeState(State.Death);
     }
 
     public override void _PhysicsProcess(double delta)
     {
         CurrentState.PhysicProcess(delta);
+
+        Label.Text = $"d: {EnemyDirection}";
     }
 
     private void ApplyImpulseToRigidBodies()
@@ -117,5 +123,19 @@ public partial class Enemy :
 
     public void OnRewindSpeedChanged(int speed)
     {
+    }
+
+    public bool TrySpawn(Vector2 spawnPoint)
+    {
+        if (CurrentState.StateEnum == State.Death)
+        {
+            GlobalPosition = spawnPoint;
+            EnemyDirection = 1;
+            MoveAndSlide();
+            StateChanger.ChangeState(State.Move);
+            return true;
+        }
+
+        return false;
     }
 }

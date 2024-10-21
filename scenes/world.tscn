@@ -1,9 +1,10 @@
-[gd_scene load_steps=26 format=4 uid="uid://u730p1tggvfb"]
+[gd_scene load_steps=28 format=4 uid="uid://u730p1tggvfb"]
 
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/ladder.tscn" id="1_e01dh"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/player.tscn" id="1_vljbg"]
 [ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/one_way_platform.tscn" id="2_7en46"]
 [ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/enemy_simple.tscn" id="3_kssy4"]
+[ext_resource type="PackedScene" uid="uid://chwame76xqi6l" path="res://scenes/cannon_ball.tscn" id="4_rl7s8"]
 [ext_resource type="Texture2D" uid="uid://dmbsrtuoaekr0" path="res://tile_sets/tileset1.png" id="4_yv7j6"]
 [ext_resource type="PackedScene" uid="uid://dkn6lvqu0x1vd" path="res://scenes/key_rb.tscn" id="5_5vd7t"]
 [ext_resource type="PackedScene" uid="uid://bb6bemfvj0nt3" path="res://scenes/locked_door.tscn" id="5_17l2d"]
@@ -13,6 +14,7 @@
 [ext_resource type="Script" path="res://scripts/common/rewind/RewindPlayer.cs" id="9_kdnbs"]
 [ext_resource type="Script" path="res://scripts/common/rewind/audio/RewindAudioPlayer.cs" id="10_61phy"]
 [ext_resource type="AudioStream" uid="uid://cwk83y0x3xvpd" path="res://music/whisper.mp3" id="10_k0s14"]
+[ext_resource type="PackedScene" uid="uid://c231kcpdermgs" path="res://scenes/spawner.tscn" id="10_omul8"]
 [ext_resource type="AudioStream" uid="uid://7l0040kbg4ky" path="res://music/whisper_reverse.mp3" id="12_8g3xf"]
 [ext_resource type="Texture2D" uid="uid://c55gba3ovncpi" path="res://sprites/parallax_bg.png" id="14_5n2d4"]
 
@@ -193,16 +195,27 @@ position = Vector2(880, -21)
 [node name="cannons" type="Node2D" parent="second_world"]
 z_index = -6
 
-[node name="cannon" parent="second_world/cannons" instance=ExtResource("8_dw018")]
+[node name="cannon" parent="second_world/cannons" node_paths=PackedStringArray("Characters") instance=ExtResource("8_dw018")]
 position = Vector2(-259, -170)
+Characters = [NodePath("cannon_ball")]
 
-[node name="cannon3" parent="second_world/cannons" instance=ExtResource("8_dw018")]
+[node name="cannon_ball" parent="second_world/cannons/cannon" instance=ExtResource("4_rl7s8")]
+
+[node name="cannon3" parent="second_world/cannons" node_paths=PackedStringArray("Characters") instance=ExtResource("8_dw018")]
 position = Vector2(1400, -15)
 scale = Vector2(-1, 1)
+Characters = [NodePath("cannon_ball"), NodePath("cannon_ball2")]
 
-[node name="cannon2" parent="second_world/cannons" instance=ExtResource("8_dw018")]
+[node name="cannon_ball" parent="second_world/cannons/cannon3" instance=ExtResource("4_rl7s8")]
+
+[node name="cannon_ball2" parent="second_world/cannons/cannon3" instance=ExtResource("4_rl7s8")]
+
+[node name="cannon2" parent="second_world/cannons" node_paths=PackedStringArray("Characters") instance=ExtResource("8_dw018")]
 position = Vector2(-524, -62)
 rotation = 0.472818
+Characters = [NodePath("cannon_ball")]
+
+[node name="cannon_ball" parent="second_world/cannons/cannon2" instance=ExtResource("4_rl7s8")]
 
 [node name="tiles" type="Node2D" parent="second_world"]
 z_index = -5
@@ -258,26 +271,6 @@ libraries = {
 "": SubResource("AnimationLibrary_l6uu7")
 }
 
-[node name="enemies" type="Node2D" parent="second_world"]
-
-[node name="enemy_simple" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
-position = Vector2(1159, 507)
-
-[node name="enemy_simple3" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
-position = Vector2(1892, -55)
-
-[node name="enemy_simple4" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
-position = Vector2(897, -485)
-
-[node name="enemy_simple5" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
-position = Vector2(1529, -486)
-
-[node name="enemy_simple2" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
-position = Vector2(1597, 577)
-
-[node name="enemy_simple6" parent="second_world/enemies" instance=ExtResource("3_kssy4")]
-position = Vector2(-667, 529)
-
 [node name="keys" type="Node2D" parent="second_world"]
 
 [node name="key" parent="second_world/keys" instance=ExtResource("5_5vd7t")]
@@ -306,6 +299,30 @@ position = Vector2(2413, 554)
 Reaction = 1
 ReactAnimationPlayer = NodePath("../../one_way_platforms/one_way_platform9/AnimationPlayer")
 ReactAnimationName = "move"
+
+[node name="spawners" type="Node2D" parent="second_world"]
+
+[node name="spawner" parent="second_world/spawners" node_paths=PackedStringArray("Characters") instance=ExtResource("10_omul8")]
+position = Vector2(1545, -515)
+Characters = [NodePath("enemy_simple"), NodePath("enemy_simple2")]
+
+[node name="enemy_simple" parent="second_world/spawners/spawner" instance=ExtResource("3_kssy4")]
+position = Vector2(-75, -29)
+
+[node name="enemy_simple2" parent="second_world/spawners/spawner" instance=ExtResource("3_kssy4")]
+position = Vector2(-75, -29)
+
+[node name="spawner2" parent="second_world/spawners" node_paths=PackedStringArray("Characters", "SpawnPoint") instance=ExtResource("10_omul8")]
+position = Vector2(1082, 422)
+SpawnInterval = 5.0
+Characters = [NodePath("enemy_simple")]
+SpawnPoint = NodePath("spawn_point")
+
+[node name="enemy_simple" parent="second_world/spawners/spawner2" instance=ExtResource("3_kssy4")]
+position = Vector2(5, -200)
+
+[node name="spawn_point" type="Node2D" parent="second_world/spawners/spawner2"]
+position = Vector2(19, -160)
 
 [node name="Player" parent="." instance=ExtResource("1_vljbg")]
 position = Vector2(495, 433)
