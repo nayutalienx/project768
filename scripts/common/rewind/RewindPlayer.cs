@@ -200,13 +200,7 @@ public partial class RewindPlayer : Node2D
 
     private void ReloadFullScene()
     {
-        var world = GD.Load<PackedScene>("res://scenes/world.tscn");
-        var root = GetTree().GetRoot();
-        foreach (var child in root.GetChildren())
-        {
-            root.RemoveChild(child);
-        }
-
-        root.AddChild(world.Instantiate<Node2D>());
+        var tree = GetTree();
+        tree.ReloadCurrentScene();
     }
 }
