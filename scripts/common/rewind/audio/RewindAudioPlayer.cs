@@ -11,7 +11,9 @@ public partial class RewindAudioPlayer :
     IRewindable,
     IStateMachineEntity<RewindAudioPlayer, RewindAudioPlayer.State>
 {
-    [Export] public Label audioLabel;
+    [Export] public Label AudioLabel;
+    [Export] public AudioStreamPlayer ForwardPlayer { get; set; }
+    [Export] public AudioStreamPlayer BackwardPlayer { get; set; }
 
     public enum State
     {
@@ -24,9 +26,6 @@ public partial class RewindAudioPlayer :
     public State<RewindAudioPlayer, State> CurrentState { get; set; }
     public Dictionary<State, State<RewindAudioPlayer, State>> States { get; set; }
     public StateChanger<RewindAudioPlayer, State> StateChanger { get; set; }
-
-    public AudioStreamPlayer ForwardPlayer { get; set; }
-    public AudioStreamPlayer BackwardPlayer { get; set; }
     public int RewindSpeed { get; set; }
 
     private double audioLen;
@@ -40,9 +39,6 @@ public partial class RewindAudioPlayer :
             {State.Backward, new BackwardState(this, State.Backward)},
         };
         StateChanger = new StateChanger<RewindAudioPlayer, State>(this);
-
-        ForwardPlayer = GetNode<AudioStreamPlayer>("forward_player");
-        BackwardPlayer = GetNode<AudioStreamPlayer>("reverse_player");
         audioLen = ForwardPlayer.GetStream().GetLength();
 
         ForwardPlayer.Play();
@@ -53,9 +49,9 @@ public partial class RewindAudioPlayer :
 
     public override void _Process(double delta)
     {
-        if (audioLabel != null)
+        if (AudioLabel != null)
         {
-            audioLabel.Text = $"{CurrentState.StateEnum}\n" +
+            AudioLabel.Text = $"{CurrentState.StateEnum}\n" +
                               $"fwd: {ForwardPlayer.GetPlaybackPosition()}\n" +
                               $"bwd: {BackwardPlayer.GetPlaybackPosition()}";
         }

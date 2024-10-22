@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://kg7vy36drcwi"]
+
+[ext_resource type="Script" path="res://scripts/common/rewind/audio/RewindAudioPlayer.cs" id="1_jowso"]
+
+[node name="MusicPlayer" type="Node2D" groups=["background_music"]]
+script = ExtResource("1_jowso")
