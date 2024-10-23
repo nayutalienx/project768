@@ -51,8 +51,12 @@ public partial class Player :
 
     public Tuple<uint, uint> OrigCollission;
 
+    public Label Label { get; set; }
+
     public override void _Ready()
     {
+        Label = GetNode<Label>("Label");
+
         Interactions =
             new Dictionary<PlayerInteraction, Interaction<Player, PlayerInteractionEvent, PlayerInteraction>>()
             {
@@ -91,6 +95,12 @@ public partial class Player :
     public override void _PhysicsProcess(double delta)
     {
         CurrentState.PhysicProcess(delta);
+        
+        // Label.Text = $"hor-dir: {Cache.HorizontalDirection}\n" +
+        //              $"onfloor: {IsOnFloor()}\n" +
+        //              $"velocity: {Velocity}\n"+
+        //              $"floor-ang: {GetFloorAngle()}\n"
+        //     ;
     }
 
     public void HandleInput(InputEvent _event)
