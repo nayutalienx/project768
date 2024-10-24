@@ -1,4 +1,5 @@
 ﻿using Godot;
+using project768.scripts.game_entity.common;
 using project768.scripts.player.interaction;
 using project768.scripts.state_machine;
 
@@ -16,6 +17,15 @@ public class BasePlayerState : State<Player, Player.State>
         {
             Entity.InteractionContext.KeyContext.Key =
                 GodotObject.InstanceFromId(Entity.InteractionContext.KeyContext.KeyInstanceId) as Key;
+        }
+    }
+
+    protected void RecoverSceneLoader(Player.State prevState)
+    {
+        if (prevState == Player.State.Rewind && Entity.InteractionContext.SceneLoaderContext.InstanceId != 0)
+        {
+            Entity.InteractionContext.SceneLoaderContext.SceneLoader =
+                GodotObject.InstanceFromId(Entity.InteractionContext.SceneLoaderContext.InstanceId) as SceneLoader;
         }
     }
 

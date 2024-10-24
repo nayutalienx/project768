@@ -1,5 +1,6 @@
 ﻿using Godot;
 using project768.scripts.common;
+using project768.scripts.game_entity.common;
 using project768.scripts.player.interaction;
 using project768.scripts.state_machine;
 
@@ -20,6 +21,7 @@ public class MoveState : BasePlayerState
     {
         RecoverKeyOnEnterState(prevState);
         RecoverSwitcherOnEnterState(prevState);
+        RecoverSceneLoader(prevState);
         Entity.EnableCollision(Entity.OrigCollission);
         if (prevState == Player.State.Rewind)
         {
@@ -34,6 +36,11 @@ public class MoveState : BasePlayerState
         {
             Entity.StateChanger.ChangeState(Player.State.Ladder);
             return;
+        }
+
+        if (Entity.Cache.UpPressed && Entity.InteractionContext.SceneLoaderContext.SceneLoader != null)
+        {
+            Entity.InteractionContext.SceneLoaderContext.SceneLoader.LoadDeferred();
         }
 
         ProcessKey();
@@ -91,6 +98,12 @@ public class MoveState : BasePlayerState
                 }
             });
         }
+
+        if (body.Body is SceneLoader sceneLoader)
+        {
+            Entity.InteractionContext.SceneLoaderContext.SceneLoader = sceneLoader;
+            Entity.InteractionContext.SceneLoaderContext.InstanceId = sceneLoader.GetInstanceId();
+        }
     }
 
     public override void OnBodyExited(CollisionBody body)
@@ -105,6 +118,12 @@ public class MoveState : BasePlayerState
                     Switcher = switcher
                 }
             });
+        }
+
+        if (body.Body is SceneLoader)
+        {
+            Entity.InteractionContext.SceneLoaderContext.SceneLoader = null;
+            Entity.InteractionContext.SceneLoaderContext.InstanceId = 0;
         }
     }
 

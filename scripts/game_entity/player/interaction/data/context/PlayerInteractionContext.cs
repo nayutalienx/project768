@@ -1,5 +1,6 @@
 ﻿using Godot;
 using project768.scripts.common.interaction;
+using project768.scripts.game_entity.common;
 
 namespace project768.scripts.player.interaction;
 
@@ -8,4 +9,5 @@ public class PlayerInteractionContext : InteractionContext
     public PlayerLadderContext LadderContext { get; set; } = new();
     public PlayerKeyContext KeyContext { get; set; } = new();
     public PlayerSwitcherContext SwitcherContext { get; set; } = new();
+    public PlayerSceneLoaderContext SceneLoaderContext { get; set; } = new();
 }
