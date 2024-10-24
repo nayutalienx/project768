@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0kdsmyy1oltu"]
+
+[ext_resource type="Script" path="res://scripts/game_entity/common/SceneLoader.cs" id="1_vsnqb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g56s5"]
+size = Vector2(129, 166.5)
+
+[node name="SceneLoader" type="StaticBody2D"]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("1_vsnqb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -82.75)
+shape = SubResource("RectangleShape2D_g56s5")
+script = ExtResource("1_vsnqb")

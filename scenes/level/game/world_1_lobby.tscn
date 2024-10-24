@@ -1,16 +1,16 @@
-[gd_scene load_steps=12 format=4 uid="uid://cxjbnxtpf5t0i"]
+[gd_scene load_steps=12 format=4 uid="uid://cg58jbv5ahy7k"]
 
-[ext_resource type="Texture2D" uid="uid://cpjrn8pjoj4ho" path="res://tile_sets/interior.png" id="1_3njts"]
-[ext_resource type="Texture2D" uid="uid://c0ybq8fc27x8w" path="res://tile_sets/town_tilesets.png" id="1_8ve7m"]
-[ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="1_nji42"]
-[ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="1_sqd2x"]
-[ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="2_qdvyo"]
-[ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="3_5idk0"]
-[ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="3_srw4l"]
-[ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="6_vet4u"]
+[ext_resource type="Texture2D" uid="uid://cpjrn8pjoj4ho" path="res://tile_sets/interior.png" id="1_li3pa"]
+[ext_resource type="Texture2D" uid="uid://c0ybq8fc27x8w" path="res://tile_sets/town_tilesets.png" id="2_tx7q6"]
+[ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="3_aberk"]
+[ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="3_vetay"]
+[ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="4_4yv7v"]
+[ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="5_ld7v5"]
+[ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="6_bsd4l"]
+[ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="7_wrpmi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kwmgo"]
-texture = ExtResource("1_3njts")
+texture = ExtResource("1_li3pa")
 1:64/size_in_atlas = Vector2i(20, 9)
 1:64/0 = 0
 2:56/size_in_atlas = Vector2i(29, 6)
@@ -48,7 +48,7 @@ texture = ExtResource("1_3njts")
 1:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gqc7w"]
-texture = ExtResource("1_8ve7m")
+texture = ExtResource("2_tx7q6")
 0:49/size_in_atlas = Vector2i(22, 31)
 0:49/0 = 0
 27:68/size_in_atlas = Vector2i(6, 7)
@@ -98,29 +98,29 @@ sources/0 = SubResource("TileSetAtlasSource_kwmgo")
 [node name="tiles" type="Node2D" parent="second_world"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
-position = Vector2(-42, 11)
-tile_map_data = PackedByteArray("AADj/w0AAQABACcAAAATAA0AAQABACcAAADV//z/AQAAADEAAAAgAPz/AQAAADEAAAAMAAcAAQAjADQAAAD5/wkAAQA4ADkAAAArAAYAAQAcABgAAAA+AAQAAQAsAEcAAABbAAQAAQAsAEcAAAA2APP/AQA8AAQAAABpAPP/AQA8AAQAAAB4AAQAAQAsAEcAAACFAPj/AQAwAA4AAABRAP7/AQA2ACwAAADy/wgAAQAbAEQAAAAAAAgAAQAjAEQAAACVAAQAAQAsAEcAAACyAAQAAQAsAEcAAAC/AP3/AQAbADMAAAC2APb/AQAVAAMAAACsAP3/AQAbADMAAABMAAsAAQAbADMAAABpAAsAAQAbADMAAACGAAsAAQAbADMAAACjAAsAAQAbADMAAADAAAsAAQAbADMAAADG/w8AAQAcABgAAAC3/xYAAQAyAEAAAACo/xgAAQAcABgAAACZ/x8AAQAyAEAAAADFAAYAAQAcABgAABDOAA8AAQAcABgAABDdABYAAQAyAEAAAAAPASQAAAACADgAAAAmASQAAAACADgAAAAOARgAAAAbAAEAAAAnARgAAAAbAAEAAAAZASAAAAABAEAAAAAKAR8AAAAjABsAAAAnAQwAAAACADgAAAAQAQwAAAACADgAAABAARgAAAAbAAEAAABHARoAAABFADgAAAA9ASQAAAACADgAAAA+AQwAAAACADgAAAA0ARoAAAApADoAAAD1ABgAAAABABwAAAD2ABgAAAAbAAEAAAD4ACQAAAACADgAAADhACQAAAACADgAAAA=")
+position = Vector2(213, -499)
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAAAtACAAAQABACcAAADp/xcAAAAmACYAAAAVABcAAAAzACUAAAAhABcAAAAzACUAAAAsABcAAAAzACUAAAA4ABcAAAAzACUAAAAKABcAAAAzACUAAAA=")
 tile_set = SubResource("TileSet_i82kd")
 
 [node name="portals" type="Node2D" parent="second_world"]
 
-[node name="SceneLoader" parent="second_world/portals" instance=ExtResource("3_5idk0")]
-position = Vector2(4885, 573)
-Path = "res://scenes/level/game/world_1_lobby.tscn"
+[node name="SceneLoader" parent="second_world/portals" instance=ExtResource("3_vetay")]
+position = Vector2(-148, -14)
+Path = "res://scenes/level/game/world_0.tscn"
 
-[node name="Player" parent="." instance=ExtResource("1_nji42")]
-position = Vector2(3591, 180)
+[node name="Player" parent="." instance=ExtResource("3_aberk")]
+position = Vector2(2, -58)
 floor_constant_speed = true
 floor_snap_length = 32.0
 
-[node name="RewindPlayer" parent="." instance=ExtResource("6_vet4u")]
+[node name="RewindPlayer" parent="." instance=ExtResource("4_4yv7v")]
 
-[node name="MusicPlayer" parent="." node_paths=PackedStringArray("ForwardPlayer", "BackwardPlayer") instance=ExtResource("1_sqd2x")]
+[node name="MusicPlayer" parent="." node_paths=PackedStringArray("ForwardPlayer", "BackwardPlayer") instance=ExtResource("5_ld7v5")]
 ForwardPlayer = NodePath("forward")
 BackwardPlayer = NodePath("backward")
 
 [node name="forward" type="AudioStreamPlayer" parent="MusicPlayer"]
-stream = ExtResource("2_qdvyo")
+stream = ExtResource("6_bsd4l")
 
 [node name="backward" type="AudioStreamPlayer" parent="MusicPlayer"]
-stream = ExtResource("3_srw4l")
+stream = ExtResource("7_wrpmi")
