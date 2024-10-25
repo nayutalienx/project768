@@ -16,7 +16,14 @@ public partial class Player :
     IStateMachineEntity<Player, Player.State>,
     IInteractableEntity<Player, PlayerInteractionContext, PlayerInteractionEvent, PlayerInteraction>
 {
-    [Export] public float JumpVelocity = -400.0f;
+    public static PreviousSceneData PreviousSceneData { get; set; } = new();
+
+    [ExportSubgroup("Player Spawn Settings")]
+    [Export]
+    public Node2D[] SpawnPositions { get; set; }
+
+    [ExportSubgroup("Player Settings")] [Export]
+    public float JumpVelocity = -400.0f;
 
     [Export] public float MoveSpeed = 300.0f;
 
@@ -84,8 +91,9 @@ public partial class Player :
         var area2d = GetNode<Area2D>("Area2D");
         area2d.BodyEntered += body => CurrentState.OnBodyEntered(new CollisionBody("player", body));
         area2d.BodyExited += body => CurrentState.OnBodyExited(new CollisionBody("player", body));
-    }
 
+        LoadPreviousSceneData();
+    }
 
     public override void _Input(InputEvent _event)
     {
@@ -95,7 +103,7 @@ public partial class Player :
     public override void _PhysicsProcess(double delta)
     {
         CurrentState.PhysicProcess(delta);
-        
+
         // Label.Text = $"hor-dir: {Cache.HorizontalDirection}\n" +
         //              $"onfloor: {IsOnFloor()}\n" +
         //              $"velocity: {Velocity}\n"+
@@ -134,6 +142,19 @@ public partial class Player :
                 ((RigidBody2D) c.GetCollider()).ApplyCentralImpulse(
                     -c.GetNormal() * PushForce);
             }
+        }
+    }
+
+    private void LoadPreviousSceneData()
+    {
+        if (PreviousSceneData.HasData)
+        {
+            Camera2D camera = GetNode<Camera2D>("Camera2D");
+            camera.SetPositionSmoothingEnabled(false);
+            GlobalPosition = SpawnPositions[PreviousSceneData.SpawnPositionIndex].GlobalPosition;
+            camera.ResetSmoothing();
+            camera.SetPositionSmoothingEnabled(true);
+            PreviousSceneData.HasData = false;
         }
     }
 

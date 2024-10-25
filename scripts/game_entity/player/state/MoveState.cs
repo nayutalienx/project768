@@ -40,6 +40,9 @@ public class MoveState : BasePlayerState
 
         if (Entity.Cache.UpPressed && Entity.InteractionContext.SceneLoaderContext.SceneLoader != null)
         {
+            Player.PreviousSceneData.HasData = true;
+            Player.PreviousSceneData.SpawnPositionIndex =
+                Entity.InteractionContext.SceneLoaderContext.SceneLoader.SpawnPositionIndex;
             Entity.InteractionContext.SceneLoaderContext.SceneLoader.LoadDeferred();
         }
 
@@ -103,6 +106,7 @@ public class MoveState : BasePlayerState
         {
             Entity.InteractionContext.SceneLoaderContext.SceneLoader = sceneLoader;
             Entity.InteractionContext.SceneLoaderContext.InstanceId = sceneLoader.GetInstanceId();
+            Entity.Label.Text = "enter(up)";
         }
     }
 
@@ -124,6 +128,7 @@ public class MoveState : BasePlayerState
         {
             Entity.InteractionContext.SceneLoaderContext.SceneLoader = null;
             Entity.InteractionContext.SceneLoaderContext.InstanceId = 0;
+            Entity.Label.Text = "";
         }
     }
 

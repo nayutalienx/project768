@@ -28,10 +28,13 @@ tile_set = ExtResource("1_betv8")
 
 [node name="SceneLoader" parent="second_world/portals" instance=ExtResource("3_cmwnn")]
 position = Vector2(-148, -14)
-Path = "res://scenes/level/game/world_0.tscn"
+Path = "res://scenes/level/game/world1/world_1_lobby.tscn"
+SpawnPositionIndex = 1
 
 [node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("3_cmwnn")]
 position = Vector2(14060, -463)
+Path = "res://scenes/level/game/world1/world_1_lobby.tscn"
+SpawnPositionIndex = 1
 
 [node name="ladders" type="Node2D" parent="second_world"]
 z_index = -5
@@ -136,10 +139,16 @@ position = Vector2(-37, 15)
 [node name="enemy_simple3" parent="second_world/enemies/spawner2" instance=ExtResource("6_u3ki2")]
 position = Vector2(90, 22)
 
-[node name="Player" parent="." instance=ExtResource("4_nrd20")]
-position = Vector2(9747, -658)
+[node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("4_nrd20")]
+position = Vector2(4, -41)
 floor_constant_speed = true
 floor_snap_length = 32.0
+SpawnPositions = [NodePath("start"), NodePath("end")]
+
+[node name="start" type="Node2D" parent="Player"]
+
+[node name="end" type="Node2D" parent="Player"]
+position = Vector2(13897, -492)
 
 [node name="RewindPlayer" parent="." instance=ExtResource("5_wiiym")]
 
