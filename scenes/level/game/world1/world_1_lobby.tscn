@@ -16,7 +16,7 @@
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAAAtACAAAQABACcAAADp/xcAAAAmACYAAAAVABcAAAAzACUAAAAhABcAAAAzACUAAAAsABcAAAAzACUAAAA4ABcAAAAzACUAAAAKABcAAAAzACUAAAA=")
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAAAtACAAAQABACcAAADp/xcAAAAmACYAAAAVABcAAAAzACUAAAAhABcAAAAzACUAAAAsABcAAAAzACUAAAA4ABcAAAAzACUAAAAKABcAAAAzACUAAADg/wgAAwBjAAQAADBKAAgAAwBjAAQAADA=")
 tile_set = ExtResource("1_nyn40")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -24,11 +24,23 @@ tile_set = ExtResource("1_nyn40")
 [node name="SceneLoader" parent="second_world/portals" instance=ExtResource("3_vetay")]
 position = Vector2(-148, -14)
 Path = "res://scenes/level/game/world_0.tscn"
+SpawnPositionIndex = 1
 
-[node name="Player" parent="." instance=ExtResource("3_aberk")]
+[node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("3_vetay")]
+position = Vector2(380, -11)
+Path = "res://scenes/level/game/world1/world_1_0.tscn"
+
+[node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("3_aberk")]
 position = Vector2(2, -58)
 floor_constant_speed = true
 floor_snap_length = 32.0
+SpawnPositions = [NodePath("start"), NodePath("world1")]
+
+[node name="start" type="Node2D" parent="Player"]
+position = Vector2(-22, 3)
+
+[node name="world1" type="Node2D" parent="Player"]
+position = Vector2(367, -63)
 
 [node name="RewindPlayer" parent="." instance=ExtResource("4_4yv7v")]
 
