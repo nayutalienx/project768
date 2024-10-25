@@ -1,0 +1,56 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cg1yfef3db88g"]
+
+[ext_resource type="Texture2D" uid="uid://dmbsrtuoaekr0" path="res://tile_sets/tileset1.png" id="1_lft5p"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a5xc7"]
+texture = ExtResource("1_lft5p")
+3:3/size_in_atlas = Vector2i(13, 5)
+3:3/0 = 0
+18:3/size_in_atlas = Vector2i(18, 5)
+18:3/0 = 0
+3:10/size_in_atlas = Vector2i(6, 6)
+3:10/0 = 0
+11:10/size_in_atlas = Vector2i(14, 6)
+11:10/0 = 0
+27:10/size_in_atlas = Vector2i(9, 5)
+27:10/0 = 0
+38:3/size_in_atlas = Vector2i(11, 47)
+38:3/0 = 0
+3:17/size_in_atlas = Vector2i(6, 6)
+3:17/0 = 0
+11:17/size_in_atlas = Vector2i(14, 3)
+11:17/0 = 0
+27:17/size_in_atlas = Vector2i(9, 4)
+27:17/0 = 0
+11:21/size_in_atlas = Vector2i(14, 5)
+11:21/0 = 0
+3:25/size_in_atlas = Vector2i(6, 27)
+3:25/0 = 0
+11:28/size_in_atlas = Vector2i(14, 6)
+11:28/0 = 0
+11:35/size_in_atlas = Vector2i(14, 9)
+11:35/0 = 0
+27:28/size_in_atlas = Vector2i(9, 6)
+27:28/0 = 0
+27:35/size_in_atlas = Vector2i(9, 9)
+27:35/0 = 0
+27:44/size_in_atlas = Vector2i(9, 5)
+27:44/0 = 0
+51:4/size_in_atlas = Vector2i(9, 45)
+51:4/0 = 0
+61:2/size_in_atlas = Vector2i(15, 74)
+61:2/0 = 0
+3:68/size_in_atlas = Vector2i(36, 8)
+3:68/0 = 0
+3:68/0/physics_layer_0/polygon_0/points = PackedVector2Array(-286.78, -50.0253, 283.005, -48.1376, 282.376, 60.7226, -284.893, 62.9249)
+3:53/size_in_atlas = Vector2i(54, 9)
+3:53/0 = 0
+3:53/0/physics_layer_0/polygon_0/points = PackedVector2Array(-424.743, -56.0032, 420.339, -54.7447, 422.699, 63.1824, -428.519, 68.5882)
+3:62/size_in_atlas = Vector2i(47, 6)
+3:62/0 = 0
+
+[resource]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 0
+sources/4 = SubResource("TileSetAtlasSource_a5xc7")

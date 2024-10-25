@@ -42,7 +42,6 @@ public partial class RewindAudioPlayer :
         audioLen = ForwardPlayer.GetStream().GetLength();
 
         ForwardPlayer.Play();
-        BackwardPlayer.Play();
 
         StateChanger.ChangeState(State.Forward);
     }
@@ -71,14 +70,14 @@ public partial class RewindAudioPlayer :
     {
         double backwardPos = audioLen - ForwardPlayer.GetPlaybackPosition();
         GD.Print($"backwardPos {backwardPos} = {audioLen} - {ForwardPlayer.GetPlaybackPosition()}");
-        BackwardPlayer.Seek((float) backwardPos);
+        BackwardPlayer.Play((float) backwardPos);
     }
 
     public void SyncForwardFromBackward()
     {
         double forwardPos = audioLen - BackwardPlayer.GetPlaybackPosition();
         GD.Print($"forwardPos {forwardPos} = {audioLen} - {BackwardPlayer.GetPlaybackPosition()}");
-        ForwardPlayer.Seek((float) forwardPos);
+        ForwardPlayer.Play((float) forwardPos);
     }
 
     public void OnRewindSpeedChanged(int speed)

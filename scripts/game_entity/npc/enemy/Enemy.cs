@@ -47,6 +47,7 @@ public partial class Enemy :
     [Export] public float MoveSpeed = 150.0f;
 
     [Export] public float PushForce = 80.0f;
+    [Export] public bool AliveOnStart = false;
     public RayCast2D FallRaycastLeft { get; set; }
     public RayCast2D FallRaycastRight { get; set; }
     public int EnemyDirection { get; set; } = 1;
@@ -88,7 +89,15 @@ public partial class Enemy :
         OriginalAttackAreaLayerMask = AttackArea.GetCollisionLayerMask();
         OriginalHeadAreaLayerMask = HeadArea.GetCollisionLayerMask();
 
-        StateChanger.ChangeState(State.Death);
+        if (AliveOnStart)
+        {
+            StateChanger.ChangeState(State.Move);
+        }
+        else
+        {
+            StateChanger.ChangeState(State.Death);
+        }
+        
     }
 
     public override void _PhysicsProcess(double delta)
