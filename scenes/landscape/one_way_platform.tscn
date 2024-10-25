@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c5c4bv6ak02u4" path="res://sprites/ladder_top.png" id="1_otw1a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l1hfv"]
-size = Vector2(279, 69)
+size = Vector2(295.064, 69)
 
 [node name="one_way_platform" type="AnimatableBody2D" groups=["one_way_platform"]]
 scale = Vector2(1.04384, 0.406434)
@@ -14,6 +14,7 @@ script = ExtResource("1_abpv2")
 texture = ExtResource("1_otw1a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, -0.5)
+position = Vector2(8.22259e-06, -0.5)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_l1hfv")
 one_way_collision = true

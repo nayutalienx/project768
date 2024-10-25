@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=4 uid="uid://cg58jbv5ahy7k"]
+
+[ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_nyn40"]
+[ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="3_aberk"]
+[ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="3_vetay"]
+[ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="4_4yv7v"]
+[ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="5_ld7v5"]
+[ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="6_bsd4l"]
+[ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="7_wrpmi"]
+
+[node name="World0" type="Node2D"]
+
+[node name="second_world" type="Node2D" parent="."]
+
+[node name="tiles" type="Node2D" parent="second_world"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
+position = Vector2(213, -499)
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAAAtACAAAQABACcAAADp/xcAAAAmACYAAAAVABcAAAAzACUAAAAhABcAAAAzACUAAAAsABcAAAAzACUAAAA4ABcAAAAzACUAAAAKABcAAAAzACUAAAA=")
+tile_set = ExtResource("1_nyn40")
+
+[node name="portals" type="Node2D" parent="second_world"]
+
+[node name="SceneLoader" parent="second_world/portals" instance=ExtResource("3_vetay")]
+position = Vector2(-148, -14)
+Path = "res://scenes/level/game/world_0.tscn"
+
+[node name="Player" parent="." instance=ExtResource("3_aberk")]
+position = Vector2(2, -58)
+floor_constant_speed = true
+floor_snap_length = 32.0
+
+[node name="RewindPlayer" parent="." instance=ExtResource("4_4yv7v")]
+
+[node name="MusicPlayer" parent="." node_paths=PackedStringArray("ForwardPlayer", "BackwardPlayer") instance=ExtResource("5_ld7v5")]
+ForwardPlayer = NodePath("forward")
+BackwardPlayer = NodePath("backward")
+
+[node name="forward" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("6_bsd4l")
+
+[node name="backward" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("7_wrpmi")
