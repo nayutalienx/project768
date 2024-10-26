@@ -96,7 +96,12 @@ texture = ExtResource("3_ecj85")
 75:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-133.983, -523.598, 136.225, -521.356, 138.083, 518.431, -133.139, 517.724)
 99:4/size_in_atlas = Vector2i(13, 68)
 99:4/0 = 0
+99:4/0/modulate = Color(0.56, 0.55664, 0.5544, 1)
 99:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-79.6001, -522.277, 85.8925, -521.648, 84.6341, 519.76, -79.6001, 519.76)
+119:4/size_in_atlas = Vector2i(16, 24)
+119:4/0 = 0
+119:4/0/z_index = 1
+119:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-104.056, -173.426, 106.038, -173.426, 105.245, 167.48, -103.659, 167.876)
 
 [resource]
 physics_layer_0/collision_layer = 1
