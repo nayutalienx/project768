@@ -16,7 +16,7 @@
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAAAtACAAAQABACcAAADp/xcAAAAmACYAAAAVABcAAAAzACUAAAAhABcAAAAzACUAAAAsABcAAAAzACUAAAA4ABcAAAAzACUAAAAKABcAAAAzACUAAADg/wgAAwBjAAQAADBKAAgAAwBjAAQAADA=")
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAAAtACAAAQABACcAAADp/xcAAAAmACYAAAAVABcAAAAzACUAAAAhABcAAAAzACUAAAAsABcAAAAzACUAAAA4ABcAAAAzACUAAAAKABcAAAAzACUAAADf/xQAAwB3AAQAAABLABQAAwB3AAQAAAA=")
 tile_set = ExtResource("1_nyn40")
 
 [node name="portals" type="Node2D" parent="second_world"]
