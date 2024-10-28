@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhfssdhsox4l5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_j0elf"]
+font_size = 100
+font_color = Color(1, 0.592157, 0.227451, 1)
+
+[node name="CollectableItemTemplate" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+offset_right = 158.0
+offset_bottom = 157.0
+border_color = Color(0.301734, 0.328541, 0.351154, 1)
+border_width = 5.0
+editor_only = false
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 51.0
+offset_top = 9.0
+offset_right = 108.0
+offset_bottom = 146.0
+label_settings = SubResource("LabelSettings_j0elf")

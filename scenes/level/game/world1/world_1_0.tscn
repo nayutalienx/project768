@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://did8os4q6wq6t"]
+[gd_scene load_steps=15 format=4 uid="uid://did8os4q6wq6t"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_betv8"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="3_cmwnn"]
@@ -12,8 +12,21 @@
 [ext_resource type="PackedScene" uid="uid://c231kcpdermgs" path="res://scenes/common/spawner.tscn" id="7_i6t6k"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="7_qun4q"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="8_hwbxa"]
+[ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="13_a6ixn"]
+[ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="14_215lr"]
 
 [node name="World0" type="Node2D"]
+
+[node name="CollectableSystem" parent="." instance=ExtResource("13_a6ixn")]
+
+[node name="CollectableItem" parent="CollectableSystem" instance=ExtResource("14_215lr")]
+position = Vector2(7841, -480)
+
+[node name="CollectableItem2" parent="CollectableSystem" instance=ExtResource("14_215lr")]
+position = Vector2(11315, -910)
+
+[node name="CollectableItem3" parent="CollectableSystem" instance=ExtResource("14_215lr")]
+position = Vector2(12537, -1079)
 
 [node name="second_world" type="Node2D" parent="."]
 

@@ -17,6 +17,7 @@ public class LadderState : BasePlayerState
 
     public override void EnterState(Player.State prevState)
     {
+        Entity.JumpMultiplier = 1.0f;
         RecoverKeyOnEnterState(prevState);
         RecoverSwitcherOnEnterState(prevState);
         Entity.EnableCollision(Entity.OrigCollission);
