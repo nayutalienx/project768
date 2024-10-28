@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2r2s6la6jbqb"]
+
+[ext_resource type="Script" path="res://scripts/game_entity/common/system/CollectableSystem.cs" id="1_kwxwj"]
+
+[node name="CollectableSystem" type="Node2D" groups=["persist"]]
+script = ExtResource("1_kwxwj")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 27.0
+offset_top = 27.0
+offset_right = 67.0
+offset_bottom = 67.0
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 200
+theme_override_constants/v_separation = 200
+columns = 3

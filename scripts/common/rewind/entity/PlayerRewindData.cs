@@ -10,6 +10,7 @@ public struct PlayerRewindData
     public Vector2 LadderGlobalPosition { get; set; }
     public bool Visible { get; set; }
     public Player.State CurrentState { get; set; }
+    public float JumpMultiplier { get; set; }
 
     // Key
     public bool HasKey { get; set; }
@@ -27,6 +28,7 @@ public struct PlayerRewindData
         CurrentState = player.CurrentState.StateEnum;
         Visible = player.Visible;
         LadderGlobalPosition = player.InteractionContext.LadderContext.LadderGlobalPosition;
+        JumpMultiplier = player.JumpMultiplier;
         // Key
         HasKey = player.InteractionContext.KeyContext.HasKey;
         KeyInstanceId = player.InteractionContext.KeyContext.KeyInstanceId;
@@ -44,6 +46,7 @@ public struct PlayerRewindData
         player.RewindState = (int) CurrentState;
         player.InteractionContext.LadderContext.LadderGlobalPosition = LadderGlobalPosition;
         player.Visible = Visible;
+        player.JumpMultiplier = JumpMultiplier;
         // Key
         player.InteractionContext.KeyContext.HasKey = HasKey;
         player.InteractionContext.KeyContext.KeyInstanceId = KeyInstanceId;

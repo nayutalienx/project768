@@ -10,6 +10,7 @@ public class FallOnEnemyInteraction : Interaction<Player, PlayerInteractionEvent
 
     public override void Interact(PlayerInteractionEvent eventContext)
     {
-        Entity.Velocity = Entity.Velocity with {Y = Entity.JumpVelocity};
+        Entity.Velocity = Entity.Velocity with {Y = Entity.JumpVelocity * Entity.JumpMultiplier};
+        Entity.JumpMultiplier = 2.0f;
     }
 }

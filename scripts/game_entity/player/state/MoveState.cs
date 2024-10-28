@@ -40,6 +40,7 @@ public class MoveState : BasePlayerState
 
         if (Entity.Cache.UpPressed && Entity.InteractionContext.SceneLoaderContext.SceneLoader != null)
         {
+            Player.SaveSystem.SaveGame(Entity.GetTree());
             Player.PreviousSceneData.HasData = true;
             Player.PreviousSceneData.SpawnPositionIndex =
                 Entity.InteractionContext.SceneLoaderContext.SceneLoader.SpawnPositionIndex;
@@ -54,9 +55,13 @@ public class MoveState : BasePlayerState
             Entity.Velocity += Entity.GetGravity() * (float) delta;
         }
 
-        if (Entity.Cache.JumpPressed && Entity.IsOnFloor())
+        if (Entity.IsOnFloor())
         {
-            Entity.Velocity = Entity.Velocity with {Y = Entity.JumpVelocity};
+            Entity.JumpMultiplier = 1.0f;
+            if (Entity.Cache.JumpPressed)
+            {
+                Entity.Velocity = Entity.Velocity with {Y = Entity.JumpVelocity};
+            }
         }
 
         float direction = Entity.Cache.HorizontalDirection;

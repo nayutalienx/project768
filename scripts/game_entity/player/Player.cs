@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using project768.scripts.common;
 using project768.scripts.common.interaction;
+using project768.scripts.game_entity.common.system;
 using project768.scripts.game_entity.landscape.cannon;
 using project768.scripts.player.interaction;
 using project768.scripts.rewind.entity;
@@ -16,6 +17,7 @@ public partial class Player :
     IStateMachineEntity<Player, Player.State>,
     IInteractableEntity<Player, PlayerInteractionContext, PlayerInteractionEvent, PlayerInteraction>
 {
+    public static SaveSystem SaveSystem { get; set; } = new();
     public static PreviousSceneData PreviousSceneData { get; set; } = new();
 
     [ExportSubgroup("Player Spawn Settings")]
@@ -28,6 +30,7 @@ public partial class Player :
     [Export] public float MoveSpeed = 300.0f;
 
     [Export] public float PushForce = 80.0f;
+    public float JumpMultiplier { get; set; } = 1.0f;
 
     public enum State
     {
@@ -57,7 +60,6 @@ public partial class Player :
     public PlayerCache Cache { get; set; }
 
     public Tuple<uint, uint> OrigCollission;
-
     public Label Label { get; set; }
 
     public override void _Ready()
@@ -93,6 +95,7 @@ public partial class Player :
         area2d.BodyExited += body => CurrentState.OnBodyExited(new CollisionBody("player", body));
 
         LoadPreviousSceneData();
+        SaveSystem.LoadGame(GetTree());
     }
 
     public override void _Input(InputEvent _event)
