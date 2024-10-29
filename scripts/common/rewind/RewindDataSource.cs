@@ -12,6 +12,7 @@ namespace project768.scripts.rewind;
 public class RewindDataSource
 {
     public Player Player { get; set; }
+    public CollectableSystem[] CollectableSystem { get; set; }
     public Enemy[] Enemies { get; set; }
     public Key[] Keys { get; set; }
     public LockedDoor[] LockedDoors { get; set; }
@@ -37,6 +38,7 @@ public class RewindDataSource
             .Where(platform => platform.AnimationPlayer != null)
             .ToArray();
         FindAndAddRewindables(t, "background_music");
+        CollectableSystem = FindAndAddRewindables(t, "collectable_system").ConvertAll(o => o as CollectableSystem).ToArray();
     }
 
     private List<IRewindable> FindAndAddRewindables(

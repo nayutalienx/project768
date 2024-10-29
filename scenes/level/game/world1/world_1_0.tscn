@@ -20,7 +20,7 @@
 [node name="CollectableSystem" parent="." instance=ExtResource("13_a6ixn")]
 
 [node name="CollectableItem" parent="CollectableSystem" instance=ExtResource("14_215lr")]
-position = Vector2(7841, -480)
+position = Vector2(7834, -487)
 
 [node name="CollectableItem2" parent="CollectableSystem" instance=ExtResource("14_215lr")]
 position = Vector2(11315, -910)
