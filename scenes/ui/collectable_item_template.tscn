@@ -12,6 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
+layout_mode = 0
 offset_right = 158.0
 offset_bottom = 157.0
 border_color = Color(0.301734, 0.328541, 0.351154, 1)

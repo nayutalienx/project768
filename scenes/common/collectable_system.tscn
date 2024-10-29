@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/game_entity/common/system/CollectableSystem.cs" id="1_kwxwj"]
 
-[node name="CollectableSystem" type="Node2D" groups=["persist"]]
+[node name="CollectableSystem" type="Node2D" groups=["collectable_system", "persist"]]
 script = ExtResource("1_kwxwj")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

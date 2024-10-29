@@ -37,6 +37,7 @@ switcher=""
 cannon_ball=""
 spawner=""
 persist=""
+collectable_system=""
 
 [input]
 
