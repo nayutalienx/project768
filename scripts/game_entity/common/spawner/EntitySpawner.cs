@@ -14,7 +14,7 @@ public partial class EntitySpawner : StaticBody2D, IRewindable
 
     [Export] public float SpawnInterval = 1.0f;
 
-    [Export] public Node2D[] Characters;
+    [Export] public Node2D[] Entities;
     [Export] public Node2D SpawnPoint;
 
     public int RewindState { get; set; }
@@ -45,19 +45,24 @@ public partial class EntitySpawner : StaticBody2D, IRewindable
         var end = TimerManager.Update(delta);
         if (end)
         {
-            if (TrySpawnCharacter())
+            if (TrySpawnEntity())
             {
                 TimerManager.Reset();
             }
         }
     }
 
-    public bool TrySpawnCharacter()
+    public bool TrySpawnEntity()
     {
-        foreach (var node2D in Characters)
+        foreach (var node2D in Entities)
         {
             var spawnable = (ISpawnable) node2D;
-            if (spawnable.TrySpawn(SpawnPoint.GlobalPosition))
+            if (spawnable.TrySpawn(
+                    SpawnPoint.GlobalPosition,
+                    new Vector2(
+                        Mathf.Cos(SpawnPoint.GlobalRotation),
+                        Mathf.Sin(SpawnPoint.GlobalRotation)
+                    )))
             {
                 return true;
             }

@@ -38,6 +38,7 @@ cannon_ball=""
 spawner=""
 persist=""
 collectable_system=""
+cloud_platform=""
 
 [input]
 

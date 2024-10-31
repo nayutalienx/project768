@@ -1,18 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Godot;
 using project768.scripts.common;
 using project768.scripts.game_entity.npc.spawner;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
 
-namespace project768.scripts.game_entity.landscape.cannon;
+namespace project768.scripts.game_entity.landscape.cloud_platform;
 
-public partial class CannonBall : Area2D,
+public partial class CloudPlatform : AnimatableBody2D,
     IRewindable,
     ISpawnable,
-    IStateMachineEntity<CannonBall, CannonBall.State>
+    IStateMachineEntity<CloudPlatform, CloudPlatform.State>
 {
-    public float Speed { get; set; } = 300.0f;
+    public float Speed { get; set; } = 200.0f;
 
     public enum State
     {
@@ -21,60 +22,74 @@ public partial class CannonBall : Area2D,
         Rewind
     }
 
-    public State<CannonBall, State> CurrentState { get; set; }
-    public Dictionary<State, State<CannonBall, State>> States { get; set; }
-    public StateChanger<CannonBall, State> StateChanger { get; set; }
+    public State<CloudPlatform, State> CurrentState { get; set; }
+    public Dictionary<State, State<CloudPlatform, State>> States { get; set; }
+    public StateChanger<CloudPlatform, State> StateChanger { get; set; }
     public int RewindState { get; set; }
     public Sprite2D Sprite { get; set; }
     public GpuParticles2D Particles { get; set; }
+    public RayCast2D RayCast2D { get; set; }
+    public CollisionShape2D CollisionShape2D { get; set; }
+
     public Vector2 Direction { get; set; } = Vector2.Right;
 
-    public bool BallHidden
+    public bool CloudHidden
     {
-        get => ballHidden;
+        get => cloudHidden;
         set
         {
             if (value)
             {
-                HideBall();
+                HideCloud();
             }
             else
             {
-                ShowBall();
+                ShowCloud();
             }
         }
     }
 
-    private bool ballHidden = true;
+    private bool cloudHidden = true;
+    private Tuple<uint, uint> collissionLayerMask;
 
     public override void _Ready()
     {
         Sprite = GetNode<Sprite2D>("Sprite2D");
         Particles = GetNode<GpuParticles2D>("GPUParticles2D");
 
-        States = new Dictionary<State, State<CannonBall, State>>()
+        States = new Dictionary<State, State<CloudPlatform, State>>()
         {
             {State.Wait, new WaitState(this, State.Wait)},
             {State.Move, new MoveState(this, State.Move)},
             {State.Rewind, new RewindState(this, State.Rewind)},
         };
-        StateChanger = new StateChanger<CannonBall, State>(this);
+        StateChanger = new StateChanger<CloudPlatform, State>(this);
 
-        BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("ball", body)); };
+        RayCast2D = GetNode<RayCast2D>("RayCast2D");
+        CollisionShape2D = GetNode<CollisionShape2D>("CollisionShape2D");
+
+        collissionLayerMask = this.GetCollisionLayerMask();
+
 
         StateChanger.ChangeState(State.Wait);
     }
 
-    public void HideBall()
+    public void HideCloud()
     {
-        ballHidden = true;
+        this.DisableCollision();
+        RayCast2D.SetEnabled(false);
+
+        cloudHidden = true;
         Sprite.Hide();
         Particles.SetEmitting(false);
     }
 
-    public void ShowBall()
+    public void ShowCloud()
     {
-        ballHidden = false;
+        this.EnableCollision(collissionLayerMask);
+        RayCast2D.SetEnabled(true);
+
+        cloudHidden = false;
         Sprite.Show();
         Particles.SetEmitting(true);
     }
@@ -107,12 +122,12 @@ public partial class CannonBall : Area2D,
         }
     }
 
-    public bool TrySpawn(Vector2 position, Vector2 direction)
+    public bool TrySpawn(Vector2 spawnPosition, Vector2 direction)
     {
         if (CurrentState.StateEnum == State.Wait)
         {
-            GlobalPosition = position;
             Direction = direction;
+            GlobalPosition = spawnPosition;
             StateChanger.ChangeState(State.Move);
             return true;
         }

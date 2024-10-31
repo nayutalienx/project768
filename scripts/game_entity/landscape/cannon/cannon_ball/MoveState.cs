@@ -18,8 +18,7 @@ public class MoveState : State<CannonBall, CannonBall.State>
 
     public override void PhysicProcess(double delta)
     {
-        Vector2 moveDirection = Vector2.Right.Rotated(Entity.Transform.Rotation).Normalized();
-        Entity.Transform = Entity.Transform.Translated(moveDirection * (float) (Entity.Speed * delta));
+        Entity.GlobalTransform = Entity.GlobalTransform.Translated(Entity.Direction * (float) (Entity.Speed * delta));
     }
 
     public override void OnBodyEntered(CollisionBody body)

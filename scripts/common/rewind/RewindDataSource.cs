@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using project768.scripts.game_entity.landscape.cannon;
+using project768.scripts.game_entity.landscape.cloud_platform;
 using project768.scripts.game_entity.npc.spawner;
 using project768.scripts.player;
 using project768.scripts.rewind.entity;
@@ -19,6 +20,7 @@ public class RewindDataSource
     public OneWayPlatform[] OneWayPlatforms { get; set; }
     public Switcher[] Switchers { get; set; }
     public CannonBall[] CannonBalls { get; set; }
+    public CloudPlatform[] CloudPlatforms { get; set; }
     public EntitySpawner[] Spawners { get; set; }
 
     public List<IRewindable> Rewindables = new();
@@ -31,6 +33,7 @@ public class RewindDataSource
         LockedDoors = FindAndAddRewindables(t, "door").ConvertAll(o => o as LockedDoor).ToArray();
         Switchers = FindAndAddRewindables(t, "switcher").ConvertAll(o => o as Switcher).ToArray();
         CannonBalls = FindAndAddRewindables(t, "cannon_ball").ConvertAll(o => o as CannonBall).ToArray();
+        CloudPlatforms = FindAndAddRewindables(t, "cloud_platform").ConvertAll(o => o as CloudPlatform).ToArray();
         Spawners = FindAndAddRewindables(t, "spawner").ConvertAll(o => o as EntitySpawner).ToArray();
 
         OneWayPlatforms = FindAndAddRewindables(t, "one_way_platform")
@@ -38,7 +41,8 @@ public class RewindDataSource
             .Where(platform => platform.AnimationPlayer != null)
             .ToArray();
         FindAndAddRewindables(t, "background_music");
-        CollectableSystem = FindAndAddRewindables(t, "collectable_system").ConvertAll(o => o as CollectableSystem).ToArray();
+        CollectableSystem = FindAndAddRewindables(t, "collectable_system").ConvertAll(o => o as CollectableSystem)
+            .ToArray();
     }
 
     private List<IRewindable> FindAndAddRewindables(

@@ -142,25 +142,25 @@ position = Vector2(880, -21)
 [node name="cannons" type="Node2D" parent="second_world"]
 z_index = -6
 
-[node name="cannon" parent="second_world/cannons" node_paths=PackedStringArray("Characters") instance=ExtResource("3_j4kr1")]
+[node name="cannon" parent="second_world/cannons" node_paths=PackedStringArray("Entities") instance=ExtResource("3_j4kr1")]
 position = Vector2(-259, -170)
-Characters = [NodePath("cannon_ball")]
+Entities = [NodePath("cannon_ball")]
 
 [node name="cannon_ball" parent="second_world/cannons/cannon" instance=ExtResource("4_3an2v")]
 
-[node name="cannon3" parent="second_world/cannons" node_paths=PackedStringArray("Characters") instance=ExtResource("3_j4kr1")]
+[node name="cannon3" parent="second_world/cannons" node_paths=PackedStringArray("Entities") instance=ExtResource("3_j4kr1")]
 position = Vector2(1400, -15)
 scale = Vector2(-1, 1)
-Characters = [NodePath("cannon_ball"), NodePath("cannon_ball2")]
+Entities = [NodePath("cannon_ball"), NodePath("cannon_ball2")]
 
 [node name="cannon_ball" parent="second_world/cannons/cannon3" instance=ExtResource("4_3an2v")]
 
 [node name="cannon_ball2" parent="second_world/cannons/cannon3" instance=ExtResource("4_3an2v")]
 
-[node name="cannon2" parent="second_world/cannons" node_paths=PackedStringArray("Characters") instance=ExtResource("3_j4kr1")]
+[node name="cannon2" parent="second_world/cannons" node_paths=PackedStringArray("Entities") instance=ExtResource("3_j4kr1")]
 position = Vector2(-524, -62)
 rotation = 0.472818
-Characters = [NodePath("cannon_ball")]
+Entities = [NodePath("cannon_ball")]
 
 [node name="cannon_ball" parent="second_world/cannons/cannon2" instance=ExtResource("4_3an2v")]
 
@@ -249,30 +249,25 @@ ReactAnimationName = "move"
 
 [node name="spawners" type="Node2D" parent="second_world"]
 
-[node name="spawner" parent="second_world/spawners" node_paths=PackedStringArray("Characters") instance=ExtResource("10_hk6kd")]
-position = Vector2(1545, -515)
-Characters = [NodePath("enemy_simple"), NodePath("enemy_simple2")]
+[node name="spawner" parent="second_world/spawners" node_paths=PackedStringArray("Entities") instance=ExtResource("10_hk6kd")]
+position = Vector2(1075, 230)
+SpawnInterval = 3.0
+Entities = [NodePath("enemy_simple")]
 
 [node name="enemy_simple" parent="second_world/spawners/spawner" instance=ExtResource("11_hlllo")]
-position = Vector2(-75, -29)
 
-[node name="enemy_simple2" parent="second_world/spawners/spawner" instance=ExtResource("11_hlllo")]
-position = Vector2(-75, -29)
-
-[node name="spawner2" parent="second_world/spawners" node_paths=PackedStringArray("Characters", "SpawnPoint") instance=ExtResource("10_hk6kd")]
-position = Vector2(1082, 422)
-SpawnInterval = 5.0
-Characters = [NodePath("enemy_simple")]
-SpawnPoint = NodePath("spawn_point")
+[node name="spawner2" parent="second_world/spawners" node_paths=PackedStringArray("Entities") instance=ExtResource("10_hk6kd")]
+position = Vector2(1507, -666)
+SpawnInterval = 3.0
+Entities = [NodePath("enemy_simple"), NodePath("enemy_simple2")]
 
 [node name="enemy_simple" parent="second_world/spawners/spawner2" instance=ExtResource("11_hlllo")]
-position = Vector2(5, -200)
 
-[node name="spawn_point" type="Node2D" parent="second_world/spawners/spawner2"]
-position = Vector2(19, -160)
+[node name="enemy_simple2" parent="second_world/spawners/spawner2" instance=ExtResource("11_hlllo")]
 
-[node name="Player" parent="." instance=ExtResource("12_hld4q")]
+[node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("12_hld4q")]
 position = Vector2(495, 433)
+SpawnPositions = [NodePath("start"), NodePath("end")]
 
 [node name="RewindSpeedLabel" type="Label" parent="Player"]
 offset_top = -28.0
@@ -287,6 +282,10 @@ offset_right = 66.0
 offset_bottom = -174.0
 text = "audio:"
 label_settings = SubResource("LabelSettings_v6an4")
+
+[node name="start" type="Node2D" parent="Player"]
+
+[node name="end" type="Node2D" parent="Player"]
 
 [node name="RewindPlayer" parent="." instance=ExtResource("13_c18ep")]
 

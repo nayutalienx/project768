@@ -46,8 +46,7 @@ SpawnPositionIndex = 1
 
 [node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("3_cmwnn")]
 position = Vector2(14060, -463)
-Path = "res://scenes/level/game/world1/world_1_lobby.tscn"
-SpawnPositionIndex = 1
+Path = "res://scenes/level/game/world1/world_1_1.tscn"
 
 [node name="ladders" type="Node2D" parent="second_world"]
 z_index = -5
@@ -135,16 +134,16 @@ points = PackedVector2Array(0, -0.0668298, 151.302, -0.0668298)
 position = Vector2(10405, -399)
 AliveOnStart = true
 
-[node name="spawner" parent="second_world/enemies" node_paths=PackedStringArray("Characters") instance=ExtResource("7_i6t6k")]
+[node name="spawner" parent="second_world/enemies" node_paths=PackedStringArray("Entities") instance=ExtResource("7_i6t6k")]
 position = Vector2(11549, -594)
-Characters = [NodePath("enemy_simple2")]
+Entities = []
 
 [node name="enemy_simple2" parent="second_world/enemies/spawner" instance=ExtResource("6_u3ki2")]
 position = Vector2(-37, 15)
 
-[node name="spawner2" parent="second_world/enemies" node_paths=PackedStringArray("Characters") instance=ExtResource("7_i6t6k")]
+[node name="spawner2" parent="second_world/enemies" node_paths=PackedStringArray("Entities") instance=ExtResource("7_i6t6k")]
 position = Vector2(12688, -573)
-Characters = [NodePath("enemy_simple2"), NodePath("enemy_simple3")]
+Entities = []
 
 [node name="enemy_simple2" parent="second_world/enemies/spawner2" instance=ExtResource("6_u3ki2")]
 position = Vector2(-37, 15)
