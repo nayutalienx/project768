@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://bpwc1j0x2g704"]
+[gd_scene load_steps=19 format=4 uid="uid://bpwc1j0x2g704"]
 
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_eg1kf"]
 [ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_3mbao"]
@@ -7,8 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="5_mbb07"]
 [ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/one_way_platform.tscn" id="6_t4q27"]
 [ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/landscape/spikes.tscn" id="7_0nanq"]
+[ext_resource type="PackedScene" uid="uid://c231kcpdermgs" path="res://scenes/common/spawner.tscn" id="8_ao6im"]
 [ext_resource type="PackedScene" uid="uid://dkn6lvqu0x1vd" path="res://scenes/item/key_rb.tscn" id="8_e0jsr"]
 [ext_resource type="PackedScene" uid="uid://bb6bemfvj0nt3" path="res://scenes/landscape/locked_door.tscn" id="9_bgmi2"]
+[ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/npc/enemy_simple.tscn" id="9_vp1gi"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="10_7etll"]
 [ext_resource type="PackedScene" uid="uid://btobpn5evuwb8" path="res://scenes/landscape/cannon.tscn" id="10_wej1h"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="11_1o818"]
@@ -28,7 +30,10 @@ position = Vector2(1760, -859)
 position = Vector2(4313, -882)
 
 [node name="CollectableItem3" parent="CollectableSystem" instance=ExtResource("2_3mbao")]
-position = Vector2(4352, -1290)
+position = Vector2(7961, -909)
+
+[node name="CollectableItem4" parent="CollectableSystem" instance=ExtResource("2_3mbao")]
+position = Vector2(7908, -444)
 
 [node name="second_world" type="Node2D" parent="."]
 
@@ -36,7 +41,7 @@ position = Vector2(4352, -1290)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADe/xQAAwB3AAQAAAAtACAAAQAyAEAAAABLAB4AAQAyAEAAAACaAPL/AQAsAEcAAACPAPf/AQAsAEcAAACqAPf/AQAsAEcAAACyAAQAAwB3AAQAAACyABkAAwB3AAQAAACHAAUAAwB3AAQAAACHABoAAwB3AAQAAADLAB8AAQABACcAAAA=")
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADe/xQAAwB3AAQAAAAtACAAAQAyAEAAAABLAB4AAQAyAEAAAACaAPL/AQAsAEcAAACPAPf/AQAsAEcAAACqAPf/AQAsAEcAAACyAAQAAwB3AAQAAACyABkAAwB3AAQAAACHAAUAAwB3AAQAAACHABoAAwB3AAQAAADLAB8AAQABACcAAAD6AB8AAQABACcAAAApAR8AAQABACcAAABZARsAAQABACcAAACJARsAAQABACcAAAC4AR8AAQABACcAAADjASIAAQABACcAAAD/ARgAAwB3AAQAAAD+AQQAAwB3AAQAAAD/AfH/AwB3AAQAAAD9Adz/AwB3AAQAAADkAfj/AQABACcAAAC0Afj/AQABACcAAADwARoAAABCACYAAAA=")
 tile_set = ExtResource("3_iqgwr")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -45,6 +50,10 @@ tile_set = ExtResource("3_iqgwr")
 position = Vector2(-148, -14)
 Path = "res://scenes/level/game/world1/world_1_lobby.tscn"
 SpawnPositionIndex = 1
+
+[node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("4_okdep")]
+position = Vector2(8156, 18)
+Path = "res://scenes/level/game/world1/world_1_2.tscn"
 
 [node name="ladders" type="Node2D" parent="second_world"]
 z_index = -5
@@ -69,6 +78,10 @@ scale = Vector2(1.16385, 0.406434)
 position = Vector2(4868, -603)
 scale = Vector2(3.20385, 0.406434)
 
+[node name="one_way_platform4" parent="second_world/one_way_platforms" instance=ExtResource("6_t4q27")]
+position = Vector2(6089, -615)
+scale = Vector2(3.20385, 0.406434)
+
 [node name="spikes" type="Node2D" parent="second_world"]
 
 [node name="Spike" parent="second_world/spikes" instance=ExtResource("7_0nanq")]
@@ -76,6 +89,21 @@ position = Vector2(500, 136)
 points = PackedVector2Array(0, -0.0668298, 151.302, -0.0668298)
 
 [node name="enemies" type="Node2D" parent="second_world"]
+
+[node name="spawner" parent="second_world/enemies" node_paths=PackedStringArray("Entities") instance=ExtResource("8_ao6im")]
+position = Vector2(4899, -722)
+Entities = [NodePath("enemy_simple")]
+
+[node name="enemy_simple" parent="second_world/enemies/spawner" instance=ExtResource("9_vp1gi")]
+
+[node name="spawner2" parent="second_world/enemies" node_paths=PackedStringArray("Entities") instance=ExtResource("8_ao6im")]
+position = Vector2(7872, -127)
+SpawnInterval = 5.0
+Entities = [NodePath("enemy_simple"), NodePath("enemy_simple2")]
+
+[node name="enemy_simple" parent="second_world/enemies/spawner2" instance=ExtResource("9_vp1gi")]
+
+[node name="enemy_simple2" parent="second_world/enemies/spawner2" instance=ExtResource("9_vp1gi")]
 
 [node name="keys" type="Node2D" parent="second_world"]
 
@@ -85,7 +113,7 @@ position = Vector2(1400, -87)
 [node name="door" type="Node2D" parent="second_world"]
 
 [node name="locked_door" parent="second_world/door" instance=ExtResource("9_bgmi2")]
-position = Vector2(733, -694)
+position = Vector2(743, -694)
 
 [node name="cloud_platforms" type="Node2D" parent="second_world"]
 
@@ -121,15 +149,16 @@ position = Vector2(626, 30)
 position = Vector2(117, 56)
 
 [node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("10_7etll")]
-position = Vector2(3434, -782)
+position = Vector2(266, -130)
 floor_constant_speed = true
 floor_snap_length = 32.0
 SpawnPositions = [NodePath("start"), NodePath("end")]
 
 [node name="start" type="Node2D" parent="Player"]
+position = Vector2(-267, -12)
 
 [node name="end" type="Node2D" parent="Player"]
-position = Vector2(261, -224)
+position = Vector2(7715, 32)
 
 [node name="RewindPlayer" parent="." instance=ExtResource("11_1o818")]
 

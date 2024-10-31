@@ -1,0 +1,120 @@
+[gd_scene load_steps=14 format=4 uid="uid://1rwc18e2dwlw"]
+
+[ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_5m8qp"]
+[ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_2ykts"]
+[ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="3_717fm"]
+[ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="4_ouidw"]
+[ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="5_y3h0n"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/one_way_platform.tscn" id="6_jdtlk"]
+[ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/npc/enemy_simple.tscn" id="9_5f1nd"]
+[ext_resource type="PackedScene" uid="uid://bb6bemfvj0nt3" path="res://scenes/landscape/locked_door.tscn" id="11_68wyy"]
+[ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="14_usa5p"]
+[ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="15_7ill1"]
+[ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="16_ef70c"]
+[ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="17_h7c4i"]
+[ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="18_prheo"]
+
+[node name="World0" type="Node2D"]
+
+[node name="CollectableSystem" parent="." instance=ExtResource("1_5m8qp")]
+
+[node name="CollectableItem" parent="CollectableSystem" instance=ExtResource("2_2ykts")]
+position = Vector2(2009, -1257)
+
+[node name="second_world" type="Node2D" parent="."]
+
+[node name="tiles" type="Node2D" parent="second_world"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
+position = Vector2(213, -499)
+tile_map_data = PackedByteArray("AAD4/yIAAQABACcAAADb/xgAAwB3AAQAAADb/wUAAwB3AAQAAADb//H/AwB3AAQAAAAoACIAAQABACcAAABYACIAAQABACcAAADq/xkAAAAzACUAAABsABoAAAAzACUAAAD6/woAAQABACcAAAAPAPj/AQABACcAAABmAPb/AQABACcAAAB0AN//AQABACcAAAA3AN//AQABACcAAAAIAN//AQABACcAAADz/9//AQABACcAAADb/97/AwB3AAQAAAB2ABoAAwB3AAQAAAB4AAcAAwB3AAQAAAB9APT/AwB3AAQAAACCAOP/AwB3AAQAAACDAM//AwB3AAQAAADa/8n/AwB3AAQAAABnAMf/AwB3AAQAAAB2AMH/AwB3AAQAAFA2AAoAAQABACcAAAA=")
+tile_set = ExtResource("3_717fm")
+
+[node name="portals" type="Node2D" parent="second_world"]
+
+[node name="SceneLoader" parent="second_world/portals" instance=ExtResource("4_ouidw")]
+position = Vector2(-148, -14)
+Path = "res://scenes/level/game/world1/world_1_1.tscn"
+SpawnPositionIndex = 1
+
+[node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("4_ouidw")]
+position = Vector2(1944, 11)
+Path = "res://scenes/level/game/world1/world_1_3.tscn"
+
+[node name="ladders" type="Node2D" parent="second_world"]
+z_index = -5
+
+[node name="ladder" parent="second_world/ladders" instance=ExtResource("5_y3h0n")]
+position = Vector2(-182, -603)
+
+[node name="ladder2" parent="second_world/ladders" instance=ExtResource("5_y3h0n")]
+position = Vector2(1532, -164)
+
+[node name="ladder3" parent="second_world/ladders" instance=ExtResource("5_y3h0n")]
+position = Vector2(1586, -956)
+
+[node name="one_way_platforms" type="Node2D" parent="second_world"]
+
+[node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("6_jdtlk")]
+position = Vector2(-86, -631)
+scale = Vector2(1.32384, 0.406434)
+
+[node name="one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("6_jdtlk")]
+position = Vector2(1596, -1031)
+scale = Vector2(1.32384, 0.406434)
+
+[node name="enemies" type="Node2D" parent="second_world"]
+
+[node name="enemy_simple" parent="second_world/enemies" instance=ExtResource("9_5f1nd")]
+position = Vector2(1058, -57)
+AliveOnStart = true
+
+[node name="enemy_simple2" parent="second_world/enemies" instance=ExtResource("9_5f1nd")]
+position = Vector2(1206, -407)
+AliveOnStart = true
+
+[node name="enemy_simple3" parent="second_world/enemies" instance=ExtResource("9_5f1nd")]
+position = Vector2(69, -410)
+AliveOnStart = true
+
+[node name="enemy_simple4" parent="second_world/enemies" instance=ExtResource("9_5f1nd")]
+position = Vector2(312, -727)
+AliveOnStart = true
+
+[node name="enemy_simple5" parent="second_world/enemies" instance=ExtResource("9_5f1nd")]
+position = Vector2(1784, -753)
+AliveOnStart = true
+
+[node name="enemy_simple6" parent="second_world/enemies" instance=ExtResource("9_5f1nd")]
+position = Vector2(-99, -1119)
+AliveOnStart = true
+
+[node name="door" type="Node2D" parent="second_world"]
+
+[node name="locked_door" parent="second_world/door" node_paths=PackedStringArray("Enemies") instance=ExtResource("11_68wyy")]
+position = Vector2(1885, -1137)
+TrackEnemies = true
+Enemies = [NodePath("../../enemies/enemy_simple"), NodePath("../../enemies/enemy_simple2"), NodePath("../../enemies/enemy_simple3"), NodePath("../../enemies/enemy_simple4"), NodePath("../../enemies/enemy_simple5"), NodePath("../../enemies/enemy_simple6")]
+
+[node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("14_usa5p")]
+position = Vector2(100, -97)
+floor_constant_speed = true
+floor_snap_length = 32.0
+SpawnPositions = [NodePath("start"), NodePath("end")]
+
+[node name="start" type="Node2D" parent="Player"]
+
+[node name="end" type="Node2D" parent="Player"]
+position = Vector2(1601, 1)
+
+[node name="RewindPlayer" parent="." instance=ExtResource("15_7ill1")]
+
+[node name="MusicPlayer" parent="." node_paths=PackedStringArray("ForwardPlayer", "BackwardPlayer") instance=ExtResource("16_ef70c")]
+ForwardPlayer = NodePath("forward")
+BackwardPlayer = NodePath("backward")
+
+[node name="forward" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("17_h7c4i")
+
+[node name="backward" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("18_prheo")

@@ -16,6 +16,28 @@ public class LockedState : State<LockedDoor, LockedDoor.State>
         Entity.LockArea.SetDeferred("monitoring", true);
     }
 
+    public override void Process(double delta)
+    {
+        if (Entity.TrackEnemies)
+        {
+            bool allDead = true;
+
+            foreach (Enemy entityEnemy in Entity.Enemies)
+            {
+                if (entityEnemy.CurrentState.StateEnum != Enemy.State.Death)
+                {
+                    allDead = false;
+                    break;
+                }
+            }
+
+            if (allDead)
+            {
+                Entity.StateChanger.ChangeState(LockedDoor.State.Unlocked);
+            }
+        }
+    }
+
     public override void OnBodyEntered(CollisionBody body)
     {
         if (body.Body is project768.scripts.player.Player player &&

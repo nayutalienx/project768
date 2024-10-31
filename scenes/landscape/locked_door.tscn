@@ -12,7 +12,7 @@ resource_name = "DoorOpen"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatableBody2D/AnimatedDoorSprite:region_rect")
+tracks/0/path = NodePath("AnimatedDoorSprite:region_rect")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -24,7 +24,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatableBody2D/AnimatedDoorSprite:position")
+tracks/1/path = NodePath("AnimatedDoorSprite:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -39,7 +39,7 @@ resource_name = "end"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatableBody2D/AnimatedDoorSprite:region_rect")
+tracks/0/path = NodePath("AnimatedDoorSprite:region_rect")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -51,7 +51,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatableBody2D/AnimatedDoorSprite:position")
+tracks/1/path = NodePath("AnimatedDoorSprite:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -74,51 +74,49 @@ font_size = 21
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
-[node name="locked_door" type="Node2D"]
-
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." groups=["door"]]
+[node name="locked_door" type="AnimatableBody2D" node_paths=PackedStringArray("Enemies") groups=["door"]]
 collision_mask = 0
 script = ExtResource("1_n7v8n")
+Enemies = []
 
-[node name="AnimatedDoorSprite" type="Sprite2D" parent="AnimatableBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.168, 0.168)
+texture = ExtResource("3_jpwhx")
+
+[node name="AnimatedDoorSprite" type="Sprite2D" parent="."]
 z_index = -11
 scale = Vector2(0.168004, 0.168004)
 texture = ExtResource("2_7qnhx")
 region_enabled = true
 region_rect = Rect2(0, 2.41078, 552, 989.589)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.00001)
 scale = Vector2(6.31107, 6.31107)
 shape = SubResource("RectangleShape2D_6mltt")
 disabled = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 reset_on_save = false
-root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_4ff2h")
 }
 next/DoorOpen = &"end"
 
-[node name="lock_area" type="Area2D" parent="AnimatableBody2D"]
+[node name="lock_area" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/lock_area"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="lock_area"]
 position = Vector2(0, 4)
 scale = Vector2(7.07136, 7.07136)
 shape = SubResource("RectangleShape2D_nh0td")
 
-[node name="Label" type="Label" parent="AnimatableBody2D"]
+[node name="Label" type="Label" parent="."]
 offset_left = -43.0
 offset_top = -171.0
-offset_right = -3.0
+offset_right = 5.0
 offset_bottom = -141.0
 text = "door"
 label_settings = SubResource("LabelSettings_rj6p8")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.168, 0.168)
-texture = ExtResource("3_jpwhx")

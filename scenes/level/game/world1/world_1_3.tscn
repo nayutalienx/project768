@@ -1,0 +1,105 @@
+[gd_scene load_steps=16 format=4 uid="uid://did2sgpoca6xq"]
+
+[ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_eo7g3"]
+[ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_00sxd"]
+[ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="3_7v7c0"]
+[ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="4_vrlpi"]
+[ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="5_jy7ak"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/one_way_platform.tscn" id="6_0gpji"]
+[ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/landscape/spikes.tscn" id="7_0lnsy"]
+[ext_resource type="PackedScene" uid="uid://c231kcpdermgs" path="res://scenes/common/spawner.tscn" id="7_7okmd"]
+[ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/npc/enemy_simple.tscn" id="7_pffd2"]
+[ext_resource type="PackedScene" uid="uid://bop1rbgs6g2n0" path="res://scenes/landscape/switcher.tscn" id="8_v5lh8"]
+[ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="9_1ktic"]
+[ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="10_ifkyl"]
+[ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="11_2vvme"]
+[ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="12_7bns2"]
+[ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="13_okf34"]
+
+[node name="World0" type="Node2D"]
+
+[node name="CollectableSystem" parent="." instance=ExtResource("1_eo7g3")]
+
+[node name="CollectableItem" parent="CollectableSystem" instance=ExtResource("2_00sxd")]
+position = Vector2(2009, -1257)
+
+[node name="second_world" type="Node2D" parent="."]
+
+[node name="tiles" type="Node2D" parent="second_world"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
+position = Vector2(213, -499)
+tile_map_data = PackedByteArray("AAD4/yIAAQABACcAAADb/xgAAwB3AAQAAAAoACIAAQABACcAAABYACIAAQABACcAAADq/xkAAAAzACUAAABrACUAAwB3AAQAAAA4APH/AwB3AAQAAABhAPz/AQAyAEAAAAC3ACQAAwB3AAQAAAC3AA8AAwB3AAQAAAC/AAIAAQAsAEcAAAC+AP7/AQAsAEcAAAC/ABAAAQAsAEcAAADDAB0AAwB3AAQAAADFACQAAwB3AAQAAAA=")
+tile_set = ExtResource("3_7v7c0")
+
+[node name="portals" type="Node2D" parent="second_world"]
+
+[node name="SceneLoader" parent="second_world/portals" instance=ExtResource("4_vrlpi")]
+position = Vector2(-148, -14)
+Path = "res://scenes/level/game/world1/world_1_lobby.tscn"
+SpawnPositionIndex = 1
+
+[node name="ladders" type="Node2D" parent="second_world"]
+z_index = -5
+
+[node name="ladder" parent="second_world/ladders" instance=ExtResource("5_jy7ak")]
+position = Vector2(1423, -287)
+
+[node name="one_way_platforms" type="Node2D" parent="second_world"]
+
+[node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("6_0gpji")]
+position = Vector2(1414, -578)
+scale = Vector2(1.32384, 0.406434)
+
+[node name="one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("6_0gpji")]
+position = Vector2(2117, -571)
+
+[node name="enemies" type="Node2D" parent="second_world"]
+
+[node name="spawner" parent="second_world/enemies" node_paths=PackedStringArray("Entities", "SpawnPoint") instance=ExtResource("7_7okmd")]
+Entities = [NodePath("enemy_simple")]
+SpawnPoint = NodePath("spawn")
+
+[node name="enemy_simple" parent="second_world/enemies/spawner" instance=ExtResource("7_pffd2")]
+position = Vector2(3113, -774)
+FallVelocityMultiplier = 5.0
+
+[node name="spawn" type="Node2D" parent="second_world/enemies/spawner"]
+position = Vector2(3023, -639)
+rotation = 3.14159
+
+[node name="door" type="Node2D" parent="second_world"]
+
+[node name="spike" type="Node2D" parent="second_world"]
+
+[node name="Spike" parent="second_world/spike" instance=ExtResource("7_0lnsy")]
+position = Vector2(2052, 174)
+points = PackedVector2Array(0, -0.0668298, 66.6961, -0.0668298)
+
+[node name="switcher" type="Node2D" parent="second_world"]
+
+[node name="switcher" parent="second_world/switcher" instance=ExtResource("8_v5lh8")]
+position = Vector2(1898, -620)
+
+[node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("9_1ktic")]
+position = Vector2(2183, -691)
+floor_constant_speed = true
+floor_snap_length = 32.0
+SpawnPositions = [NodePath("start"), NodePath("end")]
+
+[node name="start" type="Node2D" parent="Player"]
+
+[node name="end" type="Node2D" parent="Player"]
+position = Vector2(1601, 1)
+
+[node name="RewindPlayer" parent="." instance=ExtResource("10_ifkyl")]
+
+[node name="MusicPlayer" parent="." node_paths=PackedStringArray("ForwardPlayer", "BackwardPlayer") instance=ExtResource("11_2vvme")]
+ForwardPlayer = NodePath("forward")
+BackwardPlayer = NodePath("backward")
+
+[node name="forward" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("12_7bns2")
+
+[node name="backward" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("13_okf34")
