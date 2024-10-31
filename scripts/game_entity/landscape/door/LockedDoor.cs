@@ -21,6 +21,9 @@ public partial class LockedDoor :
         Rewind
     }
 
+    [Export] public bool TrackEnemies { get; set; }
+    [Export] public Enemy[] Enemies { get; set; }
+
     public int RewindState { get; set; }
     public State<LockedDoor, State> CurrentState { get; set; }
     public Dictionary<State, State<LockedDoor, State>> States { get; set; }
@@ -60,7 +63,7 @@ public partial class LockedDoor :
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
-        CurrentState.PhysicProcess(delta);
+        CurrentState.Process(delta);
         if (AnimationPlayer.AnimationPlayer.IsPlaying())
         {
             DoorLabel.Text = $"state: {CurrentState.StateEnum}\n" +
@@ -69,8 +72,26 @@ public partial class LockedDoor :
         }
         else
         {
-            DoorLabel.Text = $"state: {CurrentState.StateEnum}\n" +
-                             $"animation: {AnimationPlayer.CurrentAnimation}";
+            if (TrackEnemies)
+            {
+                int aliveCounter = 0;
+                foreach (Enemy enemy in Enemies)
+                {
+                    if (enemy.CurrentState.StateEnum != Enemy.State.Death)
+                    {
+                        aliveCounter++;
+                    }
+                }
+
+                DoorLabel.Text = $"state: {CurrentState.StateEnum}\n" +
+                                 $"enemies alive: {aliveCounter}\n" +
+                                 $"animation: {AnimationPlayer.CurrentAnimation}";
+            }
+            else
+            {
+                DoorLabel.Text = $"state: {CurrentState.StateEnum}\n" +
+                                 $"animation: {AnimationPlayer.CurrentAnimation}";
+            }
         }
     }
 

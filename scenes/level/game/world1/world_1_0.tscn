@@ -134,16 +134,14 @@ points = PackedVector2Array(0, -0.0668298, 151.302, -0.0668298)
 position = Vector2(10405, -399)
 AliveOnStart = true
 
-[node name="spawner" parent="second_world/enemies" node_paths=PackedStringArray("Entities") instance=ExtResource("7_i6t6k")]
+[node name="spawner" parent="second_world/enemies" instance=ExtResource("7_i6t6k")]
 position = Vector2(11549, -594)
-Entities = []
 
 [node name="enemy_simple2" parent="second_world/enemies/spawner" instance=ExtResource("6_u3ki2")]
 position = Vector2(-37, 15)
 
-[node name="spawner2" parent="second_world/enemies" node_paths=PackedStringArray("Entities") instance=ExtResource("7_i6t6k")]
+[node name="spawner2" parent="second_world/enemies" instance=ExtResource("7_i6t6k")]
 position = Vector2(12688, -573)
-Entities = []
 
 [node name="enemy_simple2" parent="second_world/enemies/spawner2" instance=ExtResource("6_u3ki2")]
 position = Vector2(-37, 15)

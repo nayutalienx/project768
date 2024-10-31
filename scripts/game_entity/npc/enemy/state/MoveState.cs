@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 using project768.scripts.common;
 using project768.scripts.common.interaction;
 using project768.scripts.game_entity.npc.enemy.interaction.data;
@@ -76,7 +77,25 @@ public class MoveState : BaseEnemyState
             }
         }
 
-        Entity.Velocity = Entity.Velocity with {X = Entity.EnemyDirection * Entity.MoveSpeed};
+        if (Entity.IsOnFloor())
+        {
+            Entity.Velocity = Entity.Velocity with
+            {
+                X = Entity.EnemyDirection * Entity.MoveSpeed
+            };
+        }
+        else
+        {
+            Entity.Velocity = Entity.Velocity with
+            {
+                X = Math.Clamp(
+                    Entity.Velocity.X + Entity.EnemyDirection * Entity.MoveSpeed,
+                    Entity.MoveSpeed * (Entity.FallVelocityMultiplier * -1),
+                    Entity.MoveSpeed * Entity.FallVelocityMultiplier
+                )
+            };
+        }
+
         Entity.MoveAndSlide();
     }
 

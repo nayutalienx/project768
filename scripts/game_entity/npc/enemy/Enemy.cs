@@ -44,8 +44,8 @@ public partial class Enemy :
     public Dictionary<State, State<Enemy, State>> States { get; set; }
     public StateChanger<Enemy, State> StateChanger { get; set; }
 
+    [Export] public float FallVelocityMultiplier = 1.0f;
     [Export] public float MoveSpeed = 150.0f;
-
     [Export] public float PushForce = 80.0f;
     [Export] public bool AliveOnStart = false;
     public RayCast2D FallRaycastLeft { get; set; }
@@ -140,6 +140,7 @@ public partial class Enemy :
             GlobalPosition = spawnPoint;
             EnemyDirection = (int) Math.Clamp(direction.X, -1.0f, 1.0f);
             MoveAndSlide();
+            Velocity = Vector2.Zero;
             StateChanger.ChangeState(State.Move);
             return true;
         }
