@@ -11,10 +11,10 @@ font_size = 24
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
-[node name="cannon" type="StaticBody2D" node_paths=PackedStringArray("Characters", "SpawnPoint") groups=["spawner"]]
+[node name="cannon" type="StaticBody2D" node_paths=PackedStringArray("Entities", "SpawnPoint") groups=["spawner"]]
 collision_mask = 0
 script = ExtResource("1_2m23f")
-Characters = []
+Entities = []
 SpawnPoint = NodePath("spawn_point")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -11,6 +11,7 @@ public struct WorldRewindData
     public LockedDoorRewindData[] LockedDoorRewindDatas { get; set; }
     public OneWayPlatformRewindData[] OneWayPlatformRewindDatas { get; set; }
     public CannonBallRewindData[] CannonBallRewindDatas { get; set; }
+    public CloudPlatformRewindData[] CloudPlatformRewindDatas { get; set; }
     public SwitcherRewindData[] SwitcherRewindDatas { get; set; }
     public SpawnerRewindData[] SpawnerRewindDatas { get; set; }
 
@@ -23,6 +24,8 @@ public struct WorldRewindData
         KeyRewindDatas = CommonRewindData.CreateRewindData(source.Keys, key => new KeyRewindData(key));
         CannonBallRewindDatas =
             CommonRewindData.CreateRewindData(source.CannonBalls, ball => new CannonBallRewindData(ball));
+        CloudPlatformRewindDatas =
+            CommonRewindData.CreateRewindData(source.CloudPlatforms, entity => new CloudPlatformRewindData(entity));
         LockedDoorRewindDatas =
             CommonRewindData.CreateRewindData(source.LockedDoors, door => new LockedDoorRewindData(door));
         OneWayPlatformRewindDatas =
@@ -37,7 +40,7 @@ public struct WorldRewindData
     public void ApplyData(RewindDataSource source)
     {
         PlayerRewindData.ApplyData(source.Player);
-        
+
         CommonRewindData.ApplyRewindData(source.CollectableSystem, CollectableSystemRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));
 
@@ -52,6 +55,8 @@ public struct WorldRewindData
         CommonRewindData.ApplyRewindData(source.Switchers, SwitcherRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));
         CommonRewindData.ApplyRewindData(source.CannonBalls, CannonBallRewindDatas,
+            (rewindData, entity) => rewindData.ApplyData(entity));
+        CommonRewindData.ApplyRewindData(source.CloudPlatforms, CloudPlatformRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));
         CommonRewindData.ApplyRewindData(source.Spawners, SpawnerRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));

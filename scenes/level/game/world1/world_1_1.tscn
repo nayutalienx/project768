@@ -1,0 +1,144 @@
+[gd_scene load_steps=17 format=4 uid="uid://bpwc1j0x2g704"]
+
+[ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_eg1kf"]
+[ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_3mbao"]
+[ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="3_iqgwr"]
+[ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="4_okdep"]
+[ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="5_mbb07"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/one_way_platform.tscn" id="6_t4q27"]
+[ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/landscape/spikes.tscn" id="7_0nanq"]
+[ext_resource type="PackedScene" uid="uid://dkn6lvqu0x1vd" path="res://scenes/item/key_rb.tscn" id="8_e0jsr"]
+[ext_resource type="PackedScene" uid="uid://bb6bemfvj0nt3" path="res://scenes/landscape/locked_door.tscn" id="9_bgmi2"]
+[ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="10_7etll"]
+[ext_resource type="PackedScene" uid="uid://btobpn5evuwb8" path="res://scenes/landscape/cannon.tscn" id="10_wej1h"]
+[ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="11_1o818"]
+[ext_resource type="PackedScene" uid="uid://85qk5wsgrfvo" path="res://scenes/landscape/cloud_platform.tscn" id="11_2qgp5"]
+[ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="12_stlrh"]
+[ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="13_flaal"]
+[ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="14_vt206"]
+
+[node name="World0" type="Node2D"]
+
+[node name="CollectableSystem" parent="." instance=ExtResource("1_eg1kf")]
+
+[node name="CollectableItem" parent="CollectableSystem" instance=ExtResource("2_3mbao")]
+position = Vector2(1760, -859)
+
+[node name="CollectableItem2" parent="CollectableSystem" instance=ExtResource("2_3mbao")]
+position = Vector2(4313, -882)
+
+[node name="CollectableItem3" parent="CollectableSystem" instance=ExtResource("2_3mbao")]
+position = Vector2(4352, -1290)
+
+[node name="second_world" type="Node2D" parent="."]
+
+[node name="tiles" type="Node2D" parent="second_world"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
+position = Vector2(213, -499)
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADe/xQAAwB3AAQAAAAtACAAAQAyAEAAAABLAB4AAQAyAEAAAACaAPL/AQAsAEcAAACPAPf/AQAsAEcAAACqAPf/AQAsAEcAAACyAAQAAwB3AAQAAACyABkAAwB3AAQAAACHAAUAAwB3AAQAAACHABoAAwB3AAQAAADLAB8AAQABACcAAAA=")
+tile_set = ExtResource("3_iqgwr")
+
+[node name="portals" type="Node2D" parent="second_world"]
+
+[node name="SceneLoader" parent="second_world/portals" instance=ExtResource("4_okdep")]
+position = Vector2(-148, -14)
+Path = "res://scenes/level/game/world1/world_1_lobby.tscn"
+SpawnPositionIndex = 1
+
+[node name="ladders" type="Node2D" parent="second_world"]
+z_index = -5
+
+[node name="ladder" parent="second_world/ladders" instance=ExtResource("5_mbb07")]
+position = Vector2(490, -307)
+
+[node name="ladder2" parent="second_world/ladders" instance=ExtResource("5_mbb07")]
+position = Vector2(3378, -321)
+
+[node name="one_way_platforms" type="Node2D" parent="second_world"]
+
+[node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("6_t4q27")]
+position = Vector2(796, -598)
+scale = Vector2(3.08384, 0.406434)
+
+[node name="one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("6_t4q27")]
+position = Vector2(3341, -599)
+scale = Vector2(1.16385, 0.406434)
+
+[node name="one_way_platform3" parent="second_world/one_way_platforms" instance=ExtResource("6_t4q27")]
+position = Vector2(4868, -603)
+scale = Vector2(3.20385, 0.406434)
+
+[node name="spikes" type="Node2D" parent="second_world"]
+
+[node name="Spike" parent="second_world/spikes" instance=ExtResource("7_0nanq")]
+position = Vector2(500, 136)
+points = PackedVector2Array(0, -0.0668298, 151.302, -0.0668298)
+
+[node name="enemies" type="Node2D" parent="second_world"]
+
+[node name="keys" type="Node2D" parent="second_world"]
+
+[node name="key" parent="second_world/keys" instance=ExtResource("8_e0jsr")]
+position = Vector2(1400, -87)
+
+[node name="door" type="Node2D" parent="second_world"]
+
+[node name="locked_door" parent="second_world/door" instance=ExtResource("9_bgmi2")]
+position = Vector2(733, -694)
+
+[node name="cloud_platforms" type="Node2D" parent="second_world"]
+
+[node name="cannon" parent="second_world/cloud_platforms" node_paths=PackedStringArray("Entities", "SpawnPoint") instance=ExtResource("10_wej1h")]
+position = Vector2(1173, -631)
+SpawnInterval = 2.0
+Entities = [NodePath("cloud_platform"), NodePath("cloud_platform2")]
+SpawnPoint = NodePath("spawn")
+
+[node name="cloud_platform" parent="second_world/cloud_platforms/cannon" instance=ExtResource("11_2qgp5")]
+position = Vector2(266, 43)
+
+[node name="cloud_platform2" parent="second_world/cloud_platforms/cannon" instance=ExtResource("11_2qgp5")]
+position = Vector2(681, 45)
+
+[node name="spawn" type="Node2D" parent="second_world/cloud_platforms/cannon"]
+position = Vector2(102, 20)
+
+[node name="cannon2" parent="second_world/cloud_platforms" node_paths=PackedStringArray("Entities", "SpawnPoint") instance=ExtResource("10_wej1h")]
+position = Vector2(4391, -635)
+scale = Vector2(-1, 1)
+SpawnInterval = 1.8
+Entities = [NodePath("cloud_platform"), NodePath("cloud_platform2")]
+SpawnPoint = NodePath("spawn")
+
+[node name="cloud_platform" parent="second_world/cloud_platforms/cannon2" instance=ExtResource("11_2qgp5")]
+position = Vector2(277, 33)
+
+[node name="cloud_platform2" parent="second_world/cloud_platforms/cannon2" instance=ExtResource("11_2qgp5")]
+position = Vector2(626, 30)
+
+[node name="spawn" type="Node2D" parent="second_world/cloud_platforms/cannon2"]
+position = Vector2(117, 56)
+
+[node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("10_7etll")]
+position = Vector2(3434, -782)
+floor_constant_speed = true
+floor_snap_length = 32.0
+SpawnPositions = [NodePath("start"), NodePath("end")]
+
+[node name="start" type="Node2D" parent="Player"]
+
+[node name="end" type="Node2D" parent="Player"]
+position = Vector2(261, -224)
+
+[node name="RewindPlayer" parent="." instance=ExtResource("11_1o818")]
+
+[node name="MusicPlayer" parent="." node_paths=PackedStringArray("ForwardPlayer", "BackwardPlayer") instance=ExtResource("12_stlrh")]
+ForwardPlayer = NodePath("forward")
+BackwardPlayer = NodePath("backward")
+
+[node name="forward" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("13_flaal")
+
+[node name="backward" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("14_vt206")

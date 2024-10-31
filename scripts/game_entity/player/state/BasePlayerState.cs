@@ -42,7 +42,7 @@ public class BasePlayerState : State<Player, Player.State>
     {
         if (Entity.InteractionContext.KeyContext.HasKey)
         {
-            Entity.InteractionContext.KeyContext.Key.Transform = Entity.Transform;
+            Entity.InteractionContext.KeyContext.Key.GlobalTransform = Entity.GlobalTransform;
             Entity.InteractionContext.KeyContext.Key.GlobalPosition = Entity.GlobalPosition;
         }
     }

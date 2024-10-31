@@ -97,7 +97,6 @@ public partial class Enemy :
         {
             StateChanger.ChangeState(State.Death);
         }
-        
     }
 
     public override void _PhysicsProcess(double delta)
@@ -134,12 +133,12 @@ public partial class Enemy :
     {
     }
 
-    public bool TrySpawn(Vector2 spawnPoint)
+    public bool TrySpawn(Vector2 spawnPoint, Vector2 direction)
     {
         if (CurrentState.StateEnum == State.Death)
         {
             GlobalPosition = spawnPoint;
-            EnemyDirection = 1;
+            EnemyDirection = (int) Math.Clamp(direction.X, -1.0f, 1.0f);
             MoveAndSlide();
             StateChanger.ChangeState(State.Move);
             return true;
