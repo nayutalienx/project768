@@ -21,7 +21,6 @@ public partial class Spike : DynamicSprite
 
             if (body is Enemy enemy)
             {
-                GD.Print("Spike kill enemy");
                 enemy.Interactor.Interact(new EnemyInteractionEvent(EnemyInteraction.KillEnemy));
                 return;
             }

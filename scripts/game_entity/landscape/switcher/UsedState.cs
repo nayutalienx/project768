@@ -12,11 +12,12 @@ public class UsedState : State<Switcher, Switcher.State>
     {
         if (prevState == Switcher.State.Initial)
         {
-            Entity.AnimationPlayer.Play("move");
+            Entity.AnimationPlayer.InvertAndPlay("move");
             if (Entity.Reaction == Switcher.SwitcherReaction.StartAnimation)
             {
-                Entity.ReactAnimationPlayer.Play(Entity.ReactAnimationName);
+                Entity.InvertAndPlayReact(Entity.ReactAnimationNameOnForward);
             }
         }
     }
+    
 }

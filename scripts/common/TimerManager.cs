@@ -17,9 +17,14 @@ public class TimerManager
         CurrentTime = 0.0f;
     }
 
+    public bool IsExpired()
+    {
+        return CurrentTime >= _targetTime;
+    }
+
     public bool Update(double delta)
     {
-        if (CurrentTime >= _targetTime)
+        if (IsExpired())
         {
             return true;
         }

@@ -65,9 +65,7 @@ public class MoveState : BaseEnemyState
         }
 
         if (
-            !Entity.FallRaycastLeft.IsColliding() ||
-            !Entity.FallRaycastRight.IsColliding()
-            || Entity.IsOnWall()
+            Entity.CanFall() || Entity.IsOnWall()
         )
         {
             if (Entity.IsOnFloor() && invertDirectionTimerFinished)
@@ -79,22 +77,28 @@ public class MoveState : BaseEnemyState
 
         if (Entity.IsOnFloor())
         {
-            Entity.Velocity = Entity.Velocity with
-            {
-                X = Entity.EnemyDirection * Entity.MoveSpeed
-            };
+            Entity.Velocity = Entity.Velocity.MoveToward(
+                Entity.Velocity with
+                {
+                    X = Entity.MoveSpeed * Entity.EnemyDirection
+                }, Entity.Friction
+            );
         }
         else
         {
-            Entity.Velocity = Entity.Velocity with
-            {
-                X = Math.Clamp(
-                    Entity.Velocity.X + Entity.EnemyDirection * Entity.MoveSpeed,
-                    Entity.MoveSpeed * (Entity.FallVelocityMultiplier * -1),
-                    Entity.MoveSpeed * Entity.FallVelocityMultiplier
-                )
-            };
+            Entity.Velocity = Entity.Velocity.MoveToward(
+                Entity.Velocity with
+                {
+                    X = 0
+                }, Entity.Friction
+            );
         }
+
+        Entity.Velocity = Entity.Velocity with
+        {
+            X = Mathf.Clamp(Entity.Velocity.X, Entity.VelocityLimit.X * -1, Entity.VelocityLimit.X),
+            Y = Mathf.Clamp(Entity.Velocity.Y, Entity.VelocityLimit.Y * -1, Entity.VelocityLimit.Y),
+        };
 
         Entity.MoveAndSlide();
     }

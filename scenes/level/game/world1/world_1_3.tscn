@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://did2sgpoca6xq"]
+[gd_scene load_steps=19 format=4 uid="uid://did2sgpoca6xq"]
 
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_eo7g3"]
 [ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_00sxd"]
@@ -16,12 +16,50 @@
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="12_7bns2"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="13_okf34"]
 
+[sub_resource type="Animation" id="Animation_g8l8s"]
+resource_name = "move_backward"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2867, -571), Vector2(2117, -571)]
+}
+
+[sub_resource type="Animation" id="Animation_fiww5"]
+resource_name = "move_forward"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2117, -571), Vector2(2867, -571)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y4rc4"]
+_data = {
+"move_backward": SubResource("Animation_g8l8s"),
+"move_forward": SubResource("Animation_fiww5")
+}
+
 [node name="World0" type="Node2D"]
 
 [node name="CollectableSystem" parent="." instance=ExtResource("1_eo7g3")]
 
 [node name="CollectableItem" parent="CollectableSystem" instance=ExtResource("2_00sxd")]
-position = Vector2(2009, -1257)
+position = Vector2(258, -352)
 
 [node name="second_world" type="Node2D" parent="."]
 
@@ -53,6 +91,13 @@ scale = Vector2(1.32384, 0.406434)
 
 [node name="one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("6_0gpji")]
 position = Vector2(2117, -571)
+AllAnimations = PackedStringArray("move_forward", "move_backward")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="second_world/one_way_platforms/one_way_platform2"]
+libraries = {
+"": SubResource("AnimationLibrary_y4rc4")
+}
+next/move_forward = &"end"
 
 [node name="enemies" type="Node2D" parent="second_world"]
 
@@ -62,7 +107,9 @@ SpawnPoint = NodePath("spawn")
 
 [node name="enemy_simple" parent="second_world/enemies/spawner" instance=ExtResource("7_pffd2")]
 position = Vector2(3113, -774)
-FallVelocityMultiplier = 5.0
+SpawnVelocity = Vector2(-500, -400)
+Friction = 5.0
+DisableFallCheck = true
 
 [node name="spawn" type="Node2D" parent="second_world/enemies/spawner"]
 position = Vector2(3023, -639)
@@ -78,8 +125,13 @@ points = PackedVector2Array(0, -0.0668298, 66.6961, -0.0668298)
 
 [node name="switcher" type="Node2D" parent="second_world"]
 
-[node name="switcher" parent="second_world/switcher" instance=ExtResource("8_v5lh8")]
+[node name="switcher" parent="second_world/switcher" node_paths=PackedStringArray("ReactAnimationPlayer") instance=ExtResource("8_v5lh8")]
 position = Vector2(1898, -620)
+Type = 1
+Reaction = 1
+ReactAnimationPlayer = NodePath("../../one_way_platforms/one_way_platform2/AnimationPlayer")
+ReactAnimationNameOnForward = "move_forward"
+ReactAnimationNameOnBackward = "move_backward"
 
 [node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("9_1ktic")]
 position = Vector2(2183, -691)

@@ -38,6 +38,22 @@ public class RewindableAnimationPlayer
         AnimationPlayer.Play(animation);
     }
 
+    public void InvertAndPlay(string animation)
+    {
+        if (AnimationPlayer.IsPlaying())
+        {
+            double currentPos = AnimationPlayer.CurrentAnimationPosition;
+            CurrentAnimationIndex = GetAnimationIndex(animation);
+            AnimationPlayer.SetCurrentAnimation(Animations[CurrentAnimationIndex]);
+            double newPos = AnimationPlayer.CurrentAnimationLength - currentPos;
+            AnimationPlayer.Seek(newPos, true);
+        }
+        else
+        {
+            Play(animation);
+        }
+    }
+
     public void UpdateRewindSpeed(int speed)
     {
         AnimationPlayer.SpeedScale = Mathf.Abs(speed);
