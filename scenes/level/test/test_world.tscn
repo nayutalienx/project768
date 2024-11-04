@@ -245,7 +245,6 @@ z_index = -10
 position = Vector2(2413, 554)
 Reaction = 1
 ReactAnimationPlayer = NodePath("../../one_way_platforms/one_way_platform9/AnimationPlayer")
-ReactAnimationName = "move"
 
 [node name="spawners" type="Node2D" parent="second_world"]
 

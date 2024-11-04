@@ -38,7 +38,7 @@ public struct AnimationPlayerRewindData
         {
             if (animationPlayer.AnimationPlayer.IsPlaying())
             {
-                animationPlayer.AnimationPlayer.Stop();
+                animationPlayer.AnimationPlayer.Pause();
             }
         }
     }

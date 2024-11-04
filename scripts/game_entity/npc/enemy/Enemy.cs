@@ -44,10 +44,22 @@ public partial class Enemy :
     public Dictionary<State, State<Enemy, State>> States { get; set; }
     public StateChanger<Enemy, State> StateChanger { get; set; }
 
-    [Export] public float FallVelocityMultiplier = 1.0f;
+
+    [ExportSubgroup("Enemy physics")]
+    [Export]
+    public Vector2 SpawnVelocity { get; set; } = Vector2.Zero;
+
+    [Export] public float Friction = 10.0f;
     [Export] public float MoveSpeed = 150.0f;
     [Export] public float PushForce = 80.0f;
-    [Export] public bool AliveOnStart = false;
+    [Export]
+    public Vector2 VelocityLimit = new Vector2(500.0f, 500.0f);
+    
+
+    [ExportSubgroup("Enemy settings")] [Export]
+    public bool AliveOnStart = false;
+
+    [Export] public bool DisableFallCheck = false;
     public RayCast2D FallRaycastLeft { get; set; }
     public RayCast2D FallRaycastRight { get; set; }
     public int EnemyDirection { get; set; } = 1;
@@ -103,7 +115,7 @@ public partial class Enemy :
     {
         CurrentState.PhysicProcess(delta);
 
-        Label.Text = $"d: {EnemyDirection}";
+        Label.Text = $"v: {Velocity}";
     }
 
     private void ApplyImpulseToRigidBodies()
@@ -140,11 +152,21 @@ public partial class Enemy :
             GlobalPosition = spawnPoint;
             EnemyDirection = (int) Math.Clamp(direction.X, -1.0f, 1.0f);
             MoveAndSlide();
-            Velocity = Vector2.Zero;
+            Velocity = SpawnVelocity;
             StateChanger.ChangeState(State.Move);
             return true;
         }
 
         return false;
+    }
+
+    public bool CanFall()
+    {
+        if (DisableFallCheck)
+        {
+            return false;
+        }
+
+        return !FallRaycastLeft.IsColliding() || !FallRaycastRight.IsColliding();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Godot;
 using project768.scripts.common;
 using project768.scripts.game_entity.common;
+using project768.scripts.game_entity.landscape.switcher.interaction;
 using project768.scripts.player.interaction;
 using project768.scripts.state_machine;
 
@@ -143,7 +144,7 @@ public class MoveState : BasePlayerState
         {
             if (Entity.Cache.UpPressed)
             {
-                Entity.InteractionContext.SwitcherContext.Switcher.StateChanger.ChangeState(Switcher.State.Used);
+                Entity.InteractionContext.SwitcherContext.Switcher.Interactor.Interact(new SwitcherInteractionEvent(SwitcherInteraction.Toggle));
             }
         }
     }
