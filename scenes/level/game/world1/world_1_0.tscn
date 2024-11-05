@@ -53,28 +53,36 @@ Path = "res://scenes/level/game/world1/world_1_1.tscn"
 z_index = -5
 
 [node name="ladder" parent="second_world/ladders" instance=ExtResource("4_6od2g")]
-position = Vector2(4448, -541)
+position = Vector2(4450, -340)
+points = PackedVector2Array(0, 10, 0, -53.7)
 
 [node name="ladder2" parent="second_world/ladders" instance=ExtResource("4_6od2g")]
-position = Vector2(6126, -702)
+position = Vector2(6127, -493)
+points = PackedVector2Array(0, 10, 0, -49.9)
 
 [node name="ladder3" parent="second_world/ladders" instance=ExtResource("4_6od2g")]
-position = Vector2(7554, -315)
+position = Vector2(7521, -526)
+points = PackedVector2Array(0, 10, 0, -12.3)
 
 [node name="ladder4" parent="second_world/ladders" instance=ExtResource("4_6od2g")]
-position = Vector2(9833, -277)
+position = Vector2(9832, -414)
+points = PackedVector2Array(0, 10, 0, -16.3)
 
 [node name="ladder5" parent="second_world/ladders" instance=ExtResource("4_6od2g")]
-position = Vector2(11116, -240)
+position = Vector2(11109, -396)
+points = PackedVector2Array(0, 10, 0, -15.5)
 
 [node name="ladder6" parent="second_world/ladders" instance=ExtResource("4_6od2g")]
-position = Vector2(11676, -250)
+position = Vector2(11676, -325)
+points = PackedVector2Array(0, 10, 0, -22.9)
 
 [node name="ladder7" parent="second_world/ladders" instance=ExtResource("4_6od2g")]
-position = Vector2(12299, -218)
+position = Vector2(12300, -327)
+points = PackedVector2Array(0, 10, 0, -19.2)
 
 [node name="ladder8" parent="second_world/ladders" instance=ExtResource("4_6od2g")]
-position = Vector2(12907, -215)
+position = Vector2(12901, -329)
+points = PackedVector2Array(0, 10, 0, -19.4)
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 

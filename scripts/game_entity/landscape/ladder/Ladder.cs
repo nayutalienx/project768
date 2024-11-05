@@ -1,12 +1,14 @@
 using Godot;
+using project768.scripts.game_entity.common;
 using project768.scripts.player;
 using project768.scripts.player.interaction;
 
-public partial class Ladder : Node2D
+public partial class Ladder : DynamicSprite
 {
     public override void _Ready()
     {
-        Area2D moveLadderArea = GetNode<Area2D>("move_ladder_area");
+        InitDynamicSprite(false);
+        Area2D moveLadderArea = GetNode<Area2D>("Shape");
         moveLadderArea.BodyEntered += MoveLadderArea_BodyEntered;
         moveLadderArea.BodyExited += MoveLadderArea_BodyExited;
     }

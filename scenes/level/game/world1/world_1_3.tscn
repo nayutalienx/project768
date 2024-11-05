@@ -87,7 +87,8 @@ SpawnPositionIndex = 1
 z_index = -5
 
 [node name="ladder" parent="second_world/ladders" instance=ExtResource("5_jy7ak")]
-position = Vector2(1423, -287)
+position = Vector2(1413, -83)
+points = PackedVector2Array(0, 10, 0, -53.5)
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
@@ -161,7 +162,7 @@ ReactAnimationNameOnForward = "move_forward"
 ReactAnimationNameOnBackward = "move_backward"
 
 [node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("9_1ktic")]
-position = Vector2(3332, -607)
+position = Vector2(1661.85, -93.2081)
 SpawnPositions = [NodePath("start"), NodePath("end")]
 
 [node name="start" type="Node2D" parent="Player"]

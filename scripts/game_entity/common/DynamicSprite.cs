@@ -10,7 +10,7 @@ public partial class DynamicSprite : Line2D
         InitDynamicSprite();
     }
 
-    public void InitDynamicSprite()
+    public void InitDynamicSprite(bool horizontal = true)
     {
         CollisionPolygon2D collisionPolygon2D = GetNode<CollisionPolygon2D>("Shape/CollisionPolygon2D");
 
@@ -18,16 +18,19 @@ public partial class DynamicSprite : Line2D
 
         var polys = collisionPolygon2D.Polygon;
 
-        float height = Math.Abs(polys[1].Y - polys[0].Y);
-        GD.Print($"height: {height}");
 
-        float halfHeight = height / 2f;
-
-
-        polys[0] = linePoints[0] - new Vector2(0, halfHeight);
-        polys[1] = linePoints[1] - new Vector2(0, halfHeight);
-        polys[2] = linePoints[1] + new Vector2(0, halfHeight);
-        polys[3] = linePoints[0] + new Vector2(0, halfHeight);
+        if (horizontal)
+        {
+            float len = Math.Abs(linePoints[1].X - linePoints[0].X);
+            polys[2] = polys[1] + new Vector2(len, 0);
+            polys[3] = polys[0] + new Vector2(len, 0);
+        }
+        else
+        {
+            float height = Math.Abs(linePoints[1].Y - linePoints[0].Y);
+            polys[1] = polys[0] + new Vector2(0, height * -1);
+            polys[2] = polys[3] + new Vector2(0, height * -1);
+        }
 
         collisionPolygon2D.Polygon = polys;
     }
