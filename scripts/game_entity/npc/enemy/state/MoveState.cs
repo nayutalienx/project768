@@ -64,35 +64,21 @@ public class MoveState : BaseEnemyState
             Entity.Velocity += Entity.GetGravity() * (float) delta;
         }
 
-        if (
-            Entity.CanFall() || Entity.IsOnWall()
-        )
+        if (Entity.IsOnWall())
         {
-            if (Entity.IsOnFloor() && invertDirectionTimerFinished)
+            if (invertDirectionTimerFinished)
             {
                 invertDirectionTimer.Reset();
                 Entity.EnemyDirection *= -1;
             }
         }
 
-        if (Entity.IsOnFloor())
-        {
-            Entity.Velocity = Entity.Velocity.MoveToward(
-                Entity.Velocity with
-                {
-                    X = Entity.MoveSpeed * Entity.EnemyDirection
-                }, Entity.Friction
-            );
-        }
-        else
-        {
-            Entity.Velocity = Entity.Velocity.MoveToward(
-                Entity.Velocity with
-                {
-                    X = 0
-                }, Entity.Friction
-            );
-        }
+        Entity.Velocity = Entity.Velocity.MoveToward(
+            Entity.Velocity with
+            {
+                X = Entity.MoveSpeed * Entity.EnemyDirection
+            }, Entity.Friction
+        );
 
         Entity.Velocity = Entity.Velocity with
         {

@@ -11,6 +11,7 @@ public class DeathState : BaseEnemyState
 
     public override void EnterState(Enemy.State prevState)
     {
+        Entity.GlobalPosition = Entity.InitialPosition;
         Entity.DisableCollision();
         Entity.HeadArea.DisableCollision();
         Entity.AttackArea.DisableCollision();

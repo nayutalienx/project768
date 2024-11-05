@@ -19,7 +19,13 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="enemy_simple" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 4
+collision_mask = 129
+floor_constant_speed = true
+floor_max_angle = 0.872665
+floor_snap_length = 32.0
+platform_on_leave = 1
 script = ExtResource("1_le13m")
+Friction = 5.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.33, 0.33, 1)
@@ -41,16 +47,6 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHeadArea"]
 scale = Vector2(2.48444, 1)
 shape = SubResource("RectangleShape2D_oxby5")
-
-[node name="FallRaycast_1" type="RayCast2D" parent="."]
-position = Vector2(-35, -9)
-scale = Vector2(2, 2)
-target_position = Vector2(0, 20)
-
-[node name="FallRaycast_2" type="RayCast2D" parent="."]
-position = Vector2(34, -9)
-scale = Vector2(2, 2)
-target_position = Vector2(0, 20)
 
 [node name="EnemyAttackArea" type="Area2D" parent="."]
 position = Vector2(0, -32)

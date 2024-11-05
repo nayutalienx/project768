@@ -122,9 +122,14 @@ public partial class CloudPlatform : AnimatableBody2D,
         }
     }
 
+    public bool CanSpawn()
+    {
+        return CurrentState.StateEnum == State.Wait;
+    }
+
     public bool TrySpawn(Vector2 spawnPosition, Vector2 direction)
     {
-        if (CurrentState.StateEnum == State.Wait)
+        if (CanSpawn())
         {
             Direction = direction;
             GlobalPosition = spawnPosition;

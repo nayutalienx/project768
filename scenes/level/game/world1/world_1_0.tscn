@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://did8os4q6wq6t"]
+[gd_scene load_steps=16 format=4 uid="uid://did8os4q6wq6t"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_betv8"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="3_cmwnn"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c231kcpdermgs" path="res://scenes/common/spawner.tscn" id="7_i6t6k"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="7_qun4q"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="8_hwbxa"]
+[ext_resource type="PackedScene" uid="uid://dc46m4hvdcw00" path="res://scenes/landscape/invisible_wall.tscn" id="10_snriy"]
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="13_a6ixn"]
 [ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="14_215lr"]
 
@@ -135,24 +136,43 @@ position = Vector2(10405, -399)
 AliveOnStart = true
 
 [node name="spawner" parent="second_world/enemies" instance=ExtResource("7_i6t6k")]
-position = Vector2(11549, -594)
+position = Vector2(11373, -687)
+InitialState = 1
+SpawnInterval = 2.0
 
-[node name="enemy_simple2" parent="second_world/enemies/spawner" instance=ExtResource("6_u3ki2")]
-position = Vector2(-37, 15)
+[node name="enemy_simple" parent="second_world/enemies/spawner" instance=ExtResource("6_u3ki2")]
 
 [node name="spawner2" parent="second_world/enemies" instance=ExtResource("7_i6t6k")]
-position = Vector2(12688, -573)
+position = Vector2(12613, -658)
+InitialState = 1
+SpawnInterval = 2.0
+
+[node name="enemy_simple" parent="second_world/enemies/spawner2" instance=ExtResource("6_u3ki2")]
 
 [node name="enemy_simple2" parent="second_world/enemies/spawner2" instance=ExtResource("6_u3ki2")]
-position = Vector2(-37, 15)
 
-[node name="enemy_simple3" parent="second_world/enemies/spawner2" instance=ExtResource("6_u3ki2")]
-position = Vector2(90, 22)
+[node name="invisible_walls" type="Node2D" parent="second_world"]
+
+[node name="invisible_wall" parent="second_world/invisible_walls" instance=ExtResource("10_snriy")]
+position = Vector2(9982, -422)
+
+[node name="invisible_wall2" parent="second_world/invisible_walls" instance=ExtResource("10_snriy")]
+position = Vector2(10762, -421)
+
+[node name="invisible_wall3" parent="second_world/invisible_walls" instance=ExtResource("10_snriy")]
+position = Vector2(10990, -560)
+
+[node name="invisible_wall4" parent="second_world/invisible_walls" instance=ExtResource("10_snriy")]
+position = Vector2(11811, -564)
+
+[node name="invisible_wall5" parent="second_world/invisible_walls" instance=ExtResource("10_snriy")]
+position = Vector2(12208, -541)
+
+[node name="invisible_wall6" parent="second_world/invisible_walls" instance=ExtResource("10_snriy")]
+position = Vector2(13013, -541)
 
 [node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("4_nrd20")]
 position = Vector2(4, -41)
-floor_constant_speed = true
-floor_snap_length = 32.0
 SpawnPositions = [NodePath("start"), NodePath("end")]
 
 [node name="start" type="Node2D" parent="Player"]

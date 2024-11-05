@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://1rwc18e2dwlw"]
+[gd_scene load_steps=15 format=4 uid="uid://1rwc18e2dwlw"]
 
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_5m8qp"]
 [ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_2ykts"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="5_y3h0n"]
 [ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/one_way_platform.tscn" id="6_jdtlk"]
 [ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/npc/enemy_simple.tscn" id="9_5f1nd"]
+[ext_resource type="PackedScene" uid="uid://dc46m4hvdcw00" path="res://scenes/landscape/invisible_wall.tscn" id="9_7x54k"]
 [ext_resource type="PackedScene" uid="uid://bb6bemfvj0nt3" path="res://scenes/landscape/locked_door.tscn" id="11_68wyy"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="14_usa5p"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="15_7ill1"]
@@ -96,10 +97,28 @@ position = Vector2(1885, -1137)
 TrackEnemies = true
 Enemies = [NodePath("../../enemies/enemy_simple"), NodePath("../../enemies/enemy_simple2"), NodePath("../../enemies/enemy_simple3"), NodePath("../../enemies/enemy_simple4"), NodePath("../../enemies/enemy_simple5"), NodePath("../../enemies/enemy_simple6")]
 
+[node name="invisible_walls" type="Node2D" parent="second_world"]
+
+[node name="invisible_wall" parent="second_world/invisible_walls" instance=ExtResource("9_7x54k")]
+position = Vector2(513, -408)
+
+[node name="invisible_wall2" parent="second_world/invisible_walls" instance=ExtResource("9_7x54k")]
+position = Vector2(700, -408)
+
+[node name="invisible_wall3" parent="second_world/invisible_walls" instance=ExtResource("9_7x54k")]
+position = Vector2(1476, -408)
+
+[node name="invisible_wall4" parent="second_world/invisible_walls" instance=ExtResource("9_7x54k")]
+position = Vector2(866, -700)
+
+[node name="invisible_wall5" parent="second_world/invisible_walls" instance=ExtResource("9_7x54k")]
+position = Vector2(1448, -732)
+
+[node name="invisible_wall6" parent="second_world/invisible_walls" instance=ExtResource("9_7x54k")]
+position = Vector2(1473, -1100)
+
 [node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("14_usa5p")]
 position = Vector2(100, -97)
-floor_constant_speed = true
-floor_snap_length = 32.0
 SpawnPositions = [NodePath("start"), NodePath("end")]
 
 [node name="start" type="Node2D" parent="Player"]

@@ -17,7 +17,9 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("SpawnPositions") groups=["player"]]
 collision_layer = 2
+floor_constant_speed = true
 floor_max_angle = 0.872665
+floor_snap_length = 32.0
 script = ExtResource("1_whvrt")
 SpawnPositions = []
 

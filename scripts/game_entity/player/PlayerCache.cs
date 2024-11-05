@@ -7,6 +7,7 @@ public struct PlayerCache
     public bool LeftPressed { get; set; }
     public bool RightPressed { get; set; }
     public bool JumpPressed { get; set; }
+    public bool LeftClickPressed { get; set; }
     public float VerticalDirection { get; set; }
     public float HorizontalDirection { get; set; }
 }
