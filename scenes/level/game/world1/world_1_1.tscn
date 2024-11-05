@@ -60,10 +60,12 @@ Path = "res://scenes/level/game/world1/world_1_2.tscn"
 z_index = -5
 
 [node name="ladder" parent="second_world/ladders" instance=ExtResource("5_mbb07")]
-position = Vector2(490, -307)
+position = Vector2(493, -105)
+points = PackedVector2Array(0, 10, 0, -53.3)
 
 [node name="ladder2" parent="second_world/ladders" instance=ExtResource("5_mbb07")]
-position = Vector2(3378, -321)
+position = Vector2(3383, -122)
+points = PackedVector2Array(0, 10, 0, -50.4)
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
