@@ -11,7 +11,8 @@ public partial class Spike : DynamicSprite
     {
         InitDynamicSprite();
 
-        GetNode<Area2D>("Shape").BodyEntered += body =>
+        var shape = GetNode<Area2D>("Shape");
+        shape.BodyEntered += body =>
         {
             if (body is Player player)
             {
@@ -22,7 +23,6 @@ public partial class Spike : DynamicSprite
             if (body is Enemy enemy)
             {
                 enemy.Interactor.Interact(new EnemyInteractionEvent(EnemyInteraction.KillEnemy));
-                return;
             }
         };
     }

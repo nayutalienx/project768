@@ -52,16 +52,12 @@ public partial class Enemy :
     [Export] public float Friction = 10.0f;
     [Export] public float MoveSpeed = 150.0f;
     [Export] public float PushForce = 80.0f;
-    [Export]
-    public Vector2 VelocityLimit = new Vector2(500.0f, 500.0f);
-    
+    [Export] public Vector2 VelocityLimit = new Vector2(500.0f, 500.0f);
+
 
     [ExportSubgroup("Enemy settings")] [Export]
     public bool AliveOnStart = false;
-
-    [Export] public bool DisableFallCheck = false;
-    public RayCast2D FallRaycastLeft { get; set; }
-    public RayCast2D FallRaycastRight { get; set; }
+    
     public int EnemyDirection { get; set; } = 1;
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
@@ -71,8 +67,11 @@ public partial class Enemy :
     public Tuple<uint, uint> OriginalHeadAreaLayerMask;
     public Tuple<uint, uint> OriginalAttackAreaLayerMask;
 
+    public Vector2 InitialPosition { get; set; }
+
     public override void _Ready()
     {
+        InitialPosition = GlobalPosition;
         Interactions = new Dictionary<EnemyInteraction, Interaction<Enemy, EnemyInteractionEvent, EnemyInteraction>>()
         {
             {EnemyInteraction.TryPickupKey, new TryPickupKeyInteraction(this)},
@@ -87,9 +86,7 @@ public partial class Enemy :
             {State.Rewind, new RewindState(this, State.Rewind)},
         };
         StateChanger = new StateChanger<Enemy, State>(this);
-
-        FallRaycastLeft = GetNode<RayCast2D>("FallRaycast_1");
-        FallRaycastRight = GetNode<RayCast2D>("FallRaycast_2");
+        
         HeadArea = GetNode<Area2D>("EnemyHeadArea");
         AttackArea = GetNode<Area2D>("EnemyAttackArea");
         Label = GetNode<Label>("Label");
@@ -115,7 +112,8 @@ public partial class Enemy :
     {
         CurrentState.PhysicProcess(delta);
 
-        Label.Text = $"v: {Velocity}";
+        Label.Text = $"v: {Velocity}\n" +
+                     $"d: {EnemyDirection}";
     }
 
     private void ApplyImpulseToRigidBodies()
@@ -145,13 +143,17 @@ public partial class Enemy :
     {
     }
 
+    public bool CanSpawn()
+    {
+        return CurrentState.StateEnum == State.Death;
+    }
+
     public bool TrySpawn(Vector2 spawnPoint, Vector2 direction)
     {
-        if (CurrentState.StateEnum == State.Death)
+        if (CanSpawn())
         {
             GlobalPosition = spawnPoint;
             EnemyDirection = (int) Math.Clamp(direction.X, -1.0f, 1.0f);
-            MoveAndSlide();
             Velocity = SpawnVelocity;
             StateChanger.ChangeState(State.Move);
             return true;
@@ -159,14 +161,5 @@ public partial class Enemy :
 
         return false;
     }
-
-    public bool CanFall()
-    {
-        if (DisableFallCheck)
-        {
-            return false;
-        }
-
-        return !FallRaycastLeft.IsColliding() || !FallRaycastRight.IsColliding();
-    }
+    
 }

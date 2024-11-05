@@ -107,9 +107,14 @@ public partial class CannonBall : Area2D,
         }
     }
 
+    public bool CanSpawn()
+    {
+        return CurrentState.StateEnum == State.Wait;
+    }
+
     public bool TrySpawn(Vector2 position, Vector2 direction)
     {
-        if (CurrentState.StateEnum == State.Wait)
+        if (CanSpawn())
         {
             GlobalPosition = position;
             Direction = direction;

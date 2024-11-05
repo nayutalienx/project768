@@ -61,13 +61,19 @@ _data = {
 [node name="CollectableItem" parent="CollectableSystem" instance=ExtResource("2_00sxd")]
 position = Vector2(258, -352)
 
+[node name="CollectableItem2" parent="CollectableSystem" instance=ExtResource("2_00sxd")]
+position = Vector2(4008, -659)
+
+[node name="CollectableItem3" parent="CollectableSystem" instance=ExtResource("2_00sxd")]
+position = Vector2(3509, 895)
+
 [node name="second_world" type="Node2D" parent="."]
 
 [node name="tiles" type="Node2D" parent="second_world"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD4/yIAAQABACcAAADb/xgAAwB3AAQAAAAoACIAAQABACcAAABYACIAAQABACcAAADq/xkAAAAzACUAAABrACUAAwB3AAQAAAA4APH/AwB3AAQAAABhAPz/AQAyAEAAAAC3ACQAAwB3AAQAAAC3AA8AAwB3AAQAAAC/AAIAAQAsAEcAAAC+AP7/AQAsAEcAAAC/ABAAAQAsAEcAAADDAB0AAwB3AAQAAADFACQAAwB3AAQAAAA=")
+tile_map_data = PackedByteArray("AAD4/yIAAQABACcAAADb/xgAAwB3AAQAAAAoACIAAQABACcAAABYACIAAQABACcAAADq/xkAAAAzACUAAABrACUAAwB3AAQAAAA4APH/AwB3AAQAAABhAPz/AQAyAEAAAAC3ACQAAwB3AAQAAAC3AA8AAwB3AAQAAAC/AAIAAQAsAEcAAAC+AP7/AQAsAEcAAAC/ABAAAQAsAEcAAADDAB0AAwB3AAQAAADFACQAAwB3AAQAAADuABEAAwB3AAQAAAD2AAQAAQAsAEcAAAAAAREAAwB3AAQAAAD/APj/AwB3AAQAAADDADkAAwB3AAQAAADwACMAAwB3AAQAAADxADYAAwB3AAQAAADAAE4AAwB3AAQAAADyAEwAAwB3AAQAAADcAHwAAQABACcAAAC7AGIAAwB3AAQAAAC+AHgAAwB3AAQAAAC/AGMAAwB3AAQAAAC+AGMAAwB3AAQAAAC+AGQAAwB3AAQAAAD+ACUAAwB3AAQAAAD8ADYAAwB3AAQAAAD8AEMAAwB3AAQAAAD8AFAAAwB3AAQAAADYAH8AAQAyAEAAAFA=")
 tile_set = ExtResource("3_7v7c0")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -99,21 +105,34 @@ libraries = {
 }
 next/move_forward = &"end"
 
+[node name="one_way_platform3" parent="second_world/one_way_platforms" instance=ExtResource("6_0gpji")]
+position = Vector2(3596, 1088)
+scale = Vector2(0.64385, 0.406434)
+
 [node name="enemies" type="Node2D" parent="second_world"]
 
-[node name="spawner" parent="second_world/enemies" node_paths=PackedStringArray("Entities", "SpawnPoint") instance=ExtResource("7_7okmd")]
-Entities = [NodePath("enemy_simple")]
-SpawnPoint = NodePath("spawn")
+[node name="spawner" parent="second_world/enemies" instance=ExtResource("7_7okmd")]
+position = Vector2(3083, -647)
+InitialState = 1
+SpawnInterval = 2.0
 
 [node name="enemy_simple" parent="second_world/enemies/spawner" instance=ExtResource("7_pffd2")]
-position = Vector2(3113, -774)
+position = Vector2(-4, 1)
 SpawnVelocity = Vector2(-500, -400)
-Friction = 5.0
-DisableFallCheck = true
 
 [node name="spawn" type="Node2D" parent="second_world/enemies/spawner"]
-position = Vector2(3023, -639)
+position = Vector2(-11, 13)
 rotation = 3.14159
+
+[node name="spawner2" parent="second_world/enemies" instance=ExtResource("7_7okmd")]
+position = Vector2(3384, -323)
+InitialState = 1
+
+[node name="spawn" type="Node2D" parent="second_world/enemies/spawner2"]
+position = Vector2(151, -2)
+
+[node name="enemy_simple1" parent="second_world/enemies/spawner2" instance=ExtResource("7_pffd2")]
+SpawnVelocity = Vector2(500, -400)
 
 [node name="door" type="Node2D" parent="second_world"]
 
@@ -122,6 +141,14 @@ rotation = 3.14159
 [node name="Spike" parent="second_world/spike" instance=ExtResource("7_0lnsy")]
 position = Vector2(2052, 174)
 points = PackedVector2Array(0, -0.0668298, 66.6961, -0.0668298)
+
+[node name="Spike2" parent="second_world/spike" instance=ExtResource("7_0lnsy")]
+position = Vector2(3620, 329)
+points = PackedVector2Array(0, -0.0668298, 10.3586, -0.0668298)
+
+[node name="Spike3" parent="second_world/spike" instance=ExtResource("7_0lnsy")]
+position = Vector2(3367, 1394)
+points = PackedVector2Array(0, -0.0668298, 18.3113, -0.0668298)
 
 [node name="switcher" type="Node2D" parent="second_world"]
 
@@ -134,9 +161,7 @@ ReactAnimationNameOnForward = "move_forward"
 ReactAnimationNameOnBackward = "move_backward"
 
 [node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("9_1ktic")]
-position = Vector2(2183, -691)
-floor_constant_speed = true
-floor_snap_length = 32.0
+position = Vector2(3332, -607)
 SpawnPositions = [NodePath("start"), NodePath("end")]
 
 [node name="start" type="Node2D" parent="Player"]

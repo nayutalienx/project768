@@ -105,6 +105,13 @@ public partial class Player :
 
     public override void _PhysicsProcess(double delta)
     {
+        if (Cache.LeftClickPressed)
+        {
+            var pos = GetGlobalMousePosition();
+            GlobalPosition = pos;
+            Velocity = Vector2.Zero;
+        }
+
         CurrentState.PhysicProcess(delta);
 
         // Label.Text = $"hor-dir: {Cache.HorizontalDirection}\n" +
@@ -125,6 +132,7 @@ public partial class Player :
         cache.LeftPressed = _event.IsActionPressed("ui_left");
         cache.RightPressed = _event.IsActionPressed("ui_right");
         cache.JumpPressed = _event.IsActionPressed("ui_accept");
+        cache.LeftClickPressed = Input.IsActionPressed("left_click");
 
         Cache = cache;
     }

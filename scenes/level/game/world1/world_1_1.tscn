@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://bpwc1j0x2g704"]
+[gd_scene load_steps=20 format=4 uid="uid://bpwc1j0x2g704"]
 
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_eg1kf"]
 [ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_3mbao"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://85qk5wsgrfvo" path="res://scenes/landscape/cloud_platform.tscn" id="11_2qgp5"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="12_stlrh"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="13_flaal"]
+[ext_resource type="PackedScene" uid="uid://dc46m4hvdcw00" path="res://scenes/landscape/invisible_wall.tscn" id="14_glmw2"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="14_vt206"]
 
 [node name="World0" type="Node2D"]
@@ -48,7 +49,7 @@ tile_set = ExtResource("3_iqgwr")
 
 [node name="SceneLoader" parent="second_world/portals" instance=ExtResource("4_okdep")]
 position = Vector2(-148, -14)
-Path = "res://scenes/level/game/world1/world_1_lobby.tscn"
+Path = "res://scenes/level/game/world1/world_1_0.tscn"
 SpawnPositionIndex = 1
 
 [node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("4_okdep")]
@@ -90,16 +91,17 @@ points = PackedVector2Array(0, -0.0668298, 151.302, -0.0668298)
 
 [node name="enemies" type="Node2D" parent="second_world"]
 
-[node name="spawner" parent="second_world/enemies" node_paths=PackedStringArray("Entities") instance=ExtResource("8_ao6im")]
-position = Vector2(4899, -722)
-Entities = [NodePath("enemy_simple")]
+[node name="spawner" parent="second_world/enemies" instance=ExtResource("8_ao6im")]
+position = Vector2(4911, -775)
+InitialState = 1
+SpawnInterval = 2.0
 
 [node name="enemy_simple" parent="second_world/enemies/spawner" instance=ExtResource("9_vp1gi")]
 
-[node name="spawner2" parent="second_world/enemies" node_paths=PackedStringArray("Entities") instance=ExtResource("8_ao6im")]
-position = Vector2(7872, -127)
-SpawnInterval = 5.0
-Entities = [NodePath("enemy_simple"), NodePath("enemy_simple2")]
+[node name="spawner2" parent="second_world/enemies" instance=ExtResource("8_ao6im")]
+position = Vector2(7864, -143)
+InitialState = 1
+SpawnInterval = 2.0
 
 [node name="enemy_simple" parent="second_world/enemies/spawner2" instance=ExtResource("9_vp1gi")]
 
@@ -117,41 +119,42 @@ position = Vector2(743, -694)
 
 [node name="cloud_platforms" type="Node2D" parent="second_world"]
 
-[node name="cannon" parent="second_world/cloud_platforms" node_paths=PackedStringArray("Entities", "SpawnPoint") instance=ExtResource("10_wej1h")]
-position = Vector2(1173, -631)
-SpawnInterval = 2.0
-Entities = [NodePath("cloud_platform"), NodePath("cloud_platform2")]
-SpawnPoint = NodePath("spawn")
+[node name="cannon" parent="second_world/cloud_platforms" instance=ExtResource("10_wej1h")]
+position = Vector2(1177, -631)
+InitialState = 1
+SpawnInterval = 1.8
 
 [node name="cloud_platform" parent="second_world/cloud_platforms/cannon" instance=ExtResource("11_2qgp5")]
-position = Vector2(266, 43)
+position = Vector2(269, 23)
 
 [node name="cloud_platform2" parent="second_world/cloud_platforms/cannon" instance=ExtResource("11_2qgp5")]
-position = Vector2(681, 45)
+position = Vector2(627, 23)
 
 [node name="spawn" type="Node2D" parent="second_world/cloud_platforms/cannon"]
-position = Vector2(102, 20)
+position = Vector2(97, 17)
 
-[node name="cannon2" parent="second_world/cloud_platforms" node_paths=PackedStringArray("Entities", "SpawnPoint") instance=ExtResource("10_wej1h")]
-position = Vector2(4391, -635)
+[node name="cannon2" parent="second_world/cloud_platforms" instance=ExtResource("10_wej1h")]
+position = Vector2(4439, -640)
 scale = Vector2(-1, 1)
-SpawnInterval = 1.8
-Entities = [NodePath("cloud_platform"), NodePath("cloud_platform2")]
-SpawnPoint = NodePath("spawn")
-
-[node name="cloud_platform" parent="second_world/cloud_platforms/cannon2" instance=ExtResource("11_2qgp5")]
-position = Vector2(277, 33)
-
-[node name="cloud_platform2" parent="second_world/cloud_platforms/cannon2" instance=ExtResource("11_2qgp5")]
-position = Vector2(626, 30)
+InitialState = 1
+SpawnInterval = 1.5
 
 [node name="spawn" type="Node2D" parent="second_world/cloud_platforms/cannon2"]
-position = Vector2(117, 56)
+position = Vector2(98, 75)
+
+[node name="cloud_platform" parent="second_world/cloud_platforms/cannon2" instance=ExtResource("11_2qgp5")]
+position = Vector2(326, 74)
+
+[node name="cloud_platform2" parent="second_world/cloud_platforms/cannon2" instance=ExtResource("11_2qgp5")]
+position = Vector2(653, 71)
+
+[node name="invisible_walls" type="Node2D" parent="second_world"]
+
+[node name="invisible_wall" parent="second_world/invisible_walls" instance=ExtResource("14_glmw2")]
+position = Vector2(5351, -659)
 
 [node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("10_7etll")]
 position = Vector2(266, -130)
-floor_constant_speed = true
-floor_snap_length = 32.0
 SpawnPositions = [NodePath("start"), NodePath("end")]
 
 [node name="start" type="Node2D" parent="Player"]
