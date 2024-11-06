@@ -1,24 +1,32 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Godot;
 using Godot.Collections;
+using project768.scripts.common;
 
 namespace project768.scripts.game_entity.common.system;
 
-public class SaveSystem
+public class SaveSystem : Singleton<SaveSystem>
 {
-    public string GetSaveFilePath(SceneTree tree)
+    private Json json = new Json();
+
+    public string GetSceneName(SceneTree tree)
     {
         var sceneName = tree.CurrentScene.SceneFilePath.Split("/").Last().Replace(".tscn", "");
+        return sceneName;
+    }
 
-        return $"user://{sceneName}.json";
+    public string GetSaveFilePath()
+    {
+        return $"user://db.cfg";
     }
 
     public void SaveGame(SceneTree tree)
     {
-        var filePath = GetSaveFilePath(tree);
-        GD.Print($"SaveSystem: save to file {filePath}");
-
-        using var saveFile = FileAccess.Open(filePath, FileAccess.ModeFlags.Write);
+        var configFile = new ConfigFile();
+        var saveFilePath = GetSaveFilePath();
+        var section = GetSceneName(tree);
+        configFile.Load(saveFilePath);
 
         var saveNodes = tree.GetNodesInGroup("persist");
         foreach (Node saveNode in saveNodes)
@@ -30,45 +38,33 @@ public class SaveSystem
             }
 
             var entity = saveNode as IPersistentEntity;
-            var nodeData = entity.Save();
-            var jsonString = Json.Stringify(nodeData);
-            GD.Print($"SaveSystem: save {jsonString}");
-            saveFile.StoreLine(jsonString);
+            entity.Save(section, configFile);
         }
+
+        configFile.Save(saveFilePath);
     }
 
     public void LoadGame(SceneTree tree)
     {
-        var filePath = GetSaveFilePath(tree);
-        GD.Print($"SaveSystem: load from file {filePath}");
-
-        if (!FileAccess.FileExists(filePath))
+        var configFile = new ConfigFile();
+        var saveFilePath = GetSaveFilePath();
+        var section = GetSceneName(tree);
+        Error err = configFile.Load(saveFilePath);
+        if (err != Error.Ok)
         {
-            GD.Print($"SaveSystem: file {filePath} not found");
             return;
         }
 
-        using var saveFile = FileAccess.Open(GetSaveFilePath(tree), FileAccess.ModeFlags.Read);
+        if (!configFile.HasSection(section))
+        {
+            return;
+        }
 
-        var saveNodes = tree.GetNodesInGroup("persist");
-
+        var saveNodes = tree.GetNodesInGroup("persist");~~
         for (int i = 0; i < saveNodes.Count; i++)
         {
-            var jsonString = saveFile.GetLine();
-            GD.Print($"SaveSystem: load {jsonString}");
-            var json = new Json();
-            var parseResult = json.Parse(jsonString);
-            if (parseResult != Error.Ok)
-            {
-                GD.Print($"JSON Parse Error: {json.GetErrorMessage()} in {jsonString} at line {json.GetErrorLine()}");
-                continue;
-            }
-
-            // Get the data from the JSON object.
-            var nodeData = new Godot.Collections.Dictionary<string, Variant>((Godot.Collections.Dictionary) json.Data);
-
             var entity = saveNodes[i] as IPersistentEntity;
-            entity.Load(nodeData);
+            entity.Load(section, configFile);
         }
     }
 }
