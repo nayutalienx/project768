@@ -22,6 +22,7 @@ public class RewindDataSource
     public CannonBall[] CannonBalls { get; set; }
     public CloudPlatform[] CloudPlatforms { get; set; }
     public EntitySpawner[] Spawners { get; set; }
+    public Claw[] Claws { get; set; }
 
     public List<IRewindable> Rewindables = new();
 
@@ -35,6 +36,7 @@ public class RewindDataSource
         CannonBalls = FindAndAddRewindables(t, "cannon_ball").ConvertAll(o => o as CannonBall).ToArray();
         CloudPlatforms = FindAndAddRewindables(t, "cloud_platform").ConvertAll(o => o as CloudPlatform).ToArray();
         Spawners = FindAndAddRewindables(t, "spawner").ConvertAll(o => o as EntitySpawner).ToArray();
+        Claws = FindAndAddRewindables(t, "claw").ConvertAll(o => o as Claw).ToArray();
 
         OneWayPlatforms = FindAndAddRewindables(t, "one_way_platform")
             .ConvertAll(o => o as OneWayPlatform)
