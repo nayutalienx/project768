@@ -31,8 +31,6 @@ Path = "res://scenes/level/game/world1/world_1_lobby.tscn"
 
 [node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("1_nji42")]
 position = Vector2(-1698, 282)
-floor_constant_speed = true
-floor_snap_length = 32.0
 SpawnPositions = [NodePath("start_spawn"), NodePath("end_spawn")]
 
 [node name="start_spawn" type="Node2D" parent="Player"]

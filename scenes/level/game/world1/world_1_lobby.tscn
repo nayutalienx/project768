@@ -16,7 +16,7 @@
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAAAtACAAAQABACcAAADp/xcAAAAmACYAAAAVABcAAAAzACUAAAAhABcAAAAzACUAAAAsABcAAAAzACUAAAA4ABcAAAAzACUAAAAKABcAAAAzACUAAADf/xQAAwB3AAQAAABLABQAAwB3AAQAAAA=")
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAAAtACAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAABLABQAAwB3AAQAAAA9ABcAAAAzACUAAAApABcAAAAzACUAAAAZABcAAAAzACUAAAAGABcAAAAzACUAAAA=")
 tile_set = ExtResource("1_nyn40")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -27,13 +27,23 @@ Path = "res://scenes/level/game/world_0.tscn"
 SpawnPositionIndex = 1
 
 [node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("3_vetay")]
-position = Vector2(380, -11)
+position = Vector2(306, -15)
 Path = "res://scenes/level/game/world1/world_1_0.tscn"
+
+[node name="SceneLoader3" parent="second_world/portals" instance=ExtResource("3_vetay")]
+position = Vector2(622, -13)
+Path = "res://scenes/level/game/world1/world_1_1.tscn"
+
+[node name="SceneLoader4" parent="second_world/portals" instance=ExtResource("3_vetay")]
+position = Vector2(872, -14)
+Path = "res://scenes/level/game/world1/world_1_2.tscn"
+
+[node name="SceneLoader5" parent="second_world/portals" instance=ExtResource("3_vetay")]
+position = Vector2(1195, -17)
+Path = "res://scenes/level/game/world1/world_1_3.tscn"
 
 [node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("3_aberk")]
 position = Vector2(2, -58)
-floor_constant_speed = true
-floor_snap_length = 32.0
 SpawnPositions = [NodePath("start"), NodePath("world1")]
 
 [node name="start" type="Node2D" parent="Player"]

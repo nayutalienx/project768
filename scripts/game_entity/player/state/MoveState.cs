@@ -1,6 +1,7 @@
 ﻿using Godot;
 using project768.scripts.common;
 using project768.scripts.game_entity.common;
+using project768.scripts.game_entity.common.system;
 using project768.scripts.game_entity.landscape.switcher.interaction;
 using project768.scripts.player.interaction;
 using project768.scripts.state_machine;
@@ -41,7 +42,7 @@ public class MoveState : BasePlayerState
 
         if (Entity.Cache.UpPressed && Entity.InteractionContext.SceneLoaderContext.SceneLoader != null)
         {
-            Player.SaveSystem.SaveGame(Entity.GetTree());
+            SaveSystem.Instance.SaveGame(Entity.GetTree());
             Player.PreviousSceneData.HasData = true;
             Player.PreviousSceneData.SpawnPositionIndex =
                 Entity.InteractionContext.SceneLoaderContext.SceneLoader.SpawnPositionIndex;

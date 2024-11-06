@@ -17,7 +17,6 @@ public partial class Player :
     IStateMachineEntity<Player, Player.State>,
     IInteractableEntity<Player, PlayerInteractionContext, PlayerInteractionEvent, PlayerInteraction>
 {
-    public static SaveSystem SaveSystem { get; set; } = new();
     public static PreviousSceneData PreviousSceneData { get; set; } = new();
 
     [ExportSubgroup("Player Spawn Settings")]
@@ -95,7 +94,7 @@ public partial class Player :
         area2d.BodyExited += body => CurrentState.OnBodyExited(new CollisionBody("player", body));
 
         LoadPreviousSceneData();
-        SaveSystem.LoadGame(GetTree());
+        SaveSystem.Instance.LoadGame(GetTree());
     }
 
     public override void _Input(InputEvent _event)

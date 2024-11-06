@@ -44,18 +44,14 @@ public partial class CollectableSystem : Node2D, IPersistentEntity, IRewindable
         SyncItems(Picked);
     }
 
-    public Godot.Collections.Dictionary<string, Variant> Save()
+    public void Save(string section, ConfigFile file)
     {
-        return new Godot.Collections.Dictionary<string, Variant>()
-        {
-            {$"picked", new Array<bool>(Picked)}
-        };
+        file.SetValue(section, "picked", new Array<bool>(Picked));
     }
 
-    public void Load(Godot.Collections.Dictionary<string, Variant> data)
+    public void Load(string section, ConfigFile file)
     {
-        var picked = data["picked"].As<Array<bool>>();
-        SyncItems(picked.ToArray());
+        SyncItems(file.GetValue(section, "picked").As<Array<bool>>().ToArray());
     }
 
     public void SyncItems(bool[] picked)
