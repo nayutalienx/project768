@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://did2sgpoca6xq"]
+[gd_scene load_steps=20 format=4 uid="uid://did2sgpoca6xq"]
 
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_eo7g3"]
 [ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_00sxd"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="9_1ktic"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="10_ifkyl"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="11_2vvme"]
+[ext_resource type="PackedScene" uid="uid://tybm4a5xv60n" path="res://scenes/npc/claw.tscn" id="11_tixxg"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="12_7bns2"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="13_okf34"]
 
@@ -67,13 +68,16 @@ position = Vector2(4008, -659)
 [node name="CollectableItem3" parent="CollectableSystem" instance=ExtResource("2_00sxd")]
 position = Vector2(3509, 895)
 
+[node name="CollectableItem4" parent="CollectableSystem" instance=ExtResource("2_00sxd")]
+position = Vector2(4698, -192)
+
 [node name="second_world" type="Node2D" parent="."]
 
 [node name="tiles" type="Node2D" parent="second_world"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD4/yIAAQABACcAAADb/xgAAwB3AAQAAAAoACIAAQABACcAAABYACIAAQABACcAAADq/xkAAAAzACUAAABrACUAAwB3AAQAAAA4APH/AwB3AAQAAABhAPz/AQAyAEAAAAC3ACQAAwB3AAQAAAC3AA8AAwB3AAQAAAC/AAIAAQAsAEcAAAC+AP7/AQAsAEcAAAC/ABAAAQAsAEcAAADDAB0AAwB3AAQAAADFACQAAwB3AAQAAADuABEAAwB3AAQAAAD2AAQAAQAsAEcAAAAAAREAAwB3AAQAAAD/APj/AwB3AAQAAADDADkAAwB3AAQAAADwACMAAwB3AAQAAADxADYAAwB3AAQAAADAAE4AAwB3AAQAAADyAEwAAwB3AAQAAADcAHwAAQABACcAAAC7AGIAAwB3AAQAAAC+AHgAAwB3AAQAAAC/AGMAAwB3AAQAAAC+AGMAAwB3AAQAAAC+AGQAAwB3AAQAAAD+ACUAAwB3AAQAAAD8ADYAAwB3AAQAAAD8AEMAAwB3AAQAAAD8AFAAAwB3AAQAAADYAH8AAQAyAEAAAFA=")
+tile_map_data = PackedByteArray("AAD4/yIAAQABACcAAADb/xgAAwB3AAQAAAAoACIAAQABACcAAABYACIAAQABACcAAADq/xkAAAAzACUAAABrACUAAwB3AAQAAAA4APH/AwB3AAQAAABhAPz/AQAyAEAAAAC3ACQAAwB3AAQAAAC3AA8AAwB3AAQAAAC/AAIAAQAsAEcAAAC+AP7/AQAsAEcAAAC/ABAAAQAsAEcAAADDAB0AAwB3AAQAAADFACQAAwB3AAQAAADuABEAAwB3AAQAAAD2AAQAAQAsAEcAAAAAAREAAwB3AAQAAADDADkAAwB3AAQAAADwACMAAwB3AAQAAADxADYAAwB3AAQAAADAAE4AAwB3AAQAAADyAEwAAwB3AAQAAADcAHwAAQABACcAAAC7AGIAAwB3AAQAAAC+AHgAAwB3AAQAAAC/AGMAAwB3AAQAAAC+AGMAAwB3AAQAAAC+AGQAAwB3AAQAAAD+ACUAAwB3AAQAAAD8ADYAAwB3AAQAAAD8AEMAAwB3AAQAAAD8AFAAAwB3AAQAAAAMAXwAAQABACcAAAAkAVkAAQAsAEcAAAAjATkAAQAsAEcAAAAjASEAAQAsAEcAAAAiAQQAAQAsAEcAAAAcAXEAAwB3AAQAAAAdAWYAAwB3AAQAAAA2AVAAAwB3AAQAAAA1ATsAAwB3AAQAAAAxASYAAwB3AAQAAAAsARIAAwB3AAQAAAD8AAIAAwB3AAQAAABJAQQAAQABACcAAAA6Aez/AQABACcAAABIAQ8AAwB3AAQAAABVAQ8AAwB3AAQAAAA7AQ8AAwB3AAQAAAA=")
 tile_set = ExtResource("3_7v7c0")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -89,6 +93,10 @@ z_index = -5
 [node name="ladder" parent="second_world/ladders" instance=ExtResource("5_jy7ak")]
 position = Vector2(1413, -83)
 points = PackedVector2Array(0, 10, 0, -53.5)
+
+[node name="ladder2" parent="second_world/ladders" instance=ExtResource("5_jy7ak")]
+position = Vector2(4536, 1381)
+points = PackedVector2Array(0, 10, 0, -199.3)
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
@@ -135,6 +143,13 @@ position = Vector2(151, -2)
 [node name="enemy_simple1" parent="second_world/enemies/spawner2" instance=ExtResource("7_pffd2")]
 SpawnVelocity = Vector2(500, -400)
 
+[node name="spawner3" parent="second_world/enemies" instance=ExtResource("7_7okmd")]
+position = Vector2(4330, -669)
+InitialState = 1
+SpawnInterval = 2.0
+
+[node name="enemy_simple" parent="second_world/enemies/spawner3" instance=ExtResource("7_pffd2")]
+
 [node name="door" type="Node2D" parent="second_world"]
 
 [node name="spike" type="Node2D" parent="second_world"]
@@ -161,8 +176,14 @@ ReactAnimationPlayer = NodePath("../../one_way_platforms/one_way_platform2/Anima
 ReactAnimationNameOnForward = "move_forward"
 ReactAnimationNameOnBackward = "move_backward"
 
+[node name="claws" type="Node2D" parent="second_world"]
+z_index = -5
+
+[node name="Claw" parent="second_world/claws" instance=ExtResource("11_tixxg")]
+position = Vector2(5509, -457)
+
 [node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("9_1ktic")]
-position = Vector2(1661.85, -93.2081)
+position = Vector2(3406.62, -733.894)
 SpawnPositions = [NodePath("start"), NodePath("end")]
 
 [node name="start" type="Node2D" parent="Player"]

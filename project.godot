@@ -39,6 +39,7 @@ spawner=""
 persist=""
 collectable_system=""
 cloud_platform=""
+claw=""
 
 [input]
 
