@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://pe0t0hv2qg6a"]
+
+[ext_resource type="Texture2D" uid="uid://decd3pitwnlyc" path="res://sprites/paper_bg.png" id="1_8ygqq"]
+[ext_resource type="Script" path="res://scripts/game_entity/item/collection_stand/CollectionStand.cs" id="1_vtq78"]
+
+[node name="collection_stand" type="Node2D"]
+scale = Vector2(0.399364, 0.399364)
+script = ExtResource("1_vtq78")
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+self_modulate = Color(0.607845, 0.45954, 0.356606, 1)
+layout_mode = 0
+offset_right = 1217.0
+offset_bottom = 1220.0
+scale = Vector2(0.661987, 0.661987)
+texture = ExtResource("1_8ygqq")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+offset_left = 17.0
+offset_top = 21.0
+offset_right = 417.0
+offset_bottom = 61.0
+theme_override_constants/h_separation = 200
+theme_override_constants/v_separation = 200
+columns = 4

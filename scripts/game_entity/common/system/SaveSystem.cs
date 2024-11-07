@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Godot.Collections;
@@ -8,7 +9,10 @@ namespace project768.scripts.game_entity.common.system;
 
 public class SaveSystem : Singleton<SaveSystem>
 {
-    private Json json = new Json();
+    public string SavePath
+    {
+        get => GetSaveFilePath();
+    }
 
     public string GetSceneName(SceneTree tree)
     {
@@ -23,10 +27,8 @@ public class SaveSystem : Singleton<SaveSystem>
 
     public void SaveGame(SceneTree tree)
     {
-        var configFile = new ConfigFile();
-        var saveFilePath = GetSaveFilePath();
+        var configFile = LoadSave();
         var section = GetSceneName(tree);
-        configFile.Load(saveFilePath);
 
         var saveNodes = tree.GetNodesInGroup("persist");
         foreach (Node saveNode in saveNodes)
@@ -41,30 +43,55 @@ public class SaveSystem : Singleton<SaveSystem>
             entity.Save(section, configFile);
         }
 
-        configFile.Save(saveFilePath);
+        configFile.Save(SavePath);
     }
 
     public void LoadGame(SceneTree tree)
     {
-        var configFile = new ConfigFile();
-        var saveFilePath = GetSaveFilePath();
+        var configFile = LoadSave();
+
         var section = GetSceneName(tree);
-        Error err = configFile.Load(saveFilePath);
-        if (err != Error.Ok)
-        {
-            return;
-        }
 
         if (!configFile.HasSection(section))
         {
             return;
         }
 
-        var saveNodes = tree.GetNodesInGroup("persist");~~
+        var saveNodes = tree.GetNodesInGroup("persist");
         for (int i = 0; i < saveNodes.Count; i++)
         {
             var entity = saveNodes[i] as IPersistentEntity;
             entity.Load(section, configFile);
         }
+    }
+
+    public List<int> GetPickedItemsFromWorld(string worldPrefix)
+    {
+        var configFile = LoadSave();
+        var result = new List<int>();
+        int counter = 0;
+        foreach (string section in configFile.GetSections())
+        {
+            if (section.StartsWith(worldPrefix))
+            {
+                foreach (var picked in configFile.GetValue(section, "picked").As<Array<bool>>())
+                {
+                    if (picked)
+                    {
+                        result.Add(counter);
+                        counter++;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private ConfigFile LoadSave()
+    {
+        var configFile = new ConfigFile();
+        configFile.Load(SavePath);
+        return configFile;
     }
 }
