@@ -9,6 +9,8 @@ namespace project768.scripts.game_entity.common.system;
 
 public class SaveSystem : Singleton<SaveSystem>
 {
+    private ConfigFile CachedConfig = null;
+
     public string SavePath
     {
         get => GetSaveFilePath();
@@ -90,8 +92,14 @@ public class SaveSystem : Singleton<SaveSystem>
 
     private ConfigFile LoadSave()
     {
+        if (CachedConfig != null)
+        {
+            return CachedConfig;
+        }
+
         var configFile = new ConfigFile();
         configFile.Load(SavePath);
+        CachedConfig = configFile;
         return configFile;
     }
 }
