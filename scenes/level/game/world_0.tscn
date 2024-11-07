@@ -1,12 +1,20 @@
-[gd_scene load_steps=8 format=4 uid="uid://cxjbnxtpf5t0i"]
+[gd_scene load_steps=11 format=4 uid="uid://cxjbnxtpf5t0i"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_d2k0b"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="1_nji42"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="1_sqd2x"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="2_qdvyo"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="3_5idk0"]
+[ext_resource type="PackedScene" uid="uid://pe0t0hv2qg6a" path="res://scenes/item/collection_stand.tscn" id="3_frj8v"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="3_srw4l"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="6_vet4u"]
+
+[sub_resource type="Gradient" id="Gradient_d1djc"]
+offsets = PackedFloat32Array(0.417949, 0.784615)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ntfi7"]
+gradient = SubResource("Gradient_d1djc")
 
 [node name="World0" type="Node2D"]
 
@@ -16,7 +24,7 @@
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(-42, 11)
-tile_map_data = PackedByteArray("AADj/w0AAQABACcAAAATAA0AAQABACcAAADV//z/AQAAADEAAAAgAPz/AQAAADEAAAAMAAcAAQAjADQAAAD5/wkAAQA4ADkAAAArAAYAAQAcABgAAAA+AAQAAQAsAEcAAABbAAQAAQAsAEcAAAA2APP/AQA8AAQAAABpAPP/AQA8AAQAAAB4AAQAAQAsAEcAAACFAPj/AQAwAA4AAABRAP7/AQA2ACwAAADy/wgAAQAbAEQAAAAAAAgAAQAjAEQAAACVAAQAAQAsAEcAAACyAAQAAQAsAEcAAAC/AP3/AQAbADMAAAC2APb/AQAVAAMAAACsAP3/AQAbADMAAABMAAsAAQAbADMAAABpAAsAAQAbADMAAACGAAsAAQAbADMAAACjAAsAAQAbADMAAADAAAsAAQAbADMAAADG/w8AAQAcABgAAAC3/xYAAQAyAEAAAACo/xgAAQAcABgAAACZ/x8AAQAyAEAAAADFAAYAAQAcABgAABDOAA8AAQAcABgAABDdABYAAQAyAEAAAAAPASQAAAACADgAAAAmASQAAAACADgAAAAOARgAAAAbAAEAAAAnARgAAAAbAAEAAAAZASAAAAABAEAAAAAKAR8AAAAjABsAAAAnAQwAAAACADgAAAAQAQwAAAACADgAAABAARgAAAAbAAEAAABHARoAAABFADgAAAA9ASQAAAACADgAAAA+AQwAAAACADgAAAA0ARoAAAApADoAAAD1ABgAAAABABwAAAD2ABgAAAAbAAEAAAD4ACQAAAACADgAAADhACQAAAACADgAAACH/xcAAwB3AAQAAABQARgAAwB3AAQAAAA=")
+tile_map_data = PackedByteArray("AADj/w0AAQABACcAAAATAA0AAQABACcAAADV//z/AQAAADEAAAAgAPz/AQAAADEAAAAMAAcAAQAjADQAAAD5/wkAAQA4ADkAAAArAAYAAQAcABgAAAA+AAQAAQAsAEcAAABbAAQAAQAsAEcAAAA2APP/AQA8AAQAAABpAPP/AQA8AAQAAAB4AAQAAQAsAEcAAACFAPj/AQAwAA4AAABRAP7/AQA2ACwAAADy/wgAAQAbAEQAAAAAAAgAAQAjAEQAAACVAAQAAQAsAEcAAACyAAQAAQAsAEcAAAC/AP3/AQAbADMAAAC2APb/AQAVAAMAAACsAP3/AQAbADMAAABMAAsAAQAbADMAAABpAAsAAQAbADMAAACGAAsAAQAbADMAAACjAAsAAQAbADMAAADAAAsAAQAbADMAAADG/w8AAQAcABgAAAC3/xYAAQAyAEAAAACo/xgAAQAcABgAAACZ/x8AAQAyAEAAAADFAAYAAQAcABgAABDOAA8AAQAcABgAABDdABYAAQAyAEAAAAAPASQAAAACADgAAAAmASQAAAACADgAAAAOARgAAAAbAAEAAAAnARgAAAAbAAEAAAAZASAAAAABAEAAAAAKAR8AAAAjABsAAAAnAQwAAAACADgAAAAQAQwAAAACADgAAABAARgAAAAbAAEAAAA9ASQAAAACADgAAAA+AQwAAAACADgAAAA0ARoAAAApADoAAAD1ABgAAAABABwAAAD2ABgAAAAbAAEAAAD4ACQAAAACADgAAADhACQAAAACADgAAACH/xcAAwB3AAQAAAA9ARkAAABFADgAAABUASQAAAACADgAAABVAQwAAAACADgAAABZARgAAAAbAAEAAABbARkAAABFADgAABA=")
 tile_set = ExtResource("1_d2k0b")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -29,15 +37,27 @@ Path = "res://scenes/level/game/world1/world_1_lobby.tscn"
 
 [node name="spikes" type="Node2D" parent="second_world"]
 
+[node name="collection_stand" parent="second_world" instance=ExtResource("3_frj8v")]
+position = Vector2(5120, 252)
+World = "world_1"
+
+[node name="fading" type="Node2D" parent="second_world"]
+z_index = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="second_world/fading"]
+position = Vector2(5505.65, 403.346)
+scale = Vector2(7.10455, 7.10455)
+texture = SubResource("GradientTexture2D_ntfi7")
+
 [node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("1_nji42")]
-position = Vector2(-1698, 282)
+position = Vector2(-1736, 393)
 SpawnPositions = [NodePath("start_spawn"), NodePath("end_spawn")]
 
 [node name="start_spawn" type="Node2D" parent="Player"]
 position = Vector2(64, 32)
 
 [node name="end_spawn" type="Node2D" parent="Player"]
-position = Vector2(6409, 188)
+position = Vector2(6439, 112)
 
 [node name="RewindPlayer" parent="." instance=ExtResource("6_vet4u")]
 
