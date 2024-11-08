@@ -26,6 +26,10 @@ position = Vector2(-148, -14)
 Path = "res://scenes/level/game/world_0.tscn"
 SpawnPositionIndex = 2
 
+[node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("2_xn4c0")]
+position = Vector2(316, -24)
+Path = "res://scenes/level/game/world2/world_2_0.tscn"
+
 [node name="Player" parent="." instance=ExtResource("3_jkm05")]
 position = Vector2(2, -58)
 
