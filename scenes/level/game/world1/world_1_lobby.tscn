@@ -42,14 +42,15 @@ Path = "res://scenes/level/game/world1/world_1_2.tscn"
 position = Vector2(1195, -17)
 Path = "res://scenes/level/game/world1/world_1_3.tscn"
 
-[node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("3_aberk")]
+[node name="Player" parent="." instance=ExtResource("3_aberk")]
 position = Vector2(2, -58)
-SpawnPositions = [NodePath("start"), NodePath("world1")]
 
-[node name="start" type="Node2D" parent="Player"]
+[node name="spawn" type="Node2D" parent="Player"]
+
+[node name="start" type="Node2D" parent="Player/spawn"]
 position = Vector2(-22, 3)
 
-[node name="world1" type="Node2D" parent="Player"]
+[node name="world1" type="Node2D" parent="Player/spawn"]
 position = Vector2(367, -63)
 
 [node name="RewindPlayer" parent="." instance=ExtResource("4_4yv7v")]

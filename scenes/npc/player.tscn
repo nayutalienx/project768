@@ -15,13 +15,12 @@ font_size = 25
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("SpawnPositions") groups=["player"]]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 floor_constant_speed = true
 floor_max_angle = 0.872665
 floor_snap_length = 32.0
 script = ExtResource("1_whvrt")
-SpawnPositions = []
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -65)

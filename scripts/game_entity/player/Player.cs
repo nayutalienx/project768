@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using project768.scripts.common;
 using project768.scripts.common.interaction;
@@ -19,9 +20,7 @@ public partial class Player :
 {
     public static PreviousSceneData PreviousSceneData { get; set; } = new();
 
-    [ExportSubgroup("Player Spawn Settings")]
-    [Export]
-    public Node2D[] SpawnPositions { get; set; }
+    public List<Node2D> SpawnPositions { get; set; } = new();
 
     [ExportSubgroup("Player Settings")] [Export]
     public float JumpVelocity = -400.0f;
@@ -92,6 +91,15 @@ public partial class Player :
         var area2d = GetNode<Area2D>("Area2D");
         area2d.BodyEntered += body => CurrentState.OnBodyEntered(new CollisionBody("player", body));
         area2d.BodyExited += body => CurrentState.OnBodyExited(new CollisionBody("player", body));
+        
+        foreach (var child in GetChildren())
+        {
+            if (child.Name == "spawn")
+            {
+                SpawnPositions.AddRange(child.GetChildren().ToList().ConvertAll(c => c as Node2D));
+                break;
+            }
+        }
 
         LoadPreviousSceneData();
         SaveSystem.Instance.LoadGame(GetTree());

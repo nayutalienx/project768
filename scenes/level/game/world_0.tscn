@@ -27,6 +27,10 @@ tile_set = ExtResource("1_d2k0b")
 position = Vector2(4885, 573)
 Path = "res://scenes/level/game/world1/world_1_lobby.tscn"
 
+[node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("3_5idk0")]
+position = Vector2(5688, 565)
+Path = "res://scenes/level/game/world2/world_2_lobby.tscn"
+
 [node name="walls" type="Node2D" parent="second_world"]
 
 [node name="spikes" type="Node2D" parent="second_world"]
@@ -60,15 +64,19 @@ modulate = Color(0.798771, 0.609439, 0.49629, 1)
 position = Vector2(6422, 882)
 points = PackedVector2Array(0, 10, 0, -57.3)
 
-[node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("1_nji42")]
+[node name="Player" parent="." instance=ExtResource("1_nji42")]
 position = Vector2(-1736, 393)
-SpawnPositions = [NodePath("start_spawn"), NodePath("end_spawn")]
 
-[node name="start_spawn" type="Node2D" parent="Player"]
+[node name="spawn" type="Node2D" parent="Player"]
+
+[node name="start_spawn" type="Node2D" parent="Player/spawn"]
 position = Vector2(64, 32)
 
-[node name="end_spawn" type="Node2D" parent="Player"]
+[node name="world1" type="Node2D" parent="Player/spawn"]
 position = Vector2(6439, 112)
+
+[node name="world2" type="Node2D" parent="Player/spawn"]
+position = Vector2(7246, 87)
 
 [node name="RewindPlayer" parent="." instance=ExtResource("6_vet4u")]
 

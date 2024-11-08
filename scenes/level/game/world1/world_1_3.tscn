@@ -187,14 +187,15 @@ z_index = -5
 [node name="Claw" parent="second_world/claws" instance=ExtResource("11_tixxg")]
 position = Vector2(5509, -457)
 
-[node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("9_1ktic")]
+[node name="Player" parent="." instance=ExtResource("9_1ktic")]
 position = Vector2(40.0537, -72.6684)
-SpawnPositions = [NodePath("start"), NodePath("end")]
 
-[node name="start" type="Node2D" parent="Player"]
+[node name="spawn" type="Node2D" parent="Player"]
+
+[node name="start" type="Node2D" parent="Player/spawn"]
 position = Vector2(109.523, 28.8401)
 
-[node name="end" type="Node2D" parent="Player"]
+[node name="end" type="Node2D" parent="Player/spawn"]
 position = Vector2(7093.63, -369.515)
 
 [node name="RewindPlayer" parent="." instance=ExtResource("10_ifkyl")]
