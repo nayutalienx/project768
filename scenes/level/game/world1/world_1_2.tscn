@@ -120,13 +120,14 @@ position = Vector2(1448, -732)
 [node name="invisible_wall6" parent="second_world/invisible_walls" instance=ExtResource("9_7x54k")]
 position = Vector2(1473, -1100)
 
-[node name="Player" parent="." node_paths=PackedStringArray("SpawnPositions") instance=ExtResource("14_usa5p")]
+[node name="Player" parent="." instance=ExtResource("14_usa5p")]
 position = Vector2(100, -97)
-SpawnPositions = [NodePath("start"), NodePath("end")]
 
-[node name="start" type="Node2D" parent="Player"]
+[node name="spawn" type="Node2D" parent="Player"]
 
-[node name="end" type="Node2D" parent="Player"]
+[node name="start" type="Node2D" parent="Player/spawn"]
+
+[node name="end" type="Node2D" parent="Player/spawn"]
 position = Vector2(1601, 1)
 
 [node name="RewindPlayer" parent="." instance=ExtResource("15_7ill1")]
