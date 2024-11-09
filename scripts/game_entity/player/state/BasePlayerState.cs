@@ -46,4 +46,13 @@ public class BasePlayerState : State<Player, Player.State>
             Entity.InteractionContext.KeyContext.Key.GlobalPosition = Entity.GlobalPosition;
         }
     }
+    
+    protected void ProcessTimelessKey()
+    {
+        if (Entity.InteractionContext.TimelessKeyContext.HasKey)
+        {
+            Entity.InteractionContext.TimelessKeyContext.Key.GlobalTransform = Entity.GlobalTransform;
+            Entity.InteractionContext.TimelessKeyContext.Key.GlobalPosition = Entity.GlobalPosition;
+        }
+    }
 }

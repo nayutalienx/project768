@@ -10,7 +10,13 @@ public class TryPickupKeyInteraction : Interaction<Player, PlayerInteractionEven
 
     public override void Interact(PlayerInteractionEvent eventContext)
     {
-        if (!Entity.InteractionContext.KeyContext.HasKey &&
+
+        if (Entity.InteractionContext.KeyContext.HasKey || Entity.InteractionContext.TimelessKeyContext.HasKey)
+        {
+            return;
+        }
+
+        if (
             eventContext.KeyEvent.Key.CurrentState.StateEnum == Key.State.Unpicked)
         {
             Entity.InteractionContext.KeyContext.HasKey = true;

@@ -14,4 +14,9 @@ public class RewindState : BaseEnemyState
     {
         Entity.DisableCollision();
     }
+
+    public override void PhysicProcess(double delta)
+    {
+        ProcessTimelessKey();
+    }
 }

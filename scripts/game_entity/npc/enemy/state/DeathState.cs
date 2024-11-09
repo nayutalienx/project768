@@ -17,5 +17,6 @@ public class DeathState : BaseEnemyState
         Entity.AttackArea.DisableCollision();
         Entity.Visible = false;
         DropKey();
+        DropTimelessKey();
     }
 }

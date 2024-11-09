@@ -7,6 +7,7 @@ public class PlayerInteractionEvent : InteractionEvent<PlayerInteraction>
 {
     public PlayerLadderEvent LadderEvent { get; set; }
     public PlayerKeyEvent KeyEvent { get; set; }
+    public PlayerTimelessKeyEvent TimelessKeyEvent { get; set; }
     public PlayerSwitcherEvent SwitcherEvent { get; set; }
 
     public PlayerInteractionEvent(PlayerInteraction interactionEnum) : base(interactionEnum)

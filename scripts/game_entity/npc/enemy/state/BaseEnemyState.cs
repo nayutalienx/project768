@@ -10,10 +10,27 @@ public class BaseEnemyState : State<Enemy, Enemy.State>
     
     protected void DropKey()
     {
-        if (Entity.InteractionContext.HasKey)
+        if (Entity.InteractionContext.KeyContext.HasKey)
         {
-            Entity.InteractionContext.Key.StateChanger.ChangeState(Key.State.Unpicked);
-            Entity.InteractionContext.HasKey = false;
+            Entity.InteractionContext.KeyContext.Key.StateChanger.ChangeState(Key.State.Unpicked);
+            Entity.InteractionContext.KeyContext.HasKey = false;
+        }
+    }
+
+    protected void DropTimelessKey()
+    {
+        if (Entity.InteractionContext.TimelessKeyContext.HasKey)
+        {
+            Entity.InteractionContext.TimelessKeyContext.Key.StateChanger.ChangeState(TimelessKey.State.Unpicked);
+            Entity.InteractionContext.TimelessKeyContext.HasKey = false;
+        }
+    }
+    
+    protected void ProcessTimelessKey()
+    {
+        if (Entity.InteractionContext.TimelessKeyContext.HasKey)
+        {
+            Entity.InteractionContext.TimelessKeyContext.Key.GlobalPosition = Entity.GlobalPosition;
         }
     }
 }
