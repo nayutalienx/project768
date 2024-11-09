@@ -11,12 +11,17 @@ public class TryPickupKeyInteraction : Interaction<Enemy, EnemyInteractionEvent,
 
     public override void Interact(EnemyInteractionEvent eventContext)
     {
-        if (!Entity.InteractionContext.HasKey &&
+        if (Entity.InteractionContext.KeyContext.HasKey || Entity.InteractionContext.TimelessKeyContext.HasKey)
+        {
+            return;
+        }
+
+        if (
             eventContext.Key.CurrentState.StateEnum == Key.State.Unpicked)
         {
-            Entity.InteractionContext.HasKey = true;
-            Entity.InteractionContext.Key = eventContext.Key;
-            Entity.InteractionContext.KeyInstanceId = eventContext.Key.GetInstanceId();
+            Entity.InteractionContext.KeyContext.HasKey = true;
+            Entity.InteractionContext.KeyContext.Key = eventContext.Key;
+            Entity.InteractionContext.KeyContext.KeyInstanceId = eventContext.Key.GetInstanceId();
 
             eventContext.Key.StateChanger.ChangeState(Key.State.Picked);
         }

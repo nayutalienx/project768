@@ -42,6 +42,14 @@ public class MoveState : BaseEnemyState
                     Key = key
                 });
             }
+
+            if (body.Body is TimelessKey timelessKey)
+            {
+                Entity.Interactor.Interact(new EnemyInteractionEvent(EnemyInteraction.TryPickupTimelessKey)
+                {
+                    TimelessKey = timelessKey
+                });
+            }
         }
 
         if (body.AreaName.Equals("head"))
@@ -57,6 +65,7 @@ public class MoveState : BaseEnemyState
     public override void PhysicProcess(double delta)
     {
         ProcessKey();
+        ProcessTimelessKey();
         bool invertDirectionTimerFinished = invertDirectionTimer.Update(delta);
 
         if (!Entity.IsOnFloor())
@@ -92,17 +101,18 @@ public class MoveState : BaseEnemyState
 
     protected void RecoverKeyOnEnterState(Enemy.State prevState)
     {
-        if (prevState == Enemy.State.Rewind && Entity.InteractionContext.HasKey)
+        if (prevState == Enemy.State.Rewind && Entity.InteractionContext.KeyContext.HasKey)
         {
-            Entity.InteractionContext.Key = GodotObject.InstanceFromId(Entity.InteractionContext.KeyInstanceId) as Key;
+            Entity.InteractionContext.KeyContext.Key =
+                GodotObject.InstanceFromId(Entity.InteractionContext.KeyContext.KeyInstanceId) as Key;
         }
     }
 
     protected void ProcessKey()
     {
-        if (Entity.InteractionContext.HasKey)
+        if (Entity.InteractionContext.KeyContext.HasKey)
         {
-            Entity.InteractionContext.Key.GlobalPosition = Entity.GlobalPosition;
+            Entity.InteractionContext.KeyContext.Key.GlobalPosition = Entity.GlobalPosition;
         }
     }
 }

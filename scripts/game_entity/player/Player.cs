@@ -72,7 +72,8 @@ public partial class Player :
                 {PlayerInteraction.FallOnEnemyHead, new FallOnEnemyInteraction(this)},
                 {PlayerInteraction.TryPickupKey, new TryPickupKeyInteraction(this)},
                 {PlayerInteraction.UnlockedDoor, new DoorUnlockedInteraction(this)},
-                {PlayerInteraction.SwitcherArea, new SwitcherAreaInteraction(this)}
+                {PlayerInteraction.SwitcherArea, new SwitcherAreaInteraction(this)},
+                {PlayerInteraction.TryPickupTimelessKey, new TryPickupTimelessKeyInteraction(this)},
             };
         Interactor = new(this);
 

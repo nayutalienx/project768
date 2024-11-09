@@ -3,5 +3,6 @@
 public enum EnemyInteraction
 {
     TryPickupKey,
-    KillEnemy
+    KillEnemy,
+    TryPickupTimelessKey
 }

@@ -50,6 +50,7 @@ public class MoveState : BasePlayerState
         }
 
         ProcessKey();
+        ProcessTimelessKey();
         ProcessSwitcher();
 
         if (!Entity.IsOnFloor())
@@ -93,6 +94,17 @@ public class MoveState : BasePlayerState
                 KeyEvent = new PlayerKeyEvent()
                 {
                     Key = key
+                }
+            });
+        }
+
+        if (body.Body is TimelessKey timelessKey)
+        {
+            Entity.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.TryPickupTimelessKey)
+            {
+                TimelessKeyEvent = new PlayerTimelessKeyEvent()
+                {
+                    Key = timelessKey
                 }
             });
         }
@@ -145,7 +157,8 @@ public class MoveState : BasePlayerState
         {
             if (Entity.Cache.UpPressed)
             {
-                Entity.InteractionContext.SwitcherContext.Switcher.Interactor.Interact(new SwitcherInteractionEvent(SwitcherInteraction.Toggle));
+                Entity.InteractionContext.SwitcherContext.Switcher.Interactor.Interact(
+                    new SwitcherInteractionEvent(SwitcherInteraction.Toggle));
             }
         }
     }

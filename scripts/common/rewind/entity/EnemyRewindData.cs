@@ -23,8 +23,8 @@ public struct EnemyRewindData
         Visible = enemy.Visible;
         Direction = enemy.EnemyDirection;
         // key
-        HasKey = enemy.InteractionContext.HasKey;
-        KeyInstanceId = enemy.InteractionContext.KeyInstanceId;
+        HasKey = enemy.InteractionContext.KeyContext.HasKey;
+        KeyInstanceId = enemy.InteractionContext.KeyContext.KeyInstanceId;
     }
 
     public void ApplyData(Enemy enemy)
@@ -35,7 +35,7 @@ public struct EnemyRewindData
         enemy.Visible = Visible;
         enemy.EnemyDirection = Direction;
         // key
-        enemy.InteractionContext.HasKey = HasKey;
-        enemy.InteractionContext.KeyInstanceId = KeyInstanceId;
+        enemy.InteractionContext.KeyContext.HasKey = HasKey;
+        enemy.InteractionContext.KeyContext.KeyInstanceId = KeyInstanceId;
     }
 }

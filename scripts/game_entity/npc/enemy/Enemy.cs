@@ -16,6 +16,7 @@ using DeathState = project768.scripts.enemy.DeathState;
 using MoveState = project768.scripts.enemy.MoveState;
 using RewindState = project768.scripts.enemy.RewindState;
 using TryPickupKeyInteraction = project768.scripts.game_entity.npc.enemy.interaction.TryPickupKeyInteraction;
+using TryPickupTimelessKeyInteraction = project768.scripts.game_entity.npc.enemy.interaction.TryPickupTimelessKeyInteraction;
 
 public partial class Enemy :
     CharacterBody2D,
@@ -75,7 +76,8 @@ public partial class Enemy :
         Interactions = new Dictionary<EnemyInteraction, Interaction<Enemy, EnemyInteractionEvent, EnemyInteraction>>()
         {
             {EnemyInteraction.TryPickupKey, new TryPickupKeyInteraction(this)},
-            {EnemyInteraction.KillEnemy, new KillEnemyInteraction(this)}
+            {EnemyInteraction.KillEnemy, new KillEnemyInteraction(this)},
+            {EnemyInteraction.TryPickupTimelessKey, new TryPickupTimelessKeyInteraction(this)},
         };
         Interactor = new Interactor<Enemy, EnemyInteractionContext, EnemyInteractionEvent, EnemyInteraction>(this);
 
