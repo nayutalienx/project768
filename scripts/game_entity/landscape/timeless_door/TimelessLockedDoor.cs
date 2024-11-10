@@ -1,30 +1,27 @@
+
 using System.Collections.Generic;
 using Godot;
 using project768.scripts.common;
-using project768.scripts.door;
-using project768.scripts.rewind.entity;
+using project768.scripts.game_entity.landscape.timeless_door;
 using project768.scripts.state_machine;
-using RewindState = project768.scripts.door.RewindState;
 
-public partial class LockedDoor :
+
+public partial class TimelessLockedDoor :
     AnimatableBody2D,
-    IRewindable,
-    IStateMachineEntity<LockedDoor, LockedDoor.State>
+    IStateMachineEntity<TimelessLockedDoor, TimelessLockedDoor.State>
 {
     public enum State
     {
         Locked,
-        Unlocked,
-        Rewind
+        Unlocked
     }
 
     [Export] public bool TrackEnemies { get; set; }
     [Export] public Enemy[] Enemies { get; set; }
-
-    public int RewindState { get; set; }
-    public State<LockedDoor, State> CurrentState { get; set; }
-    public Dictionary<State, State<LockedDoor, State>> States { get; set; }
-    public StateChanger<LockedDoor, State> StateChanger { get; set; }
+    
+    public State<TimelessLockedDoor, State> CurrentState { get; set; }
+    public Dictionary<State, State<TimelessLockedDoor, State>> States { get; set; }
+    public StateChanger<TimelessLockedDoor, State> StateChanger { get; set; }
     public RewindableAnimationPlayer AnimationPlayer { get; set; }
     public CollisionShape2D CollisionShape2D { get; set; }
     public Area2D LockArea { get; set; }
@@ -47,13 +44,12 @@ public partial class LockedDoor :
         LockArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("door", body)); };
         DoorLabel = GetNode<Label>("Label");
 
-        States = new Dictionary<State, State<LockedDoor, State>>()
+        States = new Dictionary<State, State<TimelessLockedDoor, State>>()
         {
             {State.Locked, new LockedState(this, State.Locked)},
             {State.Unlocked, new UnlockedState(this, State.Unlocked)},
-            {State.Rewind, new RewindState(this, State.Rewind)},
         };
-        StateChanger = new StateChanger<LockedDoor, State>(this);
+        StateChanger = new StateChanger<TimelessLockedDoor, State>(this);
         StateChanger.ChangeState(State.Locked);
     }
 
@@ -91,19 +87,5 @@ public partial class LockedDoor :
             }
         }
     }
-
-    public void RewindStarted()
-    {
-        StateChanger.ChangeState(State.Rewind);
-    }
-
-    public void RewindFinished()
-    {
-        StateChanger.ChangeState((State) RewindState);
-    }
-
-    public void OnRewindSpeedChanged(int speed)
-    {
-        AnimationPlayer.UpdateRewindSpeed(speed);
-    }
+    
 }
