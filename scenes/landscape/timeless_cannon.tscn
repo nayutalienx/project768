@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=3 uid="uid://4ifkq3ubv52u"]
+
+[ext_resource type="Script" path="res://scripts/game_entity/common/timeless_spawner/TimelessEntitySpawner.cs" id="1_7lwc4"]
+[ext_resource type="Shader" path="res://shaders/timeless.gdshader" id="2_v5dsx"]
+[ext_resource type="Texture2D" uid="uid://7fdaex256nf8" path="res://sprites/cannon.png" id="2_vvj2u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lqtj6"]
+shader = ExtResource("2_v5dsx")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plrir"]
+size = Vector2(159, 101)
+
+[sub_resource type="LabelSettings" id="LabelSettings_teixd"]
+font_size = 24
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_gsnst"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0q8yo"]
+gradient = SubResource("Gradient_gsnst")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e026e"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 100.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -2.23517e-06
+radial_accel_max = 30.0
+damping_max = 10.0
+scale_max = 5.0
+color = Color(0.384314, 0.847059, 0.176471, 1)
+color_ramp = SubResource("GradientTexture1D_0q8yo")
+
+[node name="timeless_cannon" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_7lwc4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_lqtj6")
+scale = Vector2(0.1341, 0.1341)
+texture = ExtResource("2_vvj2u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_plrir")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -79.0
+offset_top = -88.0
+offset_right = -16.0
+offset_bottom = -54.0
+text = "cann_spawner"
+label_settings = SubResource("LabelSettings_teixd")
+
+[node name="spawn_point" type="Node2D" parent="."]
+position = Vector2(79, -20)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_e026e")
