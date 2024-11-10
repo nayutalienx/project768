@@ -1,7 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://c14oily4ha1w1"]
+[gd_scene load_steps=9 format=3 uid="uid://c14oily4ha1w1"]
 
 [ext_resource type="Script" path="res://scripts/game_entity/item/timeless_key/TimelessKey.cs" id="1_osdo8"]
+[ext_resource type="Shader" path="res://shaders/timeless.gdshader" id="2_1yn47"]
 [ext_resource type="Texture2D" uid="uid://d1xlx4638oyq7" path="res://sprites/key.png" id="2_ym720"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1hads"]
+shader = ExtResource("2_1yn47")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q1y3a"]
 radius = 23.5037
@@ -10,7 +14,7 @@ height = 101.024
 [sub_resource type="Gradient" id="Gradient_3ketn"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ueled"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_k2hc7"]
 gradient = SubResource("Gradient_3ketn")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i1r8d"]
@@ -23,7 +27,7 @@ radial_accel_max = 30.0
 damping_max = 10.0
 scale_max = 5.0
 color = Color(0.384314, 0.847059, 0.176471, 1)
-color_ramp = SubResource("GradientTexture1D_ueled")
+color_ramp = SubResource("GradientTexture1D_k2hc7")
 
 [node name="timeless_key" type="RigidBody2D"]
 collision_layer = 8
@@ -31,11 +35,12 @@ lock_rotation = true
 script = ExtResource("1_osdo8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-self_modulate = Color(0.53304, 1, 0.213542, 1)
+material = SubResource("ShaderMaterial_1hads")
 scale = Vector2(0.0771115, 0.0771115)
 texture = ExtResource("2_ym720")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 rotation = 1.56123
 shape = SubResource("CapsuleShape2D_q1y3a")
 

@@ -89,6 +89,11 @@ public partial class RewindPlayer : Node2D
         {
             ReloadFullScene();
         }
+
+        if (_event.IsActionPressed("quit"))
+        {
+            GetTree().Quit();
+        }
     }
 
     public override void _PhysicsProcess(double delta)
