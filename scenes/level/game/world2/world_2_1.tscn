@@ -1,14 +1,64 @@
-[gd_scene load_steps=8 format=3 uid="uid://c70rpn1k3g5lk"]
+[gd_scene load_steps=19 format=4 uid="uid://c70rpn1k3g5lk"]
 
+[ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_jhpg7"]
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_quq5o"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_4egkl"]
+[ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_y3e0m"]
+[ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="3_jaddf"]
+[ext_resource type="PackedScene" uid="uid://c14oily4ha1w1" path="res://scenes/item/timeless_key.tscn" id="3_ol0w0"]
+[ext_resource type="PackedScene" uid="uid://c231kcpdermgs" path="res://scenes/common/spawner.tscn" id="4_hx4fj"]
+[ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/npc/enemy_simple.tscn" id="5_6rjyo"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/one_way_platform.tscn" id="5_jegit"]
+[ext_resource type="PackedScene" uid="uid://cmwltwmhaorl3" path="res://scenes/landscape/timeless_locked_door.tscn" id="5_lg0v0"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="6_w07hv"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="7_f7rre"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="8_cn8lh"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="9_m2xj2"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="10_iw2i4"]
 
+[sub_resource type="Animation" id="Animation_ch0r4"]
+resource_name = "obstacle"
+length = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 30),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1617, -706), Vector2(1617, -493)]
+}
+
+[sub_resource type="Animation" id="Animation_h78vm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1617, -493)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fyh41"]
+_data = {
+"RESET": SubResource("Animation_h78vm"),
+"obstacle": SubResource("Animation_ch0r4")
+}
+
 [node name="World0" type="Node2D"]
+
+[node name="CollectableSystem" parent="." instance=ExtResource("1_jhpg7")]
+
+[node name="CollectableItem" parent="CollectableSystem" instance=ExtResource("2_y3e0m")]
+position = Vector2(1859, -516)
 
 [node name="second_world" type="Node2D" parent="."]
 
@@ -16,7 +66,7 @@
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray(0, 0, 253, 255, 32, 0, 1, 0, 1, 0, 39, 0, 0, 0, 233, 255, 23, 0, 0, 0, 38, 0, 38, 0, 0, 0, 223, 255, 20, 0, 3, 0, 119, 0, 4, 0, 0, 0)
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAtACAAAQABACcAAABdACAAAQABACcAAAD9/wsAAQABACcAAAAfAAsAAQABACcAAABcAAsAAQABACcAAAA8APn/AQABACcAAAD+/+f/AQABACcAAAAlAOf/AQABACcAAADf////AwB3AAQAAADf/+r/AwB3AAQAAADf/9X/AwB3AAQAAAB6ABgAAwB3AAQAAAB6AAMAAwB3AAQAAAB6AO7/AwB3AAQAAAB6ANn/AwB3AAQAAABOAO3/AwB3AAQAAABgAPP/AwB3AAQAAABOANj/AwB3AAQAAABbAN7/AwB3AAQAAABoAN7/AwB3AAQAAABtAPP/AwB3AAQAAABzAN7/AwB3AAQAAABvABcAAAAmACYAAAA=")
 tile_set = ExtResource("1_quq5o")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -26,11 +76,68 @@ position = Vector2(-148, -14)
 Path = "res://scenes/level/game/world2/world_2_0.tscn"
 SpawnPositionIndex = 1
 
+[node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("2_4egkl")]
+position = Vector2(1997, -17)
+Path = "res://scenes/level/game/world2/world_2_2.tscn"
+
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
+
+[node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("5_jegit")]
+position = Vector2(1617, -493)
+rotation = 1.57079
+DisableOneWayCollission = true
+AnimationNameOnStart = "obstacle"
+AllAnimations = PackedStringArray("obstacle")
+StartAnimationOnReady = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="second_world/one_way_platforms/one_way_platform"]
+libraries = {
+"": SubResource("AnimationLibrary_fyh41")
+}
 
 [node name="keys" type="Node2D" parent="second_world"]
 
+[node name="timeless_key" parent="second_world/keys" instance=ExtResource("3_ol0w0")]
+position = Vector2(-111, -977)
+
 [node name="enemies" type="Node2D" parent="second_world"]
+
+[node name="spawner" parent="second_world/enemies" instance=ExtResource("4_hx4fj")]
+position = Vector2(-100, -1228)
+InitialState = 1
+SpawnInterval = 2.0
+
+[node name="enemy_simple" parent="second_world/enemies/spawner" instance=ExtResource("5_6rjyo")]
+position = Vector2(60, 14)
+
+[node name="enemy_simple2" parent="second_world/enemies/spawner" instance=ExtResource("5_6rjyo")]
+
+[node name="enemy_simple3" parent="second_world/enemies/spawner" instance=ExtResource("5_6rjyo")]
+
+[node name="enemy_simple4" parent="second_world/enemies/spawner" instance=ExtResource("5_6rjyo")]
+
+[node name="enemy_simple5" parent="second_world/enemies/spawner" instance=ExtResource("5_6rjyo")]
+
+[node name="ladders" type="Node2D" parent="second_world"]
+z_index = -5
+
+[node name="ladder" parent="second_world/ladders" instance=ExtResource("3_jaddf")]
+position = Vector2(1196, -110)
+points = PackedVector2Array(0, 10, 0, -42.5)
+
+[node name="ladder2" parent="second_world/ladders" instance=ExtResource("3_jaddf")]
+position = Vector2(718, -442)
+points = PackedVector2Array(0, 10, 0, -38.2)
+
+[node name="ladder3" parent="second_world/ladders" instance=ExtResource("3_jaddf")]
+position = Vector2(1269, -733)
+points = PackedVector2Array(0, 10, 0, -35.1)
+
+[node name="doors" type="Node2D" parent="second_world"]
+
+[node name="timeless_locked_door" parent="second_world/doors" node_paths=PackedStringArray("Enemies") instance=ExtResource("5_lg0v0")]
+position = Vector2(1725, -438)
+Enemies = []
 
 [node name="Player" parent="." instance=ExtResource("6_w07hv")]
 position = Vector2(2, -58)
@@ -41,7 +148,7 @@ position = Vector2(2, -58)
 position = Vector2(-22, 3)
 
 [node name="level1" type="Node2D" parent="Player/spawn"]
-position = Vector2(367, -63)
+position = Vector2(1834, -71)
 
 [node name="RewindPlayer" parent="." instance=ExtResource("7_f7rre")]
 
