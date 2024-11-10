@@ -99,10 +99,9 @@ scale_max = 5.0
 color = Color(0.384314, 0.847059, 0.176471, 1)
 color_ramp = SubResource("GradientTexture1D_ueled")
 
-[node name="timeless_locked_door" type="AnimatableBody2D" node_paths=PackedStringArray("Enemies")]
+[node name="timeless_locked_door" type="AnimatableBody2D"]
 collision_mask = 0
 script = ExtResource("1_3vq4d")
-Enemies = []
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_fm3uk")

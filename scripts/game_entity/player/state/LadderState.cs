@@ -38,6 +38,7 @@ public class LadderState : BasePlayerState
         }
 
         ProcessKey();
+        ProcessTimelessKey();
 
         float direction = Entity.Cache.VerticalDirection;
         if (direction == 0)
