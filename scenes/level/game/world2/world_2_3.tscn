@@ -3,7 +3,7 @@
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_bcuck"]
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_gll3q"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_dmspv"]
-[ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_scbwa"]
+[ext_resource type="PackedScene" uid="uid://clc02prulpxxo" path="res://scenes/item/timeless_collectable_item.tscn" id="2_n6kln"]
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="3_brb11"]
 [ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/landscape/spikes.tscn" id="4_2vl6o"]
 [ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/npc/enemy_simple.tscn" id="4_7lqpw"]
@@ -59,8 +59,8 @@ _data = {
 
 [node name="CollectableSystem" parent="." instance=ExtResource("1_gll3q")]
 
-[node name="CollectableItem" parent="CollectableSystem" instance=ExtResource("2_scbwa")]
-position = Vector2(1726, -204)
+[node name="TimelessCollectableItem" parent="CollectableSystem" instance=ExtResource("2_n6kln")]
+position = Vector2(1720, -201)
 
 [node name="second_world" type="Node2D" parent="."]
 
