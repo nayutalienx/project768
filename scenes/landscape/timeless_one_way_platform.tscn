@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://7wv6rahuxnn1"]
+
+[ext_resource type="Script" path="res://scripts/game_entity/landscape/platform/OneWayPlatform.cs" id="1_bvnpt"]
+[ext_resource type="Shader" path="res://shaders/timeless.gdshader" id="2_3jfky"]
+[ext_resource type="Texture2D" uid="uid://c5c4bv6ak02u4" path="res://sprites/ladder_top.png" id="2_tqsff"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o7bve"]
+shader = ExtResource("2_3jfky")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l1hfv"]
+size = Vector2(295.064, 69)
+
+[sub_resource type="Gradient" id="Gradient_i2x6q"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0q8yo"]
+gradient = SubResource("Gradient_i2x6q")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8aw2j"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 100.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -2.23517e-06
+radial_accel_max = 30.0
+damping_max = 10.0
+scale_max = 5.0
+color = Color(0.384314, 0.847059, 0.176471, 1)
+color_ramp = SubResource("GradientTexture1D_0q8yo")
+
+[node name="timeless_one_way_platform" type="AnimatableBody2D"]
+scale = Vector2(1.04384, 0.406434)
+script = ExtResource("1_bvnpt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_o7bve")
+texture = ExtResource("2_tqsff")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8.22259e-06, -0.5)
+shape = SubResource("RectangleShape2D_l1hfv")
+one_way_collision = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_8aw2j")

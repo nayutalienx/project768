@@ -57,6 +57,8 @@ public partial class Player :
     public StateChanger<Player, State> StateChanger { get; set; }
     public PlayerCache Cache { get; set; }
 
+    public Area2D InteractionArea { get; set; }
+
     public Tuple<uint, uint> OrigCollission;
     public Label Label { get; set; }
 
@@ -67,12 +69,10 @@ public partial class Player :
         Interactions =
             new Dictionary<PlayerInteraction, Interaction<Player, PlayerInteractionEvent, PlayerInteraction>>()
             {
-                {PlayerInteraction.LadderArea, new LadderAreaInteraction(this)},
                 {PlayerInteraction.KillPlayer, new KillPlayerInteraction(this)},
                 {PlayerInteraction.FallOnEnemyHead, new FallOnEnemyInteraction(this)},
                 {PlayerInteraction.TryPickupKey, new TryPickupKeyInteraction(this)},
                 {PlayerInteraction.UnlockedDoor, new DoorUnlockedInteraction(this)},
-                {PlayerInteraction.SwitcherArea, new SwitcherAreaInteraction(this)},
                 {PlayerInteraction.TryPickupTimelessKey, new TryPickupTimelessKeyInteraction(this)},
             };
         Interactor = new(this);
@@ -89,9 +89,9 @@ public partial class Player :
 
         StateChanger.ChangeState(State.Move);
 
-        var area2d = GetNode<Area2D>("Area2D");
-        area2d.BodyEntered += body => CurrentState.OnBodyEntered(new CollisionBody("player", body));
-        area2d.BodyExited += body => CurrentState.OnBodyExited(new CollisionBody("player", body));
+        InteractionArea = GetNode<Area2D>("Area2D");
+        InteractionArea.BodyEntered += body => CurrentState.OnBodyEntered(new CollisionBody("player", body));
+        InteractionArea.BodyExited += body => CurrentState.OnBodyExited(new CollisionBody("player", body));
         
         foreach (var child in GetChildren())
         {

@@ -9,7 +9,7 @@ public static class GodotExtensions
     {
         return new Tuple<uint, uint>(collisionObject2D.CollisionLayer, collisionObject2D.CollisionMask);
     }
-    
+
     public static void DisableCollision(this CollisionObject2D entity)
     {
         entity.CollisionLayer = 0;
@@ -46,5 +46,40 @@ public static class GodotExtensions
 
             colShape.SetDeferred(nameof(colShape.Disabled), true);
         }
+    }
+
+    public static Node2D IsOverlappingBodyWithLayer(this Area2D area, GameCollisionLayer gameLayer)
+    {
+        if (area.HasOverlappingBodies())
+        {
+            foreach (Node2D overlappingBody in area.GetOverlappingBodies())
+            {
+                if (overlappingBody is PhysicsBody2D body)
+                {
+                    if (body.CollisionLayer == (uint) gameLayer)
+                    {
+                        return body;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static Area2D IsOverlappingAreaWithLayer(this Area2D area, GameCollisionLayer gameLayer)
+    {
+        if (area.HasOverlappingAreas())
+        {
+            foreach (Area2D overlappingArea in area.GetOverlappingAreas())
+            {
+                if (overlappingArea.CollisionLayer == (uint) gameLayer)
+                {
+                    return overlappingArea;
+                }
+            }
+        }
+
+        return null;
     }
 }

@@ -16,6 +16,21 @@
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="9_m2xj2"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="10_iw2i4"]
 
+[sub_resource type="Animation" id="Animation_h78vm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1617, -493)]
+}
+
 [sub_resource type="Animation" id="Animation_ch0r4"]
 resource_name = "obstacle"
 length = 30.0
@@ -30,21 +45,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(1617, -706), Vector2(1617, -493)]
-}
-
-[sub_resource type="Animation" id="Animation_h78vm"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1617, -493)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fyh41"]

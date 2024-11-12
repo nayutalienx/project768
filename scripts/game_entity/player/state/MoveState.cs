@@ -3,8 +3,8 @@ using project768.scripts.common;
 using project768.scripts.game_entity.common;
 using project768.scripts.game_entity.common.system;
 using project768.scripts.game_entity.landscape.switcher.interaction;
+using project768.scripts.game_entity.landscape.timeless_switcher.interaction.data;
 using project768.scripts.player.interaction;
-using project768.scripts.state_machine;
 
 namespace project768.scripts.player;
 
@@ -22,8 +22,6 @@ public class MoveState : BasePlayerState
     public override void EnterState(Player.State prevState)
     {
         RecoverKeyOnEnterState(prevState);
-        RecoverSwitcherOnEnterState(prevState);
-        RecoverSceneLoader(prevState);
         Entity.EnableCollision(Entity.OrigCollission);
         if (prevState == Player.State.Rewind)
         {
@@ -33,25 +31,15 @@ public class MoveState : BasePlayerState
 
     public override void PhysicProcess(double delta)
     {
-        if ((Entity.Cache.DownPressed || Entity.Cache.UpPressed) &&
-            Entity.InteractionContext.LadderContext.LadderGlobalPosition != Vector2.Zero)
+        if (StateChangedToLadder())
         {
-            Entity.StateChanger.ChangeState(Player.State.Ladder);
             return;
         }
 
-        if (Entity.Cache.UpPressed && Entity.InteractionContext.SceneLoaderContext.SceneLoader != null)
-        {
-            SaveSystem.Instance.SaveGame(Entity.GetTree());
-            Player.PreviousSceneData.HasData = true;
-            Player.PreviousSceneData.SpawnPositionIndex =
-                Entity.InteractionContext.SceneLoaderContext.SceneLoader.SpawnPositionIndex;
-            Entity.InteractionContext.SceneLoaderContext.SceneLoader.LoadDeferred();
-        }
-
+        ProcessSceneLoad();
         ProcessKey();
         ProcessTimelessKey();
-        ProcessSwitcher();
+        ProcessSwitchers();
 
         if (!Entity.IsOnFloor())
         {
@@ -85,6 +73,22 @@ public class MoveState : BasePlayerState
         Entity.MoveAndSlide();
     }
 
+    private bool StateChangedToLadder()
+    {
+        if ((Entity.Cache.DownPressed || Entity.Cache.UpPressed))
+        {
+            Area2D areaLadder = Entity.InteractionArea.IsOverlappingAreaWithLayer(GameCollisionLayer.Ladder);
+            if (areaLadder != null)
+            {
+                Entity.InteractionContext.LadderContext.LadderGlobalPosition = areaLadder.GlobalPosition;
+                Entity.StateChanger.ChangeState(Player.State.Ladder);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public override void OnBodyEntered(CollisionBody body)
     {
         if (body.Body is Key key)
@@ -109,56 +113,52 @@ public class MoveState : BasePlayerState
             });
         }
 
-        if (body.Body is Switcher switcher)
-        {
-            Entity.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.SwitcherArea)
-            {
-                SwitcherEvent = new PlayerSwitcherEvent
-                {
-                    JoinedSwitcherArea = true,
-                    Switcher = switcher
-                }
-            });
-        }
 
         if (body.Body is SceneLoader sceneLoader)
         {
-            Entity.InteractionContext.SceneLoaderContext.SceneLoader = sceneLoader;
-            Entity.InteractionContext.SceneLoaderContext.InstanceId = sceneLoader.GetInstanceId();
             Entity.Label.Text = "enter(up)";
         }
     }
 
     public override void OnBodyExited(CollisionBody body)
     {
-        if (body.Body is Switcher switcher)
-        {
-            Entity.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.SwitcherArea)
-            {
-                SwitcherEvent = new PlayerSwitcherEvent
-                {
-                    JoinedSwitcherArea = false,
-                    Switcher = switcher
-                }
-            });
-        }
-
         if (body.Body is SceneLoader)
         {
-            Entity.InteractionContext.SceneLoaderContext.SceneLoader = null;
-            Entity.InteractionContext.SceneLoaderContext.InstanceId = 0;
             Entity.Label.Text = "";
         }
     }
 
-    private void ProcessSwitcher()
+    private void ProcessSwitchers()
     {
-        if (Entity.InteractionContext.SwitcherContext.JoinedSwitcherArea)
+        if (Entity.Cache.UpPressed)
         {
-            if (Entity.Cache.UpPressed)
+            Node2D node = Entity.InteractionArea.IsOverlappingBodyWithLayer(GameCollisionLayer.Switcher);
+            if (node is Switcher switcher)
             {
-                Entity.InteractionContext.SwitcherContext.Switcher.Interactor.Interact(
+                switcher.Interactor.Interact(
                     new SwitcherInteractionEvent(SwitcherInteraction.Toggle));
+            }
+
+            if (node is TimelessSwitcher timelessSwitcher)
+            {
+                timelessSwitcher.Interactor.Interact(
+                    new TimelessSwitcherInteractionEvent(TimelessSwitcherInteraction.Toggle));
+            }
+        }
+    }
+
+    private void ProcessSceneLoad()
+    {
+        if (Entity.Cache.UpPressed)
+        {
+            Node2D node = Entity.InteractionArea.IsOverlappingBodyWithLayer(GameCollisionLayer.SceneLoader);
+            if (node is SceneLoader sceneLoader)
+            {
+                SaveSystem.Instance.SaveGame(Entity.GetTree());
+                Player.PreviousSceneData.HasData = true;
+                Player.PreviousSceneData.SpawnPositionIndex =
+                    sceneLoader.SpawnPositionIndex;
+                sceneLoader.LoadDeferred();
             }
         }
     }

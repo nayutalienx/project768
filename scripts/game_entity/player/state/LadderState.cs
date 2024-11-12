@@ -19,7 +19,6 @@ public class LadderState : BasePlayerState
     {
         Entity.JumpMultiplier = 1.0f;
         RecoverKeyOnEnterState(prevState);
-        RecoverSwitcherOnEnterState(prevState);
         Entity.EnableCollision(Entity.OrigCollission);
         if (prevState == Player.State.Rewind)
         {
@@ -29,8 +28,9 @@ public class LadderState : BasePlayerState
 
     public override void PhysicProcess(double delta)
     {
+        Area2D ladderArea = Entity.InteractionArea.IsOverlappingAreaWithLayer(GameCollisionLayer.Ladder);
         if (
-            (Entity.Cache.JumpPressed || Entity.Cache.LeftPressed || Entity.Cache.RightPressed)
+            (Entity.Cache.JumpPressed || Entity.Cache.LeftPressed || Entity.Cache.RightPressed || ladderArea == null)
         )
         {
             Entity.StateChanger.ChangeState(Player.State.Move);

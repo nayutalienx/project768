@@ -59,6 +59,7 @@ public partial class Enemy :
     [ExportSubgroup("Enemy settings")] [Export]
     public bool AliveOnStart = false;
     
+    [Export]
     public int EnemyDirection { get; set; } = 1;
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
