@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://di5lh3kvkgors"]
+[gd_scene load_steps=24 format=4 uid="uid://di5lh3kvkgors"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_bcuck"]
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_gll3q"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bb6bemfvj0nt3" path="res://scenes/landscape/locked_door.tscn" id="5_anvt7"]
 [ext_resource type="PackedScene" uid="uid://7wv6rahuxnn1" path="res://scenes/landscape/timeless_one_way_platform.tscn" id="5_shwhi"]
 [ext_resource type="PackedScene" uid="uid://dkn6lvqu0x1vd" path="res://scenes/item/key_rb.tscn" id="6_hohpy"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/one_way_platform.tscn" id="6_vhcg2"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="7_uj66c"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="8_2fxh3"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="9_f8u85"]
@@ -55,6 +56,44 @@ _data = {
 "move_forward": SubResource("Animation_mk6ce")
 }
 
+[sub_resource type="Animation" id="Animation_boeta"]
+resource_name = "move_forward"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(3301, -382), Vector2(4122, -382)]
+}
+
+[sub_resource type="Animation" id="Animation_xa7pc"]
+resource_name = "move_backward"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(4122, -382), Vector2(3301, -382)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y5ocg"]
+_data = {
+"move_backward": SubResource("Animation_xa7pc"),
+"move_forward": SubResource("Animation_boeta")
+}
+
 [node name="World0" type="Node2D"]
 
 [node name="CollectableSystem" parent="." instance=ExtResource("1_gll3q")]
@@ -62,13 +101,16 @@ _data = {
 [node name="TimelessCollectableItem" parent="CollectableSystem" instance=ExtResource("2_n6kln")]
 position = Vector2(1720, -201)
 
+[node name="TimelessCollectableItem2" parent="CollectableSystem" instance=ExtResource("2_n6kln")]
+position = Vector2(4393, -195)
+
 [node name="second_world" type="Node2D" parent="."]
 
 [node name="tiles" type="Node2D" parent="second_world"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AADp/xcAAAAmACYAAADN/yAAAQABACcAAADJ/xcAAQABACcAAADQ/xwAAwB3AAQAAADb/wsAAwB3AAQAAADn/yAAAQABACcAAAAKAAAAAQAsAEcAAAA1AAAAAQAsAEcAAAArABkAAQAsAEcAAABgAB8AAQAsAEcAAABSAAAAAQAsAEcAAABeAAUAAQAsAEcAAABeAAkAAQAsAEcAAABeAA4AAQAsAEcAAAB4ABMAAQAsAEcAAAB4ABgAAQAsAEcAAAB4ABsAAQAsAEcAAAA=")
+tile_map_data = PackedByteArray("AADp/xcAAAAmACYAAADN/yAAAQABACcAAADJ/xcAAQABACcAAADQ/xwAAwB3AAQAAADb/wsAAwB3AAQAAADn/yAAAQABACcAAAAKAAAAAQAsAEcAAAA1AAAAAQAsAEcAAAArABkAAQAsAEcAAABgAB8AAQAsAEcAAABSAAAAAQAsAEcAAABeAAUAAQAsAEcAAABeAAkAAQAsAEcAAABeAA4AAQAsAEcAAABeAAAAAQAsAEcAAABrABMAAQAsAEcAAFCHAB8AAQABACcAAAC3AB8AAQABACcAAAAPAR8AAQAyAEAAAAAVARMAAwB3AAQAAAAZAQcAAQAyAEAAAAAeARMAAwB3AAQAAAAyAR8AAQABACcAAADDAAoAAQAyAEAAAAChAAIAAwB3AAQAAABFARYAAAAmACYAAABQARcAAwB3AAQAAABQAQIAAwB3AAQAAAA=")
 tile_set = ExtResource("1_bcuck")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -77,6 +119,10 @@ tile_set = ExtResource("1_bcuck")
 position = Vector2(-148, -14)
 Path = "res://scenes/level/game/world2/world_2_2.tscn"
 SpawnPositionIndex = 1
+
+[node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("2_dmspv")]
+position = Vector2(5415, -35)
+Path = "res://scenes/level/game/world2/world_2_4.tscn"
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
@@ -89,6 +135,20 @@ AllAnimations = PackedStringArray("move_forward", "move_backward")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="second_world/one_way_platforms/timeless_one_way_platform"]
 libraries = {
 "": SubResource("AnimationLibrary_5b11g")
+}
+
+[node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("6_vhcg2")]
+position = Vector2(3017, -350)
+
+[node name="timeless_one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("5_shwhi")]
+position = Vector2(3301, -382)
+scale = Vector2(2.84383, 0.406434)
+DisableOneWayCollission = true
+AllAnimations = PackedStringArray("move_forward", "move_backward")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="second_world/one_way_platforms/timeless_one_way_platform2"]
+libraries = {
+"": SubResource("AnimationLibrary_y5ocg")
 }
 
 [node name="keys" type="Node2D" parent="second_world"]
@@ -109,16 +169,33 @@ EnemyDirection = -1
 position = Vector2(1612, -116)
 
 [node name="ladders" type="Node2D" parent="second_world"]
+z_index = -5
 
 [node name="ladder" parent="second_world/ladders" instance=ExtResource("3_brb11")]
 position = Vector2(96, -111)
 points = PackedVector2Array(0, 10, 0, -42.6)
+
+[node name="ladder2" parent="second_world/ladders" instance=ExtResource("3_brb11")]
+position = Vector2(2060, -121)
+points = PackedVector2Array(0, 10, 0, -61.1)
+
+[node name="ladder3" parent="second_world/ladders" instance=ExtResource("3_brb11")]
+position = Vector2(4975, -123)
+points = PackedVector2Array(0, 10, 0, -39.3)
+
+[node name="ladder4" parent="second_world/ladders" instance=ExtResource("3_brb11")]
+position = Vector2(3020, -120)
+points = PackedVector2Array(0, 10, 0, -30.7)
 
 [node name="spikes" type="Node2D" parent="second_world"]
 
 [node name="Spike" parent="second_world/spikes" instance=ExtResource("4_2vl6o")]
 position = Vector2(198, 83)
 points = PackedVector2Array(0, -0.0668298, 89.3514, -0.0668298)
+
+[node name="Spike2" parent="second_world/spikes" instance=ExtResource("4_2vl6o")]
+position = Vector2(3530, 34)
+points = PackedVector2Array(0, -0.0668298, 56.7384, -0.0668298)
 
 [node name="switchers" type="Node2D" parent="second_world"]
 
@@ -130,6 +207,14 @@ ReactAnimationPlayer = NodePath("../../one_way_platforms/timeless_one_way_platfo
 ReactAnimationNameOnForward = "move_backward"
 ReactAnimationNameOnBackward = "move_forward"
 
+[node name="timeless_switcher2" parent="second_world/switchers" node_paths=PackedStringArray("ReactAnimationPlayer") instance=ExtResource("11_usegq")]
+position = Vector2(3469, -56)
+Type = 1
+Reaction = 1
+ReactAnimationPlayer = NodePath("../../one_way_platforms/timeless_one_way_platform2/AnimationPlayer")
+ReactAnimationNameOnForward = "move_forward"
+ReactAnimationNameOnBackward = "move_backward"
+
 [node name="Player" parent="." instance=ExtResource("7_uj66c")]
 position = Vector2(-10, -32)
 
@@ -139,7 +224,7 @@ position = Vector2(-10, -32)
 position = Vector2(-22, 3)
 
 [node name="end" type="Node2D" parent="Player/spawn"]
-position = Vector2(1529, -34)
+position = Vector2(5312, -81)
 
 [node name="RewindPlayer" parent="." instance=ExtResource("8_2fxh3")]
 
