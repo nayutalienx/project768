@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://bhtuhlhn5mfeh"]
+
+[ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_a8olr"]
+[ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_dercs"]
+[ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="7_8am6u"]
+[ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="8_dqkux"]
+[ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="9_4p0um"]
+[ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="10_fpwgo"]
+[ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="11_skg3j"]
+
+[node name="World0" type="Node2D"]
+
+[node name="second_world" type="Node2D" parent="."]
+
+[node name="tiles" type="Node2D" parent="second_world"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
+position = Vector2(213, -499)
+tile_map_data = PackedByteArray(0, 0, 253, 255, 32, 0, 1, 0, 1, 0, 39, 0, 0, 0, 233, 255, 23, 0, 0, 0, 38, 0, 38, 0, 0, 0, 223, 255, 20, 0, 3, 0, 119, 0, 4, 0, 0, 0)
+tile_set = ExtResource("1_a8olr")
+
+[node name="portals" type="Node2D" parent="second_world"]
+
+[node name="SceneLoader" parent="second_world/portals" instance=ExtResource("2_dercs")]
+position = Vector2(-148, -14)
+Path = "res://scenes/level/game/world2/world_2_3.tscn"
+SpawnPositionIndex = 1
+
+[node name="one_way_platforms" type="Node2D" parent="second_world"]
+
+[node name="keys" type="Node2D" parent="second_world"]
+
+[node name="enemies" type="Node2D" parent="second_world"]
+
+[node name="locked_doors" type="Node2D" parent="second_world"]
+
+[node name="Player" parent="." instance=ExtResource("7_8am6u")]
+position = Vector2(2, -58)
+
+[node name="spawn" type="Node2D" parent="Player"]
+
+[node name="start" type="Node2D" parent="Player/spawn"]
+position = Vector2(-22, 3)
+
+[node name="end" type="Node2D" parent="Player/spawn"]
+position = Vector2(1529, -34)
+
+[node name="RewindPlayer" parent="." instance=ExtResource("8_dqkux")]
+
+[node name="MusicPlayer" parent="." node_paths=PackedStringArray("ForwardPlayer", "BackwardPlayer") instance=ExtResource("9_4p0um")]
+ForwardPlayer = NodePath("forward")
+BackwardPlayer = NodePath("backward")
+
+[node name="forward" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("10_fpwgo")
+
+[node name="backward" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("11_skg3j")
