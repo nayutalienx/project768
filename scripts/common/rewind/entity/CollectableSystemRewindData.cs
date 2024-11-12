@@ -17,6 +17,6 @@ public struct CollectableSystemRewindData
 
     public void ApplyData(CollectableSystem system)
     {
-        system.SyncItems(Picked);
+        system.SyncItemsRewind(Picked);
     }
 }

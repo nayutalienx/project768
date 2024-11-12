@@ -9,6 +9,7 @@ using project768.scripts.rewind.entity;
 public partial class CollectableSystem : Node2D, IPersistentEntity, IRewindable
 {
     public List<CollectableItem> CollectableItems { get; set; } = new();
+    public List<int> TimelessCollectableItems { get; set; } = new();
     public GridContainer GridContainer { get; set; }
     public int RewindState { get; set; }
     public bool[] Picked { get; set; }
@@ -23,6 +24,10 @@ public partial class CollectableSystem : Node2D, IPersistentEntity, IRewindable
             if (child is CollectableItem collectableItem)
             {
                 CollectableItems.Add(collectableItem);
+                if (child is TimelessCollectableItem timelessCollectableItem)
+                {
+                    TimelessCollectableItems.Add(CollectableItems.Count - 1);
+                }
             }
         }
 
@@ -52,6 +57,22 @@ public partial class CollectableSystem : Node2D, IPersistentEntity, IRewindable
     public void Load(string section, ConfigFile file)
     {
         SyncItems(file.GetValue(section, "picked").As<Array<bool>>().ToArray());
+    }
+
+    public void SyncItemsRewind(bool[] picked)
+    {
+        for (var i = picked.Length - 1; i >= 0; i--)
+        {
+            if (!TimelessCollectableItems.Contains(i))
+            {
+                Picked[i] = picked[i];
+            }
+        }
+
+        for (var i = 0; i < Picked.Length; i++)
+        {
+            SetItemPicked(i, Picked[i]);
+        }
     }
 
     public void SyncItems(bool[] picked)

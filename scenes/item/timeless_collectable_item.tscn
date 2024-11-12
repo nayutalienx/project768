@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://clc02prulpxxo"]
+
+[ext_resource type="Script" path="res://scripts/game_entity/item/timeless_collectable_item/TimelessCollectableItem.cs" id="1_qf7r2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_di8ok"]
+size = Vector2(160, 161)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5pqig"]
+font_size = 100
+font_color = Color(0.47, 0.47, 0.47, 1)
+
+[sub_resource type="Gradient" id="Gradient_x5s3a"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ueled"]
+gradient = SubResource("Gradient_x5s3a")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_icuj3"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 100.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -2.23517e-06
+radial_accel_max = 30.0
+damping_max = 10.0
+scale_max = 5.0
+color = Color(0.384314, 0.847059, 0.176471, 1)
+color_ramp = SubResource("GradientTexture1D_ueled")
+
+[node name="TimelessCollectableItem" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_qf7r2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(77, 77.5)
+shape = SubResource("RectangleShape2D_di8ok")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 0
+offset_right = 156.0
+offset_bottom = 158.0
+
+[node name="Label" type="Label" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 5.0
+offset_right = 105.0
+offset_bottom = 142.0
+text = "1"
+label_settings = SubResource("LabelSettings_5pqig")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Control/Panel"]
+layout_mode = 0
+offset_right = 158.0
+offset_bottom = 157.0
+border_color = Color(0.301734, 0.328541, 0.351154, 1)
+border_width = 5.0
+editor_only = false
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(81, 75)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_icuj3")

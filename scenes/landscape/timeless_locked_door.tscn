@@ -84,7 +84,7 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="Gradient" id="Gradient_tmesc"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ueled"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rlxkp"]
 gradient = SubResource("Gradient_tmesc")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4o50r"]
@@ -97,11 +97,12 @@ radial_accel_max = 30.0
 damping_max = 10.0
 scale_max = 5.0
 color = Color(0.384314, 0.847059, 0.176471, 1)
-color_ramp = SubResource("GradientTexture1D_ueled")
+color_ramp = SubResource("GradientTexture1D_rlxkp")
 
-[node name="timeless_locked_door" type="AnimatableBody2D"]
+[node name="timeless_locked_door" type="AnimatableBody2D" node_paths=PackedStringArray("Enemies")]
 collision_mask = 0
 script = ExtResource("1_3vq4d")
+Enemies = []
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_fm3uk")
