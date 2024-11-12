@@ -19,25 +19,7 @@ public class BasePlayerState : State<Player, Player.State>
                 GodotObject.InstanceFromId(Entity.InteractionContext.KeyContext.KeyInstanceId) as Key;
         }
     }
-
-    protected void RecoverSceneLoader(Player.State prevState)
-    {
-        if (prevState == Player.State.Rewind && Entity.InteractionContext.SceneLoaderContext.InstanceId != 0)
-        {
-            Entity.InteractionContext.SceneLoaderContext.SceneLoader =
-                GodotObject.InstanceFromId(Entity.InteractionContext.SceneLoaderContext.InstanceId) as SceneLoader;
-        }
-    }
-
-    protected void RecoverSwitcherOnEnterState(Player.State prevState)
-    {
-        if (prevState == Player.State.Rewind && Entity.InteractionContext.SwitcherContext.JoinedSwitcherArea)
-        {
-            Entity.InteractionContext.SwitcherContext.Switcher =
-                GodotObject.InstanceFromId(Entity.InteractionContext.SwitcherContext.InstanceId) as Switcher;
-        }
-    }
-
+    
     protected void ProcessKey()
     {
         if (Entity.InteractionContext.KeyContext.HasKey)

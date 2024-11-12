@@ -16,10 +16,6 @@ public struct PlayerRewindData
     public bool HasKey { get; set; }
     public ulong KeyInstanceId { get; set; }
 
-    // Switcher
-    public bool NearSwitcher { get; set; }
-    public ulong SwitcherInstanceId { get; set; }
-    public ulong SceneLoaderInstanceId { get; set; }
 
     public PlayerRewindData(Player player)
     {
@@ -32,11 +28,6 @@ public struct PlayerRewindData
         // Key
         HasKey = player.InteractionContext.KeyContext.HasKey;
         KeyInstanceId = player.InteractionContext.KeyContext.KeyInstanceId;
-        // Switcher
-        NearSwitcher = player.InteractionContext.SwitcherContext.JoinedSwitcherArea;
-        SwitcherInstanceId = player.InteractionContext.SwitcherContext.InstanceId;
-        // SceneLoader
-        SceneLoaderInstanceId = player.InteractionContext.SceneLoaderContext.InstanceId;
     }
 
     public void ApplyData(Player player)
@@ -50,10 +41,5 @@ public struct PlayerRewindData
         // Key
         player.InteractionContext.KeyContext.HasKey = HasKey;
         player.InteractionContext.KeyContext.KeyInstanceId = KeyInstanceId;
-        // Switcher
-        player.InteractionContext.SwitcherContext.JoinedSwitcherArea = NearSwitcher;
-        player.InteractionContext.SwitcherContext.InstanceId = SwitcherInstanceId;
-        // SceneLoader
-        player.InteractionContext.SceneLoaderContext.InstanceId = SceneLoaderInstanceId;
     }
 }

@@ -2,11 +2,9 @@
 
 public enum PlayerInteraction
 {
-    LadderArea,
     KillPlayer,
     FallOnEnemyHead,
     TryPickupKey,
     UnlockedDoor,
-    SwitcherArea,
     TryPickupTimelessKey
 }

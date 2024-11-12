@@ -1,14 +1,66 @@
-[gd_scene load_steps=8 format=3 uid="uid://di5lh3kvkgors"]
+[gd_scene load_steps=20 format=4 uid="uid://di5lh3kvkgors"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_bcuck"]
+[ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_gll3q"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_dmspv"]
+[ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_scbwa"]
+[ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="3_brb11"]
+[ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/landscape/spikes.tscn" id="4_2vl6o"]
+[ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/npc/enemy_simple.tscn" id="4_7lqpw"]
+[ext_resource type="PackedScene" uid="uid://bb6bemfvj0nt3" path="res://scenes/landscape/locked_door.tscn" id="5_anvt7"]
+[ext_resource type="PackedScene" uid="uid://7wv6rahuxnn1" path="res://scenes/landscape/timeless_one_way_platform.tscn" id="5_shwhi"]
+[ext_resource type="PackedScene" uid="uid://dkn6lvqu0x1vd" path="res://scenes/item/key_rb.tscn" id="6_hohpy"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="7_uj66c"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="8_2fxh3"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="9_f8u85"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="10_g86om"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="11_2yspl"]
+[ext_resource type="PackedScene" uid="uid://c4638bh2af1v" path="res://scenes/landscape/timeless_switcher.tscn" id="11_usegq"]
+
+[sub_resource type="Animation" id="Animation_i3a4h"]
+resource_name = "move_backward"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1241, -18), Vector2(490, -18)]
+}
+
+[sub_resource type="Animation" id="Animation_mk6ce"]
+resource_name = "move_forward"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(490, -18), Vector2(1241, -18)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5b11g"]
+_data = {
+"move_backward": SubResource("Animation_i3a4h"),
+"move_forward": SubResource("Animation_mk6ce")
+}
 
 [node name="World0" type="Node2D"]
+
+[node name="CollectableSystem" parent="." instance=ExtResource("1_gll3q")]
+
+[node name="CollectableItem" parent="CollectableSystem" instance=ExtResource("2_scbwa")]
+position = Vector2(1726, -204)
 
 [node name="second_world" type="Node2D" parent="."]
 
@@ -16,7 +68,7 @@
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray(0, 0, 253, 255, 32, 0, 1, 0, 1, 0, 39, 0, 0, 0, 233, 255, 23, 0, 0, 0, 38, 0, 38, 0, 0, 0, 223, 255, 20, 0, 3, 0, 119, 0, 4, 0, 0, 0)
+tile_map_data = PackedByteArray("AADp/xcAAAAmACYAAADN/yAAAQABACcAAADJ/xcAAQABACcAAADQ/xwAAwB3AAQAAADb/wsAAwB3AAQAAADn/yAAAQABACcAAAAKAAAAAQAsAEcAAAA1AAAAAQAsAEcAAAArABkAAQAsAEcAAABgAB8AAQAsAEcAAABSAAAAAQAsAEcAAABeAAUAAQAsAEcAAABeAAkAAQAsAEcAAABeAA4AAQAsAEcAAAB4ABMAAQAsAEcAAAB4ABgAAQAsAEcAAAB4ABsAAQAsAEcAAAA=")
 tile_set = ExtResource("1_bcuck")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -28,14 +80,58 @@ SpawnPositionIndex = 1
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
+[node name="timeless_one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("5_shwhi")]
+position = Vector2(1241, -18)
+scale = Vector2(1.92384, 0.406434)
+DisableOneWayCollission = true
+AllAnimations = PackedStringArray("move_forward", "move_backward")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="second_world/one_way_platforms/timeless_one_way_platform"]
+libraries = {
+"": SubResource("AnimationLibrary_5b11g")
+}
+
 [node name="keys" type="Node2D" parent="second_world"]
+
+[node name="key" parent="second_world/keys" instance=ExtResource("6_hohpy")]
+position = Vector2(-385, -51)
 
 [node name="enemies" type="Node2D" parent="second_world"]
 
+[node name="enemy_simple" parent="second_world/enemies" instance=ExtResource("4_7lqpw")]
+position = Vector2(1023, -565)
+AliveOnStart = true
+EnemyDirection = -1
+
 [node name="locked_doors" type="Node2D" parent="second_world"]
 
+[node name="locked_door" parent="second_world/locked_doors" instance=ExtResource("5_anvt7")]
+position = Vector2(1612, -116)
+
+[node name="ladders" type="Node2D" parent="second_world"]
+
+[node name="ladder" parent="second_world/ladders" instance=ExtResource("3_brb11")]
+position = Vector2(96, -111)
+points = PackedVector2Array(0, 10, 0, -42.6)
+
+[node name="spikes" type="Node2D" parent="second_world"]
+
+[node name="Spike" parent="second_world/spikes" instance=ExtResource("4_2vl6o")]
+position = Vector2(198, 83)
+points = PackedVector2Array(0, -0.0668298, 89.3514, -0.0668298)
+
+[node name="switchers" type="Node2D" parent="second_world"]
+
+[node name="timeless_switcher" parent="second_world/switchers" node_paths=PackedStringArray("ReactAnimationPlayer") instance=ExtResource("11_usegq")]
+position = Vector2(923, -160)
+Type = 1
+Reaction = 1
+ReactAnimationPlayer = NodePath("../../one_way_platforms/timeless_one_way_platform/AnimationPlayer")
+ReactAnimationNameOnForward = "move_backward"
+ReactAnimationNameOnBackward = "move_forward"
+
 [node name="Player" parent="." instance=ExtResource("7_uj66c")]
-position = Vector2(2, -58)
+position = Vector2(-10, -32)
 
 [node name="spawn" type="Node2D" parent="Player"]
 

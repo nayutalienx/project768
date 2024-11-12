@@ -11,8 +11,8 @@ texture_mode = 1
 script = ExtResource("1_xj34d")
 
 [node name="Shape" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 2
+collision_layer = 256
+collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Shape"]
 position = Vector2(20, -11)

@@ -1,0 +1,144 @@
+[gd_scene load_steps=16 format=3 uid="uid://c4638bh2af1v"]
+
+[ext_resource type="Script" path="res://scripts/game_entity/landscape/timeless_switcher/TimelessSwitcher.cs" id="1_e3n4c"]
+[ext_resource type="Texture2D" uid="uid://cf52jiwhoqkq" path="res://sprites/switcher_base.png" id="2_8b5vb"]
+[ext_resource type="Shader" path="res://shaders/timeless.gdshader" id="2_ipmd7"]
+[ext_resource type="Texture2D" uid="uid://c71ym5s3ykqon" path="res://sprites/switcher_stick.png" id="3_pj3m0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hq4ih"]
+shader = ExtResource("2_ipmd7")
+
+[sub_resource type="Animation" id="Animation_tason"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/stick:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_0blx4"]
+resource_name = "end"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/stick:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5708]
+}
+
+[sub_resource type="Animation" id="Animation_2p7c1"]
+resource_name = "move"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/stick:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -1.5708]
+}
+
+[sub_resource type="Animation" id="Animation_ajxm0"]
+resource_name = "move_back"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/stick:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-1.5708, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7sjo0"]
+_data = {
+"RESET": SubResource("Animation_tason"),
+"end": SubResource("Animation_0blx4"),
+"move": SubResource("Animation_2p7c1"),
+"move_back": SubResource("Animation_ajxm0")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ai67f"]
+size = Vector2(98, 109)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2fquk"]
+font_size = 30
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_ogw8m"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ueled"]
+gradient = SubResource("Gradient_ogw8m")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vb83k"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 100.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -2.23517e-06
+radial_accel_max = 30.0
+damping_max = 10.0
+scale_max = 5.0
+color = Color(0.384314, 0.847059, 0.176471, 1)
+color_ramp = SubResource("GradientTexture1D_ueled")
+
+[node name="timeless_switcher" type="StaticBody2D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_e3n4c")
+
+[node name="sprites" type="Node2D" parent="."]
+scale = Vector2(0.0876937, 0.0876937)
+
+[node name="base" type="Sprite2D" parent="sprites"]
+material = SubResource("ShaderMaterial_hq4ih")
+texture = ExtResource("2_8b5vb")
+
+[node name="stick" type="Sprite2D" parent="sprites"]
+position = Vector2(-31, -230)
+texture = ExtResource("3_pj3m0")
+offset = Vector2(274, -245)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7sjo0")
+}
+next/move = &"end"
+next/move_back = &"RESET"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, -21.5)
+shape = SubResource("RectangleShape2D_ai67f")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -10.0
+offset_top = -214.0
+offset_right = 33.0
+offset_bottom = -172.0
+text = "log"
+label_settings = SubResource("LabelSettings_2fquk")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_vb83k")

@@ -86,6 +86,7 @@ quit={
 2d_physics/layer_6="scene_loader"
 2d_physics/layer_7="collectable_item"
 2d_physics/layer_8="invisible_wall"
+2d_physics/layer_9="ladder"
 
 [rendering]
 
