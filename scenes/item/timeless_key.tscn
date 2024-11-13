@@ -14,7 +14,7 @@ height = 101.024
 [sub_resource type="Gradient" id="Gradient_3ketn"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_k2hc7"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fiw7m"]
 gradient = SubResource("Gradient_3ketn")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i1r8d"]
@@ -27,7 +27,7 @@ radial_accel_max = 30.0
 damping_max = 10.0
 scale_max = 5.0
 color = Color(0.384314, 0.847059, 0.176471, 1)
-color_ramp = SubResource("GradientTexture1D_k2hc7")
+color_ramp = SubResource("GradientTexture1D_fiw7m")
 
 [node name="timeless_key" type="RigidBody2D"]
 collision_layer = 8

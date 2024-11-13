@@ -1,14 +1,28 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhtuhlhn5mfeh"]
+[gd_scene load_steps=17 format=4 uid="uid://bhtuhlhn5mfeh"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_a8olr"]
+[ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_703j7"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_dercs"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/one_way_platform.tscn" id="3_ojqd4"]
+[ext_resource type="PackedScene" uid="uid://4ifkq3ubv52u" path="res://scenes/landscape/timeless_cannon.tscn" id="3_q8oeu"]
+[ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/landscape/spikes.tscn" id="3_qgq5y"]
+[ext_resource type="PackedScene" uid="uid://whlole7gj4k" path="res://scenes/npc/timeless_enemy_simple.tscn" id="4_qpumt"]
+[ext_resource type="PackedScene" uid="uid://btobpn5evuwb8" path="res://scenes/landscape/cannon.tscn" id="6_nmrg4"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="7_8am6u"]
+[ext_resource type="PackedScene" uid="uid://chwame76xqi6l" path="res://scenes/landscape/cannon_ball.tscn" id="7_w158y"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="8_dqkux"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="9_4p0um"]
+[ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="9_85yh1"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="10_fpwgo"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="11_skg3j"]
+[ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="15_p33em"]
 
 [node name="World0" type="Node2D"]
+
+[node name="CollectableSystem" parent="." instance=ExtResource("15_p33em")]
+
+[node name="CollectableItem" parent="CollectableSystem" instance=ExtResource("2_703j7")]
+position = Vector2(2734, -689)
 
 [node name="second_world" type="Node2D" parent="."]
 
@@ -16,7 +30,7 @@
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray(0, 0, 253, 255, 32, 0, 1, 0, 1, 0, 39, 0, 0, 0, 233, 255, 23, 0, 0, 0, 38, 0, 38, 0, 0, 0, 223, 255, 20, 0, 3, 0, 119, 0, 4, 0, 0, 0)
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAtACAAAQABACcAAABdACAAAQABACcAAACXACAAAQABACcAAAAQAPb/AwB3AAQAAAAuAP7/AQABACcAAABeAP7/AQABACcAAACWAA4AAQAyAEAAAAA=")
 tile_set = ExtResource("1_a8olr")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -28,11 +42,66 @@ SpawnPositionIndex = 1
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
+[node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("3_ojqd4")]
+position = Vector2(2384, -280)
+
+[node name="one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("3_ojqd4")]
+position = Vector2(2773, -279)
+
 [node name="keys" type="Node2D" parent="second_world"]
 
 [node name="enemies" type="Node2D" parent="second_world"]
 
+[node name="timeless_cannon" parent="second_world/enemies" instance=ExtResource("3_q8oeu")]
+position = Vector2(634, -709)
+InitialState = 1
+SpawnInterval = 2.0
+
+[node name="timeless_enemy_simple" parent="second_world/enemies/timeless_cannon" instance=ExtResource("4_qpumt")]
+position = Vector2(161, -84)
+
+[node name="spawn" type="Node2D" parent="second_world/enemies/timeless_cannon"]
+position = Vector2(112, -18)
+
 [node name="locked_doors" type="Node2D" parent="second_world"]
+
+[node name="spikes" type="Node2D" parent="second_world"]
+
+[node name="Spike" parent="second_world/spikes" instance=ExtResource("3_qgq5y")]
+position = Vector2(2094, 56)
+
+[node name="Spike2" parent="second_world/spikes" instance=ExtResource("3_qgq5y")]
+position = Vector2(3020, 53)
+
+[node name="cannons" type="Node2D" parent="second_world"]
+
+[node name="cannon" parent="second_world/cannons" instance=ExtResource("6_nmrg4")]
+position = Vector2(2498, -587)
+scale = Vector2(-1, 1)
+SpawnInterval = 2.0
+
+[node name="spawn" type="Node2D" parent="second_world/cannons/cannon"]
+position = Vector2(96, -18)
+
+[node name="cannon_ball" parent="second_world/cannons/cannon" instance=ExtResource("7_w158y")]
+position = Vector2(63, -89)
+
+[node name="cannon_ball2" parent="second_world/cannons/cannon" instance=ExtResource("7_w158y")]
+position = Vector2(-21, -93)
+
+[node name="cannon_ball3" parent="second_world/cannons/cannon" instance=ExtResource("7_w158y")]
+position = Vector2(-105, -98)
+
+[node name="ladders" type="Node2D" parent="second_world"]
+z_index = -5
+
+[node name="ladder" parent="second_world/ladders" instance=ExtResource("9_85yh1")]
+position = Vector2(2354, -111)
+points = PackedVector2Array(0, 10, 0, -23.1)
+
+[node name="ladder2" parent="second_world/ladders" instance=ExtResource("9_85yh1")]
+position = Vector2(2863, -106)
+points = PackedVector2Array(0, 10, 0, -23.2)
 
 [node name="Player" parent="." instance=ExtResource("7_8am6u")]
 position = Vector2(2, -58)
