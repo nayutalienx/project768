@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=3 uid="uid://whlole7gj4k"]
+
+[ext_resource type="Script" path="res://scripts/game_entity/npc/timeless_enemy/TimelessEnemy.cs" id="1_2kwmq"]
+[ext_resource type="Texture2D" uid="uid://baql6qn040vl" path="res://sprites/icon.svg" id="2_b3iid"]
+[ext_resource type="Shader" path="res://shaders/timeless.gdshader" id="2_opntd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oti6w"]
+shader = ExtResource("2_opntd")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqmav"]
+radius = 14.2247
+height = 29.8259
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oxby5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vgc30"]
+size = Vector2(20, 12.5648)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qcvlv"]
+font_size = 25
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_i5rqo"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_k2hc7"]
+gradient = SubResource("Gradient_i5rqo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mo5u6"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 50.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -2.23517e-06
+radial_accel_max = 30.0
+damping_max = 10.0
+scale_max = 5.0
+color = Color(0.384314, 0.847059, 0.176471, 1)
+color_ramp = SubResource("GradientTexture1D_k2hc7")
+
+[node name="timeless_enemy_simple" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 129
+floor_constant_speed = true
+floor_max_angle = 0.872665
+floor_snap_length = 32.0
+platform_on_leave = 1
+script = ExtResource("1_2kwmq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.33, 0.33, 1)
+material = SubResource("ShaderMaterial_oti6w")
+position = Vector2(0, -32)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_b3iid")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -32.5)
+scale = Vector2(2.17931, 2.17931)
+shape = SubResource("CapsuleShape2D_hqmav")
+
+[node name="EnemyHeadArea" type="Area2D" parent="."]
+position = Vector2(0, -67)
+scale = Vector2(1.08, 0.6)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHeadArea"]
+scale = Vector2(2.48444, 1)
+shape = SubResource("RectangleShape2D_oxby5")
+
+[node name="EnemyAttackArea" type="Area2D" parent="."]
+position = Vector2(0, -32)
+scale = Vector2(3.38474, 2.94474)
+collision_layer = 0
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAttackArea"]
+position = Vector2(0, 4.92403)
+shape = SubResource("RectangleShape2D_vgc30")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -18.0
+offset_top = -93.0
+offset_right = 22.0
+offset_bottom = -70.0
+text = "d:"
+label_settings = SubResource("LabelSettings_qcvlv")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(-3, -34)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_mo5u6")
