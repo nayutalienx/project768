@@ -2,9 +2,9 @@
 
 namespace project768.scripts.common.interaction;
 
-public abstract class Interaction<T, TEventContext, TEnum>
+public abstract class Interaction<T, TInteractionEvent, TEnum>
     where TEnum : IConvertible
-    where TEventContext : InteractionEvent<TEnum>
+    where TInteractionEvent : InteractionEvent<TEnum>
 {
     public T Entity { get; set; }
 
@@ -13,7 +13,7 @@ public abstract class Interaction<T, TEventContext, TEnum>
         Entity = entity;
     }
 
-    public virtual void Interact(TEventContext eventContext)
+    public virtual void Interact(TInteractionEvent eventContext)
     {
     }
 }

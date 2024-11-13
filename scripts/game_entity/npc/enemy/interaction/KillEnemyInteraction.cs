@@ -14,7 +14,6 @@ public class KillEnemyInteraction : Interaction<Enemy, EnemyInteractionEvent, En
     {
         if (Entity.CurrentState.StateEnum == Enemy.State.Move)
         {
-            GD.Print($"{Entity.Name} killed");
             Entity.StateChanger.ChangeState(Enemy.State.Death);
         }
     }

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bjr82ea55sa61"]
+
+[node name="VectorGizmo" type="RayCast2D"]
+light_mask = 0
+enabled = false
+target_position = Vector2(13, -14)
+collision_mask = 0
