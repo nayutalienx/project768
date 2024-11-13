@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://bhtuhlhn5mfeh"]
+[gd_scene load_steps=19 format=4 uid="uid://bhtuhlhn5mfeh"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_a8olr"]
 [ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_703j7"]
@@ -10,9 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://btobpn5evuwb8" path="res://scenes/landscape/cannon.tscn" id="6_nmrg4"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="7_8am6u"]
 [ext_resource type="PackedScene" uid="uid://chwame76xqi6l" path="res://scenes/landscape/cannon_ball.tscn" id="7_w158y"]
+[ext_resource type="PackedScene" uid="uid://cigd8lf274hp2" path="res://scenes/npc/enemy_jumping.tscn" id="8_82a3v"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="8_dqkux"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="9_4p0um"]
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="9_85yh1"]
+[ext_resource type="PackedScene" uid="uid://bjr82ea55sa61" path="res://scenes/common/gizmos/vector_gizmo.tscn" id="9_y7s07"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="10_fpwgo"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="11_skg3j"]
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="15_p33em"]
@@ -62,6 +64,12 @@ position = Vector2(161, -84)
 
 [node name="spawn" type="Node2D" parent="second_world/enemies/timeless_cannon"]
 position = Vector2(112, -18)
+
+[node name="enemy_jumping" parent="second_world/enemies" instance=ExtResource("8_82a3v")]
+position = Vector2(623, -34)
+
+[node name="direction" parent="second_world/enemies/enemy_jumping" instance=ExtResource("9_y7s07")]
+target_position = Vector2(69, -66)
 
 [node name="locked_doors" type="Node2D" parent="second_world"]
 

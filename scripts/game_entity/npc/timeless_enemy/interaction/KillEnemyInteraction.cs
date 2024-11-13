@@ -14,7 +14,6 @@ public class KillEnemyInteraction : Interaction<TimelessEnemy, TimelessEnemyInte
     {
         if (Entity.CurrentState.StateEnum == TimelessEnemy.State.Move)
         {
-            GD.Print($"{Entity.Name} killed");
             Entity.StateChanger.ChangeState(TimelessEnemy.State.Death);
         }
     }
