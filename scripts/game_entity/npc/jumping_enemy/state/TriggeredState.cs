@@ -8,7 +8,7 @@ public class TriggeredState : BaseJumpingEnemyState
     public TriggeredState(JumpingEnemy entity, JumpingEnemy.State stateEnum) : base(entity, stateEnum)
     {
     }
-    
+
     public override void EnterState(JumpingEnemy.State prevState)
     {
         Entity.EnableCollision(Entity.OriginalEntityLayerMask);
@@ -19,6 +19,14 @@ public class TriggeredState : BaseJumpingEnemyState
 
     public override void PhysicProcess(double delta)
     {
+        UpdateVisionByDirection();
+
+        if (!TargetInVision())
+        {
+            Entity.StateChanger.ChangeState(JumpingEnemy.State.Idle);
+            return;
+        }
+
         var isOnFloor = Entity.IsOnFloor();
 
         if (!isOnFloor)
@@ -30,6 +38,13 @@ public class TriggeredState : BaseJumpingEnemyState
         {
             UpdateDirectionToTriggerPoint();
 
+            if (!WillJumpOnGround())
+            {
+                Entity.Direction = Entity.Direction.Reflect(Vector2.Up);
+                Entity.StateChanger.ChangeState(JumpingEnemy.State.Idle);
+                return;
+            }
+
             if (MustJumpAttack())
             {
                 Entity.Velocity = Entity.Direction * Entity.JumpAttackDirectionScale;
@@ -39,7 +54,7 @@ public class TriggeredState : BaseJumpingEnemyState
                 Entity.Velocity = Entity.Direction * Entity.TriggeredDirectionScale;
             }
         }
-        
+
         Entity.JumpAttackTimerManager.Update(delta);
 
         Entity.MoveAndSlide();
@@ -48,14 +63,6 @@ public class TriggeredState : BaseJumpingEnemyState
     public override void OnBodyEntered(CollisionBody body)
     {
         CommonBodyEntered(body);
-    }
-
-    public override void OnBodyExited(CollisionBody body)
-    {
-        if (body.AreaName.Equals("trigger"))
-        {
-            Entity.StateChanger.ChangeState(JumpingEnemy.State.Idle);
-        }
     }
 
     private bool MustJumpAttack()
@@ -73,6 +80,7 @@ public class TriggeredState : BaseJumpingEnemyState
 
             return mustJumpAttack;
         }
+
         return false;
     }
 

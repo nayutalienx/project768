@@ -1,11 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cigd8lf274hp2"]
+[gd_scene load_steps=8 format=3 uid="uid://cigd8lf274hp2"]
 
 [ext_resource type="Texture2D" uid="uid://dxsyk5xjth7rc" path="res://sprites/rabbit.png" id="1_nadhx"]
 [ext_resource type="Script" path="res://scripts/game_entity/npc/jumping_enemy/JumpingEnemy.cs" id="1_syxqy"]
 [ext_resource type="PackedScene" uid="uid://bjr82ea55sa61" path="res://scenes/common/gizmos/vector_gizmo.tscn" id="3_hy6aw"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_r32v0"]
-size = Vector2(299, 122)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqmav"]
 radius = 14.2247
@@ -29,16 +26,6 @@ floor_max_angle = 0.872665
 floor_snap_length = 32.0
 platform_on_leave = 1
 script = ExtResource("1_syxqy")
-
-[node name="EnemyTriggerArea" type="Area2D" parent="."]
-modulate = Color(0, 1, 0, 1)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyTriggerArea"]
-position = Vector2(0.5, -60)
-scale = Vector2(2.92, 1)
-shape = SubResource("RectangleShape2D_r32v0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -32.5)
@@ -84,3 +71,12 @@ target_position = Vector2(69, -66)
 [node name="jump_attack" parent="." instance=ExtResource("3_hy6aw")]
 modulate = Color(1, 0, 1, 1)
 target_position = Vector2(300, -23)
+
+[node name="VisionTarget" type="RayCast2D" parent="."]
+position = Vector2(0, -45)
+target_position = Vector2(500, 0)
+collision_mask = 3
+
+[node name="VisionGround" type="RayCast2D" parent="."]
+position = Vector2(0, -37)
+target_position = Vector2(232, 64)

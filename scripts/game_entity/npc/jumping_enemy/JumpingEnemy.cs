@@ -23,6 +23,7 @@ public partial class JumpingEnemy :
         Death,
         Rewind
     }
+
     public int RewindState { get; set; }
     public State<JumpingEnemy, State> CurrentState { get; set; }
     public Dictionary<State, State<JumpingEnemy, State>> States { get; set; }
@@ -48,10 +49,11 @@ public partial class JumpingEnemy :
 
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
-    public Area2D TriggerArea { get; set; }
     public Label Label { get; set; }
     public Vector2 Direction { get; set; }
     public Vector2 InitialPosition { get; set; }
+    public RayCast2D VisionTarget { get; set; }
+    public RayCast2D VisionGround { get; set; }
 
     public float JumpAttackDistance { get; set; }
 
@@ -90,8 +92,10 @@ public partial class JumpingEnemy :
 
         HeadArea = GetNode<Area2D>("EnemyHeadArea");
         AttackArea = GetNode<Area2D>("EnemyAttackArea");
-        TriggerArea = GetNode<Area2D>("EnemyTriggerArea");
         Label = GetNode<Label>("Label");
+
+        VisionTarget = GetNode<RayCast2D>("VisionTarget");
+        VisionGround = GetNode<RayCast2D>("VisionGround");
 
         if (HasNode("direction"))
         {
@@ -109,8 +113,6 @@ public partial class JumpingEnemy :
 
         HeadArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("head", body)); };
         AttackArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("attack", body)); };
-        TriggerArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("trigger", body)); };
-        TriggerArea.BodyExited += body => { CurrentState.OnBodyExited(new CollisionBody("trigger", body)); };
 
         OriginalEntityLayerMask = this.GetCollisionLayerMask();
         OriginalAttackAreaLayerMask = AttackArea.GetCollisionLayerMask();
@@ -131,7 +133,7 @@ public partial class JumpingEnemy :
                      $"jc: {JumpAttackTimerManager.CurrentTime}\n" +
                      $"s: {CurrentState.StateEnum}";
     }
-    
+
     public void RewindStarted()
     {
         StateChanger.ChangeState(State.Rewind);
@@ -145,6 +147,5 @@ public partial class JumpingEnemy :
 
     public void OnRewindSpeedChanged(int speed)
     {
-        
     }
 }

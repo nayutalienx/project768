@@ -13,6 +13,12 @@ public class IdleState : BaseJumpingEnemyState
 
     public override void EnterState(JumpingEnemy.State prevState)
     {
+
+        if (prevState == JumpingEnemy.State.Triggered)
+        {
+            JumpedInDirection = 0;
+        }
+
         Entity.EnableCollision(Entity.OriginalEntityLayerMask);
         Entity.HeadArea.EnableCollision(Entity.OriginalHeadAreaLayerMask);
         Entity.AttackArea.EnableCollision(Entity.OriginalAttackAreaLayerMask);
@@ -21,6 +27,14 @@ public class IdleState : BaseJumpingEnemyState
 
     public override void PhysicProcess(double delta)
     {
+        UpdateVisionByDirection();
+
+        if (TargetInVision())
+        {
+            Entity.StateChanger.ChangeState(JumpingEnemy.State.Triggered);
+            return;
+        }
+
         if (!Entity.IsOnFloor())
         {
             Entity.Velocity += Entity.GetGravity() * (float) delta;
@@ -29,7 +43,10 @@ public class IdleState : BaseJumpingEnemyState
         {
             if (Entity.IdleFloorTimerManager.IsExpired())
             {
-                if (JumpedInDirection > Entity.JumpsToRevertDirection)
+                if (
+                    JumpedInDirection > Entity.JumpsToRevertDirection ||
+                    !WillJumpOnGround()
+                )
                 {
                     Entity.Direction = Entity.Direction.Reflect(Vector2.Up);
                     JumpedInDirection = 0;
@@ -57,10 +74,5 @@ public class IdleState : BaseJumpingEnemyState
     public override void OnBodyEntered(CollisionBody body)
     {
         CommonBodyEntered(body);
-        if (body.AreaName.Equals("trigger"))
-        {
-            Entity.TriggerPoint = body.Body;
-            Entity.StateChanger.ChangeState(JumpingEnemy.State.Triggered);
-        }
     }
 }
