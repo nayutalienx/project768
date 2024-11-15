@@ -8,4 +8,13 @@ public class KillEnemyInteraction : Interaction<JumpingEnemy, JumpingEnemyIntera
     public KillEnemyInteraction(JumpingEnemy entity) : base(entity)
     {
     }
+
+    public override void Interact(JumpingEnemyInteractionEvent eventContext)
+    {
+        if (Entity.CurrentState.StateEnum == JumpingEnemy.State.Idle ||
+            Entity.CurrentState.StateEnum == JumpingEnemy.State.Triggered)
+        {
+            Entity.StateChanger.ChangeState(JumpingEnemy.State.Death);
+        }
+    }
 }
