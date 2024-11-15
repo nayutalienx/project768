@@ -6,10 +6,12 @@ using project768.scripts.common.interaction;
 using project768.scripts.game_entity.npc.jumping_enemy.interaction;
 using project768.scripts.game_entity.npc.jumping_enemy.interaction.data;
 using project768.scripts.game_entity.npc.jumping_enemy.state;
+using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
 
 public partial class JumpingEnemy :
     CharacterBody2D,
+    IRewindable,
     IStateMachineEntity<JumpingEnemy, JumpingEnemy.State>,
     IInteractableEntity<JumpingEnemy, JumpingEnemyInteractionContext, JumpingEnemyInteractionEvent,
         JumpingEnemyInteraction>
@@ -18,9 +20,10 @@ public partial class JumpingEnemy :
     {
         Idle,
         Triggered,
+        Death,
         Rewind
     }
-
+    public int RewindState { get; set; }
     public State<JumpingEnemy, State> CurrentState { get; set; }
     public Dictionary<State, State<JumpingEnemy, State>> States { get; set; }
     public StateChanger<JumpingEnemy, State> StateChanger { get; set; }
@@ -33,17 +36,29 @@ public partial class JumpingEnemy :
 
     public JumpingEnemyInteractionContext InteractionContext { get; set; }
 
-    [ExportSubgroup("Enemy settings")]
-    [Export] public float IdleFloorInterval = 1.0f;
+    [ExportSubgroup("Enemy settings")] [Export]
+    public float IdleFloorInterval = 1.0f;
+
+    [Export] public float JumpAttackCooldown = 1.5f;
+
     [Export] public float Friction = 10.0f;
     [Export] public int JumpsToRevertDirection = 3;
-    
+    [Export] public float TriggeredDirectionScale = 1.5f;
+    [Export] public float JumpAttackDirectionScale = 3.5f;
+
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
+    public Area2D TriggerArea { get; set; }
     public Label Label { get; set; }
     public Vector2 Direction { get; set; }
-    
+    public Vector2 InitialPosition { get; set; }
+
+    public float JumpAttackDistance { get; set; }
+
+    public Node2D TriggerPoint { get; set; }
+
     public TimerManager IdleFloorTimerManager { get; set; }
+    public TimerManager JumpAttackTimerManager { get; set; }
 
     public Tuple<uint, uint> OriginalEntityLayerMask;
     public Tuple<uint, uint> OriginalHeadAreaLayerMask;
@@ -53,10 +68,13 @@ public partial class JumpingEnemy :
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        InitialPosition = GlobalPosition;
+
         States = new Dictionary<State, State<JumpingEnemy, State>>()
         {
             {State.Idle, new IdleState(this, State.Idle)},
             {State.Triggered, new TriggeredState(this, State.Triggered)},
+            {State.Death, new DeathState(this, State.Death)},
             {State.Rewind, new RewindState(this, State.Rewind)}
         };
         StateChanger = new StateChanger<JumpingEnemy, State>(this);
@@ -72,7 +90,9 @@ public partial class JumpingEnemy :
 
         HeadArea = GetNode<Area2D>("EnemyHeadArea");
         AttackArea = GetNode<Area2D>("EnemyAttackArea");
+        TriggerArea = GetNode<Area2D>("EnemyTriggerArea");
         Label = GetNode<Label>("Label");
+
         if (HasNode("direction"))
         {
             Direction = GetNode<RayCast2D>("direction").TargetPosition;
@@ -82,14 +102,22 @@ public partial class JumpingEnemy :
             Direction = Vector2.Up;
         }
 
+        if (HasNode("jump_attack"))
+        {
+            JumpAttackDistance = GetNode<RayCast2D>("jump_attack").TargetPosition.Length();
+        }
+
         HeadArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("head", body)); };
         AttackArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("attack", body)); };
+        TriggerArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("trigger", body)); };
+        TriggerArea.BodyExited += body => { CurrentState.OnBodyExited(new CollisionBody("trigger", body)); };
 
         OriginalEntityLayerMask = this.GetCollisionLayerMask();
         OriginalAttackAreaLayerMask = AttackArea.GetCollisionLayerMask();
         OriginalHeadAreaLayerMask = HeadArea.GetCollisionLayerMask();
 
         IdleFloorTimerManager = new TimerManager(IdleFloorInterval);
+        JumpAttackTimerManager = new TimerManager(JumpAttackCooldown);
 
         StateChanger.ChangeState(State.Idle);
     }
@@ -99,6 +127,24 @@ public partial class JumpingEnemy :
         CurrentState.PhysicProcess(delta);
 
         Label.Text = $"v: {Velocity}\n" +
-                     $"d: {Direction}";
+                     $"d: {Direction}\n" +
+                     $"jc: {JumpAttackTimerManager.CurrentTime}\n" +
+                     $"s: {CurrentState.StateEnum}";
+    }
+    
+    public void RewindStarted()
+    {
+        StateChanger.ChangeState(State.Rewind);
+    }
+
+    public void RewindFinished()
+    {
+        StateChanger.ChangeState((State) RewindState);
+    }
+
+
+    public void OnRewindSpeedChanged(int speed)
+    {
+        
     }
 }

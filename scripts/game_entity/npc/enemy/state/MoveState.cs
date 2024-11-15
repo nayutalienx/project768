@@ -54,7 +54,7 @@ public class MoveState : BaseEnemyState
 
         if (body.AreaName.Equals("head"))
         {
-            if (body.Body is Player p)
+            if (body.Body is Player p && p.CurrentState.StateEnum != Player.State.Death)
             {
                 p.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.FallOnEnemyHead));
                 Entity.Interactor.Interact(new EnemyInteractionEvent(EnemyInteraction.KillEnemy));
