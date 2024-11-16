@@ -32,6 +32,12 @@ public class MoveState : BaseEnemyState
         {
             if (body.Body is Player p)
             {
+                var killDir = Entity.GlobalPosition.DirectionTo(p.GlobalPosition);
+                var attackAngleDeg = Mathf.RadToDeg(killDir.Angle());
+                if (attackAngleDeg > 45 && attackAngleDeg < 135)
+                {
+                    Entity.Velocity = Entity.Velocity with {Y = Entity.JumpVelocity};
+                }
                 p.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.KillPlayer));
             }
 
