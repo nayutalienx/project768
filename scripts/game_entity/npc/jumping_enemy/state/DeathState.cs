@@ -10,10 +10,28 @@ public class DeathState : BaseJumpingEnemyState
 
     public override void EnterState(JumpingEnemy.State prevState)
     {
-        Entity.GlobalPosition = Entity.InitialPosition;
+        if (prevState != JumpingEnemy.State.Rewind)
+        {
+            Entity.DeathStopTimer.Reset();
+        }
+        
         Entity.DisableCollision();
         Entity.HeadArea.DisableCollision();
         Entity.AttackArea.DisableCollision();
-        Entity.Visible = false;
+    }
+
+    public override void PhysicProcess(double delta)
+    {
+        if (Entity.DeathStopTimer.IsExpired())
+        {
+            Entity.GlobalPosition = Entity.InitialPosition;
+            Entity.Visible = false;    
+        }
+        else
+        {
+            Entity.DeathStopTimer.Update(delta);
+            Entity.Velocity += Entity.GetGravity() * (float) delta;
+            Entity.MoveAndSlide();
+        }
     }
 }

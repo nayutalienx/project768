@@ -12,21 +12,22 @@ public partial class TimelessEnemy :
     CharacterBody2D,
     ISpawnable,
     IStateMachineEntity<TimelessEnemy, TimelessEnemy.State>,
-    IInteractableEntity<TimelessEnemy, TimelessEnemyInteractionContext, TimelessEnemyInteractionEvent, TimelessEnemyInteraction>
+    IInteractableEntity<TimelessEnemy, TimelessEnemyInteractionContext, TimelessEnemyInteractionEvent,
+        TimelessEnemyInteraction>
 {
     public enum State
     {
         Move,
+        Wait,
         Death
     }
 
-    public Dictionary<TimelessEnemyInteraction, Interaction<TimelessEnemy, TimelessEnemyInteractionEvent, TimelessEnemyInteraction>> Interactions
-    {
-        get;
-        set;
-    }
+    public Dictionary<TimelessEnemyInteraction,
+        Interaction<TimelessEnemy, TimelessEnemyInteractionEvent, TimelessEnemyInteraction>> Interactions { get; set; }
 
-    public Interactor<TimelessEnemy, TimelessEnemyInteractionContext, TimelessEnemyInteractionEvent, TimelessEnemyInteraction> Interactor { get; set; }
+    public Interactor<TimelessEnemy, TimelessEnemyInteractionContext, TimelessEnemyInteractionEvent,
+        TimelessEnemyInteraction> Interactor { get; set; }
+
     public TimelessEnemyInteractionContext InteractionContext { get; set; } = new();
     public State<TimelessEnemy, State> CurrentState { get; set; }
     public Dictionary<State, State<TimelessEnemy, State>> States { get; set; }
@@ -45,9 +46,11 @@ public partial class TimelessEnemy :
 
     [ExportSubgroup("Enemy settings")] [Export]
     public bool AliveOnStart = false;
-    
-    [Export]
-    public int EnemyDirection { get; set; } = 1;
+
+    [Export] public float DeathTimeShouldPassBeforeWait = 0.5f;
+
+
+    [Export] public int EnemyDirection { get; set; } = 1;
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
     public Label Label { get; set; }
@@ -57,28 +60,35 @@ public partial class TimelessEnemy :
     public Tuple<uint, uint> OriginalAttackAreaLayerMask;
 
     public Vector2 InitialPosition { get; set; }
+    public TimerManager DeathStopTimer { get; set; }
 
     public override void _Ready()
     {
         InitialPosition = GlobalPosition;
-        Interactions = new Dictionary<TimelessEnemyInteraction, Interaction<TimelessEnemy, TimelessEnemyInteractionEvent, TimelessEnemyInteraction>>()
-        {
-            {TimelessEnemyInteraction.TryPickupKey, new TryPickupKeyInteraction(this)},
-            {TimelessEnemyInteraction.KillEnemy, new KillEnemyInteraction(this)},
-            {TimelessEnemyInteraction.TryPickupTimelessKey, new TryPickupTimelessKeyInteraction(this)},
-        };
-        Interactor = new Interactor<TimelessEnemy, TimelessEnemyInteractionContext, TimelessEnemyInteractionEvent, TimelessEnemyInteraction>(this);
+        Interactions =
+            new Dictionary<TimelessEnemyInteraction,
+                Interaction<TimelessEnemy, TimelessEnemyInteractionEvent, TimelessEnemyInteraction>>()
+            {
+                {TimelessEnemyInteraction.TryPickupKey, new TryPickupKeyInteraction(this)},
+                {TimelessEnemyInteraction.KillEnemy, new KillEnemyInteraction(this)},
+                {TimelessEnemyInteraction.TryPickupTimelessKey, new TryPickupTimelessKeyInteraction(this)},
+            };
+        Interactor =
+            new Interactor<TimelessEnemy, TimelessEnemyInteractionContext, TimelessEnemyInteractionEvent,
+                TimelessEnemyInteraction>(this);
 
         States = new Dictionary<State, State<TimelessEnemy, State>>()
         {
             {State.Move, new MoveState(this, State.Move)},
+            {State.Wait, new WaitState(this, State.Wait)},
             {State.Death, new DeathState(this, State.Death)},
         };
         StateChanger = new StateChanger<TimelessEnemy, State>(this);
-        
+
         HeadArea = GetNode<Area2D>("EnemyHeadArea");
         AttackArea = GetNode<Area2D>("EnemyAttackArea");
         Label = GetNode<Label>("Label");
+        DeathStopTimer = new TimerManager(DeathTimeShouldPassBeforeWait);
 
         HeadArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("head", body)); };
         AttackArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("attack", body)); };
@@ -93,7 +103,7 @@ public partial class TimelessEnemy :
         }
         else
         {
-            StateChanger.ChangeState(State.Death);
+            StateChanger.ChangeState(State.Wait);
         }
     }
 
@@ -120,7 +130,7 @@ public partial class TimelessEnemy :
 
     public bool CanSpawn()
     {
-        return CurrentState.StateEnum == State.Death;
+        return CurrentState.StateEnum == State.Wait;
     }
 
     public bool TrySpawn(Vector2 spawnPoint, Vector2 direction)
@@ -136,5 +146,4 @@ public partial class TimelessEnemy :
 
         return false;
     }
-    
 }

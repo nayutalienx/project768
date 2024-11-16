@@ -1,5 +1,4 @@
 ﻿using project768.scripts.common;
-using project768.scripts.state_machine;
 
 namespace project768.scripts.enemy;
 
@@ -11,12 +10,31 @@ public class DeathState : BaseEnemyState
 
     public override void EnterState(Enemy.State prevState)
     {
-        Entity.GlobalPosition = Entity.InitialPosition;
+        if (prevState != Enemy.State.Rewind)
+        {
+            Entity.DeathStopTimer.Reset();
+        }
+        
         Entity.DisableCollision();
         Entity.HeadArea.DisableCollision();
         Entity.AttackArea.DisableCollision();
-        Entity.Visible = false;
         DropKey();
         DropTimelessKey();
+    }
+
+    public override void PhysicProcess(double delta)
+    {
+        
+        if (Entity.DeathStopTimer.IsExpired())
+        {
+            Entity.StateChanger.ChangeState(Enemy.State.Wait);
+        }
+        else
+        {
+            Entity.DeathStopTimer.Update(delta);
+            Entity.Velocity += Entity.GetGravity() * (float) delta;
+            Entity.MoveAndSlide();
+        }
+        
     }
 }

@@ -11,6 +11,9 @@ public struct JumpingEnemyRewindData
     public JumpingEnemy.State CurrentState { get; set; }
     public Vector2 Direction { get; set; }
 
+    // Timers
+    public double DeathTimer { get; set; }
+
     public JumpingEnemyRewindData(JumpingEnemy enemy)
     {
         GlobalPosition = enemy.GlobalPosition;
@@ -18,6 +21,8 @@ public struct JumpingEnemyRewindData
         CurrentState = enemy.CurrentState.StateEnum;
         Visible = enemy.Visible;
         Direction = enemy.Direction;
+        // Timers
+        DeathTimer = enemy.DeathStopTimer.CurrentTime;
     }
 
     public void ApplyData(JumpingEnemy enemy)
@@ -27,5 +32,7 @@ public struct JumpingEnemyRewindData
         enemy.RewindState = (int) CurrentState;
         enemy.Visible = Visible;
         enemy.Direction = Direction;
+        // Timers
+        enemy.DeathStopTimer.CurrentTime = DeathTimer;
     }
 }
