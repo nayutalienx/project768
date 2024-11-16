@@ -1,20 +1,19 @@
-[gd_scene load_steps=20 format=4 uid="uid://bhtuhlhn5mfeh"]
+[gd_scene load_steps=19 format=4 uid="uid://bhtuhlhn5mfeh"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_a8olr"]
 [ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_703j7"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_dercs"]
-[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/one_way_platform.tscn" id="3_ojqd4"]
-[ext_resource type="PackedScene" uid="uid://4ifkq3ubv52u" path="res://scenes/landscape/timeless_cannon.tscn" id="3_q8oeu"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/platform/one_way_platform.tscn" id="3_ojqd4"]
+[ext_resource type="PackedScene" uid="uid://4ifkq3ubv52u" path="res://scenes/landscape/cannon/timeless_cannon.tscn" id="3_q8oeu"]
 [ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/landscape/spikes.tscn" id="3_qgq5y"]
 [ext_resource type="PackedScene" uid="uid://whlole7gj4k" path="res://scenes/npc/timeless_enemy_simple.tscn" id="4_qpumt"]
-[ext_resource type="PackedScene" uid="uid://btobpn5evuwb8" path="res://scenes/landscape/cannon.tscn" id="6_nmrg4"]
+[ext_resource type="PackedScene" uid="uid://btobpn5evuwb8" path="res://scenes/landscape/cannon/cannon.tscn" id="6_nmrg4"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="7_8am6u"]
-[ext_resource type="PackedScene" uid="uid://chwame76xqi6l" path="res://scenes/landscape/cannon_ball.tscn" id="7_w158y"]
+[ext_resource type="PackedScene" uid="uid://chwame76xqi6l" path="res://scenes/landscape/cannon/cannon_ball.tscn" id="7_w158y"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="8_dqkux"]
 [ext_resource type="PackedScene" uid="uid://cigd8lf274hp2" path="res://scenes/npc/enemy_jumping.tscn" id="8_osvod"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="9_4p0um"]
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="9_85yh1"]
-[ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/npc/enemy_simple.tscn" id="9_sascy"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="10_fpwgo"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="11_skg3j"]
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="15_p33em"]
@@ -76,14 +75,6 @@ position = Vector2(112, -18)
 
 [node name="enemy_jumping" parent="second_world/enemies" instance=ExtResource("8_osvod")]
 position = Vector2(834, -37)
-
-[node name="enemy_simple" parent="second_world/enemies" instance=ExtResource("9_sascy")]
-position = Vector2(345, -55)
-AliveOnStart = true
-EnemyDirection = -1
-
-[node name="enemy_jumping2" parent="second_world/enemies" instance=ExtResource("8_osvod")]
-position = Vector2(2633, -28)
 
 [node name="locked_doors" type="Node2D" parent="second_world"]
 
