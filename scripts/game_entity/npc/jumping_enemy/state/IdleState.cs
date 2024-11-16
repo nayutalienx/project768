@@ -27,9 +27,7 @@ public class IdleState : BaseJumpingEnemyState
 
     public override void PhysicProcess(double delta)
     {
-        UpdateVisionByDirection();
-
-        if (TargetInVision())
+        if (TargetInVisionAndReachable())
         {
             Entity.StateChanger.ChangeState(JumpingEnemy.State.Triggered);
             return;
