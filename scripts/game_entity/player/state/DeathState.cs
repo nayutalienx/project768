@@ -12,8 +12,13 @@ public class DeathState : State<Player, Player.State>
 
     public override void EnterState(Player.State prevState)
     {
+
+        if (prevState != Player.State.Rewind)
+        {
+            Entity.DeathStopTimer.Reset();
+        }
+
         Entity.DisableCollision();
-        Entity.DeathStopTimer.Reset();
     }
 
     public override void PhysicProcess(double delta)

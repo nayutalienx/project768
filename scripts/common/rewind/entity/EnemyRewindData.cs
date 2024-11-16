@@ -15,6 +15,9 @@ public struct EnemyRewindData
     public bool HasKey { get; set; }
     public ulong KeyInstanceId { get; set; }
 
+    // Timers
+    public double DeathTimer { get; set; }
+
     public EnemyRewindData(Enemy enemy)
     {
         GlobalPosition = enemy.GlobalPosition;
@@ -25,6 +28,8 @@ public struct EnemyRewindData
         // key
         HasKey = enemy.InteractionContext.KeyContext.HasKey;
         KeyInstanceId = enemy.InteractionContext.KeyContext.KeyInstanceId;
+        // Timers
+        DeathTimer = enemy.DeathStopTimer.CurrentTime;
     }
 
     public void ApplyData(Enemy enemy)
@@ -37,5 +42,7 @@ public struct EnemyRewindData
         // key
         enemy.InteractionContext.KeyContext.HasKey = HasKey;
         enemy.InteractionContext.KeyContext.KeyInstanceId = KeyInstanceId;
+        // Timers
+        enemy.DeathStopTimer.CurrentTime = DeathTimer;
     }
 }

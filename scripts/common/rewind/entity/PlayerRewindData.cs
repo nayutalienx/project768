@@ -16,6 +16,9 @@ public struct PlayerRewindData
     public bool HasKey { get; set; }
     public ulong KeyInstanceId { get; set; }
 
+    // Timers
+    public double DeathTimer { get; set; }
+
 
     public PlayerRewindData(Player player)
     {
@@ -28,6 +31,8 @@ public struct PlayerRewindData
         // Key
         HasKey = player.InteractionContext.KeyContext.HasKey;
         KeyInstanceId = player.InteractionContext.KeyContext.KeyInstanceId;
+        // Timers
+        DeathTimer = player.DeathStopTimer.CurrentTime;
     }
 
     public void ApplyData(Player player)
@@ -41,5 +46,7 @@ public struct PlayerRewindData
         // Key
         player.InteractionContext.KeyContext.HasKey = HasKey;
         player.InteractionContext.KeyContext.KeyInstanceId = KeyInstanceId;
+        // Timers
+        player.DeathStopTimer.CurrentTime = DeathTimer;
     }
 }

@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
 using Godot;
 using project768.scripts.common;
 using project768.scripts.common.interaction;
 using project768.scripts.enemy;
 using project768.scripts.game_entity.npc.enemy.interaction;
 using project768.scripts.game_entity.npc.enemy.interaction.data;
-using project768.scripts.game_entity.npc.spawner;
-using project768.scripts.player;
-using project768.scripts.player.interaction;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
 using DeathState = project768.scripts.enemy.DeathState;
@@ -29,6 +25,7 @@ public partial class Enemy :
     {
         Move,
         Death,
+        Wait,
         Rewind
     }
 
@@ -58,12 +55,14 @@ public partial class Enemy :
 
     [ExportSubgroup("Enemy settings")] [Export]
     public bool AliveOnStart = false;
+    [Export] public float DeathTimeShouldPassBeforeWait = 0.5f;
     
     [Export]
     public int EnemyDirection { get; set; } = 1;
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
     public Label Label { get; set; }
+    public TimerManager DeathStopTimer { get; set; }
 
     public Tuple<uint, uint> OriginalEntityLayerMask;
     public Tuple<uint, uint> OriginalHeadAreaLayerMask;
@@ -86,6 +85,7 @@ public partial class Enemy :
         {
             {State.Move, new MoveState(this, State.Move)},
             {State.Death, new DeathState(this, State.Death)},
+            {State.Wait, new WaitState(this, State.Wait)},
             {State.Rewind, new RewindState(this, State.Rewind)},
         };
         StateChanger = new StateChanger<Enemy, State>(this);
@@ -93,6 +93,8 @@ public partial class Enemy :
         HeadArea = GetNode<Area2D>("EnemyHeadArea");
         AttackArea = GetNode<Area2D>("EnemyAttackArea");
         Label = GetNode<Label>("Label");
+        
+        DeathStopTimer = new TimerManager(DeathTimeShouldPassBeforeWait);
 
         HeadArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("head", body)); };
         AttackArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("attack", body)); };
@@ -107,7 +109,7 @@ public partial class Enemy :
         }
         else
         {
-            StateChanger.ChangeState(State.Death);
+            StateChanger.ChangeState(State.Wait);
         }
     }
 
@@ -148,7 +150,7 @@ public partial class Enemy :
 
     public bool CanSpawn()
     {
-        return CurrentState.StateEnum == State.Death;
+        return CurrentState.StateEnum == State.Wait;
     }
 
     public bool TrySpawn(Vector2 spawnPoint, Vector2 direction)

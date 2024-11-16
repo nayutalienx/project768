@@ -41,11 +41,11 @@ public partial class JumpingEnemy :
     public float IdleFloorInterval = 1.0f;
 
     [Export] public float JumpAttackCooldown = 1.5f;
-
     [Export] public float Friction = 10.0f;
     [Export] public int JumpsToRevertDirection = 3;
     [Export] public float TriggeredDirectionScale = 1.5f;
     [Export] public float JumpAttackDirectionScale = 3.5f;
+    [Export] public float DeathTimeShouldPassBeforeWait = 0.5f;
 
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
@@ -54,6 +54,8 @@ public partial class JumpingEnemy :
     public Vector2 InitialPosition { get; set; }
     public RayCast2D VisionTarget { get; set; }
     public RayCast2D VisionGround { get; set; }
+
+    public TimerManager DeathStopTimer { get; set; }
 
     public float JumpAttackDistance { get; set; }
 
@@ -96,6 +98,8 @@ public partial class JumpingEnemy :
 
         VisionTarget = GetNode<RayCast2D>("VisionTarget");
         VisionGround = GetNode<RayCast2D>("VisionGround");
+
+        DeathStopTimer = new TimerManager(DeathTimeShouldPassBeforeWait);
 
         if (HasNode("direction"))
         {
