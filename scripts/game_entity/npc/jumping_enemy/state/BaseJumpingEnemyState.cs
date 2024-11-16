@@ -13,47 +13,30 @@ public class BaseJumpingEnemyState : State<JumpingEnemy, JumpingEnemy.State>
     {
     }
 
-    public bool TargetInVision()
+    public bool TargetInVisionAndReachable()
     {
-        bool isColliding = Entity.VisionTarget.IsColliding();
-        if (isColliding && Entity.VisionTarget.GetCollider() is Player player)
+        bool isColliding = Entity.VisionTarget.IsAnyColliding();
+        if (isColliding && Entity.VisionTarget.GetAnyCollider() is Player player)
         {
-            Entity.TriggerPoint = player;
-            return true;
+            if (IsTargetReachable(player.GlobalPosition))
+            {
+                Entity.TriggerPoint = player;
+                return true;
+            }
         }
 
         return false;
     }
 
-    public bool WillJumpOnGround()
+    public bool IsTargetReachable(Vector2 target)
     {
-        return Entity.VisionGround.IsColliding();
+        Entity.NavigationAgent2D.SetTargetPosition(target);
+        return Entity.NavigationAgent2D.IsTargetReachable();
     }
 
-    public void UpdateVisionByDirection()
+    public bool WillJumpOnGround()
     {
-        if (Entity.Direction.X > 0)
-        {
-            Entity.VisionTarget.TargetPosition = Entity.VisionTarget.TargetPosition with
-            {
-                X = Mathf.Abs(Entity.VisionTarget.TargetPosition.X)
-            };
-            Entity.VisionGround.TargetPosition = Entity.VisionGround.TargetPosition with
-            {
-                X = Mathf.Abs(Entity.VisionGround.TargetPosition.X)
-            };
-        }
-        else
-        {
-            Entity.VisionTarget.TargetPosition = Entity.VisionTarget.TargetPosition with
-            {
-                X = Mathf.Abs(Entity.VisionTarget.TargetPosition.X) * -1
-            };
-            Entity.VisionGround.TargetPosition = Entity.VisionGround.TargetPosition with
-            {
-                X = Mathf.Abs(Entity.VisionGround.TargetPosition.X) * -1
-            };
-        }
+        return Entity.VisionGround.IsAllColliding();
     }
 
     public void CommonBodyEntered(CollisionBody body)

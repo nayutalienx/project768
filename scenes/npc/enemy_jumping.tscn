@@ -72,11 +72,27 @@ target_position = Vector2(69, -66)
 modulate = Color(1, 0, 1, 1)
 target_position = Vector2(300, -23)
 
-[node name="VisionTarget" type="RayCast2D" parent="."]
+[node name="VisionsTarget" type="Node2D" parent="."]
+
+[node name="VisionTarget" type="RayCast2D" parent="VisionsTarget"]
 position = Vector2(0, -45)
 target_position = Vector2(500, 0)
 collision_mask = 3
 
-[node name="VisionGround" type="RayCast2D" parent="."]
+[node name="VisionTarget2" type="RayCast2D" parent="VisionsTarget"]
+position = Vector2(0, -45)
+target_position = Vector2(-500, 0)
+collision_mask = 3
+
+[node name="VisionsGround" type="Node2D" parent="."]
+
+[node name="VisionGround" type="RayCast2D" parent="VisionsGround"]
 position = Vector2(0, -37)
-target_position = Vector2(232, 64)
+target_position = Vector2(100, 64)
+
+[node name="VisionGround2" type="RayCast2D" parent="VisionsGround"]
+position = Vector2(0, -37)
+target_position = Vector2(-100, 64)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true
