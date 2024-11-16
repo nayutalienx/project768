@@ -13,6 +13,11 @@ public class RewindState : BasePlayerState
 
     public override void EnterState(Player.State prevState)
     {
+        if (prevState == Player.State.Death)
+        {
+            Entity.Label.Text = "";
+        }
+
         Entity.DisableCollision();
     }
 

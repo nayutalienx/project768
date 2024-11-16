@@ -7,6 +7,8 @@ namespace project768.scripts.rewind;
 
 public partial class RewindPlayer : Node2D
 {
+    public static RewindPlayer Instance { get; set; }
+
     [Export] public Label RewindLabel;
 
     public RewindDataSource RewindDataSource { get; set; }
@@ -49,10 +51,11 @@ public partial class RewindPlayer : Node2D
         }
     }
 
-    public bool Paused { get; set; }
+    public bool RecordingPaused { get; set; }
 
     public override void _Ready()
     {
+        Instance = this;
         if (RewindLabel != null)
         {
             RewindLabel.Hide();
@@ -158,7 +161,7 @@ public partial class RewindPlayer : Node2D
 
     public void RecordState()
     {
-        if (!Paused)
+        if (!RecordingPaused)
         {
             worldStates.Push(new WorldRewindData(RewindDataSource));
         }
@@ -168,6 +171,12 @@ public partial class RewindPlayer : Node2D
     {
         if (!IsRewinding)
         {
+            if (GetTree().IsPaused())
+            {
+                GetTree().SetPause(false);
+                Instance.RecordingPaused = false;
+            }
+
             IsRewinding = true;
             RewindSpeed = 1;
             rewindedBuffer = new(MaxStates);
