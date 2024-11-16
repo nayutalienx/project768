@@ -7,7 +7,6 @@ using project768.scripts.player.interaction;
 
 namespace project768.scripts.game_entity.npc.timeless_enemy.state;
 
-
 public class MoveState : BaseEnemyState
 {
     private TimerManager invertDirectionTimer = new TimerManager(0.1);
@@ -30,6 +29,12 @@ public class MoveState : BaseEnemyState
         {
             if (body.Body is Player p)
             {
+                var killDir = Entity.GlobalPosition.DirectionTo(p.GlobalPosition);
+                var attackAngleDeg = Mathf.RadToDeg(killDir.Angle());
+                if (attackAngleDeg > 45 && attackAngleDeg < 135)
+                {
+                    Entity.Velocity = Entity.Velocity with {Y = Entity.JumpVelocity};
+                }
                 p.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.KillPlayer));
             }
 
@@ -43,10 +48,11 @@ public class MoveState : BaseEnemyState
 
             if (body.Body is TimelessKey timelessKey)
             {
-                Entity.Interactor.Interact(new TimelessEnemyInteractionEvent(TimelessEnemyInteraction.TryPickupTimelessKey)
-                {
-                    TimelessKey = timelessKey
-                });
+                Entity.Interactor.Interact(
+                    new TimelessEnemyInteractionEvent(TimelessEnemyInteraction.TryPickupTimelessKey)
+                    {
+                        TimelessKey = timelessKey
+                    });
             }
         }
 
@@ -95,7 +101,7 @@ public class MoveState : BaseEnemyState
 
         Entity.MoveAndSlide();
     }
-    
+
 
     protected void ProcessKey()
     {

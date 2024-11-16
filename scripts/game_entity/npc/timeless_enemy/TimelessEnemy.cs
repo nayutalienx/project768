@@ -46,6 +46,7 @@ public partial class TimelessEnemy :
 
     [ExportSubgroup("Enemy settings")] [Export]
     public bool AliveOnStart = false;
+    [Export] public float JumpVelocity = -400.0f;
 
     [Export] public float DeathTimeShouldPassBeforeWait = 0.5f;
 

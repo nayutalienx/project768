@@ -12,7 +12,8 @@ using DeathState = project768.scripts.enemy.DeathState;
 using MoveState = project768.scripts.enemy.MoveState;
 using RewindState = project768.scripts.enemy.RewindState;
 using TryPickupKeyInteraction = project768.scripts.game_entity.npc.enemy.interaction.TryPickupKeyInteraction;
-using TryPickupTimelessKeyInteraction = project768.scripts.game_entity.npc.enemy.interaction.TryPickupTimelessKeyInteraction;
+using TryPickupTimelessKeyInteraction =
+    project768.scripts.game_entity.npc.enemy.interaction.TryPickupTimelessKeyInteraction;
 
 public partial class Enemy :
     CharacterBody2D,
@@ -55,10 +56,11 @@ public partial class Enemy :
 
     [ExportSubgroup("Enemy settings")] [Export]
     public bool AliveOnStart = false;
+
     [Export] public float DeathTimeShouldPassBeforeWait = 0.5f;
-    
-    [Export]
-    public int EnemyDirection { get; set; } = 1;
+
+    [Export] public int EnemyDirection { get; set; } = 1;
+    [Export] public float JumpVelocity = -400.0f;
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
     public Label Label { get; set; }
@@ -89,11 +91,11 @@ public partial class Enemy :
             {State.Rewind, new RewindState(this, State.Rewind)},
         };
         StateChanger = new StateChanger<Enemy, State>(this);
-        
+
         HeadArea = GetNode<Area2D>("EnemyHeadArea");
         AttackArea = GetNode<Area2D>("EnemyAttackArea");
         Label = GetNode<Label>("Label");
-        
+
         DeathStopTimer = new TimerManager(DeathTimeShouldPassBeforeWait);
 
         HeadArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("head", body)); };
@@ -166,5 +168,4 @@ public partial class Enemy :
 
         return false;
     }
-    
 }
