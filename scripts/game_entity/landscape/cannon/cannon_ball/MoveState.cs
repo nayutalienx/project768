@@ -2,6 +2,8 @@
 using project768.scripts.common;
 using project768.scripts.game_entity.npc.enemy.interaction.data;
 using project768.scripts.game_entity.npc.timeless_enemy.interaction.data;
+using project768.scripts.player;
+using project768.scripts.player.interaction;
 using project768.scripts.state_machine;
 
 namespace project768.scripts.game_entity.landscape.cannon;
@@ -28,7 +30,12 @@ public class MoveState : State<CannonBall, CannonBall.State>
         {
             enemy.Interactor.Interact(new EnemyInteractionEvent(EnemyInteraction.KillEnemy));
         }
-        
+
+        if (body.Body is Player player)
+        {
+            player.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.KillPlayer));
+        }
+
         if (body.Body is TimelessEnemy timelessEnemy)
         {
             timelessEnemy.Interactor.Interact(new TimelessEnemyInteractionEvent(TimelessEnemyInteraction.KillEnemy));

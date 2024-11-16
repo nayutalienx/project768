@@ -28,6 +28,7 @@ public partial class Player :
     [Export] public float MoveSpeed = 300.0f;
 
     [Export] public float PushForce = 80.0f;
+    [Export] public float DeathTimeShouldPassBeforeGameStop = 0.5f;
     public float JumpMultiplier { get; set; } = 1.0f;
 
     public enum State
@@ -61,6 +62,7 @@ public partial class Player :
 
     public Tuple<uint, uint> OrigCollission;
     public Label Label { get; set; }
+    public TimerManager DeathStopTimer { get; set; }
 
     public override void _Ready()
     {
@@ -86,13 +88,14 @@ public partial class Player :
         };
         StateChanger = new StateChanger<Player, State>(this);
         OrigCollission = this.GetCollisionLayerMask();
+        DeathStopTimer = new TimerManager(DeathTimeShouldPassBeforeGameStop);
 
         StateChanger.ChangeState(State.Move);
 
         InteractionArea = GetNode<Area2D>("Area2D");
         InteractionArea.BodyEntered += body => CurrentState.OnBodyEntered(new CollisionBody("player", body));
         InteractionArea.BodyExited += body => CurrentState.OnBodyExited(new CollisionBody("player", body));
-        
+
         foreach (var child in GetChildren())
         {
             if (child.Name == "spawn")

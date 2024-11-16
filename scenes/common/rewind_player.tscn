@@ -3,4 +3,5 @@
 [ext_resource type="Script" path="res://scripts/common/rewind/RewindPlayer.cs" id="1_l8id1"]
 
 [node name="RewindPlayer" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_l8id1")
