@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5icvrpsh38ff"]
+
+[ext_resource type="Script" path="res://scripts/game_entity/common/trap_spawner/TrapSpawner.cs" id="1_61pmi"]
+[ext_resource type="Texture2D" uid="uid://bulnwt0p201ee" path="res://sprites/flower.png" id="1_jql83"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nmuf1"]
+size = Vector2(51, 57)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gq1a5"]
+font_size = 20
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[node name="FlowerSpawner" type="Node2D" groups=["trap_spawner"]]
+script = ExtResource("1_61pmi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -22)
+scale = Vector2(0.349883, 0.349883)
+texture = ExtResource("1_jql83")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, -27.5)
+shape = SubResource("RectangleShape2D_nmuf1")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -19.0
+offset_top = -104.0
+offset_right = 21.0
+offset_bottom = -81.0
+text = "s:"
+label_settings = SubResource("LabelSettings_gq1a5")

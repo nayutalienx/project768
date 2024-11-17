@@ -41,6 +41,7 @@ collectable_system=""
 cloud_platform=""
 claw=""
 jumping_enemy=""
+trap_spawner=""
 
 [input]
 

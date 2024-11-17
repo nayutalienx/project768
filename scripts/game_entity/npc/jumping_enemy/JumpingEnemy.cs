@@ -12,12 +12,14 @@ using project768.scripts.state_machine;
 public partial class JumpingEnemy :
     CharacterBody2D,
     IRewindable,
+    ISpawnable,
     IStateMachineEntity<JumpingEnemy, JumpingEnemy.State>,
     IInteractableEntity<JumpingEnemy, JumpingEnemyInteractionContext, JumpingEnemyInteractionEvent,
         JumpingEnemyInteraction>
 {
     public enum State
     {
+        Wait,
         Idle,
         Triggered,
         Death,
@@ -46,6 +48,8 @@ public partial class JumpingEnemy :
     [Export] public float TriggeredDirectionScale = 1.5f;
     [Export] public float JumpAttackDirectionScale = 3.5f;
     [Export] public float DeathTimeShouldPassBeforeWait = 0.5f;
+    [Export] public Vector2 SpawnVelocity { get; set; } = Vector2.Zero;
+    [Export] public bool AliveOnStart = false;
 
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
@@ -77,6 +81,7 @@ public partial class JumpingEnemy :
 
         States = new Dictionary<State, State<JumpingEnemy, State>>()
         {
+            {State.Wait, new WaitState(this, State.Wait)},
             {State.Idle, new IdleState(this, State.Idle)},
             {State.Triggered, new TriggeredState(this, State.Triggered)},
             {State.Death, new DeathState(this, State.Death)},
@@ -127,7 +132,14 @@ public partial class JumpingEnemy :
         IdleFloorTimerManager = new TimerManager(IdleFloorInterval);
         JumpAttackTimerManager = new TimerManager(JumpAttackCooldown);
 
-        StateChanger.ChangeState(State.Idle);
+        if (AliveOnStart)
+        {
+            StateChanger.ChangeState(State.Idle);
+        }
+        else
+        {
+            StateChanger.ChangeState(State.Wait);
+        }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -153,5 +165,23 @@ public partial class JumpingEnemy :
 
     public void OnRewindSpeedChanged(int speed)
     {
+    }
+
+    public bool CanSpawn()
+    {
+        return CurrentState.StateEnum == State.Wait;
+    }
+
+    public bool TrySpawn(Vector2 spawnPoint, Vector2 direction)
+    {
+        if (CanSpawn())
+        {
+            GlobalPosition = spawnPoint;
+            Velocity = SpawnVelocity;
+            StateChanger.ChangeState(State.Idle);
+            return true;
+        }
+
+        return false;
     }
 }
