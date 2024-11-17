@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://bhtuhlhn5mfeh"]
+[gd_scene load_steps=20 format=4 uid="uid://bhtuhlhn5mfeh"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_a8olr"]
 [ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_703j7"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="9_85yh1"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="10_fpwgo"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="11_skg3j"]
+[ext_resource type="PackedScene" uid="uid://b5icvrpsh38ff" path="res://scenes/landscape/flower_spawner.tscn" id="13_njbhy"]
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="15_p33em"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_eybhj"]
@@ -75,6 +76,13 @@ position = Vector2(112, -18)
 
 [node name="enemy_jumping" parent="second_world/enemies" instance=ExtResource("8_osvod")]
 position = Vector2(834, -37)
+AliveOnStart = true
+
+[node name="FlowerSpawner" parent="second_world/enemies" instance=ExtResource("13_njbhy")]
+position = Vector2(1708, -15)
+
+[node name="enemy_jumping" parent="second_world/enemies/FlowerSpawner" instance=ExtResource("8_osvod")]
+position = Vector2(1, 147)
 
 [node name="locked_doors" type="Node2D" parent="second_world"]
 

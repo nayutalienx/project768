@@ -15,6 +15,7 @@ public struct WorldRewindData
     public CloudPlatformRewindData[] CloudPlatformRewindDatas { get; set; }
     public SwitcherRewindData[] SwitcherRewindDatas { get; set; }
     public SpawnerRewindData[] SpawnerRewindDatas { get; set; }
+    public TrapSpawnerRewindData[] TrapSpawnerRewindDatas { get; set; }
     public ClawRewindData[] ClawRewindDatas { get; set; }
 
     public WorldRewindData(RewindDataSource source)
@@ -38,6 +39,8 @@ public struct WorldRewindData
             CommonRewindData.CreateRewindData(source.Switchers, switcher => new SwitcherRewindData(switcher));
         SpawnerRewindDatas =
             CommonRewindData.CreateRewindData(source.Spawners, e => new SpawnerRewindData(e));
+        TrapSpawnerRewindDatas =
+            CommonRewindData.CreateRewindData(source.TrapSpawners, e => new TrapSpawnerRewindData(e));
         ClawRewindDatas = CommonRewindData.CreateRewindData(source.Claws, e => new ClawRewindData(e));
     }
 
@@ -65,6 +68,8 @@ public struct WorldRewindData
         CommonRewindData.ApplyRewindData(source.CloudPlatforms, CloudPlatformRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));
         CommonRewindData.ApplyRewindData(source.Spawners, SpawnerRewindDatas,
+            (rewindData, entity) => rewindData.ApplyData(entity));
+        CommonRewindData.ApplyRewindData(source.TrapSpawners, TrapSpawnerRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));
         CommonRewindData.ApplyRewindData(source.Claws, ClawRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));

@@ -69,14 +69,12 @@ public partial class RewindAudioPlayer :
     public void SyncBackwardFromForward()
     {
         double backwardPos = audioLen - ForwardPlayer.GetPlaybackPosition();
-        GD.Print($"backwardPos {backwardPos} = {audioLen} - {ForwardPlayer.GetPlaybackPosition()}");
         BackwardPlayer.Play((float) backwardPos);
     }
 
     public void SyncForwardFromBackward()
     {
         double forwardPos = audioLen - BackwardPlayer.GetPlaybackPosition();
-        GD.Print($"forwardPos {forwardPos} = {audioLen} - {BackwardPlayer.GetPlaybackPosition()}");
         ForwardPlayer.Play((float) forwardPos);
     }
 
