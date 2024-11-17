@@ -57,7 +57,6 @@ public partial class JumpingEnemy :
     public Vector2 Direction { get; set; }
     public Vector2 InitialPosition { get; set; }
     public RaycastList VisionTarget { get; set; } = new();
-    public RaycastList VisionGround { get; set; } = new();
     public NavigationAgent2D NavigationAgent2D { get; set; }
 
     public TimerManager DeathStopTimer { get; set; }
@@ -103,7 +102,6 @@ public partial class JumpingEnemy :
         Label = GetNode<Label>("Label");
 
         VisionTarget.AddFromNode(GetNode<Node2D>("VisionsTarget"));
-        VisionGround.AddFromNode(GetNode<Node2D>("VisionsGround"));
         NavigationAgent2D = GetNode<NavigationAgent2D>("NavigationAgent2D");
 
         DeathStopTimer = new TimerManager(DeathTimeShouldPassBeforeWait);

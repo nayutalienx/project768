@@ -68,7 +68,13 @@ public partial class TrapSpawner :
 
         Label = GetNodeOrNull<Label>("Label");
         Sprite2D = GetNodeOrNull<Sprite2D>("Sprite2D");
-        TrapArea = GetNodeOrNull<Area2D>("Area2D");
+        
+        TrapArea = GetNodeOrNull<Area2D>("Area2D_override");
+        if (TrapArea == null)
+        {
+            TrapArea = GetNodeOrNull<Area2D>("Area2D");
+        }
+        
         if (TrapArea != null)
         {
             TrapArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("trap_area", body)); };
