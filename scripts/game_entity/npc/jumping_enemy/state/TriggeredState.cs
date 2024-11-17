@@ -36,13 +36,6 @@ public class TriggeredState : BaseJumpingEnemyState
         {
             UpdateDirectionToTriggerPoint();
 
-            if (!WillJumpOnGround())
-            {
-                Entity.Direction = Entity.Direction.Reflect(Vector2.Up);
-                Entity.StateChanger.ChangeState(JumpingEnemy.State.Idle);
-                return;
-            }
-
             if (MustJumpAttack())
             {
                 Entity.Velocity = Entity.Direction * Entity.JumpAttackDirectionScale;

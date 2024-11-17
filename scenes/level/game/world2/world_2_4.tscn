@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://bhtuhlhn5mfeh"]
+[gd_scene load_steps=22 format=4 uid="uid://bhtuhlhn5mfeh"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_a8olr"]
 [ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_703j7"]
@@ -17,12 +17,16 @@
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="10_fpwgo"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="11_skg3j"]
 [ext_resource type="PackedScene" uid="uid://b5icvrpsh38ff" path="res://scenes/landscape/flower_spawner.tscn" id="13_njbhy"]
+[ext_resource type="PackedScene" uid="uid://tybm4a5xv60n" path="res://scenes/npc/claw.tscn" id="14_ra6vk"]
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="15_p33em"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_eybhj"]
-vertices = PackedVector2Array(2108.13, -159.078, 2110.86, 46, -203.188, 46.9922, -207.789, -178.906, 3013.79, -133.273, 3010.19, 44.9766, 2254.41, 44.0078, 2262.58, -153.727)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-218, -189, -213, 57, 2121, 56, 2118, -169), PackedVector2Array(2253, -164, 2244, 54, 3020, 55, 3024, -143)])
+vertices = PackedVector2Array(7453.74, -234.438, 7434.28, 507.867, 3181.03, 43.0313, 3182.95, -424.539, 2108.13, -159.078, 2110.86, 46, -203.188, 46.9922, -207.789, -178.906, 3013.79, -133.273, 3010.19, 44.9766, 2254.41, 44.0078, 2262.58, -153.727)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10, 11)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-218, -189, -213, 57, 2121, 56, 2118, -169), PackedVector2Array(2253, -164, 2244, 54, 3020, 55, 3024, -143), PackedVector2Array(3171, 52, 3173, -435, 7464, -244, 7444, 519)])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tlmsa"]
+size = Vector2(92, 110)
 
 [node name="World0" type="Node2D"]
 
@@ -37,7 +41,7 @@ position = Vector2(2734, -689)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAtACAAAQABACcAAABdACAAAQABACcAAACXACAAAQABACcAAAAQAPb/AwB3AAQAAAAuAP7/AQABACcAAABeAP7/AQABACcAAACWAA4AAQAyAEAAAAA=")
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAtACAAAQABACcAAABdACAAAQABACcAAACXACAAAQABACcAAAAQAPb/AwB3AAQAAAAuAP7/AQABACcAAABeAP7/AQABACcAAACWAA4AAQAyAEAAAADRACAAAQABACcAAAABASAAAQABACcAAAAxASAAAQABACcAAABfASQAAQABACcAAAB+ASQAAQABACcAAACrAS4AAQABACcAAACQAS0AAwB3AAQAAADmARwAAwB3AAQAAAA=")
 tile_set = ExtResource("1_a8olr")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -84,6 +88,120 @@ position = Vector2(1708, -15)
 [node name="enemy_jumping" parent="second_world/enemies/FlowerSpawner" instance=ExtResource("8_osvod")]
 position = Vector2(1, 147)
 
+[node name="FlowerSpawner2" parent="second_world/enemies" instance=ExtResource("13_njbhy")]
+position = Vector2(2615, -10)
+TimeShouldPassBeforeSpawnTriggered = 0.1
+
+[node name="Area2D_override" type="Area2D" parent="second_world/enemies/FlowerSpawner2"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="second_world/enemies/FlowerSpawner2/Area2D_override"]
+position = Vector2(-303, -51)
+shape = SubResource("RectangleShape2D_tlmsa")
+
+[node name="enemy_jumping" parent="second_world/enemies/FlowerSpawner2" instance=ExtResource("8_osvod")]
+
+[node name="flowers_p1" type="Node2D" parent="second_world/enemies"]
+
+[node name="FlowerSpawner3" parent="second_world/enemies/flowers_p1" instance=ExtResource("13_njbhy")]
+position = Vector2(3743, -10)
+scale = Vector2(0.644811, 0.644811)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p1/FlowerSpawner3" instance=ExtResource("8_osvod")]
+position = Vector2(-1, 156)
+
+[node name="FlowerSpawner4" parent="second_world/enemies/flowers_p1" instance=ExtResource("13_njbhy")]
+position = Vector2(3806, -9)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p1/FlowerSpawner4" instance=ExtResource("8_osvod")]
+position = Vector2(35, 151)
+
+[node name="FlowerSpawner5" parent="second_world/enemies/flowers_p1" instance=ExtResource("13_njbhy")]
+position = Vector2(3876, -8)
+scale = Vector2(0.808062, 0.808062)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p1/FlowerSpawner5" instance=ExtResource("8_osvod")]
+position = Vector2(48, 150)
+
+[node name="FlowerSpawner6" parent="second_world/enemies/flowers_p1" instance=ExtResource("13_njbhy")]
+position = Vector2(3958, -6)
+scale = Vector2(0.784364, 0.784364)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p1/FlowerSpawner6" instance=ExtResource("8_osvod")]
+position = Vector2(53, 149)
+
+[node name="FlowerSpawner7" parent="second_world/enemies/flowers_p1" instance=ExtResource("13_njbhy")]
+position = Vector2(4024, -9)
+scale = Vector2(0.701623, 0.701623)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p1/FlowerSpawner7" instance=ExtResource("8_osvod")]
+position = Vector2(69, 150)
+
+[node name="flowers_p2" type="Node2D" parent="second_world/enemies"]
+
+[node name="FlowerSpawner" parent="second_world/enemies/flowers_p2" instance=ExtResource("13_njbhy")]
+position = Vector2(4729, -11)
+scale = Vector2(0.824691, 0.824691)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p2/FlowerSpawner" instance=ExtResource("8_osvod")]
+position = Vector2(-6, 139)
+
+[node name="FlowerSpawner2" parent="second_world/enemies/flowers_p2" instance=ExtResource("13_njbhy")]
+position = Vector2(4789, -12)
+scale = Vector2(0.908732, 0.908732)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p2/FlowerSpawner2" instance=ExtResource("8_osvod")]
+position = Vector2(-6, 139)
+
+[node name="FlowerSpawner3" parent="second_world/enemies/flowers_p2" instance=ExtResource("13_njbhy")]
+position = Vector2(4846, -11)
+scale = Vector2(0.805046, 0.805046)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p2/FlowerSpawner3" instance=ExtResource("8_osvod")]
+position = Vector2(-6, 139)
+
+[node name="FlowerSpawner4" parent="second_world/enemies/flowers_p2" instance=ExtResource("13_njbhy")]
+position = Vector2(4905, -10)
+scale = Vector2(0.758319, 0.758319)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p2/FlowerSpawner4" instance=ExtResource("8_osvod")]
+position = Vector2(-6, 139)
+
+[node name="FlowerSpawner5" parent="second_world/enemies/flowers_p2" instance=ExtResource("13_njbhy")]
+position = Vector2(4961, -9)
+scale = Vector2(0.776512, 0.776512)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p2/FlowerSpawner5" instance=ExtResource("8_osvod")]
+position = Vector2(-6, 139)
+
+[node name="FlowerSpawner6" parent="second_world/enemies/flowers_p2" instance=ExtResource("13_njbhy")]
+position = Vector2(5020, -10)
+scale = Vector2(0.746259, 0.746259)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p2/FlowerSpawner6" instance=ExtResource("8_osvod")]
+position = Vector2(-6, 139)
+
+[node name="FlowerSpawner7" parent="second_world/enemies/flowers_p2" instance=ExtResource("13_njbhy")]
+position = Vector2(5077, -9)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p2/FlowerSpawner7" instance=ExtResource("8_osvod")]
+position = Vector2(-6, 139)
+
+[node name="FlowerSpawner8" parent="second_world/enemies/flowers_p2" instance=ExtResource("13_njbhy")]
+position = Vector2(5135, -6)
+scale = Vector2(0.774571, 0.774571)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p2/FlowerSpawner8" instance=ExtResource("8_osvod")]
+position = Vector2(-6, 139)
+
+[node name="FlowerSpawner9" parent="second_world/enemies/flowers_p2" instance=ExtResource("13_njbhy")]
+position = Vector2(5194, -8)
+scale = Vector2(0.604878, 0.604878)
+
+[node name="enemy_jumping" parent="second_world/enemies/flowers_p2/FlowerSpawner9" instance=ExtResource("8_osvod")]
+position = Vector2(-6, 139)
+
 [node name="locked_doors" type="Node2D" parent="second_world"]
 
 [node name="spikes" type="Node2D" parent="second_world"]
@@ -113,6 +231,24 @@ position = Vector2(-21, -93)
 [node name="cannon_ball3" parent="second_world/cannons/cannon" instance=ExtResource("7_w158y")]
 position = Vector2(-105, -98)
 
+[node name="cannon2" parent="second_world/cannons" instance=ExtResource("6_nmrg4")]
+position = Vector2(5520, 40)
+InitialState = 1
+SpawnInterval = 1.5
+
+[node name="cannon_ball" parent="second_world/cannons/cannon2" instance=ExtResource("7_w158y")]
+
+[node name="cannon_ball2" parent="second_world/cannons/cannon2" instance=ExtResource("7_w158y")]
+
+[node name="cannon_ball3" parent="second_world/cannons/cannon2" instance=ExtResource("7_w158y")]
+
+[node name="cannon_ball4" parent="second_world/cannons/cannon2" instance=ExtResource("7_w158y")]
+
+[node name="cannon_ball5" parent="second_world/cannons/cannon2" instance=ExtResource("7_w158y")]
+
+[node name="spawn" type="Node2D" parent="second_world/cannons/cannon2"]
+position = Vector2(83, -16)
+
 [node name="ladders" type="Node2D" parent="second_world"]
 z_index = -5
 
@@ -123,6 +259,11 @@ points = PackedVector2Array(0, 10, 0, -23.1)
 [node name="ladder2" parent="second_world/ladders" instance=ExtResource("9_85yh1")]
 position = Vector2(2863, -106)
 points = PackedVector2Array(0, 10, 0, -23.2)
+
+[node name="claws" type="Node2D" parent="second_world"]
+
+[node name="Claw" parent="second_world/claws" instance=ExtResource("14_ra6vk")]
+position = Vector2(4520, 5)
 
 [node name="Player" parent="." instance=ExtResource("7_8am6u")]
 position = Vector2(2, -58)

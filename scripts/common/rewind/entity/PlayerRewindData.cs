@@ -12,6 +12,8 @@ public struct PlayerRewindData
     public Player.State CurrentState { get; set; }
     public float JumpMultiplier { get; set; }
 
+    public Color SpriteModulate { get; set; }
+
     // Key
     public bool HasKey { get; set; }
     public ulong KeyInstanceId { get; set; }
@@ -28,6 +30,7 @@ public struct PlayerRewindData
         Visible = player.Visible;
         LadderGlobalPosition = player.InteractionContext.LadderContext.LadderGlobalPosition;
         JumpMultiplier = player.JumpMultiplier;
+        SpriteModulate = player.Sprite2D.Modulate;
         // Key
         HasKey = player.InteractionContext.KeyContext.HasKey;
         KeyInstanceId = player.InteractionContext.KeyContext.KeyInstanceId;
@@ -43,6 +46,7 @@ public struct PlayerRewindData
         player.InteractionContext.LadderContext.LadderGlobalPosition = LadderGlobalPosition;
         player.Visible = Visible;
         player.JumpMultiplier = JumpMultiplier;
+        player.Sprite2D.Modulate = SpriteModulate;
         // Key
         player.InteractionContext.KeyContext.HasKey = HasKey;
         player.InteractionContext.KeyContext.KeyInstanceId = KeyInstanceId;

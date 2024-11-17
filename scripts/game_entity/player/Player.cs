@@ -59,6 +59,7 @@ public partial class Player :
     public PlayerCache Cache { get; set; }
 
     public Area2D InteractionArea { get; set; }
+    public Sprite2D Sprite2D;
 
     public Tuple<uint, uint> OrigCollission;
     public Label Label { get; set; }
@@ -91,6 +92,8 @@ public partial class Player :
         DeathStopTimer = new TimerManager(DeathTimeShouldPassBeforeGameStop);
 
         StateChanger.ChangeState(State.Move);
+
+        Sprite2D = GetNode<Sprite2D>("Sprite2D");
 
         InteractionArea = GetNode<Area2D>("Area2D");
         InteractionArea.BodyEntered += body => CurrentState.OnBodyEntered(new CollisionBody("player", body));

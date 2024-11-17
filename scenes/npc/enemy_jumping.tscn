@@ -84,15 +84,5 @@ position = Vector2(0, -45)
 target_position = Vector2(-500, 0)
 collision_mask = 3
 
-[node name="VisionsGround" type="Node2D" parent="."]
-
-[node name="VisionGround" type="RayCast2D" parent="VisionsGround"]
-position = Vector2(0, -37)
-target_position = Vector2(100, 64)
-
-[node name="VisionGround2" type="RayCast2D" parent="VisionsGround"]
-position = Vector2(0, -37)
-target_position = Vector2(-100, 64)
-
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 debug_enabled = true

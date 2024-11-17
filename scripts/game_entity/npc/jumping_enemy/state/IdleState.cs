@@ -42,8 +42,7 @@ public class IdleState : BaseJumpingEnemyState
             if (Entity.IdleFloorTimerManager.IsExpired())
             {
                 if (
-                    JumpedInDirection > Entity.JumpsToRevertDirection ||
-                    !WillJumpOnGround()
+                    JumpedInDirection > Entity.JumpsToRevertDirection
                 )
                 {
                     Entity.Direction = Entity.Direction.Reflect(Vector2.Up);

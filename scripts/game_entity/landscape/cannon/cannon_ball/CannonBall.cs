@@ -46,9 +46,12 @@ public partial class CannonBall : Area2D,
     }
 
     private bool ballHidden = true;
+    
+    public Vector2 InitialPosition { get; set; }
 
     public override void _Ready()
     {
+        InitialPosition = GlobalPosition;
         Sprite = GetNode<Sprite2D>("Sprite2D");
         Particles = GetNode<GpuParticles2D>("GPUParticles2D");
 

@@ -34,11 +34,6 @@ public class BaseJumpingEnemyState : State<JumpingEnemy, JumpingEnemy.State>
         return Entity.NavigationAgent2D.IsTargetReachable();
     }
 
-    public bool WillJumpOnGround()
-    {
-        return Entity.VisionGround.IsAllColliding();
-    }
-
     public void CommonBodyEntered(CollisionBody body)
     {
         if (body.AreaName.Equals("attack"))

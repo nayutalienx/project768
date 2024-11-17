@@ -1,4 +1,5 @@
-﻿using project768.scripts.common;
+﻿using Godot;
+using project768.scripts.common;
 using project768.scripts.rewind;
 using project768.scripts.state_machine;
 
@@ -12,12 +13,11 @@ public class DeathState : State<Player, Player.State>
 
     public override void EnterState(Player.State prevState)
     {
-
         if (prevState != Player.State.Rewind)
         {
             Entity.DeathStopTimer.Reset();
         }
-
+        Entity.Sprite2D.Modulate = Colors.Red;
         Entity.DisableCollision();
     }
 
@@ -35,7 +35,7 @@ public class DeathState : State<Player, Player.State>
         else
         {
             Entity.DeathStopTimer.Update(delta);
-            
+
             Entity.Velocity += Entity.GetGravity() * (float) delta;
             Entity.MoveAndSlide();
         }

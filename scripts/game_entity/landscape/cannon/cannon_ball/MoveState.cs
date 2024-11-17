@@ -1,6 +1,7 @@
 ﻿using Godot;
 using project768.scripts.common;
 using project768.scripts.game_entity.npc.enemy.interaction.data;
+using project768.scripts.game_entity.npc.jumping_enemy.interaction.data;
 using project768.scripts.game_entity.npc.timeless_enemy.interaction.data;
 using project768.scripts.player;
 using project768.scripts.player.interaction;
@@ -39,6 +40,11 @@ public class MoveState : State<CannonBall, CannonBall.State>
         if (body.Body is TimelessEnemy timelessEnemy)
         {
             timelessEnemy.Interactor.Interact(new TimelessEnemyInteractionEvent(TimelessEnemyInteraction.KillEnemy));
+        }
+
+        if (body.Body is JumpingEnemy jumpingEnemy)
+        {
+            jumpingEnemy.Interactor.Interact(new JumpingEnemyInteractionEvent(JumpingEnemyInteraction.KillEnemy));
         }
 
         Entity.StateChanger.ChangeState(CannonBall.State.Wait);
