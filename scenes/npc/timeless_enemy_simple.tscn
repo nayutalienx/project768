@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://whlole7gj4k"]
+[gd_scene load_steps=9 format=3 uid="uid://whlole7gj4k"]
 
 [ext_resource type="Script" path="res://scripts/game_entity/npc/timeless_enemy/TimelessEnemy.cs" id="1_2kwmq"]
 [ext_resource type="Texture2D" uid="uid://baql6qn040vl" path="res://sprites/icon.svg" id="2_b3iid"]
@@ -20,24 +20,6 @@ size = Vector2(20, 12.5648)
 font_size = 25
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="Gradient" id="Gradient_i5rqo"]
-colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_k2hc7"]
-gradient = SubResource("Gradient_i5rqo")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mo5u6"]
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 50.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -2.23517e-06
-radial_accel_max = 30.0
-damping_max = 10.0
-scale_max = 5.0
-color = Color(0.384314, 0.847059, 0.176471, 1)
-color_ramp = SubResource("GradientTexture1D_k2hc7")
 
 [node name="timeless_enemy_simple" type="CharacterBody2D"]
 collision_layer = 4
@@ -87,8 +69,3 @@ offset_right = 22.0
 offset_bottom = -70.0
 text = "d:"
 label_settings = SubResource("LabelSettings_qcvlv")
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(-3, -34)
-amount = 20
-process_material = SubResource("ParticleProcessMaterial_mo5u6")

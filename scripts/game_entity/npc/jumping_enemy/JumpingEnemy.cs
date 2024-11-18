@@ -50,6 +50,7 @@ public partial class JumpingEnemy :
     [Export] public float DeathTimeShouldPassBeforeWait = 0.5f;
     [Export] public Vector2 SpawnVelocity { get; set; } = Vector2.Zero;
     [Export] public bool AliveOnStart = false;
+    [Export] public bool Debug = false;
 
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
@@ -144,10 +145,13 @@ public partial class JumpingEnemy :
     {
         CurrentState.PhysicProcess(delta);
 
-        Label.Text = $"v: {Velocity}\n" +
-                     $"d: {Direction}\n" +
-                     $"jc: {JumpAttackTimerManager.CurrentTime}\n" +
-                     $"s: {CurrentState.StateEnum}";
+        if (Debug)
+        {
+            Label.Text = $"v: {Velocity}\n" +
+                         $"d: {Direction}\n" +
+                         $"jc: {JumpAttackTimerManager.CurrentTime}\n" +
+                         $"s: {CurrentState.StateEnum}";
+        }
     }
 
     public void RewindStarted()

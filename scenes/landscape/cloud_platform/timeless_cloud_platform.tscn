@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://7i3eiergxml5"]
+[gd_scene load_steps=6 format=3 uid="uid://7i3eiergxml5"]
 
 [ext_resource type="Script" path="res://scripts/game_entity/landscape/timeless_cloud_platform/TimelessCloudPlatform.cs" id="1_hpxwc"]
 [ext_resource type="Shader" path="res://shaders/timeless.gdshader" id="2_hsjft"]
@@ -9,17 +9,6 @@ shader = ExtResource("2_hsjft")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_41ehj"]
 size = Vector2(239.223, 18.5437)
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v8wbw"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(100, 50, 1)
-angular_velocity_min = 601.64
-angular_velocity_max = 654.24
-gravity = Vector3(-100, 0, 0)
-scale_min = 3.28
-scale_max = 12.41
-color = Color(0.0128988, 0.825521, 0, 1)
 
 [node name="timeless_cloud_platform" type="AnimatableBody2D"]
 collision_mask = 0
@@ -36,10 +25,14 @@ position = Vector2(1.00001, -52)
 scale = Vector2(1.2875, 1.2875)
 shape = SubResource("RectangleShape2D_41ehj")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-amount = 30
-process_material = SubResource("ParticleProcessMaterial_v8wbw")
-
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(144, -26)
 rotation = -1.58612
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 10
+emission_shape = 1
+emission_sphere_radius = 100.0
+gravity = Vector2(-300, 0)
+scale_amount_min = 3.0
+scale_amount_max = 6.0

@@ -85,4 +85,3 @@ target_position = Vector2(-500, 0)
 collision_mask = 3
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-debug_enabled = true

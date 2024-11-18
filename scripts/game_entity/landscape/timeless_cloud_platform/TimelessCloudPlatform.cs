@@ -23,7 +23,7 @@ public partial class TimelessCloudPlatform : AnimatableBody2D,
     public StateChanger<TimelessCloudPlatform, State> StateChanger { get; set; }
     public int RewindState { get; set; }
     public Sprite2D Sprite { get; set; }
-    public GpuParticles2D Particles { get; set; }
+    public CpuParticles2D Particles { get; set; }
     public RayCast2D RayCast2D { get; set; }
     public CollisionShape2D CollisionShape2D { get; set; }
 
@@ -51,7 +51,7 @@ public partial class TimelessCloudPlatform : AnimatableBody2D,
     public override void _Ready()
     {
         Sprite = GetNode<Sprite2D>("Sprite2D");
-        Particles = GetNode<GpuParticles2D>("GPUParticles2D");
+        Particles = GetNode<CpuParticles2D>("CPUParticles2D");
 
         States = new Dictionary<State, State<TimelessCloudPlatform, State>>()
         {
@@ -93,7 +93,7 @@ public partial class TimelessCloudPlatform : AnimatableBody2D,
     {
         CurrentState.PhysicProcess(delta);
     }
-    
+
     public bool CanSpawn()
     {
         return CurrentState.StateEnum == State.Wait;

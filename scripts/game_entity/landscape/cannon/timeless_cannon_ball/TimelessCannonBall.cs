@@ -1,32 +1,31 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Godot;
 using project768.scripts.common;
-using project768.scripts.rewind.entity;
+using project768.scripts.game_entity.landscape.cannon.timeless_cannon_ball;
 using project768.scripts.state_machine;
 
-namespace project768.scripts.game_entity.landscape.cannon;
-
-public partial class CannonBall : Area2D,
-    IRewindable,
+public partial class TimelessCannonBall : Area2D,
     ISpawnable,
-    IStateMachineEntity<CannonBall, CannonBall.State>
+    IStateMachineEntity<TimelessCannonBall, TimelessCannonBall.State>
 {
     public float Speed { get; set; } = 300.0f;
 
     public enum State
     {
         Wait,
-        Move,
-        Rewind
+        Move
     }
 
-    public State<CannonBall, State> CurrentState { get; set; }
-    public Dictionary<State, State<CannonBall, State>> States { get; set; }
-    public StateChanger<CannonBall, State> StateChanger { get; set; }
+    public State<TimelessCannonBall, State> CurrentState { get; set; }
+    public Dictionary<State, State<TimelessCannonBall, State>> States { get; set; }
+    public StateChanger<TimelessCannonBall, State> StateChanger { get; set; }
     public int RewindState { get; set; }
     public Sprite2D Sprite { get; set; }
-    public CpuParticles2D Particles { get; set; }
     public Vector2 Direction { get; set; } = Vector2.Right;
+
+    public CpuParticles2D Particles { get; set; }
+
+    public Vector2 InitialPosition { get; set; }
 
     public bool BallHidden
     {
@@ -46,21 +45,18 @@ public partial class CannonBall : Area2D,
 
     private bool ballHidden = true;
 
-    public Vector2 InitialPosition { get; set; }
-
     public override void _Ready()
     {
         InitialPosition = GlobalPosition;
         Sprite = GetNode<Sprite2D>("Sprite2D");
         Particles = GetNode<CpuParticles2D>("CPUParticles2D");
 
-        States = new Dictionary<State, State<CannonBall, State>>()
+        States = new Dictionary<State, State<TimelessCannonBall, State>>()
         {
             {State.Wait, new WaitState(this, State.Wait)},
             {State.Move, new MoveState(this, State.Move)},
-            {State.Rewind, new RewindState(this, State.Rewind)},
         };
-        StateChanger = new StateChanger<CannonBall, State>(this);
+        StateChanger = new StateChanger<TimelessCannonBall, State>(this);
 
         BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("ball", body)); };
         AreaEntered += area => { CurrentState.OnBodyEntered(new CollisionBody("area", area)); };
@@ -85,29 +81,6 @@ public partial class CannonBall : Area2D,
     public override void _PhysicsProcess(double delta)
     {
         CurrentState.PhysicProcess(delta);
-    }
-
-    public void RewindStarted()
-    {
-        StateChanger.ChangeState(State.Rewind);
-    }
-
-    public void RewindFinished()
-    {
-        StateChanger.ChangeState((State) RewindState);
-    }
-
-    public void OnRewindSpeedChanged(int speed)
-    {
-        if (speed == 0)
-        {
-            Particles.SetEmitting(false);
-        }
-        else
-        {
-            Particles.SetEmitting(true);
-            Particles.SpeedScale = Mathf.Abs(speed);
-        }
     }
 
     public bool CanSpawn()

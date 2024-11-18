@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://e6v818pit2uj"]
+
+[ext_resource type="Shader" path="res://shaders/timeless.gdshader" id="2_6pn4a"]
+[ext_resource type="Texture2D" uid="uid://bjyfi6hm5ryu0" path="res://sprites/cannon_ball.png" id="2_wvkts"]
+[ext_resource type="Script" path="res://scripts/game_entity/landscape/cannon/timeless_cannon_ball/TimelessCannonBall.cs" id="4_d8dhp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u52e7"]
+shader = ExtResource("2_6pn4a")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r2lkw"]
+
+[node name="timeless_cannon_ball" type="Area2D"]
+collision_mask = 7
+script = ExtResource("4_d8dhp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_u52e7")
+rotation = -2.42987
+scale = Vector2(0.0504693, 0.0504693)
+texture = ExtResource("2_wvkts")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(13, 2)
+scale = Vector2(1.2875, 1.2875)
+shape = SubResource("CircleShape2D_r2lkw")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emission_shape = 1
+emission_sphere_radius = 10.0
+gravity = Vector2(-100, 0)
+scale_amount_min = 3.0
+scale_amount_max = 6.0
+color = Color(1, 0.421875, 0, 1)
