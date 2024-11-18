@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Godot;
 using project768.scripts.common;
-using project768.scripts.game_entity.npc.spawner;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
 
@@ -27,7 +26,7 @@ public partial class CloudPlatform : AnimatableBody2D,
     public StateChanger<CloudPlatform, State> StateChanger { get; set; }
     public int RewindState { get; set; }
     public Sprite2D Sprite { get; set; }
-    public GpuParticles2D Particles { get; set; }
+    public CpuParticles2D Particles { get; set; }
     public RayCast2D RayCast2D { get; set; }
     public CollisionShape2D CollisionShape2D { get; set; }
 
@@ -55,7 +54,7 @@ public partial class CloudPlatform : AnimatableBody2D,
     public override void _Ready()
     {
         Sprite = GetNode<Sprite2D>("Sprite2D");
-        Particles = GetNode<GpuParticles2D>("GPUParticles2D");
+        Particles = GetNode<CpuParticles2D>("CPUParticles2D");
 
         States = new Dictionary<State, State<CloudPlatform, State>>()
         {

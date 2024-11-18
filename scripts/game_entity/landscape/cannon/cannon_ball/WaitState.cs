@@ -11,7 +11,7 @@ public class WaitState : State<CannonBall, CannonBall.State>
 
     public override void EnterState(CannonBall.State prevState)
     {
-        Entity.GlobalPosition = Entity.InitialPosition;
         Entity.HideBall();
+        Entity.GlobalPosition = Entity.InitialPosition;
     }
 }

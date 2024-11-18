@@ -17,6 +17,7 @@ public partial class EntitySpawner : StaticBody2D, IRewindable, IStateMachineEnt
 
     [Export] public State InitialState = State.Normal;
     [Export] public float SpawnInterval = 1.0f;
+    [Export] public bool Debug = false;
 
     public List<ISpawnable> Entities = new();
     public Node2D SpawnPoint;
@@ -66,7 +67,11 @@ public partial class EntitySpawner : StaticBody2D, IRewindable, IStateMachineEnt
 
     public override void _PhysicsProcess(double delta)
     {
-        TimerLabel.Text = $"st: {TimerManager.CurrentTime:0.00}";
+        if (Debug)
+        {
+            TimerLabel.Text = $"st: {TimerManager.CurrentTime:0.00}";
+        }
+
         CurrentState.PhysicProcess(delta);
     }
 
