@@ -1,5 +1,4 @@
-﻿using Godot;
-using project768.scripts.common;
+﻿using project768.scripts.common;
 
 namespace project768.scripts.rewind.entity;
 
@@ -11,6 +10,7 @@ public struct AnimationPlayerRewindData
 
     public AnimationPlayerRewindData(RewindableAnimationPlayer animationPlayer)
     {
+
         IsAnimationPlaying = animationPlayer.AnimationPlayer.IsPlaying();
         if (IsAnimationPlaying)
         {

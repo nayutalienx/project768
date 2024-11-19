@@ -9,7 +9,7 @@ using MoveState = project768.scripts.platform.MoveState;
 using RewindState = project768.scripts.platform.RewindState;
 
 public partial class OneWayPlatform :
-    Node2D,
+    AnimatableBody2D,
     IRewindable,
     IStateMachineEntity<OneWayPlatform, OneWayPlatform.State>
 {
@@ -30,7 +30,15 @@ public partial class OneWayPlatform :
     [Export] public string[] AllAnimations { get; set; }
     [Export] public bool StartAnimationOnReady { get; set; }
 
+    [ExportSubgroup("Platform Move Mode")]
+    [Export]
+    public bool PlatformMoveMode { get; set; } = false;
+
+    [Export] public Vector2 PlatformMoveVector { get; set; } = Vector2.Zero;
+    [Export] public bool StopOnRaycast = false;
+
     public RewindableAnimationPlayer AnimationPlayer { get; set; }
+    public RayCast2D RayCast2D { get; set; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -43,6 +51,11 @@ public partial class OneWayPlatform :
         StateChanger = new StateChanger<OneWayPlatform, State>(this);
         StateChanger.ChangeState(State.Move);
 
+        RayCast2D = GetNode<RayCast2D>("RayCast2D");
+        if (!StopOnRaycast)
+        {
+            RayCast2D.Enabled = false;
+        }
 
         if (HasNode("AnimationPlayer"))
         {
@@ -59,6 +72,11 @@ public partial class OneWayPlatform :
         {
             GetNode<CollisionShape2D>("CollisionShape2D").OneWayCollision = false;
         }
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        CurrentState.PhysicProcess(delta);
     }
 
     public void RewindStarted()

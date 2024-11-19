@@ -44,7 +44,6 @@ public class RewindDataSource
 
         OneWayPlatforms = FindAndAddRewindables(t, "one_way_platform")
             .ConvertAll(o => o as OneWayPlatform)
-            .Where(platform => platform.AnimationPlayer != null)
             .ToArray();
         FindAndAddRewindables(t, "background_music");
         CollectableSystem = FindAndAddRewindables(t, "collectable_system").ConvertAll(o => o as CollectableSystem)
