@@ -48,7 +48,8 @@ public partial class Enemy :
     [Export]
     public Vector2 SpawnVelocity { get; set; } = Vector2.Zero;
 
-    [Export] public float Friction = 10.0f;
+    [Export] public float GroundFriction = 10.0f;
+    [Export] public float AirFriction = 5.0f;
     [Export] public float MoveSpeed = 150.0f;
     [Export] public float PushForce = 80.0f;
     [Export] public Vector2 VelocityLimit = new Vector2(500.0f, 500.0f);

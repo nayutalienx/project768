@@ -29,6 +29,7 @@ public partial class LockedDoor :
     public CollisionShape2D CollisionShape2D { get; set; }
     public Area2D LockArea { get; set; }
     public Label DoorLabel { get; set; }
+    public bool RewindDisabled { get; set; } = false;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -94,16 +95,29 @@ public partial class LockedDoor :
 
     public void RewindStarted()
     {
+        if (RewindDisabled)
+        {
+            return;
+        }
         StateChanger.ChangeState(State.Rewind);
     }
 
     public void RewindFinished()
     {
+        if (RewindDisabled)
+        {
+            return;
+        }
         StateChanger.ChangeState((State) RewindState);
     }
 
     public void OnRewindSpeedChanged(int speed)
     {
+        if (RewindDisabled)
+        {
+            return;
+        }
+
         AnimationPlayer.UpdateRewindSpeed(speed);
     }
 }
