@@ -46,6 +46,12 @@ public class LockedState : State<LockedDoor, LockedDoor.State>
                 player.InteractionContext.TimelessKeyContext.HasKey
             ))
         {
+            if (player.InteractionContext.TimelessKeyContext.HasKey)
+            {
+                // disable rewind
+                Entity.RewindDisabled = true;
+            }
+
             player.Interactor.Interact(
                 new PlayerInteractionEvent(PlayerInteraction.UnlockedDoor)
             );

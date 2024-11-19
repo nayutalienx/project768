@@ -18,6 +18,11 @@ public struct LockedDoorRewindData
 
     public void ApplyData(LockedDoor lockedDoor)
     {
+        if (lockedDoor.RewindDisabled)
+        {
+            return;
+        }
+
         lockedDoor.GlobalPosition = GlobalPosition;
         lockedDoor.RewindState = (int) CurrentState;
         AnimationPlayerRewindData.ApplyData(lockedDoor.AnimationPlayer);

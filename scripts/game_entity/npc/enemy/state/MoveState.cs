@@ -38,6 +38,7 @@ public class MoveState : BaseEnemyState
                 {
                     Entity.Velocity = Entity.Velocity with {Y = Entity.JumpVelocity};
                 }
+
                 p.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.KillPlayer));
             }
 
@@ -74,7 +75,9 @@ public class MoveState : BaseEnemyState
         ProcessTimelessKey();
         bool invertDirectionTimerFinished = invertDirectionTimer.Update(delta);
 
-        if (!Entity.IsOnFloor())
+        bool isOnFloor = Entity.IsOnFloor();
+
+        if (!isOnFloor)
         {
             Entity.Velocity += Entity.GetGravity() * (float) delta;
         }
@@ -88,12 +91,29 @@ public class MoveState : BaseEnemyState
             }
         }
 
-        Entity.Velocity = Entity.Velocity.MoveToward(
-            Entity.Velocity with
+        if (isOnFloor)
+        {
+            Entity.Velocity = Entity.Velocity.MoveToward(
+                Entity.Velocity with
+                {
+                    X = Entity.MoveSpeed * Entity.EnemyDirection
+                }, Entity.GroundFriction
+            );
+
+            Entity.Velocity = Entity.Velocity with
             {
-                X = Entity.MoveSpeed * Entity.EnemyDirection
-            }, Entity.Friction
-        );
+                X = Mathf.Clamp(Entity.Velocity.X, Entity.MoveSpeed * -1, Entity.MoveSpeed),
+            };
+        }
+        else
+        {
+            Entity.Velocity = Entity.Velocity.MoveToward(
+                Entity.Velocity with
+                {
+                    X = Entity.MoveSpeed * Entity.EnemyDirection
+                }, Entity.AirFriction
+            );
+        }
 
         Entity.Velocity = Entity.Velocity with
         {
