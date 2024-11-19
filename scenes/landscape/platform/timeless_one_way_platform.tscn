@@ -8,7 +8,7 @@
 shader = ExtResource("2_3jfky")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l1hfv"]
-size = Vector2(295.064, 69)
+size = Vector2(308, 32)
 
 [sub_resource type="Gradient" id="Gradient_i2x6q"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
@@ -29,18 +29,22 @@ color = Color(0.384314, 0.847059, 0.176471, 1)
 color_ramp = SubResource("GradientTexture1D_0q8yo")
 
 [node name="timeless_one_way_platform" type="AnimatableBody2D"]
-scale = Vector2(1.04384, 0.406434)
 script = ExtResource("1_bvnpt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_o7bve")
+scale = Vector2(1.04384, 0.406434)
 texture = ExtResource("2_tqsff")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(8.22259e-06, -0.5)
+position = Vector2(-7.15256e-06, 0)
 shape = SubResource("RectangleShape2D_l1hfv")
 one_way_collision = true
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_8aw2j")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-157, -15)
+target_position = Vector2(-20, 0)

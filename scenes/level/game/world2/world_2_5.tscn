@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bj43iu0x43w30"]
+[gd_scene load_steps=11 format=4 uid="uid://bj43iu0x43w30"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_qra2a"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_nxeu5"]
+[ext_resource type="PackedScene" uid="uid://7wv6rahuxnn1" path="res://scenes/landscape/platform/timeless_one_way_platform.tscn" id="3_lpfik"]
+[ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/landscape/spikes.tscn" id="4_idulb"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/platform/one_way_platform.tscn" id="4_iqpnk"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="7_v0lfk"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="8_vofwo"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="9_5sicl"]
@@ -16,7 +19,7 @@
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray(0, 0, 253, 255, 32, 0, 1, 0, 1, 0, 39, 0, 0, 0, 233, 255, 23, 0, 0, 0, 38, 0, 38, 0, 0, 0, 223, 255, 20, 0, 3, 0, 119, 0, 4, 0, 0, 0)
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAD+/w8AAQABACcAAAAtACAAAQABACcAAAA0AAYAAQABACcAAAAuAA8AAQABACcAAAA0AAoAAQABACcAAADf////AwB3AAQAAADf/+r/AwB3AAQAAAAuAP//AQABACcAAABGAAcAAwB3AAQAAAA=")
 tile_set = ExtResource("1_qra2a")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -28,11 +31,33 @@ SpawnPositionIndex = 1
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
+[node name="timeless_one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("3_lpfik")]
+position = Vector2(615, -328)
+rotation = -4.71238
+scale = Vector2(0.240001, 2.2)
+DisableOneWayCollission = true
+PlatformMoveMode = true
+PlatformMoveVector = Vector2(0, -5)
+StopOnRaycast = true
+
+[node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("4_iqpnk")]
+position = Vector2(1053, -446)
+DisableOneWayCollission = true
+PlatformMoveMode = true
+PlatformMoveVector = Vector2(-20, 0)
+StopOnRaycast = true
+
 [node name="keys" type="Node2D" parent="second_world"]
 
 [node name="enemies" type="Node2D" parent="second_world"]
 
 [node name="locked_doors" type="Node2D" parent="second_world"]
+
+[node name="spikes" type="Node2D" parent="second_world"]
+
+[node name="Spike" parent="second_world/spikes" instance=ExtResource("4_idulb")]
+position = Vector2(-201, -349)
+points = PackedVector2Array(0, -0.0668298, 51.6594, -0.0668298)
 
 [node name="Player" parent="." instance=ExtResource("7_v0lfk")]
 position = Vector2(2, -58)
