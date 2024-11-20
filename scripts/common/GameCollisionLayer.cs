@@ -14,4 +14,5 @@ public enum GameCollisionLayer
     CollectableItem = 1 << 6,
     InvisibleWall = 1 << 7,
     Ladder = 1 << 8,
+    LadderGrid = 1 << 9,
 }

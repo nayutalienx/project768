@@ -7,7 +7,7 @@ using project768.scripts.game_entity.npc.timeless_enemy.interaction.data;
 using project768.scripts.player;
 using project768.scripts.player.interaction;
 
-public partial class Spike : DynamicSprite
+public partial class Spike : DynamicSpriteLine
 {
     public override void _Ready()
     {

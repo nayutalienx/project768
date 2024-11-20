@@ -31,7 +31,7 @@ public class MoveState : BasePlayerState
 
     public override void PhysicProcess(double delta)
     {
-        if (StateChangedToLadder())
+        if (StateChangedToLadder() || StateChangedToLadderGrid())
         {
             return;
         }
@@ -82,6 +82,21 @@ public class MoveState : BasePlayerState
             {
                 Entity.InteractionContext.LadderContext.LadderGlobalPosition = areaLadder.GlobalPosition;
                 Entity.StateChanger.ChangeState(Player.State.Ladder);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool StateChangedToLadderGrid()
+    {
+        if ((Entity.Cache.DownPressed || Entity.Cache.UpPressed))
+        {
+            Area2D areaLadderGrid = Entity.InteractionArea.IsOverlappingAreaWithLayer(GameCollisionLayer.LadderGrid);
+            if (areaLadderGrid != null)
+            {
+                Entity.StateChanger.ChangeState(Player.State.LadderGrid);
                 return true;
             }
         }
