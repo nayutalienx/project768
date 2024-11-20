@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://7mf12rlgecmv"]
+
+[ext_resource type="Texture2D" uid="uid://c5mubd42l077v" path="res://sprites/ladder_part.png" id="1_3ldyy"]
+[ext_resource type="Script" path="res://scripts/game_entity/landscape/ladder_grid/LadderGrid.cs" id="2_bs8i4"]
+
+[node name="ladder_grid" type="Polygon2D" groups=["ladder"]]
+scale = Vector2(10, 10)
+texture = ExtResource("1_3ldyy")
+texture_scale = Vector2(50, 50)
+texture_rotation = 0.785398
+polygon = PackedVector2Array(-5, 9.9, -4.9, 3, 4.9, 2.9, 4.9, 10)
+script = ExtResource("2_bs8i4")
+
+[node name="Shape" type="Area2D" parent="."]
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Shape"]
+polygon = PackedVector2Array(-5.1, 9.8, -5, 2.9, 4.9, 2.9, 5, 10.1)

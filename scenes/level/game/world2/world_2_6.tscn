@@ -1,9 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://cf2gg2emmyut"]
+[gd_scene load_steps=14 format=4 uid="uid://cf2gg2emmyut"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_2nk6p"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_pdagc"]
+[ext_resource type="PackedScene" uid="uid://cmwltwmhaorl3" path="res://scenes/landscape/locked_door/timeless_locked_door.tscn" id="3_6ar4b"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/platform/one_way_platform.tscn" id="3_a1qva"]
+[ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/landscape/spikes.tscn" id="3_q8th8"]
+[ext_resource type="PackedScene" uid="uid://c14oily4ha1w1" path="res://scenes/item/timeless_key.tscn" id="4_wpa68"]
+[ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/npc/enemy_simple.tscn" id="5_n066g"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="7_h3yke"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="8_52q61"]
+[ext_resource type="PackedScene" uid="uid://7mf12rlgecmv" path="res://scenes/landscape/ladder_grid.tscn" id="8_fys7f"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="9_kjshe"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="10_shsfo"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="11_0o6x7"]
@@ -15,8 +21,9 @@
 [node name="tiles" type="Node2D" parent="second_world"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
+z_index = -3
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray(0, 0, 253, 255, 32, 0, 1, 0, 1, 0, 39, 0, 0, 0, 233, 255, 23, 0, 0, 0, 38, 0, 38, 0, 0, 0, 223, 255, 20, 0, 3, 0, 119, 0, 4, 0, 0, 0)
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAPACwAAwB3AAQAAAAQADQAAwB3AAQAAAAwADcAAwB3AAQAAAAwAC0AAwB3AAQAAABCACEAAQABACcAAABUAC0AAwB3AAQAAACbACgAAQABACcAAAA=")
 tile_set = ExtResource("1_2nk6p")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -28,11 +35,50 @@ SpawnPositionIndex = 1
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
+[node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("3_a1qva")]
+position = Vector2(732, 421)
+
+[node name="one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("3_a1qva")]
+position = Vector2(519, 10)
+
+[node name="one_way_platform3" parent="second_world/one_way_platforms" instance=ExtResource("3_a1qva")]
+position = Vector2(2219, 239)
+rotation = -1.01457
+DisableOneWayCollission = true
+
 [node name="keys" type="Node2D" parent="second_world"]
+
+[node name="timeless_key" parent="second_world/keys" instance=ExtResource("4_wpa68")]
+position = Vector2(983, -43)
 
 [node name="enemies" type="Node2D" parent="second_world"]
 
+[node name="enemy_simple" parent="second_world/enemies" instance=ExtResource("5_n066g")]
+position = Vector2(1155, -42)
+AliveOnStart = true
+EnemyDirection = -1
+
 [node name="locked_doors" type="Node2D" parent="second_world"]
+
+[node name="timeless_locked_door" parent="second_world/locked_doors" instance=ExtResource("3_6ar4b")]
+position = Vector2(1578, -83)
+
+[node name="spikes" type="Node2D" parent="second_world"]
+z_index = -2
+
+[node name="Spike" parent="second_world/spikes" instance=ExtResource("3_q8th8")]
+position = Vector2(581, 440)
+points = PackedVector2Array(0, -0.0668298, 20.8509, -0.0668298)
+
+[node name="Spike2" parent="second_world/spikes" instance=ExtResource("3_q8th8")]
+position = Vector2(1667, 395)
+points = PackedVector2Array(0, -0.0668298, 34.2168, -0.0668298)
+
+[node name="ladder_grids" type="Node2D" parent="second_world"]
+
+[node name="ladder_grid" parent="second_world/ladder_grids" instance=ExtResource("8_fys7f")]
+position = Vector2(1728, 169)
+polygon = PackedVector2Array(-1.59999, 13, -3, -31.2, 56.2, -31.3, 56.1, -9.6, 39, 14.2)
 
 [node name="Player" parent="." instance=ExtResource("7_h3yke")]
 position = Vector2(2, -58)

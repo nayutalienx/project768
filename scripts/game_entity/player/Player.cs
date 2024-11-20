@@ -35,6 +35,7 @@ public partial class Player :
     {
         Move,
         Ladder,
+        LadderGrid,
         Death,
         Rewind
     }
@@ -84,6 +85,7 @@ public partial class Player :
         {
             {State.Move, new MoveState(this, State.Move)},
             {State.Ladder, new LadderState(this, State.Ladder)},
+            {State.LadderGrid, new LadderGridState(this, State.LadderGrid)},
             {State.Death, new DeathState(this, State.Death)},
             {State.Rewind, new RewindState(this, State.Rewind)},
         };

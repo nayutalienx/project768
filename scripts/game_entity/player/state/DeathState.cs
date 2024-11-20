@@ -5,7 +5,7 @@ using project768.scripts.state_machine;
 
 namespace project768.scripts.player;
 
-public class DeathState : State<Player, Player.State>
+public class DeathState : BasePlayerState
 {
     public DeathState(Player entity, Player.State stateEnum) : base(entity, stateEnum)
     {
@@ -23,6 +23,7 @@ public class DeathState : State<Player, Player.State>
 
     public override void PhysicProcess(double delta)
     {
+        ProcessTimelessKey();
         if (Entity.DeathStopTimer.IsExpired())
         {
             if (!Entity.GetTree().IsPaused())
