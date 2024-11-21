@@ -66,6 +66,14 @@ public class MoveState : BaseEnemyState
                 p.Interactor.Interact(new PlayerInteractionEvent(PlayerInteraction.FallOnEnemyHead));
                 Entity.Interactor.Interact(new EnemyInteractionEvent(EnemyInteraction.KillEnemy));
             }
+
+            if (body.Body is Box box)
+            {
+                if (Mathf.Abs(box.LinearVelocity.Y) > 10)
+                {
+                    Entity.Interactor.Interact(new EnemyInteractionEvent(EnemyInteraction.KillEnemy));
+                }
+            }
         }
     }
 

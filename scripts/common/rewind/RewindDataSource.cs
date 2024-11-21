@@ -25,6 +25,7 @@ public class RewindDataSource
     public EntitySpawner[] Spawners { get; set; }
     public TrapSpawner[] TrapSpawners { get; set; }
     public Claw[] Claws { get; set; }
+    public Box[] Boxes { get; set; }
 
     public List<IRewindable> Rewindables = new();
 
@@ -41,10 +42,9 @@ public class RewindDataSource
         Spawners = FindAndAddRewindables(t, "spawner").ConvertAll(o => o as EntitySpawner).ToArray();
         TrapSpawners = FindAndAddRewindables(t, "trap_spawner").ConvertAll(o => o as TrapSpawner).ToArray();
         Claws = FindAndAddRewindables(t, "claw").ConvertAll(o => o as Claw).ToArray();
+        Boxes = FindAndAddRewindables(t, "box").ConvertAll(o => o as Box).ToArray();
 
-        OneWayPlatforms = FindAndAddRewindables(t, "one_way_platform")
-            .ConvertAll(o => o as OneWayPlatform)
-            .ToArray();
+        OneWayPlatforms = FindAndAddRewindables(t, "one_way_platform").ConvertAll(o => o as OneWayPlatform).ToArray();
         FindAndAddRewindables(t, "background_music");
         CollectableSystem = FindAndAddRewindables(t, "collectable_system").ConvertAll(o => o as CollectableSystem)
             .ToArray();

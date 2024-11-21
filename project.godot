@@ -42,6 +42,7 @@ cloud_platform=""
 claw=""
 jumping_enemy=""
 trap_spawner=""
+box=""
 
 [input]
 
@@ -91,6 +92,7 @@ quit={
 2d_physics/layer_8="invisible_wall"
 2d_physics/layer_9="ladder"
 2d_physics/layer_10="ladder_grid"
+2d_physics/layer_11="box"
 
 [rendering]
 

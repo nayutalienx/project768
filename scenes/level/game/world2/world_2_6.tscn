@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://cf2gg2emmyut"]
+[gd_scene load_steps=16 format=4 uid="uid://cf2gg2emmyut"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_2nk6p"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_pdagc"]
@@ -7,11 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/landscape/spikes.tscn" id="3_q8th8"]
 [ext_resource type="PackedScene" uid="uid://c14oily4ha1w1" path="res://scenes/item/timeless_key.tscn" id="4_wpa68"]
 [ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/npc/enemy_simple.tscn" id="5_n066g"]
+[ext_resource type="PackedScene" uid="uid://btobpn5evuwb8" path="res://scenes/landscape/cannon/cannon.tscn" id="6_ryt5y"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="7_h3yke"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="8_52q61"]
 [ext_resource type="PackedScene" uid="uid://7mf12rlgecmv" path="res://scenes/landscape/ladder_grid.tscn" id="8_fys7f"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="9_kjshe"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="10_shsfo"]
+[ext_resource type="PackedScene" uid="uid://2mjss7hrvbuw" path="res://scenes/landscape/box.tscn" id="10_wsyfu"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="11_0o6x7"]
 
 [node name="World0" type="Node2D"]
@@ -23,7 +25,7 @@
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 z_index = -3
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAPACwAAwB3AAQAAAAQADQAAwB3AAQAAAAwADcAAwB3AAQAAAAwAC0AAwB3AAQAAABCACEAAQABACcAAABUAC0AAwB3AAQAAACbACgAAQABACcAAAA=")
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAPACwAAwB3AAQAAAAQADQAAwB3AAQAAAAwADcAAwB3AAQAAAAwAC0AAwB3AAQAAABCACEAAQABACcAAABUAC0AAwB3AAQAAACbACgAAQABACcAAADLACgAAQABACcAAAD7ACgAAQABACcAAACLAP3/AQAsAEcAAACoAP3/AQAsAEcAAADEAP3/AQAsAEcAAADgAP3/AQAsAEcAAAD8AP3/AQAsAEcAAAANAQwAAQAsAEcAAGB/AAoAAQAsAEcAAGCOAAoAAQAsAEcAAFCHABcAAQAyAEAAADAAARcAAQAyAEAAADDyAA4AAQAyAEAAAGD7AAEAAQAyAEAAAAA=")
 tile_set = ExtResource("1_2nk6p")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -46,6 +48,12 @@ position = Vector2(2219, 239)
 rotation = -1.01457
 DisableOneWayCollission = true
 
+[node name="one_way_platform4" parent="second_world/one_way_platforms" instance=ExtResource("3_a1qva")]
+position = Vector2(2960, -284)
+
+[node name="one_way_platform5" parent="second_world/one_way_platforms" instance=ExtResource("3_a1qva")]
+position = Vector2(3646, -282)
+
 [node name="keys" type="Node2D" parent="second_world"]
 
 [node name="timeless_key" parent="second_world/keys" instance=ExtResource("4_wpa68")]
@@ -58,10 +66,25 @@ position = Vector2(1155, -42)
 AliveOnStart = true
 EnemyDirection = -1
 
+[node name="cannon" parent="second_world/enemies" instance=ExtResource("6_ryt5y")]
+position = Vector2(4091, -366)
+scale = Vector2(-1, 1)
+InitialState = 1
+
+[node name="spawn" type="Node2D" parent="second_world/enemies/cannon"]
+position = Vector2(122, -16)
+
+[node name="enemy_simple" parent="second_world/enemies/cannon" instance=ExtResource("5_n066g")]
+position = Vector2(-140, 17)
+SpawnVelocity = Vector2(-200, 0)
+
 [node name="locked_doors" type="Node2D" parent="second_world"]
 
 [node name="timeless_locked_door" parent="second_world/locked_doors" instance=ExtResource("3_6ar4b")]
 position = Vector2(1578, -83)
+
+[node name="timeless_locked_door2" parent="second_world/locked_doors" instance=ExtResource("3_6ar4b")]
+position = Vector2(4553, 31)
 
 [node name="spikes" type="Node2D" parent="second_world"]
 z_index = -2
@@ -75,10 +98,23 @@ position = Vector2(1667, 395)
 points = PackedVector2Array(0, -0.0668298, 34.2168, -0.0668298)
 
 [node name="ladder_grids" type="Node2D" parent="second_world"]
+z_index = -5
 
 [node name="ladder_grid" parent="second_world/ladder_grids" instance=ExtResource("8_fys7f")]
 position = Vector2(1728, 169)
 polygon = PackedVector2Array(-1.59999, 13, -3, -31.2, 56.2, -31.3, 56.1, -9.6, 39, 14.2)
+
+[node name="ladder_grid2" parent="second_world/ladder_grids" instance=ExtResource("8_fys7f")]
+position = Vector2(2565, 19)
+polygon = PackedVector2Array(-5, 9.9, -4.89998, -54.6, 151.2, -53.6, 152.2, 10.6, 123.4, 11.5, 124.4, -31.3, 20.3, -32.1, 20.6, 11.6)
+
+[node name="boxes" type="Node2D" parent="second_world"]
+
+[node name="Box" parent="second_world/boxes" instance=ExtResource("10_wsyfu")]
+position = Vector2(2958, -340)
+
+[node name="Box2" parent="second_world/boxes" instance=ExtResource("10_wsyfu")]
+position = Vector2(3654, -340)
 
 [node name="Player" parent="." instance=ExtResource("7_h3yke")]
 position = Vector2(2, -58)

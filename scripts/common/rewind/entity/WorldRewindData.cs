@@ -17,6 +17,7 @@ public struct WorldRewindData
     public SpawnerRewindData[] SpawnerRewindDatas { get; set; }
     public TrapSpawnerRewindData[] TrapSpawnerRewindDatas { get; set; }
     public ClawRewindData[] ClawRewindDatas { get; set; }
+    public BoxRewindData[] BoxRewindDatas { get; set; }
 
     public WorldRewindData(RewindDataSource source)
     {
@@ -24,7 +25,8 @@ public struct WorldRewindData
         CollectableSystemRewindDatas =
             CommonRewindData.CreateRewindData(source.CollectableSystem, s => new CollectableSystemRewindData(s));
         EnemyRewindDatas = CommonRewindData.CreateRewindData(source.Enemies, enemy => new EnemyRewindData(enemy));
-        JumpingEnemyRewindDatas = CommonRewindData.CreateRewindData(source.JumpingEnemies, enemy => new JumpingEnemyRewindData(enemy));
+        JumpingEnemyRewindDatas =
+            CommonRewindData.CreateRewindData(source.JumpingEnemies, enemy => new JumpingEnemyRewindData(enemy));
         KeyRewindDatas = CommonRewindData.CreateRewindData(source.Keys, key => new KeyRewindData(key));
         CannonBallRewindDatas =
             CommonRewindData.CreateRewindData(source.CannonBalls, ball => new CannonBallRewindData(ball));
@@ -42,6 +44,7 @@ public struct WorldRewindData
         TrapSpawnerRewindDatas =
             CommonRewindData.CreateRewindData(source.TrapSpawners, e => new TrapSpawnerRewindData(e));
         ClawRewindDatas = CommonRewindData.CreateRewindData(source.Claws, e => new ClawRewindData(e));
+        BoxRewindDatas = CommonRewindData.CreateRewindData(source.Boxes, e => new BoxRewindData(e));
     }
 
     public void ApplyData(RewindDataSource source)
@@ -72,6 +75,8 @@ public struct WorldRewindData
         CommonRewindData.ApplyRewindData(source.TrapSpawners, TrapSpawnerRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));
         CommonRewindData.ApplyRewindData(source.Claws, ClawRewindDatas,
+            (rewindData, entity) => rewindData.ApplyData(entity));
+        CommonRewindData.ApplyRewindData(source.Boxes, BoxRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));
     }
 }
