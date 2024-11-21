@@ -158,7 +158,7 @@ public partial class Player :
         Cache = new PlayerCache();
     }
 
-    private void ApplyImpulseToRigidBodies()
+    public void ApplyImpulseToRigidBodies()
     {
         // Player impulse to rigid bodies
         for (int i = 0; i < GetSlideCollisionCount(); i++)

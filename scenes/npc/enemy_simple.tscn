@@ -25,7 +25,6 @@ floor_max_angle = 0.872665
 floor_snap_length = 32.0
 platform_on_leave = 1
 script = ExtResource("1_le13m")
-Friction = 5.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.33, 0.33, 1)
@@ -42,7 +41,7 @@ shape = SubResource("CapsuleShape2D_hqmav")
 position = Vector2(0, -67)
 scale = Vector2(1.08, 0.6)
 collision_layer = 0
-collision_mask = 2
+collision_mask = 1026
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHeadArea"]
 scale = Vector2(2.48444, 1)

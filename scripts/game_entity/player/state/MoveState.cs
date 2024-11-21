@@ -71,6 +71,9 @@ public class MoveState : BasePlayerState
         }
 
         Entity.MoveAndSlide();
+
+
+        Entity.ApplyImpulseToRigidBodies();
     }
 
     private bool StateChangedToLadder()
