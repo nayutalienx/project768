@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://cf2gg2emmyut"]
+[gd_scene load_steps=17 format=4 uid="uid://cf2gg2emmyut"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_2nk6p"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_pdagc"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c14oily4ha1w1" path="res://scenes/item/timeless_key.tscn" id="4_wpa68"]
 [ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/npc/enemy_simple.tscn" id="5_n066g"]
 [ext_resource type="PackedScene" uid="uid://btobpn5evuwb8" path="res://scenes/landscape/cannon/cannon.tscn" id="6_ryt5y"]
+[ext_resource type="PackedScene" uid="uid://cbu50jdl8gyd7" path="res://scenes/npc/timeless_enemy_boss.tscn" id="7_2f4g7"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="7_h3yke"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="8_52q61"]
 [ext_resource type="PackedScene" uid="uid://7mf12rlgecmv" path="res://scenes/landscape/ladder_grid.tscn" id="8_fys7f"]
@@ -25,7 +26,7 @@
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 z_index = -3
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAPACwAAwB3AAQAAAAQADQAAwB3AAQAAAAwADcAAwB3AAQAAAAwAC0AAwB3AAQAAABCACEAAQABACcAAABUAC0AAwB3AAQAAACbACgAAQABACcAAADLACgAAQABACcAAAD7ACgAAQABACcAAACLAP3/AQAsAEcAAACoAP3/AQAsAEcAAADEAP3/AQAsAEcAAADgAP3/AQAsAEcAAAD8AP3/AQAsAEcAAAANAQwAAQAsAEcAAGB/AAoAAQAsAEcAAGCOAAoAAQAsAEcAAFCHABcAAQAyAEAAADAAARcAAQAyAEAAADDyAA4AAQAyAEAAAGD7AAEAAQAyAEAAAAA=")
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAPACwAAwB3AAQAAAAQADQAAwB3AAQAAAAwADcAAwB3AAQAAAAwAC0AAwB3AAQAAABCACEAAQABACcAAABUAC0AAwB3AAQAAACbACgAAQABACcAAADLACgAAQABACcAAAD7ACgAAQABACcAAACLAP3/AQAsAEcAAACoAP3/AQAsAEcAAADEAP3/AQAsAEcAAADgAP3/AQAsAEcAAAD8AP3/AQAsAEcAAAANAQwAAQAsAEcAAGB/AAoAAQAsAEcAAGCOAAoAAQAsAEcAAFCHABcAAQAyAEAAADAAARcAAQAyAEAAADDyAA4AAQAyAEAAAGD7AAEAAQAyAEAAAAArASgAAQABACcAAABBARwAAwB3AAQAAABBAQcAAwB3AAQAAAA1AR8AAAAmACYAAAA=")
 tile_set = ExtResource("1_2nk6p")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -34,6 +35,10 @@ tile_set = ExtResource("1_2nk6p")
 position = Vector2(-148, -14)
 Path = "res://scenes/level/game/world2/world_2_5.tscn"
 SpawnPositionIndex = 1
+
+[node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("2_pdagc")]
+position = Vector2(5160, 121)
+Path = "res://scenes/level/game/world2/world_2_7.tscn"
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
@@ -77,6 +82,18 @@ position = Vector2(122, -16)
 [node name="enemy_simple" parent="second_world/enemies/cannon" instance=ExtResource("5_n066g")]
 position = Vector2(-140, 17)
 SpawnVelocity = Vector2(-200, 0)
+
+[node name="timeless_enemy_boss" parent="second_world/enemies" node_paths=PackedStringArray("FieldLine", "TimelessKey") instance=ExtResource("7_2f4g7")]
+position = Vector2(3260, -5)
+FieldLine = NodePath("../boss_line_field")
+TimelessKey = NodePath("timeless_key")
+
+[node name="timeless_key" parent="second_world/enemies/timeless_enemy_boss" instance=ExtResource("4_wpa68")]
+PickedOnAlive = true
+
+[node name="boss_line_field" type="Line2D" parent="second_world/enemies"]
+points = PackedVector2Array(2543, 35, 4100, 46)
+default_color = Color(1, 1, 1, 0)
 
 [node name="locked_doors" type="Node2D" parent="second_world"]
 
@@ -125,7 +142,7 @@ position = Vector2(2, -58)
 position = Vector2(-22, 3)
 
 [node name="end" type="Node2D" parent="Player/spawn"]
-position = Vector2(1529, -34)
+position = Vector2(5031, 120)
 
 [node name="RewindPlayer" parent="." instance=ExtResource("8_52q61")]
 

@@ -1,0 +1,84 @@
+[gd_scene load_steps=9 format=3 uid="uid://cbu50jdl8gyd7"]
+
+[ext_resource type="Script" path="res://scripts/game_entity/npc/timeless_enemy_boss/TimelessEnemyBoss.cs" id="1_bcfd5"]
+[ext_resource type="Shader" path="res://shaders/timeless.gdshader" id="2_36gx7"]
+[ext_resource type="Texture2D" uid="uid://baql6qn040vl" path="res://sprites/icon.svg" id="3_r14lc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oti6w"]
+shader = ExtResource("2_36gx7")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqmav"]
+radius = 44.28
+height = 88.5601
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oxby5"]
+size = Vector2(58.1396, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vgc30"]
+size = Vector2(56.4297, 30.563)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qcvlv"]
+font_size = 50
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="timeless_enemy_boss" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 129
+floor_constant_speed = true
+floor_max_angle = 0.872665
+floor_snap_length = 32.0
+platform_on_leave = 1
+script = ExtResource("1_bcfd5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_oti6w")
+position = Vector2(0, -32)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_r14lc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -32.5)
+scale = Vector2(2.17931, 2.17931)
+shape = SubResource("CapsuleShape2D_hqmav")
+
+[node name="EnemyHeadArea" type="Area2D" parent="."]
+position = Vector2(0, -127)
+scale = Vector2(1.08, 0.6)
+collision_layer = 0
+collision_mask = 1024
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHeadArea"]
+position = Vector2(0.925919, 0)
+scale = Vector2(2.48444, 1)
+shape = SubResource("RectangleShape2D_oxby5")
+
+[node name="EnemyAttackArea" type="Area2D" parent="."]
+position = Vector2(0, 31)
+scale = Vector2(3.38474, 2.94474)
+collision_layer = 0
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAttackArea"]
+position = Vector2(-0.147722, -4.07506)
+shape = SubResource("RectangleShape2D_vgc30")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -99.0
+offset_top = -261.0
+offset_right = 90.0
+offset_bottom = -192.0
+text = "* * * * *"
+label_settings = SubResource("LabelSettings_qcvlv")
+
+[node name="VisionsTarget" type="Node2D" parent="."]
+
+[node name="VisionTarget" type="RayCast2D" parent="VisionsTarget"]
+position = Vector2(0, -45)
+target_position = Vector2(500, 0)
+collision_mask = 2
+
+[node name="VisionTarget2" type="RayCast2D" parent="VisionsTarget"]
+position = Vector2(0, -45)
+target_position = Vector2(-500, 0)
+collision_mask = 2

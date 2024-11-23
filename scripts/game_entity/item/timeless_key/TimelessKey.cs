@@ -13,11 +13,13 @@ public partial class TimelessKey : RigidBody2D, IStateMachineEntity<TimelessKey,
         Picked,
         Used,
     }
-
+    
     public State<TimelessKey, State> CurrentState { get; set; }
     public Dictionary<State, State<TimelessKey, State>> States { get; set; }
     public StateChanger<TimelessKey, State> StateChanger { get; set; }
     public Tuple<uint, uint> KeyCollision;
+
+    [Export] public bool PickedOnAlive;
 
     public override void _Ready()
     {
@@ -31,7 +33,14 @@ public partial class TimelessKey : RigidBody2D, IStateMachineEntity<TimelessKey,
 
         KeyCollision = this.GetCollisionLayerMask();
 
-        StateChanger.ChangeState(State.Unpicked);
+        if (PickedOnAlive)
+        {
+            StateChanger.ChangeState(State.Picked);
+        }
+        else
+        {
+            StateChanger.ChangeState(State.Unpicked);
+        }
     }
 
     public override void _PhysicsProcess(double delta)

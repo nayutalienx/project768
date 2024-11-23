@@ -32,5 +32,8 @@ public struct BoxRewindData
             PhysicsServer2D.BodyState.AngularVelocity,
             AngularVelocity
         );
+
+        box.PausedRewindLinearVelocity = LinearVelocity;
+        box.PausedRewindAngularVelocity = AngularVelocity;
     }
 }
