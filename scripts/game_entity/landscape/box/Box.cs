@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using project768.scripts.common;
 using project768.scripts.rewind.entity;
@@ -11,10 +12,13 @@ public partial class Box :
     public Vector2 PausedRewindLinearVelocity;
     public float PausedRewindAngularVelocity;
 
+    public Tuple<uint, uint> OriginalEntityLayerMask;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         Label = GetNode<Label>("Label");
+        OriginalEntityLayerMask = this.GetCollisionLayerMask();
     }
 
 
@@ -29,10 +33,12 @@ public partial class Box :
 
     public void RewindStarted()
     {
+        this.DisableCollision();
     }
 
     public void RewindFinished()
     {
+        this.EnableCollision(OriginalEntityLayerMask);
     }
 
     public void OnRewindSpeedChanged(int speed)

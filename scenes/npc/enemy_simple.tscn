@@ -58,9 +58,9 @@ position = Vector2(0, 4.92403)
 shape = SubResource("RectangleShape2D_vgc30")
 
 [node name="Label" type="Label" parent="."]
-offset_left = -18.0
-offset_top = -93.0
-offset_right = 22.0
-offset_bottom = -70.0
-text = "d:"
+offset_left = -8.0
+offset_top = -106.0
+offset_right = 87.0
+offset_bottom = -71.0
+text = "v"
 label_settings = SubResource("LabelSettings_qcvlv")
