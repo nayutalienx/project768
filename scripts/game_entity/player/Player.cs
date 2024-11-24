@@ -61,6 +61,8 @@ public partial class Player :
 
     public Area2D InteractionArea { get; set; }
     public Sprite2D Sprite2D;
+    private Material OriginalMaterial;
+    public bool RewindLocked = false;
 
     public Tuple<uint, uint> OrigCollission;
     public Label Label { get; set; }
@@ -96,6 +98,7 @@ public partial class Player :
         StateChanger.ChangeState(State.Move);
 
         Sprite2D = GetNode<Sprite2D>("Sprite2D");
+        OriginalMaterial = Sprite2D.Material;
 
         InteractionArea = GetNode<Area2D>("Area2D");
         InteractionArea.BodyEntered += body => CurrentState.OnBodyEntered(new CollisionBody("player", body));
@@ -158,7 +161,7 @@ public partial class Player :
         Cache = new PlayerCache();
     }
 
-    public void ApplyImpulseToRigidBodies()
+    public void ProcessContactWithOtherBodies()
     {
         // Player impulse to rigid bodies
         for (int i = 0; i < GetSlideCollisionCount(); i++)
@@ -185,6 +188,11 @@ public partial class Player :
         }
     }
 
+    public void ResetMaterial()
+    {
+        Sprite2D.SetMaterial(OriginalMaterial);
+    }
+
     public void RewindStarted()
     {
         StateChanger.ChangeState(State.Rewind);
@@ -197,5 +205,17 @@ public partial class Player :
 
     public void OnRewindSpeedChanged(int speed)
     {
+    }
+
+    public void LockRewind(Material material)
+    {
+        RewindLocked = true;
+        Sprite2D.SetMaterial(material);
+    }
+
+    public void UnlockRewind()
+    {
+        RewindLocked = false;
+        ResetMaterial();
     }
 }
