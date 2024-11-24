@@ -31,6 +31,10 @@ Path = "res://scenes/level/game/world1/world_1_lobby.tscn"
 position = Vector2(5688, 565)
 Path = "res://scenes/level/game/world2/world_2_lobby.tscn"
 
+[node name="SceneLoader3" parent="second_world/portals" instance=ExtResource("3_5idk0")]
+position = Vector2(6636, 461)
+Path = "res://scenes/level/game/world3/world_3_lobby.tscn"
+
 [node name="walls" type="Node2D" parent="second_world"]
 
 [node name="spikes" type="Node2D" parent="second_world"]
@@ -77,6 +81,9 @@ position = Vector2(6439, 112)
 
 [node name="world2" type="Node2D" parent="Player/spawn"]
 position = Vector2(7246, 87)
+
+[node name="world3" type="Node2D" parent="Player/spawn"]
+position = Vector2(8553, -26)
 
 [node name="RewindPlayer" parent="." instance=ExtResource("6_vet4u")]
 
