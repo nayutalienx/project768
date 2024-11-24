@@ -50,7 +50,7 @@ Path = "res://scenes/level/game/world2/world_2_3.tscn"
 
 [node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("3_wpxmo")]
 position = Vector2(153, -333)
-scale = Vector2(2.36384, 0.406434)
+scale = Vector2(2.364, 1)
 
 [node name="one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("3_wpxmo")]
 position = Vector2(3244, -277)

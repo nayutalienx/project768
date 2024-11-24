@@ -38,7 +38,7 @@ Path = "res://scenes/level/game/world2/world_2_1.tscn"
 
 [node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("3_15i2b")]
 position = Vector2(748, 1)
-scale = Vector2(1.51701, 0.392146)
+scale = Vector2(1.517, 1)
 
 [node name="keys" type="Node2D" parent="second_world"]
 

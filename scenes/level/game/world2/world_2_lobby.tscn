@@ -16,7 +16,7 @@
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAAAtACAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAABLABQAAwB3AAQAAAAGABcAAAAzACUAAAA=")
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAAAtACAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAGABcAAAAzACUAAAAbABcAAAAzACUAAAAxABcAAAAzACUAAABdACAAAQABACcAAACNACAAAQABACcAAABHABcAAAAzACUAAABdABcAAAAzACUAAAB1ABcAAAAzACUAAACMABcAAAAzACUAAADf////AwB3AAQAAACrACAAAQABACcAAACmABcAAAAzACUAAAC+ABQAAwB3AAQAAAC+AP//AwB3AAQAAAA=")
 tile_set = ExtResource("1_j6epl")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -29,6 +29,34 @@ SpawnPositionIndex = 2
 [node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("2_xn4c0")]
 position = Vector2(316, -24)
 Path = "res://scenes/level/game/world2/world_2_0.tscn"
+
+[node name="SceneLoader3" parent="second_world/portals" instance=ExtResource("2_xn4c0")]
+position = Vector2(653, -20)
+Path = "res://scenes/level/game/world2/world_2_1.tscn"
+
+[node name="SceneLoader4" parent="second_world/portals" instance=ExtResource("2_xn4c0")]
+position = Vector2(1004, -9)
+Path = "res://scenes/level/game/world2/world_2_2.tscn"
+
+[node name="SceneLoader5" parent="second_world/portals" instance=ExtResource("2_xn4c0")]
+position = Vector2(1358, -14)
+Path = "res://scenes/level/game/world2/world_2_3.tscn"
+
+[node name="SceneLoader6" parent="second_world/portals" instance=ExtResource("2_xn4c0")]
+position = Vector2(1702, -10)
+Path = "res://scenes/level/game/world2/world_2_4.tscn"
+
+[node name="SceneLoader7" parent="second_world/portals" instance=ExtResource("2_xn4c0")]
+position = Vector2(2096, -17)
+Path = "res://scenes/level/game/world2/world_2_5.tscn"
+
+[node name="SceneLoader8" parent="second_world/portals" instance=ExtResource("2_xn4c0")]
+position = Vector2(2462, -13)
+Path = "res://scenes/level/game/world2/world_2_6.tscn"
+
+[node name="SceneLoader9" parent="second_world/portals" instance=ExtResource("2_xn4c0")]
+position = Vector2(2876, -13)
+Path = "res://scenes/level/game/world2/world_2_7.tscn"
 
 [node name="Player" parent="." instance=ExtResource("3_jkm05")]
 position = Vector2(2, -58)
