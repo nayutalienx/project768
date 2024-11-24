@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://d0kdsmyy1oltu"]
+[gd_scene load_steps=4 format=3 uid="uid://d0kdsmyy1oltu"]
 
 [ext_resource type="Script" path="res://scripts/game_entity/common/SceneLoader.cs" id="1_vsnqb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g56s5"]
 size = Vector2(129, 166.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gi602"]
+font_size = 30
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [node name="SceneLoader" type="StaticBody2D"]
 collision_layer = 32
@@ -13,3 +18,12 @@ script = ExtResource("1_vsnqb")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -82.75)
 shape = SubResource("RectangleShape2D_g56s5")
+
+[node name="Label" type="Label" parent="."]
+z_index = 100
+offset_left = -37.0
+offset_top = -338.0
+offset_right = 39.0
+offset_bottom = -296.0
+text = "level:"
+label_settings = SubResource("LabelSettings_gi602")

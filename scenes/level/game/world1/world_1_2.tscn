@@ -61,11 +61,11 @@ points = PackedVector2Array(0, 10, 0, -27.3)
 
 [node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("6_jdtlk")]
 position = Vector2(-86, -631)
-scale = Vector2(1.32384, 0.406434)
+scale = Vector2(1.32384, 1)
 
 [node name="one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("6_jdtlk")]
 position = Vector2(1596, -1031)
-scale = Vector2(1.32384, 0.406434)
+scale = Vector2(1.32384, 1)
 
 [node name="enemies" type="Node2D" parent="second_world"]
 

@@ -128,7 +128,7 @@ Path = "res://scenes/level/game/world2/world_2_4.tscn"
 
 [node name="timeless_one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("5_shwhi")]
 position = Vector2(1241, -18)
-scale = Vector2(1.92384, 0.406434)
+scale = Vector2(1.92384, 1)
 DisableOneWayCollission = true
 AllAnimations = PackedStringArray("move_forward", "move_backward")
 
@@ -142,7 +142,7 @@ position = Vector2(3017, -350)
 
 [node name="timeless_one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("5_shwhi")]
 position = Vector2(3301, -382)
-scale = Vector2(2.84383, 0.406434)
+scale = Vector2(2.84383, 1)
 DisableOneWayCollission = true
 AllAnimations = PackedStringArray("move_forward", "move_backward")
 

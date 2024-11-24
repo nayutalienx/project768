@@ -88,11 +88,11 @@ points = PackedVector2Array(0, 10, 0, -19.4)
 
 [node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("4_1d2kh")]
 position = Vector2(8034, -553)
-scale = Vector2(3.08384, 0.406434)
+scale = Vector2(3.08384, 1)
 
 [node name="one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("4_1d2kh")]
 position = Vector2(9278, -547)
-scale = Vector2(4.51826, 0.406434)
+scale = Vector2(4.51826, 1)
 
 [node name="one_way_platform4" parent="second_world/one_way_platforms" instance=ExtResource("4_1d2kh")]
 position = Vector2(7920, -327)
@@ -105,31 +105,31 @@ position = Vector2(9619, -314)
 
 [node name="one_way_platform6" parent="second_world/one_way_platforms" instance=ExtResource("4_1d2kh")]
 position = Vector2(8950, -307)
-scale = Vector2(2.60384, 0.406434)
+scale = Vector2(2.60384, 1)
 
 [node name="one_way_platform8" parent="second_world/one_way_platforms" instance=ExtResource("4_1d2kh")]
 position = Vector2(11396, -507)
-scale = Vector2(2.60384, 0.406434)
+scale = Vector2(2.60384, 1)
 
 [node name="one_way_platform9" parent="second_world/one_way_platforms" instance=ExtResource("4_1d2kh")]
 position = Vector2(12606, -486)
-scale = Vector2(2.60384, 0.406434)
+scale = Vector2(2.60384, 1)
 
 [node name="one_way_platform10" parent="second_world/one_way_platforms" instance=ExtResource("4_1d2kh")]
 position = Vector2(13692, -283)
-scale = Vector2(1.28384, 0.406434)
+scale = Vector2(1.28384, 1)
 
 [node name="one_way_platform11" parent="second_world/one_way_platforms" instance=ExtResource("4_1d2kh")]
 position = Vector2(13757, -332)
-scale = Vector2(1.28384, 0.406434)
+scale = Vector2(1.28384, 1)
 
 [node name="one_way_platform12" parent="second_world/one_way_platforms" instance=ExtResource("4_1d2kh")]
 position = Vector2(13655, -384)
-scale = Vector2(1.28384, 0.406434)
+scale = Vector2(1.28384, 1)
 
 [node name="one_way_platform13" parent="second_world/one_way_platforms" instance=ExtResource("4_1d2kh")]
 position = Vector2(13612, -432)
-scale = Vector2(1.28384, 0.406434)
+scale = Vector2(1.28384, 1)
 
 [node name="spikes" type="Node2D" parent="second_world"]
 
