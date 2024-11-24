@@ -37,8 +37,14 @@ public partial class OneWayPlatform :
     [Export] public Vector2 PlatformMoveVector { get; set; } = Vector2.Zero;
     [Export] public bool StopOnRaycast = false;
 
+    [ExportSubgroup("Platform Rewind Mode")] [Export]
+    public bool DisablePlayerRewindOnStand = false;
+
     public RewindableAnimationPlayer AnimationPlayer { get; set; }
     public RayCast2D RayCast2D { get; set; }
+    public Area2D Area2D { get; set; }
+
+    public Sprite2D Sprite2D;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -55,6 +61,21 @@ public partial class OneWayPlatform :
         if (!StopOnRaycast)
         {
             RayCast2D.Enabled = false;
+        }
+
+        Sprite2D = GetNode<Sprite2D>("Sprite2D");
+
+        Area2D = GetNodeOrNull<Area2D>("Area2D");
+        if (Area2D != null && DisablePlayerRewindOnStand)
+        {
+            GpuParticles2D gpuParticles = GetNode<GpuParticles2D>("GPUParticles2D");
+            gpuParticles.SetLifetime(5);
+            gpuParticles.SetSpeedScale(2);
+
+            Area2D.BodyEntered += body => CurrentState.OnBodyEntered(new CollisionBody(
+                "top", body));
+            Area2D.BodyExited += body => CurrentState.OnBodyExited(new CollisionBody(
+                "top", body));
         }
 
         if (HasNode("AnimationPlayer"))

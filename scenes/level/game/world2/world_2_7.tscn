@@ -1,14 +1,96 @@
-[gd_scene load_steps=8 format=3 uid="uid://cnhhrd22kws21"]
+[gd_scene load_steps=28 format=4 uid="uid://cnhhrd22kws21"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_4dsp5"]
+[ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_gmo8a"]
+[ext_resource type="PackedScene" uid="uid://clc02prulpxxo" path="res://scenes/item/timeless_collectable_item.tscn" id="2_6d1gn"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_nkih4"]
+[ext_resource type="PackedScene" uid="uid://calnxde5gh3v3" path="res://scenes/item/collectable_item.tscn" id="2_wu7h2"]
+[ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="3_qv5sm"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/platform/one_way_platform.tscn" id="3_xcdxs"]
+[ext_resource type="PackedScene" uid="uid://7wv6rahuxnn1" path="res://scenes/landscape/platform/timeless_one_way_platform.tscn" id="4_sop67"]
+[ext_resource type="PackedScene" uid="uid://cbes6p0xgmvbf" path="res://scenes/npc/enemy_simple.tscn" id="7_0e8ww"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="7_32ggm"]
+[ext_resource type="PackedScene" uid="uid://dkn6lvqu0x1vd" path="res://scenes/item/key_rb.tscn" id="7_c4qd1"]
 [ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="8_1x0c4"]
+[ext_resource type="PackedScene" uid="uid://c4638bh2af1v" path="res://scenes/landscape/switcher/timeless_switcher.tscn" id="8_510ti"]
 [ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="9_6rbbf"]
+[ext_resource type="PackedScene" uid="uid://bb6bemfvj0nt3" path="res://scenes/landscape/locked_door/locked_door.tscn" id="9_bvxf1"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="10_fbsqf"]
+[ext_resource type="PackedScene" uid="uid://dc46m4hvdcw00" path="res://scenes/landscape/invisible_wall.tscn" id="10_sd2im"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="11_lim2f"]
+[ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/landscape/spikes.tscn" id="14_lfc2y"]
+[ext_resource type="PackedScene" uid="uid://7mf12rlgecmv" path="res://scenes/landscape/ladder_grid.tscn" id="15_3uxmc"]
+[ext_resource type="PackedScene" uid="uid://btobpn5evuwb8" path="res://scenes/landscape/cannon/cannon.tscn" id="16_atkov"]
+[ext_resource type="PackedScene" uid="uid://chwame76xqi6l" path="res://scenes/landscape/cannon/cannon_ball.tscn" id="17_bb308"]
+
+[sub_resource type="Animation" id="Animation_d8jfx"]
+resource_name = "move_forward"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(68, -265), Vector2(2936, -265)]
+}
+
+[sub_resource type="Animation" id="Animation_cmpl7"]
+resource_name = "move_backward"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2936, -265), Vector2(68, -265)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gh6ek"]
+_data = {
+"move_backward": SubResource("Animation_cmpl7"),
+"move_forward": SubResource("Animation_d8jfx")
+}
+
+[sub_resource type="Animation" id="Animation_y8ac3"]
+resource_name = "move_up"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(4221, 76), Vector2(4221, -208)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ghi3t"]
+_data = {
+"move_up": SubResource("Animation_y8ac3")
+}
 
 [node name="World0" type="Node2D"]
+
+[node name="CollectableSystem" parent="." instance=ExtResource("1_gmo8a")]
+
+[node name="TimelessCollectableItem" parent="CollectableSystem" instance=ExtResource("2_6d1gn")]
+position = Vector2(1011, -931)
+
+[node name="CollectableItem2" parent="CollectableSystem" instance=ExtResource("2_wu7h2")]
+position = Vector2(3012, -739)
 
 [node name="second_world" type="Node2D" parent="."]
 
@@ -16,7 +98,7 @@
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray(0, 0, 253, 255, 32, 0, 1, 0, 1, 0, 39, 0, 0, 0, 233, 255, 23, 0, 0, 0, 38, 0, 38, 0, 0, 0, 223, 255, 20, 0, 3, 0, 119, 0, 4, 0, 0, 0)
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAD+/woAAQABACcAAAAKAPr/AQABACcAAADf////AwB3AAQAAADf/+r/AwB3AAQAAAAcAO7/AwB3AAQAAAAuAOH/AQABACcAAAAtACAAAQABACcAAABdACAAAQABACcAAABDAPL/AwB3AAQAAABDAP//AwB3AAQAAABhAPz/AQABACcAAABiAAkAAQABACcAAABsAO3/AQABACcAAABeAN7/AQABACcAAABDAOv/AwB3AAQAAABvAN7/AQABACcAAAB6AAkAAQABACcAAACKAP3/AQAsAEcAAGCQAPj/AwB3AAQAAACQAAEAAwB3AAQAAAA4AOD/AQAVAAMAAAA8AN7/AQAVAAMAAAA/ANz/AQAVAAMAAABCANv/AQAVAAMAAABFANn/AQAVAAMAAACNACAAAQABACcAAACvACAAAQABACcAAAC4AM//AQAsAEcAAFCQAN7/AQABACcAAAB/AO3/AQABACcAAAC4AOH/AQAsAEcAAGDBABcAAwB3AAQAAAC1AP7/AQAsAEcAAACwAO3/AQAyAEAAAADCAOH/AQAsAEcAAFDGAA4AAQAyAEAAAAC9AMj/AQAVAAMAAFDCAMn/AQAVAAMAAFDTAPj/AQABACcAAGDTAPH/AQABACcAAGDf/9X/AwB3AAQAAAC7ALf/AwB3AAQAAAC+ALf/AwB3AAQAAAC9AMn/AwB3AAQAAACpAPb/AQAyAEAAAGAkAfL/AQABACcAAFA6ARwAAQABACcAAAAdASIAAwB3AAQAAADNACUAAwB3AAQAAADZACUAAwB3AAQAAABJAbv/AwB3AAQAAAA9Aan/AwB3AAQAAAAxAaf/AwB3AAQAAABNARMAAAAmACYAAABYARQAAwB3AAQAAABYAf//AwB3AAQAAAA=")
 tile_set = ExtResource("1_4dsp5")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -26,13 +108,245 @@ position = Vector2(-148, -14)
 Path = "res://scenes/level/game/world2/world_2_6.tscn"
 SpawnPositionIndex = 1
 
+[node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("2_nkih4")]
+position = Vector2(5536, -78)
+Path = "res://scenes/level/game/world_0.tscn"
+SpawnPositionIndex = 2
+
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
+
+[node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("3_xcdxs")]
+position = Vector2(1140, -741)
+
+[node name="timeless_one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("4_sop67")]
+position = Vector2(68, -265)
+scale = Vector2(1.72, 1)
+AllAnimations = PackedStringArray("move_forward", "move_backward")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="second_world/one_way_platforms/timeless_one_way_platform"]
+libraries = {
+"": SubResource("AnimationLibrary_gh6ek")
+}
+
+[node name="one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("3_xcdxs")]
+position = Vector2(1455, -812)
+
+[node name="one_way_platform3" parent="second_world/one_way_platforms" instance=ExtResource("3_xcdxs")]
+position = Vector2(2234, -575)
+
+[node name="one_way_platform4" parent="second_world/one_way_platforms" instance=ExtResource("3_xcdxs")]
+position = Vector2(3031, -1053)
+
+[node name="one_way_platform5" parent="second_world/one_way_platforms" instance=ExtResource("3_xcdxs")]
+position = Vector2(2762, -812)
+
+[node name="one_way_platform6" parent="second_world/one_way_platforms" instance=ExtResource("3_xcdxs")]
+position = Vector2(3251, -1040)
+rotation = -1.57079
+DisableOneWayCollission = true
+PlatformMoveMode = true
+PlatformMoveVector = Vector2(0, 5)
+StopOnRaycast = true
+
+[node name="one_way_platform7" parent="second_world/one_way_platforms" instance=ExtResource("3_xcdxs")]
+position = Vector2(3510, -1115)
+
+[node name="one_way_platform8" parent="second_world/one_way_platforms" instance=ExtResource("3_xcdxs")]
+position = Vector2(3441, -548)
+
+[node name="one_way_platform9" parent="second_world/one_way_platforms" instance=ExtResource("3_xcdxs")]
+position = Vector2(5002, -1115)
+
+[node name="timeless_one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("4_sop67")]
+position = Vector2(4221, 76)
+AllAnimations = PackedStringArray("move_up")
+DisablePlayerRewindOnStand = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="second_world/one_way_platforms/timeless_one_way_platform2"]
+libraries = {
+"": SubResource("AnimationLibrary_ghi3t")
+}
 
 [node name="keys" type="Node2D" parent="second_world"]
 
+[node name="key" parent="second_world/keys" instance=ExtResource("7_c4qd1")]
+position = Vector2(138, -657)
+
 [node name="enemies" type="Node2D" parent="second_world"]
 
+[node name="enemy_simple" parent="second_world/enemies" instance=ExtResource("7_0e8ww")]
+position = Vector2(1706, -402)
+AliveOnStart = true
+
+[node name="enemy_simple2" parent="second_world/enemies" instance=ExtResource("7_0e8ww")]
+position = Vector2(367, -637)
+AliveOnStart = true
+
+[node name="enemy_simple3" parent="second_world/enemies" instance=ExtResource("7_0e8ww")]
+position = Vector2(2314, -1092)
+AliveOnStart = true
+
+[node name="cannon" parent="second_world/enemies" instance=ExtResource("16_atkov")]
+position = Vector2(3648, -825)
+InitialState = 1
+SpawnInterval = 2.0
+Debug = true
+
+[node name="spawn" type="Node2D" parent="second_world/enemies/cannon"]
+position = Vector2(155, -17)
+
+[node name="enemy_simple" parent="second_world/enemies/cannon" instance=ExtResource("7_0e8ww")]
+position = Vector2(-49, 152)
+SpawnVelocity = Vector2(100, 0)
+
+[node name="enemy_simple2" parent="second_world/enemies/cannon" instance=ExtResource("7_0e8ww")]
+position = Vector2(-38, 241)
+SpawnVelocity = Vector2(100, 0)
+
+[node name="cannon2" parent="second_world/enemies" instance=ExtResource("16_atkov")]
+position = Vector2(4799, -820)
+scale = Vector2(-1, 1)
+InitialState = 1
+SpawnInterval = 2.0
+Debug = true
+
+[node name="spawn" type="Node2D" parent="second_world/enemies/cannon2"]
+position = Vector2(149, -20)
+
+[node name="enemy_simple" parent="second_world/enemies/cannon2" instance=ExtResource("7_0e8ww")]
+position = Vector2(-62, 159)
+SpawnVelocity = Vector2(-100, 0)
+
+[node name="enemy_simple2" parent="second_world/enemies/cannon2" instance=ExtResource("7_0e8ww")]
+position = Vector2(-59, 254)
+SpawnVelocity = Vector2(-100, 0)
+
 [node name="locked_doors" type="Node2D" parent="second_world"]
+
+[node name="locked_door" parent="second_world/locked_doors" instance=ExtResource("9_bvxf1")]
+position = Vector2(3273, -387)
+
+[node name="ladders" type="Node2D" parent="second_world"]
+z_index = -1
+
+[node name="ladder" parent="second_world/ladders" instance=ExtResource("3_qv5sm")]
+position = Vector2(944, -499)
+points = PackedVector2Array(0, 10, 0, -38.5)
+
+[node name="ladder2" parent="second_world/ladders" instance=ExtResource("3_qv5sm")]
+position = Vector2(-115, -460)
+points = PackedVector2Array(0, 10, 0, -23)
+
+[node name="ladder3" parent="second_world/ladders" instance=ExtResource("3_qv5sm")]
+position = Vector2(496, -712)
+points = PackedVector2Array(0, 10, 0, -38.1)
+
+[node name="ladder4" parent="second_world/ladders" instance=ExtResource("3_qv5sm")]
+position = Vector2(2311, -473)
+points = PackedVector2Array(0, 10, 0, -19.8)
+
+[node name="ladder5" parent="second_world/ladders" instance=ExtResource("3_qv5sm")]
+position = Vector2(1475, -686)
+points = PackedVector2Array(0, 10, 0, -23.2)
+
+[node name="ladder6" parent="second_world/ladders" instance=ExtResource("3_qv5sm")]
+position = Vector2(3038, -923)
+points = PackedVector2Array(0, 10, 0, -19.6)
+
+[node name="ladder7" parent="second_world/ladders" instance=ExtResource("3_qv5sm")]
+position = Vector2(2759, -110)
+points = PackedVector2Array(0, 10, 0, -80)
+
+[node name="ladder8" parent="second_world/ladders" instance=ExtResource("3_qv5sm")]
+position = Vector2(3477, -393)
+points = PackedVector2Array(0, 10, 0, -80.1)
+
+[node name="ladder9" parent="second_world/ladders" instance=ExtResource("3_qv5sm")]
+position = Vector2(5051, -172)
+points = PackedVector2Array(0, 10, 0, -102.8)
+
+[node name="switchers" type="Node2D" parent="second_world"]
+
+[node name="timeless_switcher" parent="second_world/switchers" node_paths=PackedStringArray("ReactAnimationPlayer") instance=ExtResource("8_510ti")]
+position = Vector2(1480, -410)
+Type = 1
+Reaction = 1
+ReactAnimationPlayer = NodePath("../../one_way_platforms/timeless_one_way_platform/AnimationPlayer")
+ReactAnimationNameOnForward = "move_forward"
+ReactAnimationNameOnBackward = "move_backward"
+
+[node name="timeless_switcher2" parent="second_world/switchers" node_paths=PackedStringArray("ReactAnimationPlayer") instance=ExtResource("8_510ti")]
+position = Vector2(3501, -100)
+Reaction = 1
+ReactAnimationPlayer = NodePath("../../one_way_platforms/timeless_one_way_platform2/AnimationPlayer")
+ReactAnimationNameOnForward = "move_up"
+ReactAnimationNameOnBackward = "move_up"
+
+[node name="invisible_walls" type="Node2D" parent="second_world"]
+
+[node name="invisible_wall" parent="second_world/invisible_walls" instance=ExtResource("10_sd2im")]
+position = Vector2(5, -659)
+
+[node name="spikes" type="Node2D" parent="second_world"]
+
+[node name="Spike" parent="second_world/spikes" instance=ExtResource("14_lfc2y")]
+position = Vector2(3627, -1008)
+points = PackedVector2Array(0, -0.0668298, 82.0669, -0.0668298)
+
+[node name="Spike2" parent="second_world/spikes" instance=ExtResource("14_lfc2y")]
+position = Vector2(3789, -23)
+points = PackedVector2Array(0, -0.0668298, 59.6121, -0.0668298)
+
+[node name="ladder_grid" type="Node2D" parent="second_world"]
+
+[node name="ladder_grid" parent="second_world/ladder_grid" instance=ExtResource("15_3uxmc")]
+position = Vector2(3654, -1260)
+polygon = PackedVector2Array(-5, 9.9, -5, -8.6, 133.2, -7.99999, 133.4, 10.4)
+
+[node name="ladder_grid2" parent="second_world/ladder_grid" instance=ExtResource("15_3uxmc")]
+position = Vector2(3826, -378)
+polygon = PackedVector2Array(-5, 9.9, -5.49997, -17.8, 84.8, -15.5, 85, 11.6)
+
+[node name="cannons" type="Node2D" parent="second_world"]
+
+[node name="cannon" parent="second_world/cannons" instance=ExtResource("16_atkov")]
+position = Vector2(4647, -141)
+rotation = 0.785397
+scale = Vector2(-1, 1)
+InitialState = 1
+SpawnInterval = 2.0
+
+[node name="spawn" type="Node2D" parent="second_world/cannons/cannon"]
+position = Vector2(130.108, -21.2133)
+
+[node name="cannon_ball" parent="second_world/cannons/cannon" instance=ExtResource("17_bb308")]
+position = Vector2(-90.5096, 84.8529)
+
+[node name="cannon_ball2" parent="second_world/cannons/cannon" instance=ExtResource("17_bb308")]
+position = Vector2(-130.107, 138.593)
+
+[node name="cannon_ball3" parent="second_world/cannons/cannon" instance=ExtResource("17_bb308")]
+
+[node name="cannon_ball4" parent="second_world/cannons/cannon" instance=ExtResource("17_bb308")]
+
+[node name="cannon2" parent="second_world/cannons" instance=ExtResource("16_atkov")]
+position = Vector2(3808, -125)
+rotation = -0.785397
+InitialState = 1
+SpawnInterval = 2.5
+
+[node name="spawn" type="Node2D" parent="second_world/cannons/cannon2"]
+position = Vector2(127.986, -12.021)
+
+[node name="cannon_ball" parent="second_world/cannons/cannon2" instance=ExtResource("17_bb308")]
+position = Vector2(-98.9948, 104.652)
+
+[node name="cannon_ball2" parent="second_world/cannons/cannon2" instance=ExtResource("17_bb308")]
+position = Vector2(-155.563, 155.564)
+
+[node name="cannon_ball3" parent="second_world/cannons/cannon2" instance=ExtResource("17_bb308")]
+
+[node name="cannon_ball4" parent="second_world/cannons/cannon2" instance=ExtResource("17_bb308")]
 
 [node name="Player" parent="." instance=ExtResource("7_32ggm")]
 position = Vector2(2, -58)

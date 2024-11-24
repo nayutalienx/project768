@@ -40,6 +40,11 @@ public struct PlayerRewindData
 
     public void ApplyData(Player player)
     {
+        if (player.RewindLocked)
+        {
+            return;
+        }
+
         player.Velocity = Velocity;
         player.GlobalPosition = GlobalPosition;
         player.RewindState = (int) CurrentState;
