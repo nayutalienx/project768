@@ -5,7 +5,6 @@ namespace project768.scripts.rewind.entity;
 public struct WorldRewindData
 {
     public CollectableSystemRewindData[] CollectableSystemRewindDatas { get; set; }
-    public PlayerRewindData PlayerRewindData { get; set; }
     public EnemyRewindData[] EnemyRewindDatas { get; set; }
     public JumpingEnemyRewindData[] JumpingEnemyRewindDatas { get; set; }
     public KeyRewindData[] KeyRewindDatas { get; set; }
@@ -21,7 +20,6 @@ public struct WorldRewindData
 
     public WorldRewindData(RewindDataSource source)
     {
-        PlayerRewindData = new PlayerRewindData(source.Player);
         CollectableSystemRewindDatas =
             CommonRewindData.CreateRewindData(source.CollectableSystem, s => new CollectableSystemRewindData(s));
         EnemyRewindDatas = CommonRewindData.CreateRewindData(source.Enemies, enemy => new EnemyRewindData(enemy));
@@ -49,8 +47,6 @@ public struct WorldRewindData
 
     public void ApplyData(RewindDataSource source)
     {
-        PlayerRewindData.ApplyData(source.Player);
-
         CommonRewindData.ApplyRewindData(source.CollectableSystem, CollectableSystemRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));
 

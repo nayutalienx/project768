@@ -17,6 +17,8 @@ public partial class RewindPlayer : Node2D
 
     private FixedSizeStack<WorldRewindData> worldStates = new(MaxStates);
     private FixedSizeStack<WorldRewindData> rewindedBuffer;
+    private FixedSizeStack<PlayerRewindData> playerStates = new(MaxStates);
+    private FixedSizeStack<PlayerRewindData> playerRewindedBuffer;
 
     private int rewindSpeed;
     public bool IsRewinding { get; set; }
@@ -124,7 +126,6 @@ public partial class RewindPlayer : Node2D
             rewindMode = RewindMode.Forward;
         }
 
-
         for (int i = 0; i < Math.Abs(RewindSpeed); i++)
         {
             if (rewindMode == RewindMode.Backward)
@@ -134,6 +135,10 @@ public partial class RewindPlayer : Node2D
                     var lastState = worldStates.Pop();
                     lastState.ApplyData(RewindDataSource);
                     rewindedBuffer.Push(lastState);
+
+                    var lastPlayerState = playerStates.Pop();
+                    lastPlayerState.ApplyData(RewindDataSource.Player);
+                    playerRewindedBuffer.Push(lastPlayerState);
                 }
                 else
                 {
@@ -148,6 +153,10 @@ public partial class RewindPlayer : Node2D
                     var futureState = rewindedBuffer.Pop();
                     futureState.ApplyData(RewindDataSource);
                     worldStates.Push(futureState);
+
+                    var futurePlayerState = playerRewindedBuffer.Pop();
+                    futurePlayerState.ApplyData(RewindDataSource.Player);
+                    playerStates.Push(futurePlayerState);
                 }
                 else
                 {
@@ -158,12 +167,12 @@ public partial class RewindPlayer : Node2D
         }
     }
 
-
     public void RecordState()
     {
         if (!RecordingPaused)
         {
             worldStates.Push(new WorldRewindData(RewindDataSource));
+            playerStates.Push(new PlayerRewindData(RewindDataSource.Player));
         }
     }
 
@@ -180,6 +189,7 @@ public partial class RewindPlayer : Node2D
             IsRewinding = true;
             RewindSpeed = 1;
             rewindedBuffer = new(MaxStates);
+            playerRewindedBuffer = new(MaxStates);
 
             if (RewindLabel != null)
             {
