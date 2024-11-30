@@ -17,6 +17,7 @@ public class DeathState : BasePlayerState
         {
             Entity.DeathStopTimer.Reset();
         }
+
         Entity.Sprite2D.Modulate = Colors.Red;
         Entity.DisableCollision();
     }
@@ -29,7 +30,18 @@ public class DeathState : BasePlayerState
             if (!Entity.GetTree().IsPaused())
             {
                 Entity.GetTree().SetPause(true);
-                RewindPlayer.Instance.RecordingPaused = true;
+                
+                if (RewindPlayer.Instance != null)
+                {
+                    RewindPlayer.Instance.RecordingPaused = true;
+                }
+                
+                if(SpacetimeRewindPlayer.Instance != null)
+                {
+                    SpacetimeRewindPlayer.Instance.RecordingPaused = true;
+                }
+                
+
                 Entity.Label.Text = "you dead. rewind via SHIFT";
             }
         }

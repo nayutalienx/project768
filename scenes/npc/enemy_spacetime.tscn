@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://n7kbhexoamn1"]
+
+[ext_resource type="Script" path="res://scripts/game_entity/npc/enemy_spacetime/EnemySpacetime.cs" id="1_a645p"]
+[ext_resource type="Texture2D" uid="uid://baql6qn040vl" path="res://sprites/icon.svg" id="2_phs8c"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqmav"]
+radius = 14.2247
+height = 29.8259
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oxby5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vgc30"]
+size = Vector2(20, 12.5648)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qcvlv"]
+font_size = 25
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Curve2D" id="Curve2D_1e5po"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, -17.4569, -30.1023, 17.4569, 30.1023, 66, 49, 0, 0, 0, 0, 102, 140)
+}
+point_count = 3
+
+[node name="enemy_spacetime" type="CharacterBody2D" groups=["spacetime_enemy"]]
+collision_layer = 4
+script = ExtResource("1_a645p")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.33, 0.33, 1)
+position = Vector2(0, -33)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_phs8c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -33)
+scale = Vector2(2.17931, 2.17931)
+shape = SubResource("CapsuleShape2D_hqmav")
+
+[node name="EnemyHeadArea" type="Area2D" parent="."]
+position = Vector2(0, -62)
+scale = Vector2(1.08, 0.6)
+collision_layer = 0
+collision_mask = 1026
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHeadArea"]
+scale = Vector2(2.48444, 1)
+shape = SubResource("RectangleShape2D_oxby5")
+
+[node name="EnemyAttackArea" type="Area2D" parent="."]
+position = Vector2(0, -33)
+scale = Vector2(3.38474, 2.94474)
+collision_layer = 0
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAttackArea"]
+position = Vector2(0, 4.92403)
+shape = SubResource("RectangleShape2D_vgc30")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -3.0
+offset_top = -112.0
+offset_right = 92.0
+offset_bottom = -77.0
+text = "v"
+label_settings = SubResource("LabelSettings_qcvlv")
+
+[node name="DeathPath2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_1e5po")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="DeathPath2D"]
+rotation = 0.638635

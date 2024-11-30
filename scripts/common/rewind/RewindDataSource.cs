@@ -15,6 +15,7 @@ public class RewindDataSource
     public Player Player { get; set; }
     public CollectableSystem[] CollectableSystem { get; set; }
     public Enemy[] Enemies { get; set; }
+    public EnemySpacetime[] EnemySpacetimes { get; set; }
     public JumpingEnemy[] JumpingEnemies { get; set; }
     public Key[] Keys { get; set; }
     public LockedDoor[] LockedDoors { get; set; }
@@ -33,6 +34,7 @@ public class RewindDataSource
     {
         Player = FindAndAddRewindables(t, "player")[0] as Player;
         Enemies = FindAndAddRewindables(t, "enemy").ConvertAll(o => o as Enemy).ToArray();
+        EnemySpacetimes = FindAndAddRewindables(t, "spacetime_enemy").ConvertAll(o => o as EnemySpacetime).ToArray();
         JumpingEnemies = FindAndAddRewindables(t, "jumping_enemy").ConvertAll(o => o as JumpingEnemy).ToArray();
         Keys = FindAndAddRewindables(t, "key").ConvertAll(o => o as Key).ToArray();
         LockedDoors = FindAndAddRewindables(t, "door").ConvertAll(o => o as LockedDoor).ToArray();

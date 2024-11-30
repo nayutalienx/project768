@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://1o2jv46sb6vl"]
+
+[ext_resource type="Script" path="res://scripts/common/rewind/SpacetimeRewindPlayer.cs" id="1_mn0g1"]
+
+[node name="SpacetimeRewindPlayer" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_mn0g1")

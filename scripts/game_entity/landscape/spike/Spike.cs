@@ -1,6 +1,7 @@
 using System.Transactions;
 using Godot;
 using project768.scripts.game_entity.common;
+using project768.scripts.game_entity.npc.enemy_spacetime.interaction.data;
 using project768.scripts.game_entity.npc.enemy.interaction.data;
 using project768.scripts.game_entity.npc.jumping_enemy.interaction.data;
 using project768.scripts.game_entity.npc.timeless_enemy.interaction.data;
@@ -25,6 +26,11 @@ public partial class Spike : DynamicSpriteLine
             if (body is Enemy enemy)
             {
                 enemy.Interactor.Interact(new EnemyInteractionEvent(EnemyInteraction.KillEnemy));
+            }
+            
+            if (body is EnemySpacetime enemySpacetime)
+            {
+                enemySpacetime.Interactor.Interact(new EnemySpacetimeInteractionEvent(EnemySpacetimeInteraction.KillEnemy));
             }
 
             if (body is JumpingEnemy jumpingEnemy)

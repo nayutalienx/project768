@@ -43,6 +43,7 @@ claw=""
 jumping_enemy=""
 trap_spawner=""
 box=""
+spacetime_enemy=""
 
 [input]
 
