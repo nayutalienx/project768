@@ -6,6 +6,7 @@ public struct WorldRewindData
 {
     public CollectableSystemRewindData[] CollectableSystemRewindDatas { get; set; }
     public EnemyRewindData[] EnemyRewindDatas { get; set; }
+    public EnemySpacetimeRewindData[] EnemySpacetimeRewindDatas { get; set; }
     public JumpingEnemyRewindData[] JumpingEnemyRewindDatas { get; set; }
     public KeyRewindData[] KeyRewindDatas { get; set; }
     public LockedDoorRewindData[] LockedDoorRewindDatas { get; set; }
@@ -23,6 +24,8 @@ public struct WorldRewindData
         CollectableSystemRewindDatas =
             CommonRewindData.CreateRewindData(source.CollectableSystem, s => new CollectableSystemRewindData(s));
         EnemyRewindDatas = CommonRewindData.CreateRewindData(source.Enemies, enemy => new EnemyRewindData(enemy));
+        EnemySpacetimeRewindDatas =
+            CommonRewindData.CreateRewindData(source.EnemySpacetimes, enemy => new EnemySpacetimeRewindData(enemy));
         JumpingEnemyRewindDatas =
             CommonRewindData.CreateRewindData(source.JumpingEnemies, enemy => new JumpingEnemyRewindData(enemy));
         KeyRewindDatas = CommonRewindData.CreateRewindData(source.Keys, key => new KeyRewindData(key));
@@ -51,6 +54,8 @@ public struct WorldRewindData
             (rewindData, entity) => rewindData.ApplyData(entity));
 
         CommonRewindData.ApplyRewindData(source.Enemies, EnemyRewindDatas,
+            (rewindData, entity) => rewindData.ApplyData(entity));
+        CommonRewindData.ApplyRewindData(source.EnemySpacetimes, EnemySpacetimeRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));
         CommonRewindData.ApplyRewindData(source.JumpingEnemies, JumpingEnemyRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));

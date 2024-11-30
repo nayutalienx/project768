@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://buidffxhnjvew"]
+
+[ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_jseew"]
+[ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_iatqp"]
+[ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="9_3dtsw"]
+[ext_resource type="PackedScene" uid="uid://1o2jv46sb6vl" path="res://scenes/common/spacetime_rewind_player.tscn" id="10_wpp4p"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_rdw5m"]
+font_size = 30
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="World0" type="Node2D"]
+
+[node name="second_world" type="Node2D" parent="."]
+
+[node name="tiles" type="Node2D" parent="second_world"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
+position = Vector2(213, -499)
+tile_map_data = PackedByteArray(0, 0, 253, 255, 32, 0, 1, 0, 1, 0, 39, 0, 0, 0, 233, 255, 23, 0, 0, 0, 38, 0, 38, 0, 0, 0, 223, 255, 20, 0, 3, 0, 119, 0, 4, 0, 0, 0)
+tile_set = ExtResource("1_jseew")
+
+[node name="portals" type="Node2D" parent="second_world"]
+
+[node name="SceneLoader" parent="second_world/portals" instance=ExtResource("2_iatqp")]
+position = Vector2(-148, -14)
+Path = "res://scenes/level/game/world3/world_3_0.tscn"
+SpawnPositionIndex = 1
+
+[node name="one_way_platforms" type="Node2D" parent="second_world"]
+
+[node name="keys" type="Node2D" parent="second_world"]
+
+[node name="enemies" type="Node2D" parent="second_world"]
+
+[node name="locked_doors" type="Node2D" parent="second_world"]
+
+[node name="spikes" type="Node2D" parent="second_world"]
+
+[node name="Player" parent="." instance=ExtResource("9_3dtsw")]
+position = Vector2(-169, -14)
+
+[node name="spawn" type="Node2D" parent="Player"]
+
+[node name="start" type="Node2D" parent="Player/spawn"]
+
+[node name="end" type="Node2D" parent="Player/spawn"]
+position = Vector2(1834, -75)
+
+[node name="Label2" type="Label" parent="Player"]
+offset_left = 1.0
+offset_top = -167.0
+offset_right = 41.0
+offset_bottom = -144.0
+label_settings = SubResource("LabelSettings_rdw5m")
+
+[node name="SpacetimeRewindPlayer" parent="." node_paths=PackedStringArray("RewindLabel") instance=ExtResource("10_wpp4p")]
+RewindLabel = NodePath("../Player/Label2")
+
+[node name="start" type="Node2D" parent="SpacetimeRewindPlayer"]
+position = Vector2(-181, -31)
+
+[node name="end" type="Node2D" parent="SpacetimeRewindPlayer"]
+position = Vector2(1680, -40)

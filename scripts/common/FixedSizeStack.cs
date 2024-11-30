@@ -19,6 +19,11 @@ public class FixedSizeStack<T>
         _maxSize = maxSize;
     }
 
+    public void AddAll(FixedSizeStack<T> stack)
+    {
+        _stack.AddRange(stack._stack);
+    }
+
     public void Push(T item)
     {
         if (_stack.Count >= _maxSize)
@@ -30,6 +35,13 @@ public class FixedSizeStack<T>
         _stack.Add(item);
     }
 
+    public T Last()
+    {
+        if (_stack.Count == 0)
+            throw new InvalidOperationException("Stack is empty.");
+        return _stack.Last();
+    }
+
     public T Pop()
     {
         if (_stack.Count == 0)
@@ -38,6 +50,11 @@ public class FixedSizeStack<T>
         T value = _stack.Last();
         _stack.RemoveAt(_stack.Count - 1);
         return value;
+    }
+
+    public void Flush()
+    {
+        _stack.Clear();
     }
 
     public int Count => _stack.Count;

@@ -5,7 +5,6 @@ using Godot;
 using project768.scripts.common;
 using project768.scripts.common.interaction;
 using project768.scripts.game_entity.common.system;
-using project768.scripts.game_entity.landscape.cannon;
 using project768.scripts.player.interaction;
 using project768.scripts.rewind.entity;
 using project768.scripts.state_machine;
@@ -116,6 +115,7 @@ public partial class Player :
         LoadPreviousSceneData();
         SaveSystem.Instance.LoadGame(GetTree());
     }
+
 
     public override void _Input(InputEvent _event)
     {

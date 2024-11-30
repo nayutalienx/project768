@@ -1,16 +1,26 @@
-[gd_scene load_steps=12 format=4 uid="uid://3ugxj5ywtylm"]
+[gd_scene load_steps=13 format=4 uid="uid://3ugxj5ywtylm"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_mrhc8"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_aagrc"]
 [ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/platform/one_way_platform.tscn" id="3_8c1te"]
 [ext_resource type="PackedScene" uid="uid://c14oily4ha1w1" path="res://scenes/item/timeless_key.tscn" id="4_eem0w"]
+[ext_resource type="PackedScene" uid="uid://n7kbhexoamn1" path="res://scenes/npc/enemy_spacetime.tscn" id="5_xy6uk"]
 [ext_resource type="PackedScene" uid="uid://dagfrs5bi1ci6" path="res://scenes/landscape/spikes.tscn" id="6_6u24f"]
+[ext_resource type="Script" path="res://scripts/common/rewind/SpacetimePathFollow.cs" id="6_ht631"]
 [ext_resource type="PackedScene" uid="uid://cmwltwmhaorl3" path="res://scenes/landscape/locked_door/timeless_locked_door.tscn" id="6_xbwd3"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="7_pfx22"]
-[ext_resource type="PackedScene" uid="uid://j2k81ogo4gnf" path="res://scenes/common/rewind_player.tscn" id="8_8y0ed"]
-[ext_resource type="PackedScene" uid="uid://kg7vy36drcwi" path="res://scenes/common/music_player.tscn" id="9_52igi"]
-[ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="10_mssgj"]
-[ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="11_88wfa"]
+[ext_resource type="PackedScene" uid="uid://1o2jv46sb6vl" path="res://scenes/common/spacetime_rewind_player.tscn" id="9_6b4t2"]
+
+[sub_resource type="Curve2D" id="Curve2D_vkfei"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 670, -10, 0, 0, 0, 0, 716, -11, -20.8739, -20.3874, 20.8739, 20.3874, 793, 10, -6.25992, -11.8568, 6.25992, 11.8568, 894, 195, -0.691308, -0.821678, 0.691308, 0.821678, 829, 388, 0.354874, 0.545862, -0.354874, -0.545862, 739, 388, 0, 0, 0, 0, -200, 393)
+}
+point_count = 7
+
+[sub_resource type="LabelSettings" id="LabelSettings_rdw5m"]
+font_size = 30
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [node name="World0" type="Node2D"]
 
@@ -37,8 +47,9 @@ Path = "res://scenes/level/game/world3/world_3_1.tscn"
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
 [node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("3_8c1te")]
-position = Vector2(748, 1)
+position = Vector2(483, 6)
 scale = Vector2(1.517, 1)
+DisableOneWayCollission = true
 
 [node name="keys" type="Node2D" parent="second_world"]
 
@@ -46,6 +57,20 @@ scale = Vector2(1.517, 1)
 position = Vector2(367, 331)
 
 [node name="enemies" type="Node2D" parent="second_world"]
+
+[node name="enemy_spacetime" parent="second_world/enemies" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("5_xy6uk")]
+position = Vector2(670, -10)
+AliveOnStart = true
+SpacetimePathFollow = NodePath("../Path2D/PathFollow2D")
+
+[node name="Path2D" type="Path2D" parent="second_world/enemies"]
+curve = SubResource("Curve2D_vkfei")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/enemies/Path2D"]
+position = Vector2(670, -10)
+rotates = false
+loop = false
+script = ExtResource("6_ht631")
 
 [node name="locked_doors" type="Node2D" parent="second_world"]
 
@@ -59,24 +84,27 @@ position = Vector2(158, 271)
 rotation = 1.5708
 
 [node name="Player" parent="." instance=ExtResource("7_pfx22")]
-position = Vector2(2, -58)
+position = Vector2(-169, -14)
 
 [node name="spawn" type="Node2D" parent="Player"]
 
 [node name="start" type="Node2D" parent="Player/spawn"]
-position = Vector2(-22, 3)
 
 [node name="end" type="Node2D" parent="Player/spawn"]
-position = Vector2(1529, -34)
+position = Vector2(1834, -75)
 
-[node name="RewindPlayer" parent="." instance=ExtResource("8_8y0ed")]
+[node name="Label2" type="Label" parent="Player"]
+offset_left = 1.0
+offset_top = -167.0
+offset_right = 41.0
+offset_bottom = -144.0
+label_settings = SubResource("LabelSettings_rdw5m")
 
-[node name="MusicPlayer" parent="." node_paths=PackedStringArray("ForwardPlayer", "BackwardPlayer") instance=ExtResource("9_52igi")]
-ForwardPlayer = NodePath("forward")
-BackwardPlayer = NodePath("backward")
+[node name="SpacetimeRewindPlayer" parent="." node_paths=PackedStringArray("RewindLabel") instance=ExtResource("9_6b4t2")]
+RewindLabel = NodePath("../Player/Label2")
 
-[node name="forward" type="AudioStreamPlayer" parent="MusicPlayer"]
-stream = ExtResource("10_mssgj")
+[node name="start" type="Node2D" parent="SpacetimeRewindPlayer"]
+position = Vector2(-181, -31)
 
-[node name="backward" type="AudioStreamPlayer" parent="MusicPlayer"]
-stream = ExtResource("11_88wfa")
+[node name="end" type="Node2D" parent="SpacetimeRewindPlayer"]
+position = Vector2(1680, -40)
