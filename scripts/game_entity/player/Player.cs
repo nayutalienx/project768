@@ -18,6 +18,7 @@ public partial class Player :
     IInteractableEntity<Player, PlayerInteractionContext, PlayerInteractionEvent, PlayerInteraction>
 {
     public static PreviousSceneData PreviousSceneData { get; set; } = new();
+    public static float PositionDeltaFactor = 5.0f; // подбирать вручную
 
     public List<Node2D> SpawnPositions { get; set; } = new();
 
