@@ -3,6 +3,7 @@ using project768.scripts.common;
 using project768.scripts.game_entity.npc.enemy_spacetime.interaction.data;
 using project768.scripts.player;
 using project768.scripts.player.interaction;
+using project768.scripts.rewind;
 
 namespace project768.scripts.game_entity.npc.enemy_spacetime.state;
 
@@ -14,6 +15,7 @@ public class MoveState : BaseEnemySpacetimeState
 
     public override void EnterState(EnemySpacetime.State prevState)
     {
+        Entity.Visible = true;
         RecoverKeyOnEnterState(prevState);
         Entity.EnableCollision(Entity.OriginalEntityLayerMask);
         Entity.HeadArea.EnableCollision(Entity.OriginalHeadAreaLayerMask);
@@ -78,8 +80,17 @@ public class MoveState : BaseEnemySpacetimeState
         ProcessTimelessKey();
         ProcessTimelinePosition();
         Entity.MoveAndSlide();
+
+        if (!Entity.AliveOnStart && 
+            SpacetimeRewindPlayer.Instance.GetCurrentTimelinePosition() < Entity.SpawnTimeInPixel)
+        {
+            Entity.LockSpawn = false;
+            Entity.LockWaitingToDeath = true;
+            Entity.StateChanger.ChangeState(EnemySpacetime.State.Wait);
+            return;
+        }
     }
-    
+
     private void ProcessTimelinePosition()
     {
         Entity.GlobalPosition = Entity.SpacetimePathFollow.GlobalPosition;

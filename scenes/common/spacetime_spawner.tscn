@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwpc4tbhvj0ug"]
+
+[ext_resource type="Script" path="res://scripts/game_entity/common/spacetime_spawner/SpacetimeSpawner.cs" id="1_lbkjv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5xlsr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_l24ry"]
+font_size = 25
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="spacetime_spawner" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_lbkjv")
+SpawnIntervalInPixel = 1000.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5xlsr")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -19.0
+offset_top = -48.0
+offset_right = 21.0
+offset_bottom = -13.0
+text = "spawner:"
+label_settings = SubResource("LabelSettings_l24ry")

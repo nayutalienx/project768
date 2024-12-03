@@ -47,6 +47,8 @@ public partial class EnemySpacetime :
     [ExportSubgroup("Enemy settings")] [Export]
     public bool AliveOnStart = false;
 
+    [Export] public float SpawnTimeInPixel = 1000.0f;
+
     public Area2D HeadArea { get; set; }
     public Area2D AttackArea { get; set; }
     public Label Label { get; set; }
@@ -57,13 +59,15 @@ public partial class EnemySpacetime :
 
     [Export] public float DeathTimelineLength = 300.0f;
     [Export] public SpacetimePathFollow SpacetimePathFollow { get; set; }
-    
+
     public Path2D DeathPath2D { get; set; }
     public PathFollow2D DeathPathFollow { get; set; }
 
-    public Vector2 PlayerPositionWhenEnemyKilled;
-
-    public Player Player;
+    public Vector2 PlayerPositionWhenEnemyKilled = new Vector2(-99999, 0);
+    public Vector2 PlayerPositionWhenEnemyWaitingAfterKilled = new Vector2(-99999, 0);
+    
+    public bool LockSpawn;
+    public bool LockWaitingToDeath;
 
     public override void _Ready()
     {
@@ -90,18 +94,14 @@ public partial class EnemySpacetime :
 
         DeathPath2D = GetNode<Path2D>("DeathPath2D");
         DeathPathFollow = GetNode<PathFollow2D>("DeathPath2D/PathFollow2D");
-        
+
         var enemyParent = GetParent();
         RemoveChild(DeathPath2D);
-        Callable.From(() =>
-        {
-            enemyParent.AddChild(DeathPath2D);
-        }).CallDeferred();
-        
+        Callable.From(() => { enemyParent.AddChild(DeathPath2D); }).CallDeferred();
+
         HeadArea = GetNode<Area2D>("EnemyHeadArea");
         AttackArea = GetNode<Area2D>("EnemyAttackArea");
         Label = GetNode<Label>("Label");
-        Player = GetTree().GetFirstNodeInGroup("player") as Player;
 
         HeadArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("head", body)); };
         AttackArea.BodyEntered += body => { CurrentState.OnBodyEntered(new CollisionBody("attack", body)); };
@@ -109,6 +109,8 @@ public partial class EnemySpacetime :
         OriginalEntityLayerMask = this.GetCollisionLayerMask();
         OriginalAttackAreaLayerMask = AttackArea.GetCollisionLayerMask();
         OriginalHeadAreaLayerMask = HeadArea.GetCollisionLayerMask();
+        
+        GlobalPosition = SpacetimePathFollow.GlobalPosition;
 
         if (AliveOnStart)
         {
@@ -117,6 +119,7 @@ public partial class EnemySpacetime :
         else
         {
             StateChanger.ChangeState(State.Wait);
+            SpacetimePathFollow.SetLocalTimelineStart(SpawnTimeInPixel);
         }
     }
 
@@ -125,7 +128,7 @@ public partial class EnemySpacetime :
         CurrentState.PhysicProcess(delta);
 
         Label.Text = $"s: {CurrentState.StateEnum}\n" +
-                     $"pr: {SpacetimePathFollow.GlobalPosition}";
+                     $"ratio: {SpacetimePathFollow.ProgressRatio}";
     }
 
     public void RewindStarted()
@@ -141,4 +144,6 @@ public partial class EnemySpacetime :
     public void OnRewindSpeedChanged(int speed)
     {
     }
+
+   
 }

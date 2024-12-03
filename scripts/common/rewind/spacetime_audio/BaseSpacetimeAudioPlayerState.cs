@@ -13,12 +13,12 @@ public class BaseSpacetimeAudioPlayerState : State<SpacetimeAudioPlayer, Spaceti
 
     public void UpdatePitchScaleFromPositionDelta()
     {
-        if (Entity.PlayerPosDelta == 0)
+        if (Player.Instance.PosDelta == 0)
         {
             return;
         }
 
-        float speed = Entity.PlayerPosDelta / Player.PositionDeltaFactor;
+        float speed = Player.Instance.PosDelta / Player.PositionDeltaFactor;
         Entity.ForwardPlayer.PitchScale = Math.Abs(speed);
         Entity.BackwardPlayer.PitchScale = Math.Abs(speed);
     }

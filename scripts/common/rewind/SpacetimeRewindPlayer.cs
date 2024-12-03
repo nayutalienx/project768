@@ -29,13 +29,24 @@ public partial class SpacetimeRewindPlayer : Node2D
     public Vector2 TimelineStartPos { get; set; }
     public Vector2 TimelineEndPos { get; set; }
 
-    public float TimelineProgress => CalculateTimelineProgress(RewindDataSource.Player.GlobalPosition.X, TimelineStartPos.X, TimelineEndPos.X);
-    
+    public float GlobalTimelineProgress => CalculateTimelineProgress(RewindDataSource.Player.GlobalPosition.X,
+        TimelineStartPos.X, TimelineEndPos.X);
+
     public static float CalculateTimelineProgress(float playerPosX, float startPosX, float endPosX)
     {
         return Mathf.Clamp((playerPosX - startPosX) / (endPosX - startPosX), 0, 1);
     }
-    
+
+    public float CalculateSpacetimeTime(float intervalInPixel)
+    {
+        return (RewindDataSource.Player.GlobalPosition.X - TimelineStartPos.X) % intervalInPixel;
+    }
+
+    public float GetCurrentTimelinePosition()
+    {
+        return (RewindDataSource.Player.GlobalPosition.X - TimelineStartPos.X);
+    }
+
     public enum RewindMode
     {
         Backward,
