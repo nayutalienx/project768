@@ -1,5 +1,6 @@
 ﻿using project768.scripts.common.interaction;
 using project768.scripts.game_entity.npc.enemy_spacetime.interaction.data;
+using project768.scripts.player;
 
 namespace project768.scripts.game_entity.npc.enemy_spacetime.interaction;
 
@@ -14,7 +15,7 @@ public class
     {
         if (Entity.CurrentState.StateEnum == EnemySpacetime.State.Move)
         {
-            Entity.PlayerPositionWhenEnemyKilled = Entity.Player.GlobalPosition;
+            Entity.PlayerPositionWhenEnemyKilled = Player.Instance.GlobalPosition;
             Entity.DeathPath2D.GlobalPosition = Entity.GlobalPosition;
             Entity.StateChanger.ChangeState(EnemySpacetime.State.Death);
         }

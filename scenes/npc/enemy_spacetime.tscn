@@ -19,7 +19,7 @@ outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Curve2D" id="Curve2D_1e5po"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, -17.4569, -30.1023, 17.4569, 30.1023, 66, 49, 0, 0, 0, 0, 102, 140)
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, -17.4569, -30.1023, 17.4569, 30.1023, 66, 49, 0, 0, 0, 0, 96, 110)
 }
 point_count = 3
 
@@ -71,3 +71,5 @@ curve = SubResource("Curve2D_1e5po")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="DeathPath2D"]
 rotation = 0.638635
+rotates = false
+loop = false

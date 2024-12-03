@@ -1,4 +1,6 @@
-﻿namespace project768.scripts.rewind.spacetime_audio;
+﻿using project768.scripts.player;
+
+namespace project768.scripts.rewind.spacetime_audio;
 
 public class StoppedState : BaseSpacetimeAudioPlayerState
 {
@@ -27,13 +29,13 @@ public class StoppedState : BaseSpacetimeAudioPlayerState
     public override void Process(double delta)
     {
         
-        if (Entity.PlayerPosDelta < 0)
+        if (Player.Instance.PosDelta < 0)
         {
             Entity.StateChanger.ChangeState(SpacetimeAudioPlayer.State.Backward);
             return;
         }
         
-        if (Entity.PlayerPosDelta > 0)
+        if (Player.Instance.PosDelta > 0)
         {
             Entity.StateChanger.ChangeState(SpacetimeAudioPlayer.State.Forward);
             return;

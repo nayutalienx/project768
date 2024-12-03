@@ -1,9 +1,47 @@
-[gd_scene load_steps=6 format=3 uid="uid://buidffxhnjvew"]
+[gd_scene load_steps=19 format=4 uid="uid://bypjbm3xw3exk"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_jseew"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_iatqp"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/platform/one_way_platform.tscn" id="3_qd7ra"]
+[ext_resource type="Script" path="res://scripts/common/rewind/SpacetimePathFollow.cs" id="4_6rb3w"]
+[ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="4_ed0u3"]
+[ext_resource type="PackedScene" uid="uid://n7kbhexoamn1" path="res://scenes/npc/enemy_spacetime.tscn" id="5_ux608"]
+[ext_resource type="PackedScene" uid="uid://cwpc4tbhvj0ug" path="res://scenes/common/spacetime_spawner.tscn" id="6_m68j4"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="9_3dtsw"]
 [ext_resource type="PackedScene" uid="uid://1o2jv46sb6vl" path="res://scenes/common/spacetime_rewind_player.tscn" id="10_wpp4p"]
+[ext_resource type="PackedScene" uid="uid://c3waffwuom10l" path="res://scenes/common/spacetime_music_player.tscn" id="11_7mv1x"]
+[ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="12_iinx8"]
+[ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="13_subei"]
+
+[sub_resource type="Curve2D" id="Curve2D_weept"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 171, -892, 0, 0, 0, 0, 262, -6, -42, -9.5, 42, 9.5, 346, -75, 0, 0, 0, 0, 437, -8, 0, 0, 0, 0, 643, -11, 0, 0, 0, 0, 879, -13, 0, 0, 0, 0, 3613, -14)
+}
+point_count = 7
+
+[sub_resource type="Curve2D" id="Curve2D_og6i3"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 734, -271, 0, 0, 0, 0, 2071, -265, 0, 0, 0, 0, 736, -260)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_lq6y7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 759, -606, 0, 0, 0, 0, 1962, -606, 0, 0, 0, 0, 653, -606)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_x2j0h"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1876, -606, 0, 0, 0, 0, 654, -604, 0, 0, 0, 0, 1962, -603)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_hj7k6"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1094, -966, 0, 0, 0, 0, 1160, -924, 0, 0, 0, 0, 2013, -922, -25.0127, -10.3826, 25.0127, 10.3826, 2076, -911, 0, 0, 0, 0, 2144, -723, 0, 0, 0, 0, 2344.11, -724.573, -17.0089, -16.694, 17.0089, 16.694, 2406, -713, 0, 0, 0, 0, 2436, -371, -23.026, -19.3552, 23.026, 19.3552, 2524, -360, 0, 0, 0, 0, 2641, -14, -21.2315, -2.97638, 21.2315, 2.97638, 2670, -57, 0, 0, 0, 0, 2714, -13, 0, 0, 0, 0, 3549, -13)
+}
+point_count = 13
 
 [sub_resource type="LabelSettings" id="LabelSettings_rdw5m"]
 font_size = 30
@@ -18,7 +56,7 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray(0, 0, 253, 255, 32, 0, 1, 0, 1, 0, 39, 0, 0, 0, 233, 255, 23, 0, 0, 0, 38, 0, 38, 0, 0, 0, 223, 255, 20, 0, 3, 0, 119, 0, 4, 0, 0, 0)
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAtACAAAQABACcAAABdACAAAQABACcAAAAxAOf/AQABACcAAAA3ABAAAQABACcAAABFAPv/AQABACcAAABGAOf/AQABACcAAABMABAAAQABACcAAABWAPv/AQABACcAAAB6APT/AQAVAAMAAACAAAoAAQAVAAMAAACNACAAAQABACcAAAC8ACAAAQABACcAAADf////AwB3AAQAAADf/+v/AwB3AAQAAADf/9b/AwB3AAQAAADf/8H/AwB3AAQAAADf/63/AwB3AAQAAAAPAPf/AQAVAAMAAAAUAAwAAQAVAAMAAAAeAOT/AQAVAAMAAAAjAOL/AQAVAAMAAAA=")
 tile_set = ExtResource("1_jseew")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -30,13 +68,144 @@ SpawnPositionIndex = 1
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
+[node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("3_qd7ra")]
+position = Vector2(1965, -248)
+
+[node name="one_way_platform2" parent="second_world/one_way_platforms" instance=ExtResource("3_qd7ra")]
+position = Vector2(783, -588)
+
+[node name="one_way_platform3" parent="second_world/one_way_platforms" instance=ExtResource("3_qd7ra")]
+position = Vector2(1858, -906)
+
+[node name="one_way_platform5" parent="second_world/one_way_platforms" instance=ExtResource("3_qd7ra")]
+position = Vector2(471, -906)
+
+[node name="one_way_platform4" parent="second_world/one_way_platforms" instance=ExtResource("3_qd7ra")]
+position = Vector2(1521, -1160)
+scale = Vector2(1.56, 1)
+
 [node name="keys" type="Node2D" parent="second_world"]
 
 [node name="enemies" type="Node2D" parent="second_world"]
 
+[node name="Path2D" type="Path2D" parent="second_world/enemies"]
+curve = SubResource("Curve2D_weept")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/enemies/Path2D"]
+position = Vector2(171, -892)
+rotation = 1.55674
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+
+[node name="enemy_spacetime" parent="second_world/enemies" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("5_ux608")]
+position = Vector2(-109, -1194)
+AliveOnStart = true
+SpacetimePathFollow = NodePath("../Path2D/PathFollow2D")
+
+[node name="Path2D2" type="Path2D" parent="second_world/enemies"]
+curve = SubResource("Curve2D_og6i3")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/enemies/Path2D2"]
+position = Vector2(734, -271)
+rotation = 0.00225903
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+TimelineProjectionMax = 0.7
+
+[node name="enemy_spacetime2" parent="second_world/enemies" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("5_ux608")]
+position = Vector2(912, -313)
+AliveOnStart = true
+SpacetimePathFollow = NodePath("../Path2D2/PathFollow2D")
+
+[node name="Path2D3" type="Path2D" parent="second_world/enemies"]
+curve = SubResource("Curve2D_lq6y7")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/enemies/Path2D3"]
+position = Vector2(759, -606)
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+TimelineProjectionMax = 0.7
+
+[node name="enemy_spacetime3" parent="second_world/enemies" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("5_ux608")]
+position = Vector2(779, -634)
+AliveOnStart = true
+SpacetimePathFollow = NodePath("../Path2D3/PathFollow2D")
+
+[node name="Path2D4" type="Path2D" parent="second_world/enemies"]
+curve = SubResource("Curve2D_x2j0h")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/enemies/Path2D4"]
+position = Vector2(1876, -606)
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+TimelineProjectionMax = 0.7
+
+[node name="enemy_spacetime4" parent="second_world/enemies" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("5_ux608")]
+position = Vector2(1776, -626)
+AliveOnStart = true
+SpacetimePathFollow = NodePath("../Path2D4/PathFollow2D")
+
+[node name="spacetime_spawner" parent="second_world/enemies" instance=ExtResource("6_m68j4")]
+position = Vector2(981, -977)
+Debug = true
+
+[node name="enemy_spacetime5" parent="second_world/enemies" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("5_ux608")]
+position = Vector2(1116, -1022)
+SpacetimePathFollow = NodePath("../Path2D5/PathFollow2D")
+
+[node name="Path2D5" type="Path2D" parent="second_world/enemies"]
+curve = SubResource("Curve2D_hj7k6")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/enemies/Path2D5"]
+position = Vector2(1094, -966)
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+PathMode = 1
+LocalTimelineLength = 6000.0
+
+[node name="enemy_spacetime6" parent="second_world/enemies" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("5_ux608")]
+position = Vector2(1039, -1140)
+SpawnTimeInPixel = 2000.0
+SpacetimePathFollow = NodePath("../Path2D6/PathFollow2D")
+
+[node name="Path2D6" type="Path2D" parent="second_world/enemies"]
+curve = SubResource("Curve2D_hj7k6")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/enemies/Path2D6"]
+position = Vector2(1094, -966)
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+PathMode = 1
+LocalTimelineLength = 6000.0
+
 [node name="locked_doors" type="Node2D" parent="second_world"]
 
 [node name="spikes" type="Node2D" parent="second_world"]
+
+[node name="ladders" type="Node2D" parent="second_world"]
+z_index = -10
+
+[node name="ladder" parent="second_world/ladders" instance=ExtResource("4_ed0u3")]
+position = Vector2(1928, -108)
+points = PackedVector2Array(0, 10, 0, -30.9)
+
+[node name="ladder2" parent="second_world/ladders" instance=ExtResource("4_ed0u3")]
+position = Vector2(795, -365)
+points = PackedVector2Array(0, 10, 0, -30.9)
+
+[node name="ladder3" parent="second_world/ladders" instance=ExtResource("4_ed0u3")]
+position = Vector2(1865, -699)
+points = PackedVector2Array(0, 10, 0, -30.9)
+
+[node name="ladder4" parent="second_world/ladders" instance=ExtResource("4_ed0u3")]
+position = Vector2(1613, -1017)
+points = PackedVector2Array(0, 10, 0, -30.9)
 
 [node name="Player" parent="." instance=ExtResource("9_3dtsw")]
 position = Vector2(-169, -14)
@@ -46,7 +215,7 @@ position = Vector2(-169, -14)
 [node name="start" type="Node2D" parent="Player/spawn"]
 
 [node name="end" type="Node2D" parent="Player/spawn"]
-position = Vector2(1834, -75)
+position = Vector2(5246, -129)
 
 [node name="Label2" type="Label" parent="Player"]
 offset_left = 1.0
@@ -59,7 +228,19 @@ label_settings = SubResource("LabelSettings_rdw5m")
 RewindLabel = NodePath("../Player/Label2")
 
 [node name="start" type="Node2D" parent="SpacetimeRewindPlayer"]
-position = Vector2(-181, -31)
+position = Vector2(-205, -4)
 
 [node name="end" type="Node2D" parent="SpacetimeRewindPlayer"]
-position = Vector2(1680, -40)
+position = Vector2(4773, -118)
+
+[node name="SpacetimeMusicPlayer" parent="." node_paths=PackedStringArray("ForwardPlayer", "BackwardPlayer") instance=ExtResource("11_7mv1x")]
+ForwardPlayer = NodePath("forward")
+BackwardPlayer = NodePath("backward")
+
+[node name="forward" type="AudioStreamPlayer" parent="SpacetimeMusicPlayer"]
+stream = ExtResource("12_iinx8")
+parameters/looping = true
+
+[node name="backward" type="AudioStreamPlayer" parent="SpacetimeMusicPlayer"]
+stream = ExtResource("13_subei")
+parameters/looping = true

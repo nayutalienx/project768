@@ -23,22 +23,6 @@
 [ext_resource type="PackedScene" uid="uid://btobpn5evuwb8" path="res://scenes/landscape/cannon/cannon.tscn" id="16_atkov"]
 [ext_resource type="PackedScene" uid="uid://chwame76xqi6l" path="res://scenes/landscape/cannon/cannon_ball.tscn" id="17_bb308"]
 
-[sub_resource type="Animation" id="Animation_d8jfx"]
-resource_name = "move_forward"
-length = 20.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 20),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(68, -265), Vector2(2936, -265)]
-}
-
 [sub_resource type="Animation" id="Animation_cmpl7"]
 resource_name = "move_backward"
 length = 20.0
@@ -53,6 +37,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(2936, -265), Vector2(68, -265)]
+}
+
+[sub_resource type="Animation" id="Animation_d8jfx"]
+resource_name = "move_forward"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(68, -265), Vector2(2936, -265)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gh6ek"]

@@ -17,6 +17,7 @@ public partial class Player :
     IStateMachineEntity<Player, Player.State>,
     IInteractableEntity<Player, PlayerInteractionContext, PlayerInteractionEvent, PlayerInteraction>
 {
+    public static Player Instance;
     public static PreviousSceneData PreviousSceneData { get; set; } = new();
     public static float PositionDeltaFactor = 5.0f; // подбирать вручную
 
@@ -67,9 +68,13 @@ public partial class Player :
     public Tuple<uint, uint> OrigCollission;
     public Label Label { get; set; }
     public TimerManager DeathStopTimer { get; set; }
+    
+    private Vector2 PlayerPrevPos;
+    public float PosDelta => GlobalPosition.X - PlayerPrevPos.X;
 
     public override void _Ready()
     {
+        Instance = this;
         Label = GetNode<Label>("Label");
 
         Interactions =
@@ -125,6 +130,7 @@ public partial class Player :
 
     public override void _PhysicsProcess(double delta)
     {
+        PlayerPrevPos = GlobalPosition;
         if (Cache.LeftClickPressed)
         {
             var pos = GetGlobalMousePosition();
@@ -133,12 +139,7 @@ public partial class Player :
         }
 
         CurrentState.PhysicProcess(delta);
-
-        // Label.Text = $"hor-dir: {Cache.HorizontalDirection}\n" +
-        //              $"onfloor: {IsOnFloor()}\n" +
-        //              $"velocity: {Velocity}\n"+
-        //              $"floor-ang: {GetFloorAngle()}\n"
-        //     ;
+        Label.Text = $"pos: {GlobalPosition}";
     }
 
     public void HandleInput(InputEvent _event)

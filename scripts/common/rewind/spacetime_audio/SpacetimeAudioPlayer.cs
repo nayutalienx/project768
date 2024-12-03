@@ -27,10 +27,6 @@ public partial class SpacetimeAudioPlayer : Node2D,
     public int RewindState { get; set; }
     public int RewindSpeed { get; set; }
     private double audioLen;
-    private Player Player;
-
-    private Vector2 PlayerPrevPos;
-    public float PlayerPosDelta => Player.GlobalPosition.X - PlayerPrevPos.X;
 
     public override void _Ready()
     {
@@ -43,7 +39,6 @@ public partial class SpacetimeAudioPlayer : Node2D,
         };
         StateChanger = new StateChanger<SpacetimeAudioPlayer, State>(this);
         
-        Player = GetTree().GetFirstNodeInGroup("player") as Player;
         audioLen = ForwardPlayer.GetStream().GetLength();
         ForwardPlayer.Play();
         
@@ -61,15 +56,12 @@ public partial class SpacetimeAudioPlayer : Node2D,
     {
         if (AudioLabel != null)
         {
-            AudioLabel.Text = $"PosDelta: {PlayerPosDelta}\n" +
-                              $"s: {CurrentState.StateEnum}\n" +
+            AudioLabel.Text = $"s: {CurrentState.StateEnum}\n" +
                               $"fwd: {ForwardPlayer.GetPlaybackPosition()}\n" +
                               $"bwd: {BackwardPlayer.GetPlaybackPosition()}";
         }
 
         CurrentState.Process(delta);
-
-        PlayerPrevPos = Player.GlobalPosition;
     }
 
 
