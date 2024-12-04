@@ -1,7 +1,9 @@
-[gd_scene load_steps=19 format=4 uid="uid://bypjbm3xw3exk"]
+[gd_scene load_steps=21 format=4 uid="uid://bypjbm3xw3exk"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_jseew"]
+[ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_lnvia"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_iatqp"]
+[ext_resource type="PackedScene" uid="uid://m3ylpa622p5r" path="res://scenes/item/spacetime_collectable_item.tscn" id="2_yxyeh"]
 [ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/platform/one_way_platform.tscn" id="3_qd7ra"]
 [ext_resource type="Script" path="res://scripts/common/rewind/SpacetimePathFollow.cs" id="4_6rb3w"]
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="4_ed0u3"]
@@ -49,6 +51,11 @@ outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
 [node name="World0" type="Node2D"]
+
+[node name="CollectableSystem" parent="." instance=ExtResource("1_lnvia")]
+
+[node name="SpacetimeCollectableItem" parent="CollectableSystem" instance=ExtResource("2_yxyeh")]
+position = Vector2(1335, -1369)
 
 [node name="second_world" type="Node2D" parent="."]
 
