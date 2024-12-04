@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot.Collections;
 using project768.scripts.game_entity.common.system;
+using project768.scripts.player;
 using project768.scripts.rewind.entity;
 
 public partial class CollectableSystem : Node2D, IPersistentEntity, IRewindable
 {
     public List<CollectableItem> CollectableItems { get; set; } = new();
     public List<int> TimelessCollectableItems { get; set; } = new();
+    public List<int> SpacetimeCollectableItems { get; set; } = new();
     public GridContainer GridContainer { get; set; }
     public int RewindState { get; set; }
     public bool[] Picked { get; set; }
@@ -28,6 +30,11 @@ public partial class CollectableSystem : Node2D, IPersistentEntity, IRewindable
                 {
                     TimelessCollectableItems.Add(CollectableItems.Count - 1);
                 }
+
+                if (child is SpacetimeCollectableItem spacetimeCollectableItem)
+                {
+                    SpacetimeCollectableItems.Add(CollectableItems.Count - 1);
+                }
             }
         }
 
@@ -43,9 +50,33 @@ public partial class CollectableSystem : Node2D, IPersistentEntity, IRewindable
         Picked = GetPicked();
     }
 
+    public override void _Process(double delta)
+    {
+        foreach (var item in SpacetimeCollectableItems)
+        {
+            if (CollectableItems[item] is SpacetimeCollectableItem spacetimeCollectableItem)
+            {
+                if (spacetimeCollectableItem.Picked && Player.Instance.GlobalPosition.X < spacetimeCollectableItem.PickedPosition.X)
+                {
+                    spacetimeCollectableItem.Picked = false;
+                    Picked[item] = false;
+                    SyncItemsRewind(Picked);
+                }
+            }
+        }
+    }
+
     private void OnItemCollected(int index, Node2D body)
     {
         Picked[index] = true;
+
+        if (SpacetimeCollectableItems.Contains(index))
+        {
+            var spacetimeCollectableItem = CollectableItems[index] as SpacetimeCollectableItem;
+            spacetimeCollectableItem.Picked = true;
+            spacetimeCollectableItem.PickedPosition = Player.Instance.GlobalPosition;
+        }
+
         SyncItems(Picked);
     }
 
