@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://bypjbm3xw3exk"]
+[gd_scene load_steps=27 format=4 uid="uid://bypjbm3xw3exk"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_jseew"]
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_lnvia"]
@@ -8,11 +8,14 @@
 [ext_resource type="Script" path="res://scripts/common/rewind/SpacetimePathFollow.cs" id="4_6rb3w"]
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="4_ed0u3"]
 [ext_resource type="PackedScene" uid="uid://n7kbhexoamn1" path="res://scenes/npc/enemy_spacetime.tscn" id="5_ux608"]
+[ext_resource type="PackedScene" uid="uid://c14oily4ha1w1" path="res://scenes/item/timeless_key.tscn" id="6_75r0c"]
 [ext_resource type="PackedScene" uid="uid://cwpc4tbhvj0ug" path="res://scenes/common/spacetime_spawner.tscn" id="6_m68j4"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="9_3dtsw"]
 [ext_resource type="PackedScene" uid="uid://1o2jv46sb6vl" path="res://scenes/common/spacetime_rewind_player.tscn" id="10_wpp4p"]
 [ext_resource type="PackedScene" uid="uid://c3waffwuom10l" path="res://scenes/common/spacetime_music_player.tscn" id="11_7mv1x"]
+[ext_resource type="PackedScene" uid="uid://dbf4o78ikhnh8" path="res://scenes/landscape/cannon/spacetime_cannon.tscn" id="11_sellw"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="12_iinx8"]
+[ext_resource type="PackedScene" uid="uid://rpc5rtp00p4t" path="res://scenes/landscape/cannon/spacetime_cannon_ball.tscn" id="12_kvgqx"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="13_subei"]
 
 [sub_resource type="Curve2D" id="Curve2D_weept"]
@@ -45,6 +48,24 @@ _data = {
 }
 point_count = 13
 
+[sub_resource type="Curve2D" id="Curve2D_si484"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 6078, -300, 0, 0, 0, 0, 4008, -300)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_eo6en"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 3966, -630, 0, 0, 0, 0, 6051, -630)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_y5gpf"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 5593, -915, 0, 0, 0, 0, 4045, -915)
+}
+point_count = 2
+
 [sub_resource type="LabelSettings" id="LabelSettings_rdw5m"]
 font_size = 30
 outline_size = 5
@@ -63,7 +84,7 @@ position = Vector2(1335, -1369)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAtACAAAQABACcAAABdACAAAQABACcAAAAxAOf/AQABACcAAAA3ABAAAQABACcAAABFAPv/AQABACcAAABGAOf/AQABACcAAABMABAAAQABACcAAABWAPv/AQABACcAAAB6APT/AQAVAAMAAACAAAoAAQAVAAMAAACNACAAAQABACcAAAC8ACAAAQABACcAAADf////AwB3AAQAAADf/+v/AwB3AAQAAADf/9b/AwB3AAQAAADf/8H/AwB3AAQAAADf/63/AwB3AAQAAAAPAPf/AQAVAAMAAAAUAAwAAQAVAAMAAAAeAOT/AQAVAAMAAAAjAOL/AQAVAAMAAAA=")
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAtACAAAQABACcAAABdACAAAQABACcAAAAxAOf/AQABACcAAAA3ABAAAQABACcAAABFAPv/AQABACcAAABGAOf/AQABACcAAABMABAAAQABACcAAABWAPv/AQABACcAAAB6APT/AQAVAAMAAACAAAoAAQAVAAMAAACNACAAAQABACcAAAC8ACAAAQABACcAAADf////AwB3AAQAAADf/+v/AwB3AAQAAADf/9b/AwB3AAQAAADf/8H/AwB3AAQAAADf/63/AwB3AAQAAAAPAPf/AQAVAAMAAAAUAAwAAQAVAAMAAAAeAOT/AQAVAAMAAAAjAOL/AQAVAAMAAADrACAAAQABACcAAAAaASAAAQABACcAAABIASAAAQABACcAAAB4ASAAAQABACcAAAAXARAAAQABACcAAABAARAAAQABACcAAAAWAfz/AQABACcAAABEAfz/AQABACcAAAAVAer/AQABACcAAABEAer/AQABACcAAACMAOb/AQAsAEcAAACgAOb/AQAsAEcAAADGAOb/AQAsAEcAAADUAOb/AQAsAEcAAABkARAAAQABACcAAAD3APz/AQABACcAAADgABAAAQAyAEAAAADgAAwAAQAyAEAAAADgAAkAAQAyAEAAAAB5Afz/AQAyAEAAAAB5Afn/AQAyAEAAAAB5AfX/AQAyAEAAAADgAOn/AQAyAEAAAADgAOb/AQAyAEAAAADgAOP/AQAyAEAAAADjAOf/AQAyAEAAAACnAR8AAQABACcAAADPARwAAQABACcAAADrARIAAwB3AAQAAADsAf7/AwB3AAQAAADsAen/AwB3AAQAAADSARMAAAAmACYAAAA=")
 tile_set = ExtResource("1_jseew")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -91,7 +112,25 @@ position = Vector2(471, -906)
 position = Vector2(1521, -1160)
 scale = Vector2(1.56, 1)
 
+[node name="one_way_platform6" parent="second_world/one_way_platforms" instance=ExtResource("3_qd7ra")]
+position = Vector2(4142, -249)
+
+[node name="one_way_platform7" parent="second_world/one_way_platforms" instance=ExtResource("3_qd7ra")]
+position = Vector2(5945, -572)
+
+[node name="one_way_platform8" parent="second_world/one_way_platforms" instance=ExtResource("3_qd7ra")]
+position = Vector2(4129, -861)
+
+[node name="one_way_platform9" parent="second_world/one_way_platforms" instance=ExtResource("3_qd7ra")]
+position = Vector2(4244, -1056)
+
+[node name="one_way_platform10" parent="second_world/one_way_platforms" instance=ExtResource("3_qd7ra")]
+position = Vector2(4602, -1148)
+
 [node name="keys" type="Node2D" parent="second_world"]
+
+[node name="timeless_key" parent="second_world/keys" instance=ExtResource("6_75r0c")]
+position = Vector2(4598, -1222)
 
 [node name="enemies" type="Node2D" parent="second_world"]
 
@@ -213,6 +252,181 @@ points = PackedVector2Array(0, 10, 0, -30.9)
 [node name="ladder4" parent="second_world/ladders" instance=ExtResource("4_ed0u3")]
 position = Vector2(1613, -1017)
 points = PackedVector2Array(0, 10, 0, -30.9)
+
+[node name="ladder5" parent="second_world/ladders" instance=ExtResource("4_ed0u3")]
+position = Vector2(4122, -105)
+points = PackedVector2Array(0, 10, 0, -27.1)
+
+[node name="ladder6" parent="second_world/ladders" instance=ExtResource("4_ed0u3")]
+position = Vector2(5914, -354)
+points = PackedVector2Array(0, 10, 0, -27.1)
+
+[node name="ladder7" parent="second_world/ladders" instance=ExtResource("4_ed0u3")]
+position = Vector2(4132, -682)
+points = PackedVector2Array(0, 10, 0, -22.9)
+
+[node name="cannons" type="Node2D" parent="second_world"]
+
+[node name="spacetime_cannon" parent="second_world/cannons" instance=ExtResource("11_sellw")]
+position = Vector2(6197, -281)
+scale = Vector2(-1, 1)
+
+[node name="Path2D" type="Path2D" parent="second_world/cannons"]
+curve = SubResource("Curve2D_si484")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/cannons/Path2D"]
+position = Vector2(6078, -300)
+rotation = 3.14159
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+PathMode = 1
+LoopTimeline = true
+
+[node name="Path2D2" type="Path2D" parent="second_world/cannons"]
+curve = SubResource("Curve2D_si484")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/cannons/Path2D2"]
+position = Vector2(6078, -300)
+rotation = 3.14159
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+PathMode = 1
+LoopTimeline = true
+
+[node name="Path2D3" type="Path2D" parent="second_world/cannons"]
+curve = SubResource("Curve2D_si484")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/cannons/Path2D3"]
+position = Vector2(6078, -300)
+rotation = 3.14159
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+PathMode = 1
+LoopTimeline = true
+
+[node name="spacetime_cannon_ball" parent="second_world/cannons" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("12_kvgqx")]
+position = Vector2(6018, -398)
+rotation = -3.14159
+SpacetimePathFollow = NodePath("../Path2D/PathFollow2D")
+SpawnTimeInPixel = 3500.0
+
+[node name="spacetime_cannon_ball2" parent="second_world/cannons" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("12_kvgqx")]
+position = Vector2(6018, -398)
+rotation = -3.14159
+SpacetimePathFollow = NodePath("../Path2D2/PathFollow2D")
+SpawnTimeInPixel = 3000.0
+
+[node name="spacetime_cannon_ball3" parent="second_world/cannons" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("12_kvgqx")]
+position = Vector2(6018, -398)
+rotation = -3.14159
+SpacetimePathFollow = NodePath("../Path2D3/PathFollow2D")
+SpawnTimeInPixel = 4000.0
+
+[node name="spacetime_cannon2" parent="second_world/cannons" instance=ExtResource("11_sellw")]
+position = Vector2(3867, -609)
+
+[node name="Path2D4" type="Path2D" parent="second_world/cannons"]
+curve = SubResource("Curve2D_eo6en")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/cannons/Path2D4"]
+position = Vector2(3966, -630)
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+PathMode = 1
+LoopTimeline = true
+
+[node name="Path2D5" type="Path2D" parent="second_world/cannons"]
+curve = SubResource("Curve2D_eo6en")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/cannons/Path2D5"]
+position = Vector2(3966, -630)
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+PathMode = 1
+LoopTimeline = true
+
+[node name="Path2D6" type="Path2D" parent="second_world/cannons"]
+curve = SubResource("Curve2D_eo6en")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/cannons/Path2D6"]
+position = Vector2(3966, -630)
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+PathMode = 1
+LoopTimeline = true
+
+[node name="spacetime_cannon_ball4" parent="second_world/cannons" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("12_kvgqx")]
+position = Vector2(3882, -740)
+SpacetimePathFollow = NodePath("../Path2D4/PathFollow2D")
+
+[node name="spacetime_cannon_ball5" parent="second_world/cannons" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("12_kvgqx")]
+SpacetimePathFollow = NodePath("../Path2D5/PathFollow2D")
+SpawnTimeInPixel = 1500.0
+
+[node name="spacetime_cannon_ball6" parent="second_world/cannons" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("12_kvgqx")]
+SpacetimePathFollow = NodePath("../Path2D6/PathFollow2D")
+SpawnTimeInPixel = 2000.0
+
+[node name="spacetime_cannon3" parent="second_world/cannons" instance=ExtResource("11_sellw")]
+position = Vector2(5703, -897)
+rotation = 3.14159
+scale = Vector2(1, -1)
+
+[node name="Path2D7" type="Path2D" parent="second_world/cannons"]
+curve = SubResource("Curve2D_y5gpf")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/cannons/Path2D7"]
+position = Vector2(5593, -915)
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+PathMode = 1
+LoopTimeline = true
+
+[node name="Path2D8" type="Path2D" parent="second_world/cannons"]
+curve = SubResource("Curve2D_y5gpf")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/cannons/Path2D8"]
+position = Vector2(5593, -915)
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+PathMode = 1
+LoopTimeline = true
+
+[node name="Path2D9" type="Path2D" parent="second_world/cannons"]
+curve = SubResource("Curve2D_y5gpf")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/cannons/Path2D9"]
+position = Vector2(5593, -915)
+rotates = false
+loop = false
+script = ExtResource("4_6rb3w")
+PathMode = 1
+LoopTimeline = true
+
+[node name="spacetime_cannon_ball7" parent="second_world/cannons" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("12_kvgqx")]
+position = Vector2(14, 168)
+rotation = -3.14159
+SpacetimePathFollow = NodePath("../Path2D7/PathFollow2D")
+
+[node name="spacetime_cannon_ball8" parent="second_world/cannons" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("12_kvgqx")]
+position = Vector2(14, 168)
+rotation = -3.14159
+SpacetimePathFollow = NodePath("../Path2D8/PathFollow2D")
+SpawnTimeInPixel = 1500.0
+
+[node name="spacetime_cannon_ball9" parent="second_world/cannons" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("12_kvgqx")]
+position = Vector2(14, 168)
+rotation = -3.14159
+SpacetimePathFollow = NodePath("../Path2D9/PathFollow2D")
+SpawnTimeInPixel = 2000.0
 
 [node name="Player" parent="." instance=ExtResource("9_3dtsw")]
 position = Vector2(-169, -14)

@@ -36,6 +36,11 @@ public partial class SpacetimeRewindPlayer : Node2D
     {
         return Mathf.Clamp((playerPosX - startPosX) / (endPosX - startPosX), 0, 1);
     }
+    
+    public static float CalculateTimelineProgressNoClamp(float playerPosX, float startPosX, float endPosX)
+    {
+        return (playerPosX - startPosX) / (endPosX - startPosX);
+    }
 
     public float CalculateSpacetimeTime(float intervalInPixel)
     {

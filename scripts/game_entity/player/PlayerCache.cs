@@ -10,4 +10,6 @@ public struct PlayerCache
     public bool LeftClickPressed { get; set; }
     public float VerticalDirection { get; set; }
     public float HorizontalDirection { get; set; }
+    public bool WheelScrollUp { get; set; }
+    public bool WheelScrollDown { get; set; }
 }
