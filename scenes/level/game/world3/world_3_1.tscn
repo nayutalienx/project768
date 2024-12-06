@@ -1,9 +1,10 @@
-[gd_scene load_steps=27 format=4 uid="uid://bypjbm3xw3exk"]
+[gd_scene load_steps=29 format=4 uid="uid://bypjbm3xw3exk"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_jseew"]
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_lnvia"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_iatqp"]
 [ext_resource type="PackedScene" uid="uid://m3ylpa622p5r" path="res://scenes/item/spacetime_collectable_item.tscn" id="2_yxyeh"]
+[ext_resource type="PackedScene" uid="uid://clc02prulpxxo" path="res://scenes/item/timeless_collectable_item.tscn" id="3_ng802"]
 [ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/platform/one_way_platform.tscn" id="3_qd7ra"]
 [ext_resource type="Script" path="res://scripts/common/rewind/SpacetimePathFollow.cs" id="4_6rb3w"]
 [ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="4_ed0u3"]
@@ -12,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cwpc4tbhvj0ug" path="res://scenes/common/spacetime_spawner.tscn" id="6_m68j4"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="9_3dtsw"]
 [ext_resource type="PackedScene" uid="uid://1o2jv46sb6vl" path="res://scenes/common/spacetime_rewind_player.tscn" id="10_wpp4p"]
+[ext_resource type="PackedScene" uid="uid://bsp5euk0mrqf4" path="res://scenes/landscape/locked_door/spacetime_locked_door.tscn" id="11_2tkhk"]
 [ext_resource type="PackedScene" uid="uid://c3waffwuom10l" path="res://scenes/common/spacetime_music_player.tscn" id="11_7mv1x"]
 [ext_resource type="PackedScene" uid="uid://dbf4o78ikhnh8" path="res://scenes/landscape/cannon/spacetime_cannon.tscn" id="11_sellw"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="12_iinx8"]
@@ -78,13 +80,16 @@ outline_color = Color(0, 0, 0, 1)
 [node name="SpacetimeCollectableItem" parent="CollectableSystem" instance=ExtResource("2_yxyeh")]
 position = Vector2(1335, -1369)
 
+[node name="TimelessCollectableItem" parent="CollectableSystem" instance=ExtResource("3_ng802")]
+position = Vector2(3013, -1122)
+
 [node name="second_world" type="Node2D" parent="."]
 
 [node name="tiles" type="Node2D" parent="second_world"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAtACAAAQABACcAAABdACAAAQABACcAAAAxAOf/AQABACcAAAA3ABAAAQABACcAAABFAPv/AQABACcAAABGAOf/AQABACcAAABMABAAAQABACcAAABWAPv/AQABACcAAAB6APT/AQAVAAMAAACAAAoAAQAVAAMAAACNACAAAQABACcAAAC8ACAAAQABACcAAADf////AwB3AAQAAADf/+v/AwB3AAQAAADf/9b/AwB3AAQAAADf/8H/AwB3AAQAAADf/63/AwB3AAQAAAAPAPf/AQAVAAMAAAAUAAwAAQAVAAMAAAAeAOT/AQAVAAMAAAAjAOL/AQAVAAMAAADrACAAAQABACcAAAAaASAAAQABACcAAABIASAAAQABACcAAAB4ASAAAQABACcAAAAXARAAAQABACcAAABAARAAAQABACcAAAAWAfz/AQABACcAAABEAfz/AQABACcAAAAVAer/AQABACcAAABEAer/AQABACcAAACMAOb/AQAsAEcAAACgAOb/AQAsAEcAAADGAOb/AQAsAEcAAADUAOb/AQAsAEcAAABkARAAAQABACcAAAD3APz/AQABACcAAADgABAAAQAyAEAAAADgAAwAAQAyAEAAAADgAAkAAQAyAEAAAAB5Afz/AQAyAEAAAAB5Afn/AQAyAEAAAAB5AfX/AQAyAEAAAADgAOn/AQAyAEAAAADgAOb/AQAyAEAAAADgAOP/AQAyAEAAAADjAOf/AQAyAEAAAACnAR8AAQABACcAAADPARwAAQABACcAAADrARIAAwB3AAQAAADsAf7/AwB3AAQAAADsAen/AwB3AAQAAADSARMAAAAmACYAAAA=")
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAtACAAAQABACcAAABdACAAAQABACcAAAAxAOf/AQABACcAAAA3ABAAAQABACcAAABFAPv/AQABACcAAABGAOf/AQABACcAAABMABAAAQABACcAAABWAPv/AQABACcAAAB6APT/AQAVAAMAAACAAAoAAQAVAAMAAACNACAAAQABACcAAAC8ACAAAQABACcAAADf////AwB3AAQAAADf/+v/AwB3AAQAAADf/9b/AwB3AAQAAADf/8H/AwB3AAQAAADf/63/AwB3AAQAAAAPAPf/AQAVAAMAAAAUAAwAAQAVAAMAAAAeAOT/AQAVAAMAAAAjAOL/AQAVAAMAAADrACAAAQABACcAAAAaASAAAQABACcAAABIASAAAQABACcAAAB4ASAAAQABACcAAAAXARAAAQABACcAAABAARAAAQABACcAAAAWAfz/AQABACcAAABEAfz/AQABACcAAAAVAer/AQABACcAAABEAer/AQABACcAAACMAOb/AQAsAEcAAACgAOb/AQAsAEcAAADGAOb/AQAsAEcAAADUAOb/AQAsAEcAAABkARAAAQABACcAAAD3APz/AQABACcAAADgABAAAQAyAEAAAADgAAwAAQAyAEAAAADgAAkAAQAyAEAAAAB5Afz/AQAyAEAAAAB5Afn/AQAyAEAAAAB5AfX/AQAyAEAAAADgAOn/AQAyAEAAAADgAOb/AQAyAEAAAADgAOP/AQAyAEAAAADjAOf/AQAyAEAAAACnAR8AAQABACcAAADPARwAAQABACcAAADrARIAAwB3AAQAAADsAf7/AwB3AAQAAADsAen/AwB3AAQAAADSARMAAAAmACYAAACzANX/AQAsAEcAAAA=")
 tile_set = ExtResource("1_jseew")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -231,6 +236,12 @@ PathMode = 1
 LocalTimelineLength = 6000.0
 
 [node name="locked_doors" type="Node2D" parent="second_world"]
+
+[node name="spacetime_locked_door" parent="second_world/locked_doors" instance=ExtResource("11_2tkhk")]
+position = Vector2(2906, -1039)
+
+[node name="spacetime_locked_door2" parent="second_world/locked_doors" instance=ExtResource("11_2tkhk")]
+position = Vector2(3275, -1037)
 
 [node name="spikes" type="Node2D" parent="second_world"]
 
