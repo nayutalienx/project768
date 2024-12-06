@@ -22,6 +22,7 @@ public partial class Player :
     public static float PositionDeltaFactor = 5.0f; // подбирать вручную
 
     public List<Node2D> SpawnPositions { get; set; } = new();
+    public Camera2D Camera { get; set; }
 
     [ExportSubgroup("Player Settings")] [Export]
     public float JumpVelocity = -400.0f;
@@ -68,7 +69,7 @@ public partial class Player :
     public Tuple<uint, uint> OrigCollission;
     public Label Label { get; set; }
     public TimerManager DeathStopTimer { get; set; }
-    
+
     private Vector2 PlayerPrevPos;
     public float PosDelta => GlobalPosition.X - PlayerPrevPos.X;
 
@@ -102,6 +103,7 @@ public partial class Player :
 
         StateChanger.ChangeState(State.Move);
 
+        Camera = GetNode<Camera2D>("Camera2D");
         Sprite2D = GetNode<Sprite2D>("Sprite2D");
         OriginalMaterial = Sprite2D.Material;
 
@@ -138,6 +140,18 @@ public partial class Player :
             Velocity = Vector2.Zero;
         }
 
+        if (Cache.WheelScrollUp)
+        {
+            Camera.Zoom = new Vector2(Camera.Zoom.X + 0.05f, Camera.Zoom.Y + 0.05f )
+                .Clamp(new Vector2(0.03f, 0.03f), new Vector2(10.0f, 10.0f));
+        }
+
+        if (Cache.WheelScrollDown)
+        {
+            Camera.Zoom = new Vector2(Camera.Zoom.X - 0.05f, Camera.Zoom.Y - 0.05f)
+                .Clamp(new Vector2(0.03f, 0.03f), new Vector2(10.0f, 10.0f));
+        }
+
         CurrentState.PhysicProcess(delta);
         Label.Text = $"pos: {GlobalPosition}";
     }
@@ -147,6 +161,9 @@ public partial class Player :
         var cache = Cache;
         cache.VerticalDirection = Input.GetAxis("ui_up", "ui_down");
         cache.HorizontalDirection = Input.GetAxis("ui_left", "ui_right");
+
+        cache.WheelScrollUp = _event.IsActionPressed("wheel_up");
+        cache.WheelScrollDown = _event.IsActionPressed("wheel_down");
 
         cache.UpPressed = _event.IsActionPressed("ui_up");
         cache.DownPressed = _event.IsActionPressed("ui_down");

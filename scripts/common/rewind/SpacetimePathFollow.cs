@@ -14,6 +14,8 @@ public partial class SpacetimePathFollow : PathFollow2D
 
     [Export] public Mode PathMode = Mode.GlobalTimeline;
     [Export] public float LocalTimelineLength = 1000.0f;
+    [Export] public bool LoopTimeline = false;
+
 
     private Label Label;
 
@@ -57,11 +59,24 @@ public partial class SpacetimePathFollow : PathFollow2D
 
     private void ProcessManualLocalTimeline()
     {
-        ProgressRatio = SpacetimeRewindPlayer.CalculateTimelineProgress(
-            Player.Instance.GlobalPosition.X,
-            LocalTimelineStart + SpacetimeRewindPlayer.Instance.TimelineStartPos.X,
-            LocalTimelineStart + LocalTimelineLength + SpacetimeRewindPlayer.Instance.TimelineStartPos.X
-        );
+        if (LoopTimeline)
+        {
+            var noClampProgress = SpacetimeRewindPlayer.CalculateTimelineProgressNoClamp(
+                Player.Instance.GlobalPosition.X,
+                LocalTimelineStart + SpacetimeRewindPlayer.Instance.TimelineStartPos.X,
+                LocalTimelineStart + LocalTimelineLength + SpacetimeRewindPlayer.Instance.TimelineStartPos.X
+            );
+            var minClamped = Mathf.Clamp(noClampProgress, 0, 10);
+            ProgressRatio = minClamped % 1;
+        }
+        else
+        {
+            ProgressRatio = SpacetimeRewindPlayer.CalculateTimelineProgress(
+                Player.Instance.GlobalPosition.X,
+                LocalTimelineStart + SpacetimeRewindPlayer.Instance.TimelineStartPos.X,
+                LocalTimelineStart + LocalTimelineLength + SpacetimeRewindPlayer.Instance.TimelineStartPos.X
+            );
+        }
     }
 
     private void ProcessGlobalTimeline()
