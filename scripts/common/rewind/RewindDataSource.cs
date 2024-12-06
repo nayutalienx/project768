@@ -4,6 +4,7 @@ using System.Linq;
 using Godot;
 using project768.scripts.game_entity.landscape.cannon;
 using project768.scripts.game_entity.landscape.cloud_platform;
+using project768.scripts.game_entity.landscape.spacetime_door;
 using project768.scripts.game_entity.npc.spawner;
 using project768.scripts.player;
 using project768.scripts.rewind.entity;
@@ -19,6 +20,7 @@ public class RewindDataSource
     public JumpingEnemy[] JumpingEnemies { get; set; }
     public Key[] Keys { get; set; }
     public LockedDoor[] LockedDoors { get; set; }
+    public SpacetimeLockedDoor[] SpacetimeLockedDoors { get; set; }
     public OneWayPlatform[] OneWayPlatforms { get; set; }
     public Switcher[] Switchers { get; set; }
     public CannonBall[] CannonBalls { get; set; }
@@ -38,6 +40,7 @@ public class RewindDataSource
         JumpingEnemies = FindAndAddRewindables(t, "jumping_enemy").ConvertAll(o => o as JumpingEnemy).ToArray();
         Keys = FindAndAddRewindables(t, "key").ConvertAll(o => o as Key).ToArray();
         LockedDoors = FindAndAddRewindables(t, "door").ConvertAll(o => o as LockedDoor).ToArray();
+        SpacetimeLockedDoors = FindAndAddRewindables(t, "spacetime_locked_door").ConvertAll(o => o as SpacetimeLockedDoor).ToArray();
         Switchers = FindAndAddRewindables(t, "switcher").ConvertAll(o => o as Switcher).ToArray();
         CannonBalls = FindAndAddRewindables(t, "cannon_ball").ConvertAll(o => o as CannonBall).ToArray();
         CloudPlatforms = FindAndAddRewindables(t, "cloud_platform").ConvertAll(o => o as CloudPlatform).ToArray();
