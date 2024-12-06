@@ -16,9 +16,7 @@ public class UnlockedState : State<SpacetimeLockedDoor, SpacetimeLockedDoor.Stat
         Entity.CollisionShape2D.SetDeferred("disabled", true);
         Entity.LockArea.SetDeferred("monitoring", false);
         
-        Entity.AnimationPlayer.SetCurrentAnimation("DoorOpen");
-        Entity.AnimationPlayer.SpeedScale = 0.0f;
-        Entity.AnimationPlayer.Seek(0.0f, true);
+        Entity.AnimationPlayer.AnimationPlayer.SpeedScale = 0.0f;
     }
     
     public override void Process(double delta)
@@ -30,10 +28,10 @@ public class UnlockedState : State<SpacetimeLockedDoor, SpacetimeLockedDoor.Stat
         );
         float animationPosition = (float) Mathf.Lerp(
             0.0f,
-            Entity.AnimationPlayer.GetCurrentAnimationLength(),
+            Entity.AnimationPlayer.AnimationPlayer.GetCurrentAnimationLength(),
             Mathf.Clamp(animationProgress, 0.0f, 0.98f)
         );
-        Entity.AnimationPlayer.Seek(animationPosition, true);
+        Entity.AnimationPlayer.AnimationPlayer.Seek(animationPosition, true);
 
         if (Player.Instance.GlobalPosition.X < Entity.PlayerPositionWhenDoorUnlocked.X)
         {

@@ -74,7 +74,7 @@ font_size = 21
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
-[node name="spacetime_locked_door" type="AnimatableBody2D" node_paths=PackedStringArray("Enemies")]
+[node name="spacetime_locked_door" type="AnimatableBody2D" node_paths=PackedStringArray("Enemies") groups=["spacetime_locked_door"]]
 collision_mask = 0
 script = ExtResource("1_g520n")
 Enemies = []

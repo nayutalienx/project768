@@ -16,10 +16,7 @@ public class LockedState : State<SpacetimeLockedDoor, SpacetimeLockedDoor.State>
     {
         Entity.CollisionShape2D.SetDeferred("disabled", false);
         Entity.LockArea.SetDeferred("monitoring", true);
-        
-        Entity.AnimationPlayer.SetCurrentAnimation("DoorOpen");
-        Entity.AnimationPlayer.SpeedScale = 0.0f;
-        Entity.AnimationPlayer.Seek(0.0f, true);
+        Entity.AnimationPlayer.AnimationPlayer.SpeedScale = 0.0f;
     }
 
     public override void Process(double delta)
