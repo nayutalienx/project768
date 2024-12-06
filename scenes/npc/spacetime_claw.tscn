@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://u0t24ocxjl70"]
+[gd_scene load_steps=8 format=3 uid="uid://u0t24ocxjl70"]
 
+[ext_resource type="Script" path="res://scripts/game_entity/landscape/spacetime_claw/SpacetimeClaw.cs" id="1_jybtw"]
 [ext_resource type="Texture2D" uid="uid://cb24okjtx2iq6" path="res://sprites/claw/root.png" id="2_m7t4j"]
 [ext_resource type="Texture2D" uid="uid://bgocmj8ychdu2" path="res://sprites/claw/claw.png" id="3_p73j6"]
 [ext_resource type="Texture2D" uid="uid://ds5gwpm6vglqf" path="res://sprites/claw/base.png" id="4_mcw7y"]
@@ -65,11 +66,12 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ryp4r"]
 size = Vector2(535.927, 828.375)
 
-[node name="SpacetimeClaw" type="Area2D" groups=["claw"]]
+[node name="SpacetimeClaw" type="Area2D"]
 position = Vector2(0, -19)
 scale = Vector2(0.276157, 0.276157)
 collision_layer = 0
 collision_mask = 6
+script = ExtResource("1_jybtw")
 
 [node name="base_claw" type="Node2D" parent="."]
 

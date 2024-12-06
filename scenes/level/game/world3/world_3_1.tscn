@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://bypjbm3xw3exk"]
+[gd_scene load_steps=30 format=4 uid="uid://bypjbm3xw3exk"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_jseew"]
 [ext_resource type="PackedScene" uid="uid://b2r2s6la6jbqb" path="res://scenes/common/collectable_system.tscn" id="1_lnvia"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="12_iinx8"]
 [ext_resource type="PackedScene" uid="uid://rpc5rtp00p4t" path="res://scenes/landscape/cannon/spacetime_cannon_ball.tscn" id="12_kvgqx"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="13_subei"]
+[ext_resource type="PackedScene" uid="uid://u0t24ocxjl70" path="res://scenes/npc/spacetime_claw.tscn" id="15_bdosp"]
 
 [sub_resource type="Curve2D" id="Curve2D_weept"]
 _data = {
@@ -89,7 +90,7 @@ position = Vector2(3013, -1122)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAtACAAAQABACcAAABdACAAAQABACcAAAAxAOf/AQABACcAAAA3ABAAAQABACcAAABFAPv/AQABACcAAABGAOf/AQABACcAAABMABAAAQABACcAAABWAPv/AQABACcAAAB6APT/AQAVAAMAAACAAAoAAQAVAAMAAACNACAAAQABACcAAAC8ACAAAQABACcAAADf////AwB3AAQAAADf/+v/AwB3AAQAAADf/9b/AwB3AAQAAADf/8H/AwB3AAQAAADf/63/AwB3AAQAAAAPAPf/AQAVAAMAAAAUAAwAAQAVAAMAAAAeAOT/AQAVAAMAAAAjAOL/AQAVAAMAAADrACAAAQABACcAAAAaASAAAQABACcAAABIASAAAQABACcAAAB4ASAAAQABACcAAAAXARAAAQABACcAAABAARAAAQABACcAAAAWAfz/AQABACcAAABEAfz/AQABACcAAAAVAer/AQABACcAAABEAer/AQABACcAAACMAOb/AQAsAEcAAACgAOb/AQAsAEcAAADGAOb/AQAsAEcAAADUAOb/AQAsAEcAAABkARAAAQABACcAAAD3APz/AQABACcAAADgABAAAQAyAEAAAADgAAwAAQAyAEAAAADgAAkAAQAyAEAAAAB5Afz/AQAyAEAAAAB5Afn/AQAyAEAAAAB5AfX/AQAyAEAAAADgAOn/AQAyAEAAAADgAOb/AQAyAEAAAADgAOP/AQAyAEAAAADjAOf/AQAyAEAAAACnAR8AAQABACcAAADPARwAAQABACcAAADrARIAAwB3AAQAAADsAf7/AwB3AAQAAADsAen/AwB3AAQAAADSARMAAAAmACYAAACzANX/AQAsAEcAAAA=")
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAtACAAAQABACcAAABdACAAAQABACcAAAAxAOf/AQABACcAAAA3ABAAAQABACcAAABFAPv/AQABACcAAABGAOf/AQABACcAAABMABAAAQABACcAAABWAPv/AQABACcAAAB6APT/AQAVAAMAAACAAAoAAQAVAAMAAACNACAAAQABACcAAAC8ACAAAQABACcAAADf////AwB3AAQAAADf/+v/AwB3AAQAAADf/9b/AwB3AAQAAADf/8H/AwB3AAQAAADf/63/AwB3AAQAAAAPAPf/AQAVAAMAAAAUAAwAAQAVAAMAAAAeAOT/AQAVAAMAAAAjAOL/AQAVAAMAAADrACAAAQABACcAAAAaASAAAQABACcAAABIASAAAQABACcAAAB4ASAAAQABACcAAAAXARAAAQABACcAAABAARAAAQABACcAAAAWAfz/AQABACcAAABEAfz/AQABACcAAAAVAer/AQABACcAAABEAer/AQABACcAAACMAOb/AQAsAEcAAACgAOb/AQAsAEcAAADGAOb/AQAsAEcAAADUAOb/AQAsAEcAAABkARAAAQABACcAAAD3APz/AQABACcAAADgABAAAQAyAEAAAADgAAwAAQAyAEAAAADgAAkAAQAyAEAAAAB5Afz/AQAyAEAAAAB5Afn/AQAyAEAAAAB5AfX/AQAyAEAAAADgAOn/AQAyAEAAAADgAOb/AQAyAEAAAADgAOP/AQAyAEAAAADjAOf/AQAyAEAAAACnAR8AAQABACcAAADPARwAAQABACcAAADrARIAAwB3AAQAAADsAf7/AwB3AAQAAADsAen/AwB3AAQAAACzANX/AQAsAEcAAADhARMAAAAmACYAAAA=")
 tile_set = ExtResource("1_jseew")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -98,6 +99,10 @@ tile_set = ExtResource("1_jseew")
 position = Vector2(-148, -14)
 Path = "res://scenes/level/game/world3/world_3_0.tscn"
 SpawnPositionIndex = 1
+
+[node name="SceneLoader2" parent="second_world/portals" instance=ExtResource("2_iatqp")]
+position = Vector2(7909, -76)
+Path = "res://scenes/level/game/world3/world_3_2.tscn"
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
@@ -439,6 +444,12 @@ rotation = -3.14159
 SpacetimePathFollow = NodePath("../Path2D9/PathFollow2D")
 SpawnTimeInPixel = 2000.0
 
+[node name="claws" type="Node2D" parent="second_world"]
+z_index = -5
+
+[node name="SpacetimeClaw" parent="second_world/claws" instance=ExtResource("15_bdosp")]
+position = Vector2(5723, 35)
+
 [node name="Player" parent="." instance=ExtResource("9_3dtsw")]
 position = Vector2(-169, -14)
 
@@ -447,7 +458,7 @@ position = Vector2(-169, -14)
 [node name="start" type="Node2D" parent="Player/spawn"]
 
 [node name="end" type="Node2D" parent="Player/spawn"]
-position = Vector2(5246, -129)
+position = Vector2(8075, -68)
 
 [node name="Label2" type="Label" parent="Player"]
 offset_left = 1.0
@@ -463,7 +474,7 @@ RewindLabel = NodePath("../Player/Label2")
 position = Vector2(-205, -4)
 
 [node name="end" type="Node2D" parent="SpacetimeRewindPlayer"]
-position = Vector2(4773, -118)
+position = Vector2(7989, -78)
 
 [node name="SpacetimeMusicPlayer" parent="." node_paths=PackedStringArray("ForwardPlayer", "BackwardPlayer") instance=ExtResource("11_7mv1x")]
 ForwardPlayer = NodePath("forward")
