@@ -1,0 +1,117 @@
+[gd_scene load_steps=11 format=3 uid="uid://dkr4o7lvppt64"]
+
+[ext_resource type="Script" path="res://scripts/game_entity/landscape/spacetime_switcher/SpacetimeSwitcher.cs" id="1_c4hf1"]
+[ext_resource type="Texture2D" uid="uid://cf52jiwhoqkq" path="res://sprites/switcher_base.png" id="2_se7qt"]
+[ext_resource type="Texture2D" uid="uid://c71ym5s3ykqon" path="res://sprites/switcher_stick.png" id="3_f3acv"]
+
+[sub_resource type="Animation" id="Animation_tason"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/stick:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_0blx4"]
+resource_name = "end"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/stick:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5708]
+}
+
+[sub_resource type="Animation" id="Animation_2p7c1"]
+resource_name = "move"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/stick:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -1.5708]
+}
+
+[sub_resource type="Animation" id="Animation_ajxm0"]
+resource_name = "move_back"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprites/stick:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-1.5708, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7sjo0"]
+_data = {
+"RESET": SubResource("Animation_tason"),
+"end": SubResource("Animation_0blx4"),
+"move": SubResource("Animation_2p7c1"),
+"move_back": SubResource("Animation_ajxm0")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ai67f"]
+size = Vector2(98, 109)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2fquk"]
+font_size = 30
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="spacetime_switcher" type="StaticBody2D" groups=["spacetime_switcher"]]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_c4hf1")
+
+[node name="sprites" type="Node2D" parent="."]
+scale = Vector2(0.0876937, 0.0876937)
+
+[node name="base" type="Sprite2D" parent="sprites"]
+texture = ExtResource("2_se7qt")
+
+[node name="stick" type="Sprite2D" parent="sprites"]
+position = Vector2(-31, -230)
+texture = ExtResource("3_f3acv")
+offset = Vector2(274, -245)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7sjo0")
+}
+next/move = &"end"
+next/move_back = &"RESET"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, -21.5)
+shape = SubResource("RectangleShape2D_ai67f")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -10.0
+offset_top = -214.0
+offset_right = 33.0
+offset_bottom = -172.0
+text = "log"
+label_settings = SubResource("LabelSettings_2fquk")
