@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfmm26x6osc8c"]
+
+[ext_resource type="Texture2D" uid="uid://c5c4bv6ak02u4" path="res://sprites/ladder_top.png" id="2_0t36q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l1hfv"]
+size = Vector2(308, 32)
+
+[node name="spacetime_one_way_platform" type="AnimatableBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.04384, 0.406434)
+texture = ExtResource("2_0t36q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-7.15256e-06, 0)
+shape = SubResource("RectangleShape2D_l1hfv")

@@ -15,6 +15,7 @@ public struct WorldRewindData
     public CannonBallRewindData[] CannonBallRewindDatas { get; set; }
     public CloudPlatformRewindData[] CloudPlatformRewindDatas { get; set; }
     public SwitcherRewindData[] SwitcherRewindDatas { get; set; }
+    public SpacetimeSwitcherRewindData[] SpacetimeSwitcherRewindDatas { get; set; }
     public SpawnerRewindData[] SpawnerRewindDatas { get; set; }
     public TrapSpawnerRewindData[] TrapSpawnerRewindDatas { get; set; }
     public ClawRewindData[] ClawRewindDatas { get; set; }
@@ -43,6 +44,8 @@ public struct WorldRewindData
                 platform => new OneWayPlatformRewindData(platform));
         SwitcherRewindDatas =
             CommonRewindData.CreateRewindData(source.Switchers, switcher => new SwitcherRewindData(switcher));
+        SpacetimeSwitcherRewindDatas = CommonRewindData.CreateRewindData(source.SpacetimeSwitchers, switcher =>
+            new SpacetimeSwitcherRewindData(switcher));
         SpawnerRewindDatas =
             CommonRewindData.CreateRewindData(source.Spawners, e => new SpawnerRewindData(e));
         TrapSpawnerRewindDatas =
@@ -72,6 +75,8 @@ public struct WorldRewindData
             (rewindData, entity) => rewindData.ApplyData(entity));
         CommonRewindData.ApplyRewindData(source.Switchers, SwitcherRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));
+        CommonRewindData.ApplyRewindData(source.SpacetimeSwitchers, SpacetimeSwitcherRewindDatas, (rewindData, entity) =>
+            rewindData.ApplyData(entity));
         CommonRewindData.ApplyRewindData(source.CannonBalls, CannonBallRewindDatas,
             (rewindData, entity) => rewindData.ApplyData(entity));
         CommonRewindData.ApplyRewindData(source.CloudPlatforms, CloudPlatformRewindDatas,

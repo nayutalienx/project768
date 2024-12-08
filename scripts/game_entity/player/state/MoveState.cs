@@ -2,6 +2,7 @@
 using project768.scripts.common;
 using project768.scripts.game_entity.common;
 using project768.scripts.game_entity.common.system;
+using project768.scripts.game_entity.landscape.spacetime_switcher.interaction.data;
 using project768.scripts.game_entity.landscape.switcher.interaction;
 using project768.scripts.game_entity.landscape.timeless_switcher.interaction.data;
 using project768.scripts.player.interaction;
@@ -161,6 +162,12 @@ public class MoveState : BasePlayerState
             {
                 timelessSwitcher.Interactor.Interact(
                     new TimelessSwitcherInteractionEvent(TimelessSwitcherInteraction.Toggle));
+            }
+            
+            if(node is SpacetimeSwitcher spacetimeSwitcher)
+            {
+                spacetimeSwitcher.Interactor.Interact(
+                    new SpacetimeSwitcherInteractionEvent(SpacetimeSwitcherInteraction.Toggle));
             }
         }
     }

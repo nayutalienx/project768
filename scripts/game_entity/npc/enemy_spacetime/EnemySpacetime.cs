@@ -128,7 +128,8 @@ public partial class EnemySpacetime :
         CurrentState.PhysicProcess(delta);
 
         Label.Text = $"s: {CurrentState.StateEnum}\n" +
-                     $"ratio: {SpacetimePathFollow.ProgressRatio}";
+                     $"ratio: {SpacetimePathFollow.ProgressRatio}\n" +
+                     $"path: {SpacetimePathFollow.Name}";
     }
 
     public void RewindStarted()

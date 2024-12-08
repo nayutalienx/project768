@@ -1,12 +1,80 @@
-[gd_scene load_steps=9 format=3 uid="uid://du2px0k3ed2uj"]
+[gd_scene load_steps=21 format=4 uid="uid://du2px0k3ed2uj"]
 
 [ext_resource type="TileSet" uid="uid://7bqfijx61idf" path="res://tile_sets/tiles/city_tiles.tres" id="1_1uwyy"]
 [ext_resource type="PackedScene" uid="uid://d0kdsmyy1oltu" path="res://scenes/common/scene_loader.tscn" id="2_mavsm"]
+[ext_resource type="PackedScene" uid="uid://chwq1hm1c6ake" path="res://scenes/landscape/platform/one_way_platform.tscn" id="3_6q7lp"]
+[ext_resource type="PackedScene" uid="uid://dirjawkiwdyvb" path="res://scenes/landscape/ladder.tscn" id="3_ad45j"]
+[ext_resource type="PackedScene" uid="uid://bfmm26x6osc8c" path="res://scenes/landscape/platform/spacetime_one_way_platform.tscn" id="4_8glen"]
+[ext_resource type="Script" path="res://scripts/common/SpacetimeAnimationPlayer.cs" id="5_7kqvi"]
+[ext_resource type="PackedScene" uid="uid://n7kbhexoamn1" path="res://scenes/npc/enemy_spacetime.tscn" id="5_mh11s"]
+[ext_resource type="Script" path="res://scripts/common/rewind/SpacetimePathFollow.cs" id="6_dswj0"]
+[ext_resource type="PackedScene" uid="uid://dkr4o7lvppt64" path="res://scenes/landscape/switcher/spacetime_switcher.tscn" id="7_v8gy1"]
 [ext_resource type="PackedScene" uid="uid://5bobworwik70" path="res://scenes/npc/player.tscn" id="9_vo827"]
 [ext_resource type="PackedScene" uid="uid://1o2jv46sb6vl" path="res://scenes/common/spacetime_rewind_player.tscn" id="10_lfqcx"]
 [ext_resource type="PackedScene" uid="uid://c3waffwuom10l" path="res://scenes/common/spacetime_music_player.tscn" id="11_6lkvh"]
 [ext_resource type="AudioStream" uid="uid://ds8fibvsj1dyn" path="res://music/level_bg/hub/hub_bg_forward.mp3" id="12_3tb2w"]
 [ext_resource type="AudioStream" uid="uid://debbc3e362j4q" path="res://music/level_bg/hub/hub_bg_reverse.mp3" id="13_yyikt"]
+
+[sub_resource type="Animation" id="Animation_uwvpy"]
+resource_name = "move"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("platform_combination1/spacetime_one_way_platform:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1299, -737), Vector2(1299, -866)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("platform_combination1/spacetime_one_way_platform2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1438, -867), Vector2(1438, -734)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../enemies/enemy2/Path2D:curve:point_1/position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.566667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1278, -671), Vector2(1400, -671)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kiwte"]
+_data = {
+"move": SubResource("Animation_uwvpy")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_5yno1"]
+font_size = 30
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Curve2D" id="Curve2D_p2hoa"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 353, -971, -7, -109.5, 7, 109.5, -173, -303, 0, 0, 0, 0, 3, -15, 0, 0, 0, 0, 4385, -12)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_bixv7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 302, -671, 0, 0, 0, 0, 1278, -671, 0, 0, 0, 0, 300, -669)
+}
+point_count = 3
 
 [sub_resource type="LabelSettings" id="LabelSettings_rdw5m"]
 font_size = 30
@@ -21,7 +89,7 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="second_world/tiles"]
 position = Vector2(213, -499)
-tile_map_data = PackedByteArray(0, 0, 253, 255, 32, 0, 1, 0, 1, 0, 39, 0, 0, 0, 233, 255, 23, 0, 0, 0, 38, 0, 38, 0, 0, 0, 223, 255, 20, 0, 3, 0, 119, 0, 4, 0, 0, 0)
+tile_map_data = PackedByteArray("AAD9/yAAAQABACcAAADp/xcAAAAmACYAAADf/xQAAwB3AAQAAAAtACAAAQABACcAAABdACAAAQABACcAAACNACAAAQABACcAAAC9ACAAAQABACcAAADtACAAAQABACcAAAAOAA0AAQABACcAAAAdAA0AAQABACcAAAAdAPf/AQABACcAAABVAPf/AQABACcAAAAoAOL/AQABACcAAABOAOL/AQABACcAAADf/wAAAwB3AAQAAADf/+z/AwB3AAQAAADf/9f/AwB3AAQAAADf/8L/AwB3AAQAAACOAAkAAQABACcAAAC8AAkAAQABACcAAACjAOz/AQABACcAAADRAOz/AQABACcAAADRAMb/AQABACcAAAD5AMb/AQABACcAAAA=")
 tile_set = ExtResource("1_1uwyy")
 
 [node name="portals" type="Node2D" parent="second_world"]
@@ -33,13 +101,90 @@ SpawnPositionIndex = 1
 
 [node name="one_way_platforms" type="Node2D" parent="second_world"]
 
+[node name="one_way_platform" parent="second_world/one_way_platforms" instance=ExtResource("3_6q7lp")]
+position = Vector2(1124, -651)
+
+[node name="platform_combination1" type="Node2D" parent="second_world/one_way_platforms"]
+
+[node name="spacetime_one_way_platform" parent="second_world/one_way_platforms/platform_combination1" instance=ExtResource("4_8glen")]
+position = Vector2(1299, -737)
+rotation = 1.57079
+scale = Vector2(0.44, 1)
+
+[node name="spacetime_one_way_platform2" parent="second_world/one_way_platforms/platform_combination1" instance=ExtResource("4_8glen")]
+position = Vector2(1438, -867)
+rotation = 1.57079
+scale = Vector2(0.44, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="second_world/one_way_platforms/platform_combination1"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_kiwte")
+}
+script = ExtResource("5_7kqvi")
+AnimationNameOnPlay = "move"
+
+[node name="Label" type="Label" parent="second_world/one_way_platforms/platform_combination1/AnimationPlayer"]
+offset_left = 1374.0
+offset_top = -517.0
+offset_right = 1414.0
+offset_bottom = -494.0
+label_settings = SubResource("LabelSettings_5yno1")
+
 [node name="keys" type="Node2D" parent="second_world"]
 
 [node name="enemies" type="Node2D" parent="second_world"]
 
+[node name="enemy1" type="Node2D" parent="second_world/enemies"]
+
+[node name="Path2D" type="Path2D" parent="second_world/enemies/enemy1"]
+curve = SubResource("Curve2D_p2hoa")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="second_world/enemies/enemy1/Path2D"]
+position = Vector2(353, -971)
+rotates = false
+loop = false
+script = ExtResource("6_dswj0")
+
+[node name="enemy_spacetime" parent="second_world/enemies/enemy1" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("5_mh11s")]
+position = Vector2(70, -714)
+AliveOnStart = true
+SpacetimePathFollow = NodePath("../Path2D/PathFollow2D")
+
+[node name="enemy2" type="Node2D" parent="second_world/enemies"]
+
+[node name="Path2D" type="Path2D" parent="second_world/enemies/enemy2"]
+curve = SubResource("Curve2D_bixv7")
+
+[node name="pathfollow" type="PathFollow2D" parent="second_world/enemies/enemy2/Path2D"]
+position = Vector2(302, -671)
+rotates = false
+loop = false
+script = ExtResource("6_dswj0")
+TimelineProjectionMax = 0.5
+
+[node name="enemy_spacetime" parent="second_world/enemies/enemy2" node_paths=PackedStringArray("SpacetimePathFollow") instance=ExtResource("5_mh11s")]
+position = Vector2(351, -689)
+AliveOnStart = true
+SpacetimePathFollow = NodePath("../Path2D/pathfollow")
+
 [node name="locked_doors" type="Node2D" parent="second_world"]
 
 [node name="spikes" type="Node2D" parent="second_world"]
+
+[node name="ladders" type="Node2D" parent="second_world"]
+z_index = -10
+
+[node name="ladder" parent="second_world/ladders" instance=ExtResource("3_ad45j")]
+position = Vector2(1127, -107)
+points = PackedVector2Array(0, 10, 0, -65.3)
+
+[node name="switchers" type="Node2D" parent="second_world"]
+
+[node name="spacetime_switcher" parent="second_world/switchers" node_paths=PackedStringArray("ReactAnimationPlayer") instance=ExtResource("7_v8gy1")]
+position = Vector2(286, -345)
+Reaction = 1
+ReactAnimationPlayer = NodePath("../../one_way_platforms/platform_combination1/AnimationPlayer")
 
 [node name="Player" parent="." instance=ExtResource("9_vo827")]
 position = Vector2(-169, -14)
@@ -65,10 +210,9 @@ RewindLabel = NodePath("../Player/Label2")
 position = Vector2(-181, -31)
 
 [node name="end" type="Node2D" parent="SpacetimeRewindPlayer"]
-position = Vector2(1680, -40)
+position = Vector2(4430, -64)
 
-[node name="SpacetimeMusicPlayer" parent="." node_paths=PackedStringArray("AudioLabel", "ForwardPlayer", "BackwardPlayer") instance=ExtResource("11_6lkvh")]
-AudioLabel = NodePath("")
+[node name="SpacetimeMusicPlayer" parent="." node_paths=PackedStringArray("ForwardPlayer", "BackwardPlayer") instance=ExtResource("11_6lkvh")]
 ForwardPlayer = NodePath("forward")
 BackwardPlayer = NodePath("backward")
 

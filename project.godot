@@ -45,6 +45,7 @@ trap_spawner=""
 box=""
 spacetime_enemy=""
 spacetime_locked_door=""
+spacetime_switcher=""
 
 [input]
 

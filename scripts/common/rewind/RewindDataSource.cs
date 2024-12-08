@@ -23,6 +23,7 @@ public class RewindDataSource
     public SpacetimeLockedDoor[] SpacetimeLockedDoors { get; set; }
     public OneWayPlatform[] OneWayPlatforms { get; set; }
     public Switcher[] Switchers { get; set; }
+    public SpacetimeSwitcher[] SpacetimeSwitchers { get; set; }
     public CannonBall[] CannonBalls { get; set; }
     public CloudPlatform[] CloudPlatforms { get; set; }
     public EntitySpawner[] Spawners { get; set; }
@@ -42,6 +43,7 @@ public class RewindDataSource
         LockedDoors = FindAndAddRewindables(t, "door").ConvertAll(o => o as LockedDoor).ToArray();
         SpacetimeLockedDoors = FindAndAddRewindables(t, "spacetime_locked_door").ConvertAll(o => o as SpacetimeLockedDoor).ToArray();
         Switchers = FindAndAddRewindables(t, "switcher").ConvertAll(o => o as Switcher).ToArray();
+        SpacetimeSwitchers = FindAndAddRewindables(t, "spacetime_switcher").ConvertAll(o => o as SpacetimeSwitcher).ToArray();
         CannonBalls = FindAndAddRewindables(t, "cannon_ball").ConvertAll(o => o as CannonBall).ToArray();
         CloudPlatforms = FindAndAddRewindables(t, "cloud_platform").ConvertAll(o => o as CloudPlatform).ToArray();
         Spawners = FindAndAddRewindables(t, "spawner").ConvertAll(o => o as EntitySpawner).ToArray();

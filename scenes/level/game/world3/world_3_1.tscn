@@ -84,6 +84,9 @@ position = Vector2(1335, -1369)
 [node name="TimelessCollectableItem" parent="CollectableSystem" instance=ExtResource("3_ng802")]
 position = Vector2(3013, -1122)
 
+[node name="TimelessCollectableItem2" parent="CollectableSystem" instance=ExtResource("3_ng802")]
+position = Vector2(5371, -1052)
+
 [node name="second_world" type="Node2D" parent="."]
 
 [node name="tiles" type="Node2D" parent="second_world"]
