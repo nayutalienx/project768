@@ -19,7 +19,7 @@ public partial class Player :
 {
     public static Player Instance;
     public static PreviousSceneData PreviousSceneData { get; set; } = new();
-    public static float PositionDeltaFactor = 5.0f; // подбирать вручную
+    public static float PositionDeltaFactor = 5.0f; // adjust manually
 
     public List<Node2D> SpawnPositions { get; set; } = new();
     public Camera2D Camera { get; set; }
